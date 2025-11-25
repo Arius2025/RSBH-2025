@@ -33,20 +33,24 @@ RUN rm -f .env
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer install --no-dev --optimize-autoloader
 
+# >>> BARIS KRUSIAL BARU: Bersihkan cache yang mungkin menghalangi PHP-FPM start
+RUN php artisan config:clear
+RUN php artisan cache:clear
+# <<< END BARIS KRUSIAL BARU
+
 # Atur izin file (PENTING untuk Laravel)
 RUN chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
 # -------------------------------------------------------------
-# KONFIGURASI NGINX & SUPERVISOR (INI BAGIAN KRUSIAL)
+# KONFIGURASI NGINX & SUPERVISOR & PHP-FPM
 # -------------------------------------------------------------
 
-# Salin konfigurasi Nginx ke direktori Nginx
-# default.conf adalah file yang Anda buat untuk mengarahkan ke public/index.php
-COPY default.conf /etc/nginx/conf.d/default.conf
+# Salin konfigurasi PHP-FPM untuk menggunakan socket UNIX
+COPY php-fpm-www.conf /usr/local/etc/php-fpm.d/www.conf
 
-# Hapus default Nginx yang lama
-RUN rm -rf /etc/nginx/conf.d/default.conf
+# Salin konfigurasi Nginx ke direktori Nginx
+COPY default.conf /etc/nginx/conf.d/default.conf
 
 # Salin konfigurasi Supervisor
 COPY supervisord.conf /etc/supervisord.conf
