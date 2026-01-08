@@ -68,4 +68,10 @@ class FrontendController extends Controller
         // Ubah: 'komplain' menjadi 'pages.komplain'
         return view('pages.komplain');
     }
+    
+    public function kontak()
+    {
+        // Ubah: 'kontak' menjadi 'pages.kontak'
+        return view('pages.kontak');
+    }
 }

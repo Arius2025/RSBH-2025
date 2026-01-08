@@ -44,6 +44,7 @@
             width: 1rem;
             text-align: center;
         }
+        
     </style>
 </head>
 <body>

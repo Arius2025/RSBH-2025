@@ -26,7 +26,7 @@ Route::get('/berita/{slug}', [FrontendController::class, 'detailBerita'])->name(
 Route::get('/ppid', [FrontendController::class, 'ppid'])->name('ppid');
 Route::get('/zona', [FrontendController::class, 'zonaIntegritas'])->name('zona');
 Route::get('/komplain', [FrontendController::class, 'komplain'])->name('komplain');
-
+Route::get('/kontak',[FrontendController::class,'kontak'])->name('kontak');
 
 // =========================================================================
 // 2. ROUTE AUTHENTICATION (BREEZE)

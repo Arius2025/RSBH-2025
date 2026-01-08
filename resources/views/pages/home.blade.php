@@ -76,30 +76,80 @@
     </section>
 
 
-    {{-- 4. TESTIMONI SECTION (Warna Background di CSS app.blade.php) --}}
-    <section class="testimoni-section rounded py-5 my-5" data-aos="fade-up"> 
-        <div class="container">
-            <div class="text-center mb-5" data-aos="fade-down">
-                {{-- Text-white karena latar belakang sudah diganti di CSS --}}
-                <h2 class="fw-bold text-white mb-3">💬 Komentar Pengunjung</h2> 
-                <p class="lead text-white-50">Apa kata mereka tentang layanan kami.</p>
+    {{-- 4. TESTIMONI SECTION (Google Maps Style) --}}
+<section class="py-5 my-5" data-aos="fade-up" style="background: #f8f9fa;"> 
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-down">
+            <h2 class="fw-bold text-success mb-2">💬 Ulasan Pengunjung</h2> 
+            <div class="d-flex justify-content-center align-items-center gap-2 mb-3">
+                <img src="https://cdn.worldvectorlogo.com/logos/google-maps-2020-icon.svg" width="20" alt="Google">
+                <span class="fw-bold">4.6 / 5.0</span>
+                <div class="text-warning">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
+                </div>
             </div>
-            <div class="testimoni-slider">
-                <div class="testimoni-card transition hover-shadow" data-aos="zoom-in" data-aos-delay="50">
-                    <p class="quote">“Pelayanannya sangat cepat dan ramah. Dokter dan perawatnya sangat membantu. Sangat direkomendasikan.”</p>
-                    <h4 class="name">— Bpk. Agus W.</h4>
+            <p class="text-muted">Berdasarkan ulasan terbaru di Google Maps</p>
+        </div>
+
+        <div class="row g-4">
+            {{-- Testimoni 1 --}}
+            <div class="col-md-4" data-aos="zoom-in" data-aos-delay="50">
+                <div class="card h-100 border-0 shadow-sm p-4 rounded-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center fw-bold me-3" style="width: 45px; height: 45px;">A</div>
+                        <div>
+                            <h6 class="fw-bold mb-0">Agus Wijaya</h6>
+                            <small class="text-muted">Local Guide • 2 minggu lalu</small>
+                        </div>
+                    </div>
+                    <div class="text-warning mb-2 small">
+                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                    </div>
+                    <p class="text-muted small italic">"Pelayanan di RS DKT Jember sangat cepat dan ramah. Dokter spesialisnya sangat membantu dan penjelasannya mudah dimengerti."</p>
                 </div>
-                <div class="testimoni-card transition hover-shadow" data-aos="zoom-in" data-aos-delay="100">
-                    <p class="quote">“Fasilitasnya lengkap dan bersih. Benar-benar merasa nyaman selama perawatan dan petugasnya sigap.”</p>
-                    <h4 class="name">— Ibu Rina S.</h4>
+            </div>
+
+            {{-- Testimoni 2 --}}
+            <div class="col-md-4" data-aos="zoom-in" data-aos-delay="100">
+                <div class="card h-100 border-0 shadow-sm p-4 rounded-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold me-3" style="width: 45px; height: 45px;">R</div>
+                        <div>
+                            <h6 class="fw-bold mb-0">Rina Septi</h6>
+                            <small class="text-muted">Pengunjung • 1 bulan lalu</small>
+                        </div>
+                    </div>
+                    <div class="text-warning mb-2 small">
+                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                    </div>
+                    <p class="text-muted small">"Fasilitas kamarnya bersih dan nyaman. Perawat sigap saat dibutuhkan. Terima kasih RS Baladhika Husada."</p>
                 </div>
-                <div class="testimoni-card transition hover-shadow d-none d-lg-block" data-aos="zoom-in" data-aos-delay="150">
-                    <p class="quote">“Proses administrasi cepat. Stafnya sangat tanggap dan profesional. Pelayanan prima.”</p>
-                    <h4 class="name">— Bapak Hari D.</h4>
+            </div>
+
+            {{-- Testimoni 3 --}}
+            <div class="col-md-4" data-aos="zoom-in" data-aos-delay="150">
+                <div class="card h-100 border-0 shadow-sm p-4 rounded-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-warning text-white rounded-circle d-flex align-items-center justify-content-center fw-bold me-3" style="width: 45px; height: 45px;">H</div>
+                        <div>
+                            <h6 class="fw-bold mb-0">Hari Darmawan</h6>
+                            <small class="text-muted">Local Guide • 3 bulan lalu</small>
+                        </div>
+                    </div>
+                    <div class="text-warning mb-2 small">
+                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                    </div>
+                    <p class="text-muted small">"Proses administrasi BPJS lancar dan tidak ribet. Sangat membantu masyarakat Jember."</p>
                 </div>
             </div>
         </div>
-    </section>
 
+        <div class="text-center mt-5">
+            <a href="https://www.google.com/maps/place/Rumah+Sakit+Baladhika+Husada+(RS+DKT)+Jember/@-8.1639433,113.7035974,17z/data=!3m1!4b1!4m6!3m5!1s0x2dd6943bb3448627:0x4568cb1a5d56572d!8m2!3d-8.1639486!4d113.7061723!16s%2Fg%2F1pzx5ytnd?entry=ttu&g_ep=EgoyMDI2MDEwNC4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn btn-outline-dark rounded-pill px-4 shadow-sm">
+                Lihat Semua Ulasan di Google Maps
+            </a>
+        </div>
+    </div>
+</section>
 </main>
 @endsection
