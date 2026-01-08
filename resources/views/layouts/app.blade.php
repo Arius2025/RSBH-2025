@@ -49,24 +49,80 @@ body {
 /* NAVBAR CUSTOM (Desktop) */
 /* ========================================= */
 
-.nav-link-custom {
-  font-weight: 600;
-  color: #3498db; /* Biru muda */
-  border-radius: 50px;
-  padding: 8px 18px;
-  transition: all 0.3s;
-}
+/* ========================================= */
+    /* 1. SHARED & DESKTOP STYLES                */
+    /* ========================================= */
+    .navbar-custom {
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        background-color: rgba(255, 255, 255, 0.8) !important; /* Lebih Transparan */
+        backdrop-filter: blur(8px); /* Efek blur halus */
+        -webkit-backdrop-filter: blur(8px);
+        padding: 10px 0; /* Lebih tipis */
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
 
-.nav-link-custom:hover, .nav-link-custom.active {
-  color: white;
-  background-color: #2ecc71; /* Hijau sukses */
-  box-shadow: 0 4px 10px rgba(46, 204, 113, 0.4);
-}
+    /* Efek Ramping saat Scroll */
+    .navbar-scrolled {
+        padding: 5px 0 !important;
+        background-color: rgba(255, 255, 255, 0.95) !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+    }
 
-.nav-link-custom.active {
-  /* HAPUS ATAU KOMENTARI BARIS INI */
-  /* pointer-events: none; */ 
-}
+    /* Nav Links Styling */
+    .nav-link-custom {
+        font-weight: 600;
+        color: #444 !important;
+        padding: 6px 15px !important;
+        margin: 0 2px;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+        border-radius: 8px;
+    }
+
+    .nav-link-custom:hover {
+        color: #2ecc71 !important;
+        background: rgba(46, 204, 113, 0.1);
+    }
+
+    .nav-link-custom.active {
+        color: #ffffff !important;
+        background-color: #2ecc71;
+    }
+
+    /* Dropdown Animasi Halus */
+    @media (min-width: 992px) {
+        .dropdown-menu {
+            display: block;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.25s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+            margin-top: 8px !important;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+    }
+
+    .nav-link-custom-sub {
+        font-size: 0.88rem;
+        padding: 8px 15px;
+        color: #555;
+        border-radius: 6px;
+        transition: all 0.2s;
+    }
+
+    .nav-link-custom-sub:hover {
+        background: #f1fcf4;
+        color: #2ecc71;
+        padding-left: 20px;
+    }
 
 /* ========================================= */
 /* NAVBAR MOBILE (Fixed Bottom) */
@@ -481,8 +537,18 @@ if (galeriCarousel) {
         scrollInterval = setInterval(autoScroll, scrollSpeed);
     });
 }
+    // JS Minimalis untuk Scroll Effect
+    (function() {
+        const nav = document.getElementById('desktopNav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                nav.classList.add('navbar-scrolled');
+            } else {
+                nav.classList.remove('navbar-scrolled');
+            }
+        });
+    })();
 // ------------------------------------
-
 
             // Logic Splash Screen dihapus
         </script>

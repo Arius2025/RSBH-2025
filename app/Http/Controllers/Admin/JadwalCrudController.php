@@ -24,43 +24,33 @@ class JadwalCrudController extends Controller
     /**
      * Tangani pengunggahan dan pembaruan gambar jadwal.
      */
-    public function update(Request $request)
-    {
-        $request->validate([
-            'gambar_pagi' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:3072', // Max 3MB
-            'gambar_sore' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:3072', // Max 3MB
-        ]);
+ public function update(Request $request)
+{
+    $request->validate([
+        'gambar_pagi' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:3072',
+        'gambar_sore' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:3072',
+    ]);
 
-        $jadwal = JadwalDokter::firstOrCreate([]);
-        $dataToUpdate = [];
+    // Menggunakan ID tetap agar data hanya ada satu baris
+    $jadwal = JadwalDokter::firstOrCreate(['id' => 1]);
 
-        // --- Proses Gambar Pagi ---
-        if ($request->hasFile('gambar_pagi')) {
-            // 1. Hapus gambar lama jika ada
-            if ($jadwal->gambar_pagi) {
-                Storage::disk('public')->delete($jadwal->gambar_pagi);
-            }
-            // 2. Simpan gambar baru ke folder storage/app/public/jadwal_dokter
-            $path = $request->file('gambar_pagi')->store('jadwal_dokter', 'public');
-            $dataToUpdate['gambar_pagi'] = $path;
+    if ($request->hasFile('gambar_pagi')) {
+        if ($jadwal->gambar_pagi) {
+            Storage::disk('public')->delete($jadwal->gambar_pagi);
         }
-
-        // --- Proses Gambar Sore ---
-        if ($request->hasFile('gambar_sore')) {
-            // 1. Hapus gambar lama jika ada
-            if ($jadwal->gambar_sore) {
-                Storage::disk('public')->delete($jadwal->gambar_sore);
-            }
-            // 2. Simpan gambar baru
-            $path = $request->file('gambar_sore')->store('jadwal_dokter', 'public');
-            $dataToUpdate['gambar_sore'] = $path;
-        }
-        
-        // Update database hanya jika ada file baru yang diunggah
-        if (!empty($dataToUpdate)) {
-            $jadwal->update($dataToUpdate);
-        }
-
-        return redirect()->route('admin.jadwal.index')->with('success', 'Jadwal Dokter berhasil diperbarui!');
+        // Simpan ke folder 'jadwal_dokter' di disk 'public'
+        $jadwal->gambar_pagi = $request->file('gambar_pagi')->store('jadwal_dokter', 'public');
     }
+
+    if ($request->hasFile('gambar_sore')) {
+        if ($jadwal->gambar_sore) {
+            Storage::disk('public')->delete($jadwal->gambar_sore);
+        }
+        $jadwal->gambar_sore = $request->file('gambar_sore')->store('jadwal_dokter', 'public');
+    }
+
+    $jadwal->save(); // Pastikan tersimpan ke database
+
+    return redirect()->back()->with('success', 'Jadwal berhasil diperbarui!');
+}
 }
