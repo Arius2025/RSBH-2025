@@ -14,44 +14,42 @@ class FrontendController extends Controller
 {
 
    public function berita()
-    {
-        // URL yang sudah diperbaiki (SlB bukan SIB)
-        $url = "https://feeds.behold.so/SlB320FpXXbkExJMQhJy";
+{
+    $url = "https://feeds.behold.so/SlB320FpXXbkExJMQhJy";
 
+    // Durasi cache diatur menjadi 86400 detik (24 jam / 1 hari)
+    $beritas = \Illuminate\Support\Facades\Cache::remember('instagram_feed_final', 86400, function () use ($url) {
         try {
-            $response = Http::withOptions(['verify' => false])
-                            ->timeout(30)
-                            ->get($url);
+            $response = \Illuminate\Support\Facades\Http::withOptions(['verify' => false])
+                            ->timeout(30)->get($url);
 
             if ($response->successful()) {
                 $data = $response->json();
                 
-                // Masuk ke array 'posts'
                 if (isset($data['posts'])) {
-                    $beritas = collect($data['posts'])->map(function($item) {
+                    return collect($data['posts'])->map(function($item) {
                         $rawCaption = $item['caption'] ?? 'Update RS Baladhika Husada';
-                        
-                        // Pembersihan teks untuk Judul dan Isi
                         $cleanText = preg_replace('/(@\w+|#\w+)/', '', $rawCaption);
                         $lines = explode("\n", trim($cleanText));
                         
                         return (object) [
-                            'judul' => Str::limit($lines[0], 65),
-                            'isi'   => count($lines) > 1 ? Str::limit(implode(" ", array_slice($lines, 1)), 120) : 'Klik untuk info selengkapnya...',
+                            'judul' => \Illuminate\Support\Str::limit($lines[0], 65),
+                            'isi'   => count($lines) > 1 ? \Illuminate\Support\Str::limit(implode(" ", array_slice($lines, 1)), 120) : 'Klik untuk info selengkapnya...',
                             'img'   => $item['full']['mediaUrl'] ?? ($item['mediaUrl'] ?? null),
                             'url'   => $item['permalink'] ?? '#',
                             'tgl'   => $item['timestamp'] ?? now(),
                         ];
                     });
-
-                    return view('pages.berita', compact('beritas'));
                 }
             }
-            return "Gagal memuat data dari API.";
+            return collect([]);
         } catch (\Exception $e) {
-            return "Error: " . $e->getMessage();
+            return collect([]);
         }
-    }
+    });
+
+    return view('pages.berita', compact('beritas'));
+}
 
     // Fungsi pendukung lainnya tetap ada
     public function home() { 
