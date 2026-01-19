@@ -11,11 +11,10 @@ class Berita extends Model
 
     protected $fillable = [
         'judul',
-        'slug', // <-- BARU: Field ini wajib ada untuk mengatasi error General error: 1364
+        'slug', 
         'isi',
-        'gambar', // Jika ada field gambar
+        'gambar', 
     ];
     
-    // Asumsi nama tabel adalah 'berita'
-    protected $table = 'beritas'; 
+    protected $table = 'beritas'; // Pastikan nama tabel sesuai
 }

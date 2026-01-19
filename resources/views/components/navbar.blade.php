@@ -1,70 +1,121 @@
-{{-- resources/views/components/navbar.blade.php --}}
+{{-- 1. Desktop Navbar (Hanya muncul di layar besar) --}}
+<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top py-2 shadow-sm d-none d-lg-block border-bottom" style="z-index: 1100;">
+    <div class="container-fluid px-4">
+        <div class="d-flex align-items-center justify-content-between w-100">
+            {{-- KIRI: Nama RS & Logo --}}
+            <div class="d-flex align-items-center">
+                <a class="navbar-brand d-flex align-items-center me-3" href="{{ route('home') }}">
+                    <div class="lh-1 border-end pe-3">
+                        <span class="fw-bold text-success d-block" style="font-size: 1.2rem; letter-spacing: -0.5px;">RS Baladhika Husada</span>
+                        <small class="text-muted fw-bold" style="font-size: 0.6rem; letter-spacing: 1px;">HESTI WIRA SAKTI</small>
+                    </div>
+                </a>
+                <div class="ps-2">
+                    <img src="{{ asset('images/logo.png') }}" alt="Logo Instansi" style="height: 40px; width: auto; object-fit: contain;">
+                </div>
+            </div>
 
-{{-- 1. Desktop Navbar (FIXED TOP) - HANYA Muncul di layar Besar (lg dan lebih besar) --}}
-<nav class="navbar navbar-expand-lg fixed-top navbar-custom d-none d-lg-block" id="desktopNav">
-    <div class="container">
-        <a class="navbar-brand fw-bold text-success d-flex align-items-center" href="{{ route('home') }}">
-            <i class="bi bi-hospital-fill me-2 fs-4"></i>
-            <span style="font-size: 1.15rem; letter-spacing: -0.3px;">RS Baladhika Husada</span>
-        </a>
-
-        <div class="ms-auto d-flex align-items-center">
-            <ul class="navbar-nav mb-0">
-                <li class="nav-item">
-                    <a class="nav-link-custom {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">Beranda</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link-custom {{ request()->routeIs('informasi') ? 'active' : '' }}" href="{{ route('informasi') }}">Informasi</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link-custom {{ request()->routeIs('jadwal') ? 'active' : '' }}" href="{{ route('jadwal') }}">Jadwal</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link-custom {{ request()->routeIs('berita') ? 'active' : '' }}" href="{{ route('berita') }}">Berita</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link-custom dropdown-toggle {{ request()->routeIs(['ppid', 'zona', 'komplain']) ? 'active' : '' }}" href="#" role="button">
-                        Layanan
-                    </a>
-                    <ul class="dropdown-menu border-0 shadow-sm">
-                        <li><a class="dropdown-item nav-link-custom-sub {{ request()->routeIs('ppid') ? 'active' : '' }}" href="{{ route('ppid') }}">PPID</a></li>
-                        <li><a class="dropdown-item nav-link-custom-sub {{ request()->routeIs('zona') ? 'active' : '' }}" href="{{ route('zona') }}">Zona Integritas</a></li>
-                        <li><hr class="dropdown-divider opacity-50"></li>
-                        <li><a class="dropdown-item nav-link-custom-sub {{ request()->routeIs('komplain') ? 'active' : '' }}" href="{{ route('komplain') }}">Komplain</a></li>
-                    </ul>
-                </li>
-            </ul>
+            {{-- KANAN: Menu --}}
+            <div class="d-flex align-items-center">
+                <ul class="navbar-nav fw-semibold gap-1 me-4">
+                    <li class="nav-item">
+                        <a class="nav-link px-2 {{ request()->routeIs('home') ? 'text-success active' : '' }}" href="{{ route('home') }}">Beranda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-2 {{ request()->routeIs('informasi') ? 'text-success active' : '' }}" href="{{ route('informasi') }}">Informasi</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-2 {{ request()->routeIs('jadwal') ? 'text-success active' : '' }}" href="{{ route('jadwal') }}">Jadwal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-2 {{ request()->routeIs('berita') ? 'text-success active' : '' }}" href="{{ route('berita') }}">Berita</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle px-2" href="#" data-bs-toggle="dropdown">Layanan</a>
+                        <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-3 p-2 rounded-3">
+                            <li><a class="dropdown-item rounded-2" href="{{ route('ppid') }}">PPID</a></li>
+                            <li><a class="dropdown-item rounded-2" href="{{ route('zona') }}">Zona Integritas</a></li>
+                            <li><hr class="dropdown-divider opacity-50"></li>
+                            <li><a class="dropdown-item rounded-2 text-danger fw-bold" href="{{ route('komplain') }}">Komplain</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <a href="{{ route('kontak') }}" class="btn btn-success rounded-pill px-4 shadow-sm fw-bold d-flex align-items-center py-2 transition-all hover-shadow">
+                    <i class="bi bi-whatsapp me-2 fs-5"></i> KONTAK
+                </a>
+            </div>
         </div>
     </div>
 </nav>
 
-{{-- 2. Mobile Navbar (Fixed Bottom) --}}
-<nav class="fixed-bottom d-lg-none bg-white border-top shadow-lg" style="z-index: 1030;">
-    <div class="d-flex justify-content-around w-100">
-        
+{{-- 2. Mobile Header (Hanya muncul di HP - Diperbaiki agar tidak kepotong) --}}
+<header class="d-lg-none bg-white fixed-top shadow-sm border-bottom" style="z-index: 1100;">
+    <div class="d-flex justify-content-between align-items-center px-3 py-2">
+        <div class="lh-1">
+            <span class="fw-bold text-success d-block" style="font-size: 0.9rem;">RS Baladhika Husada</span>
+            <small class="text-muted fw-bold" style="font-size: 0.55rem; text-transform: uppercase;">Hesti Wira Sakti</small>
+        </div>
+        <img src="{{ asset('images/logo.png') }}" alt="Logo" style="height: 20px; width: auto; opacity: 0.9;">
+    </div>
+</header>
+
+{{-- 3. Mobile Bottom Nav (Tetap muncul di HP) --}}
+<nav class="fixed-bottom d-lg-none bg-white border-top shadow-lg" style="z-index: 1100; height: 65px;">
+    <div class="d-flex justify-content-around align-items-center h-100">
         <a class="nav-link-mobile {{ request()->routeIs('home') ? 'active-mobile' : '' }}" href="{{ route('home') }}">
-            <i class="bi bi-house-door-fill"></i>
-            <span class="small d-block">Beranda</span>
+            <i class="bi bi-house-door{{ request()->routeIs('home') ? '-fill' : '' }} fs-5"></i>
+            <span class="d-block" style="font-size: 0.65rem;">Beranda</span>
         </a>
-        
-        <a class="nav-link-mobile {{ request()->routeIs('informasi') ? 'active-mobile' : '' }}" href="{{ route('informasi') }}">
-            <i class="bi bi-info-circle-fill"></i>
-            <span class="small d-block">Info</span>
-        </a>
-        
         <a class="nav-link-mobile {{ request()->routeIs('jadwal') ? 'active-mobile' : '' }}" href="{{ route('jadwal') }}">
-            <i class="bi bi-calendar-check-fill"></i>
-            <span class="small d-block">Jadwal</span>
+            <i class="bi bi-calendar-check{{ request()->routeIs('jadwal') ? '-fill' : '' }} fs-5"></i>
+            <span class="d-block" style="font-size: 0.65rem;">Jadwal</span>
         </a>
-        
+        <a class="nav-link-mobile {{ request()->routeIs('kontak') ? 'active-mobile' : '' }}" href="{{ route('kontak') }}">
+            <i class="bi bi-whatsapp fs-5"></i>
+            <span class="d-block" style="font-size: 0.65rem;">Kontak</span>
+        </a>
         <a class="nav-link-mobile {{ request()->routeIs('ppid') ? 'active-mobile' : '' }}" href="{{ route('ppid') }}">
-            <i class="bi bi-file-earmark-lock-fill"></i>
-            <span class="small d-block">PPID</span>
+            <i class="bi bi-file-earmark-lock{{ request()->routeIs('ppid') ? '-fill' : '' }} fs-5"></i>
+            <span class="d-block" style="font-size: 0.65rem;">PPID</span>
         </a>
-        
         <a class="nav-link-mobile {{ request()->routeIs('komplain') ? 'active-mobile' : '' }}" href="{{ route('komplain') }}">
-            <i class="bi bi-chat-right-text-fill"></i>
-            <span class="small d-block">Komplain</span>
+            <i class="bi bi-chat-right-text{{ request()->routeIs('komplain') ? '-fill' : '' }} fs-5"></i>
+            <span class="d-block" style="font-size: 0.65rem;">Aduan</span>
         </a>
     </div>
 </nav>
+
+{{-- Spacer agar konten tidak tertutup navbar yang melayang --}}
+<div class="d-none d-lg-block" style="height: 80px;"></div>
+<div class="d-lg-none" style="height: 60px;"></div>
+
+<style>
+    .transition-all { transition: all 0.3s ease; }
+    .hover-shadow:hover { 
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(25, 135, 84, 0.2) !important;
+    }
+    .nav-link { color: #4a4a4a !important; }
+    .nav-link:hover, .nav-link.active { color: #198754 !important; }
+    
+    .nav-link-mobile {
+        text-align: center;
+        text-decoration: none;
+        color: #6c757d;
+        flex: 1;
+    }
+    .active-mobile { 
+        color: #198754 !important; 
+        font-weight: bold;
+    }
+    
+    .dropdown-menu { 
+        animation: slideIn 0.3s ease-out; 
+        border-radius: 12px;
+    }
+
+    @keyframes slideIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>

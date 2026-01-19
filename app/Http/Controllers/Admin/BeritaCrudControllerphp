@@ -1,0 +1,60 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Berita; // Memanggil model database Anda
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
+
+class BeritaController extends Controller
+{
+    public function index()
+    {
+        // 1. Coba ambil data dari Instagram dulu (Cache 1 minggu)
+        $beritas = Cache::remember('instagram_feed_weekly', 604800, function () {
+            $url = env('BEHOLD_FEED_URL');
+            
+            try {
+                $response = Http::timeout(5)->get($url);
+
+                if ($response->successful()) {
+                    $data = $response->json();
+                    return collect($data)->map(function ($item) {
+                        $cleanCaption = preg_replace('/(@\w+|#\w+)/', '', $item['caption'] ?? '');
+                        $parts = explode("\n", trim($cleanCaption), 2);
+
+                        return (object) [
+                            'judul'      => Str::limit($parts[0] ?? 'Berita Terbaru', 85),
+                            'isi'        => isset($parts[1]) ? Str::limit(trim($parts[1]), 150) : '',
+                            'gambar'     => $item['mediaUrl'] ?? ($item['thumbnailUrl'] ?? ''),
+                            'url'        => $item['permalink'],
+                            'source'     => 'instagram', // Penanda sumber
+                            'created_at' => $item['timestamp'],
+                        ];
+                    });
+                }
+            } catch (\Exception $e) {
+                \Log::error("Instagram API Gagal: " . $e->getMessage());
+            }
+            return null; // Mengembalikan null jika gagal
+        });
+
+        // 2. FALLBACK: Jika Instagram gagal atau kosong, ambil dari Database
+        if (!$beritas || $beritas->isEmpty()) {
+            $beritas = Berita::orderBy('created_at', 'desc')->get()->map(function ($item) {
+                return (object) [
+                    'judul'      => $item->judul,
+                    'isi'        => Str::limit($item->isi, 150),
+                    'gambar'     => asset('storage/' . $item->gambar), // Sesuaikan path storage Anda
+                    'url'        => route('berita.show', $item->id), // Link ke halaman detail internal
+                    'source'     => 'database',
+                    'created_at' => $item->created_at,
+                ];
+            });
+        }
+
+        return view('berita', compact('beritas'));
+    }
+}
