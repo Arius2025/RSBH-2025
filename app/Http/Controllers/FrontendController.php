@@ -45,6 +45,7 @@ class FrontendController extends Controller
             return collect([]);
         } catch (\Exception $e) {
             return collect([]);
+<<<<<<< HEAD
         }
     });
 
@@ -85,8 +86,13 @@ class FrontendController extends Controller
         } catch (\Exception $e) {
             Log::error("Bed Monitoring Connection Error: " . $e->getMessage());
             return response()->json(['error' => 'Koneksi terputus'], 500);
+=======
+>>>>>>> 78aab63354d78457d74c67103f77cd1ee42796ac
         }
-    }
+    });
+
+    return view('pages.berita', compact('beritas'));
+}
 
 
     public function home() 
