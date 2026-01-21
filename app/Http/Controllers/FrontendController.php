@@ -89,8 +89,7 @@ class FrontendController extends Controller
 
         }
 
-    return view('pages.berita', compact('beritas'));
-}
+    }
 
 
     public function home() 
