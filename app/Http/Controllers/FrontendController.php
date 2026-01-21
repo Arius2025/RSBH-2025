@@ -94,11 +94,10 @@ class FrontendController extends Controller
 
     public function home() 
 {
-    // Mengambil data dari cache yang sudah dibuat di fungsi berita()
-    // Jika cache kosong, kita berikan collect([]) agar tidak error
+  
     $beritas = \Illuminate\Support\Facades\Cache::get('instagram_feed_final', collect([]));
 
-    return view('pages.home', compact('beritas'));
+    return view('pages.home', compact('beritas')); 
 }
 
     public function detailBerita($slug) {
