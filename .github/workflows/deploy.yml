@@ -12,14 +12,13 @@ jobs:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@master
         with:
-          host: 31.97.107.14  # <--- Tulis IP ini langsung, jangan pakai ${{ secrets... }}
+          host: 31.97.107.14
           username: rsbaladhikahusada
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
-         script: |
+          script: |
             cd /home/rsbaladhikahusada/htdocs/www.rsbaladhikahusada.com
             git config --global --add safe.directory /home/rsbaladhikahusada/htdocs/www.rsbaladhikahusada.com
-            git checkout main
             git fetch origin main
             git reset --hard origin/main
             git clean -fd
