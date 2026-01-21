@@ -152,4 +152,147 @@
     </div>
 </section>
 </main>
+<div class="modal fade" id="infoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg"> {{-- Ukuran LG lebih pas untuk laptop & tablet --}}
+        <div class="modal-content modal-compact shadow-lg">
+            <div class="modal-body p-0">
+                <div class="row g-0">
+                    <div class="col-md-5 d-none d-md-block">
+                        @if($beritas->count() > 0)
+                            <img src="{{ $beritas[0]->img }}" class="news-side-img w-100" alt="News Image">
+                        @else
+                            <div class="h-100 bg-success d-flex align-items-center justify-content-center">
+                                <i class="bi bi-hospital text-white display-4"></i>
+                            </div>
+                        @endif
+                    </div>
+
+                    <div class="col-md-7">
+                        <div class="news-body h-100">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <span class="news-tag"><i class="bi bi-info-circle-fill me-1"></i> Update Terbaru</span>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+
+                            @if($beritas->count() > 0)
+                                <h2 class="news-title-sm">{{ $beritas[0]->judul }}</h2>
+                                <p class="news-text-sm">
+                                    {{ Str::limit($beritas[0]->isi, 150) }}
+                                </p>
+                            @endif
+
+                            <div class="d-grid gap-2">
+                                <a href="{{ route('tidur') }}" class="btn btn-rs-primary text-decoration-none text-center">
+                                    <i class="bi bi-door-open me-2"></i> Ketersediaan Kamar
+                                </a>
+                                @if($beritas->count() > 0)
+                                <a href="{{ $beritas[0]->url }}" target="_blank" class="btn btn-rs-ig text-decoration-none text-center">
+                                    <i class="bi bi-instagram me-2"></i> Baca di Instagram
+                                </a>
+                                @endif
+                            </div>
+
+                            <div class="mt-3 pt-2 border-top">
+                                <div class="form-check form-switch small">
+                                    <input class="form-check-input" type="checkbox" id="dontShowAgain">
+                                    <label class="form-check-label text-muted" for="dontShowAgain">Jangan tampilkan hari ini</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const dontShow = localStorage.getItem('hideInfoModalToday');
+    const today = new Date().toDateString();
+
+    if (dontShow !== today) {
+        var myModal = new bootstrap.Modal(document.getElementById('infoModal'));
+        setTimeout(() => { myModal.show(); }, 1500);
+    }
+
+    document.getElementById('dontShowAgain').addEventListener('change', function() {
+        if(this.checked) { localStorage.setItem('hideInfoModalToday', today); }
+        else { localStorage.removeItem('hideInfoModalToday'); }
+    });
+});
+</script>
+<style>
+    /* Ukuran Modal Custom */
+.modal-compact {
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+/* Sisi Kiri: Foto yang Presisi */
+.news-side-img {
+    height: 100%;
+    min-height: 320px; /* Ukuran tidak terlalu tinggi */
+    object-fit: cover;
+}
+
+/* Sisi Kanan: Tipografi Bersih */
+.news-body {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.news-tag {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #157347;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.news-title-sm {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #2d3419;
+    margin: 8px 0;
+    line-height: 1.3;
+}
+
+.news-text-sm {
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+/* Button Styling */
+.btn-rs-primary {
+    background: #157347;
+    color: white;
+    font-weight: 600;
+    border-radius: 10px;
+    padding: 10px;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-rs-primary:hover {
+    background: #115c39;
+    color: white;
+}
+
+.btn-rs-ig {
+    background: white;
+    color: #bc1888;
+    border: 1px solid #bc1888;
+    font-weight: 600;
+    border-radius: 10px;
+    padding: 8px;
+    font-size: 0.85rem;
+}
+</style>
 @endsection

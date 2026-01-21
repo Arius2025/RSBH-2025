@@ -27,7 +27,8 @@ Route::get('/ppid', [FrontendController::class, 'ppid'])->name('ppid');
 Route::get('/zona', [FrontendController::class, 'zonaIntegritas'])->name('zona');
 Route::get('/komplain', [FrontendController::class, 'komplain'])->name('komplain');
 Route::get('/kontak',[FrontendController::class,'kontak'])->name('kontak');
-
+Route::get('/tidur',[FrontendController::class,'tidur'])->name('tidur');
+Route::get('/api/bed-status', [FrontendController::class, 'getBedData'])->name('api.bed.status');
 // =========================================================================
 // 2. ROUTE AUTHENTICATION (BREEZE)
 // =========================================================================

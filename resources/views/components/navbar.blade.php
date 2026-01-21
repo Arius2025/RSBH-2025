@@ -21,8 +21,12 @@
                     <li class="nav-item">
                         <a class="nav-link px-2 {{ request()->routeIs('home') ? 'text-success active' : '' }}" href="{{ route('home') }}">Beranda</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link px-2 {{ request()->routeIs('informasi') ? 'text-success active' : '' }}" href="{{ route('informasi') }}">Informasi</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle px-2" href="#" data-bs-toggle="dropdown">Informasi</a>
+                        <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-3 p-2 rounded-3">
+                            <li><a class="dropdown-item rounded-2" href="{{ route('informasi') }}">Visi & Misi</a></li>
+                            <li><a class="dropdown-item rounded-2" href="{{ route('tidur') }}">Ketersedian Tempat Tidur</a></li>
+                        </ul>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link px-2 {{ request()->routeIs('jadwal') ? 'text-success active' : '' }}" href="{{ route('jadwal') }}">Jadwal</a>

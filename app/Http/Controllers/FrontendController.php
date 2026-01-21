@@ -14,50 +14,90 @@ class FrontendController extends Controller
 {
 
    public function berita()
-    {
-        // URL yang sudah diperbaiki (SlB bukan SIB)
-        $url = "https://feeds.behold.so/SlB320FpXXbkExJMQhJy";
+{
+    $url = "https://feeds.behold.so/SlB320FpXXbkExJMQhJy";
 
+    // Durasi cache diatur menjadi 86400 detik (24 jam / 1 hari)
+    $beritas = \Illuminate\Support\Facades\Cache::remember('instagram_feed_final', 86400, function () use ($url) {
         try {
-            $response = Http::withOptions(['verify' => false])
-                            ->timeout(30)
-                            ->get($url);
+            $response = \Illuminate\Support\Facades\Http::withOptions(['verify' => false])
+                            ->timeout(30)->get($url);
 
             if ($response->successful()) {
                 $data = $response->json();
                 
-                // Masuk ke array 'posts'
                 if (isset($data['posts'])) {
-                    $beritas = collect($data['posts'])->map(function($item) {
+                    return collect($data['posts'])->map(function($item) {
                         $rawCaption = $item['caption'] ?? 'Update RS Baladhika Husada';
-                        
-                        // Pembersihan teks untuk Judul dan Isi
                         $cleanText = preg_replace('/(@\w+|#\w+)/', '', $rawCaption);
                         $lines = explode("\n", trim($cleanText));
                         
                         return (object) [
-                            'judul' => Str::limit($lines[0], 65),
-                            'isi'   => count($lines) > 1 ? Str::limit(implode(" ", array_slice($lines, 1)), 120) : 'Klik untuk info selengkapnya...',
+                            'judul' => \Illuminate\Support\Str::limit($lines[0], 65),
+                            'isi'   => count($lines) > 1 ? \Illuminate\Support\Str::limit(implode(" ", array_slice($lines, 1)), 120) : 'Klik untuk info selengkapnya...',
                             'img'   => $item['full']['mediaUrl'] ?? ($item['mediaUrl'] ?? null),
                             'url'   => $item['permalink'] ?? '#',
                             'tgl'   => $item['timestamp'] ?? now(),
                         ];
                     });
-
-                    return view('pages.berita', compact('beritas'));
                 }
             }
-            return "Gagal memuat data dari API.";
+            return collect([]);
         } catch (\Exception $e) {
-            return "Error: " . $e->getMessage();
+            return collect([]);
+        }
+    });
+
+    return view('pages.berita', compact('beritas'));
+}
+
+
+    public function getBedData()
+    {
+        $apiUrl = "https://dkt-jember.promedika.id/update-dkt-2/api/tt";
+
+        try {
+            // Menggunakan HTTP Client Laravel dengan opsi proteksi tinggi
+            $response = Http::withHeaders([
+                'Accept' => 'application/json',
+                'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36',
+            ])
+            ->withoutVerifying() // Melewati pengecekan SSL (Seringkali penyebab utama Gagal di server lokal)
+            ->timeout(15)        // Batasi waktu tunggu agar tidak membuat server Anda hang
+            ->get($apiUrl);
+
+            if ($response->successful()) {
+                // API sering mengirimkan data kotor dengan tag HTML, kita bersihkan total
+                $body = $response->body();
+                $cleanJson = trim(strip_tags($body));
+                
+                $data = json_decode($cleanJson, true);
+
+                if (json_last_error() === JSON_ERROR_NONE) {
+                    return response()->json($data);
+                }
+                
+                Log::error("Bed Monitoring: JSON Parse Error - " . json_last_error_msg());
+            }
+
+            return response()->json(['error' => 'Server pusat tidak merespon'], 502);
+
+        } catch (\Exception $e) {
+            Log::error("Bed Monitoring Connection Error: " . $e->getMessage());
+            return response()->json(['error' => 'Koneksi terputus'], 500);
         }
     }
 
-    // Fungsi pendukung lainnya tetap ada
-    public function home() { 
-        $beritas = Berita::latest()->take(3)->get(); 
-        return view('pages.home', compact('beritas')); 
-    }
+
+    public function home() 
+{
+    // Mengambil data dari cache yang sudah dibuat di fungsi berita()
+    // Jika cache kosong, kita berikan collect([]) agar tidak error
+    $beritas = \Illuminate\Support\Facades\Cache::get('instagram_feed_final', collect([]));
+
+    return view('pages.home', compact('beritas'));
+}
+
     public function detailBerita($slug) {
         $berita = Berita::where('slug', $slug)->firstOrFail();
         return view('pages.berita_detail', compact('berita'));
@@ -67,6 +107,7 @@ class FrontendController extends Controller
     public function komplain() { return view('pages.komplain'); }
     public function kontak() { return view('pages.kontak'); }
     public function informasi() { return view('pages.informasi'); }
+    public function tidur() { return view('pages.tidur'); }
     public function jadwal() { 
         $jadwal = \App\Models\JadwalDokter::first();
         return view('pages.jadwal', compact('jadwal')); 
