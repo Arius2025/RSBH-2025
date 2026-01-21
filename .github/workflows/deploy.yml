@@ -16,10 +16,13 @@ jobs:
           username: rsbaladhikahusada
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
-          script: |
+         script: |
             cd /home/rsbaladhikahusada/htdocs/www.rsbaladhikahusada.com
-            git fetch --all
+            git config --global --add safe.directory /home/rsbaladhikahusada/htdocs/www.rsbaladhikahusada.com
+            git checkout main
+            git fetch origin main
             git reset --hard origin/main
+            git clean -fd
             npm install
             npm run build
             php artisan optimize:clear
