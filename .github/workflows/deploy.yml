@@ -12,7 +12,7 @@ jobs:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@master
         with:
-          host: 31.97.107.14
+          host: 31.97.107.14  # <--- Tulis IP ini langsung, jangan pakai ${{ secrets... }}
           username: rsbaladhikahusada
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
