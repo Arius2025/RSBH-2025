@@ -3,16 +3,16 @@ name: Auto Deploy to CloudPanel
 on:
   push:
     branches:
-      - main  # Memastikan otomatisasi jalan saat push ke branch main
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - - name: Deploy via SSH
+      - name: Deploy via SSH
         uses: appleboy/ssh-action@master
         with:
-          host: 31.97.107.14 # <--- GANTI LANGSUNG DENGAN IP SERVER ANDA
+          host: 31.97.107.14
           username: rsbaladhikahusada
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
@@ -21,4 +21,4 @@ jobs:
             git pull origin main
             npm install
             npm run build
-            php artisan optimize  
+            php artisan optimize
