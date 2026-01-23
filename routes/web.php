@@ -29,6 +29,8 @@ Route::get('/komplain', [FrontendController::class, 'komplain'])->name('komplain
 Route::get('/kontak',[FrontendController::class,'kontak'])->name('kontak');
 Route::get('/tidur',[FrontendController::class,'tidur'])->name('tidur');
 Route::get('/api/bed-status', [FrontendController::class, 'getBedData'])->name('api.bed.status');
+Route::get('/jadwalOperasi',[FrontendController::class,'jadwalOperasi'])->name('jadwaloperasi');
+Route::get('/test-api-operasi', [FrontendController::class, 'testKoneksi']);
 // =========================================================================
 // 2. ROUTE AUTHENTICATION (BREEZE)
 // =========================================================================

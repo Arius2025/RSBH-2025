@@ -114,4 +114,108 @@ class FrontendController extends Controller
         $jadwal = \App\Models\JadwalDokter::first();
         return view('pages.jadwal', compact('jadwal')); 
     }
+    public function jadwalOperasi(Request $request)
+    {
+        $url = "https://dkt-jember.promedika.id/update-dkt-2/api/jadwal-operasi";
+        $tglAwal = $request->query('tgl_awal', date('Y-m-d'));
+        $tglAkhir = $request->query('tgl_akhir', date('Y-m-d'));
+        $search = $request->query('q');
+
+        try {
+            // Menarik data dengan bypass SSL
+            $response = Http::withOptions(['verify' => false])->get($url);
+
+            if ($response->successful()) {
+                $allData = collect($response->json())->map(function($item) {
+                    return (object) [
+                        'rm'         => $item['mr'] ?? '-',
+                        'pasien'     => $item['patient_name'] ?? 'Anonim',
+                        'namadokter' => $item['doctor_name'] ?? '-',
+                        'namaruang'  => $item['department_name'] ?? 'Kamar Operasi',
+                        'tanggal'    => $item['schedule_time'] ?? date('d-m-Y'),
+                        'jam_mulai'  => $item['mulai_jadwal'] ?? '00:00',
+                        'jam_selesai'=> $item['selesai_jadwal'] ?? '00:00',
+                        'diagnosa'   => $item['profile_diagnose'] ?? '-',
+                        'status'     => $this->calculateStatus($item['mulai_jadwal'] ?? null, $item['selesai_jadwal'] ?? null),
+                    ];
+                });
+
+                // Filter Berdasarkan Tanggal & Pencarian (Nama, Dokter, RM)
+                $jadwal = $allData->filter(function($item) use ($tglAwal, $tglAkhir, $search) {
+                    $tglItem = date('Y-m-d', strtotime($item->tanggal));
+                    $matchTanggal = ($tglItem >= $tglAwal && $tglItem <= $tglAkhir);
+                    
+                    if ($search) {
+                        $s = strtolower($search);
+                        return $matchTanggal && (
+                            str_contains(strtolower($item->pasien), $s) || 
+                            str_contains(strtolower($item->namadokter), $s) || 
+                            str_contains(strtolower($item->rm), $s)
+                        );
+                    }
+                    return $matchTanggal;
+                })->values(); // Reset index setelah filter
+
+                return view('pages.jadwal_operasi', compact('jadwal', 'tglAwal', 'tglAkhir', 'search'));
+            }
+        } catch (\Exception $e) {
+            return back()->with('error', 'Gagal memuat data: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Helper untuk menentukan status realtime berdasarkan jam
+     */
+    private function calculateStatus($mulai, $selesai) 
+    {
+        if (!$mulai || !$selesai) return 'MENUNGGU';
+        
+        $now = date('H:i');
+        
+        if ($now >= $mulai && $now <= $selesai) return 'PROSES';
+        if ($now > $selesai) return 'SELESAI';
+        
+        return 'MENUNGGU';
+    }
+
+
+    // FUNGSI INI HARUS DI LUAR jadwalOperasi
+    private function getLiveStatus($mulai, $selesai) 
+    {
+        if (!$mulai || !$selesai) return 'MENUNGGU';
+        
+        $now = date('H:i');
+        // Pastikan format waktu konsisten (HH:mm)
+        if ($now >= $mulai && $now <= $selesai) return 'PROSES';
+        if ($now > $selesai) return 'SELESAI';
+        
+        return 'MENUNGGU';
+    }
+
+    public function testKoneksi()
+{
+    $url = "https://dkt-jember.promedika.id/update-dkt-2/api/jadwal-operasi";
+
+    try {
+        $response = \Illuminate\Support\Facades\Http::withOptions([
+            'verify' => false, // Bypass SSL jika sertifikat bermasalah
+        ])->timeout(20)->get($url);
+
+        if ($response->successful()) {
+            // Mengambil 3 data pertama saja untuk tes agar tidak kepanjangan
+            $data = collect($response->json())->take(3);
+            
+            return response()->json([
+                'status' => 'Koneksi Berhasil!',
+                'jumlah_data' => count($response->json()),
+                'sample_data' => $data
+            ], 200);
+        }
+
+        return response()->json(['status' => 'Gagal konek ke API', 'code' => $response->status()], 500);
+
+    } catch (\Exception $e) {
+        return response()->json(['status' => 'Error Exception', 'message' => $e->getMessage()], 500);
+    }
+}
 }
