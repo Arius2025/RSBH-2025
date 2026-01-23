@@ -1,12 +1,21 @@
-- name: Deploy via SSH
+name: Auto Deploy to CloudPanel
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy via SSH
         uses: appleboy/ssh-action@master
         with:
           host: 31.97.107.14
           username: rsbaladhikahusada
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
-          timeout: 60s             # Tambahkan waktu tunggu koneksi
-          command_timeout: 30m     # Tambahkan waktu untuk npm install & build yang lama
           script: |
             cd /home/rsbaladhikahusada/htdocs/www.rsbaladhikahusada.com
             git config --global --add safe.directory /home/rsbaladhikahusada/htdocs/www.rsbaladhikahusada.com
