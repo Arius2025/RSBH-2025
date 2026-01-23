@@ -16,9 +16,11 @@ jobs:
           username: rsbaladhikahusada
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
+          timeout: 60s
+          debug: true # Untuk melihat detail jika gagal koneksi
           script: |
             cd /home/rsbaladhikahusada/htdocs/www.rsbaladhikahusada.com
-            git config --global --add safe.directory /home/rsbaladhikahusada/htdocs/www.rsbaladhikahusada.com
+            git config --global --add safe.directory "*"
             git fetch origin main
             git reset --hard origin/main
             git clean -fd
