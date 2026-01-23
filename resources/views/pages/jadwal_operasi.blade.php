@@ -33,7 +33,7 @@
 <div class="container py-5">
     <div class="row mb-4 align-items-center">
         <div class="col-lg-5 mb-3 mb-lg-0">
-            <h2 class="fw-bold text-dark mb-1">Monitoring Kamar Operasi</h2>
+            <h1 class="fw-bold text-dark mb-1">Monitoring Kamar Operasi</h1>
             <p class="text-muted small mb-0"><span class="status-live"></span> Sistem Terintegrasi RS DKT Jember</p>
         </div>
         <div class="col-lg-7">
