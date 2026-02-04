@@ -24,7 +24,7 @@
                     <i class="bi bi-calendar-check me-2"></i> JADWAL DOKTER
                 </a>
                 <a href="{{ route('siterbat') }}" class="btn btn-outline-light btn-lg shadow fw-bold px-4 py-3 rounded-pill transition-all hover-lift" data-aos="zoom-in" data-aos-delay="250">
-                    <i class="bi bi-truck me-2"></i> PESAN OBAT DIANTAR
+                    <i class="bi bi-bicycle me-2"></i> PESAN OBAT DIANTAR
                 </a>
             </div>
         </div>
@@ -87,12 +87,12 @@
         <div class="container" data-aos="zoom-in">
             <div class="bg-success rounded-4 p-4 p-md-5 text-white position-relative overflow-hidden shadow-lg">
                 <div class="position-absolute end-0 bottom-0 opacity-25 me-n5 mb-n5">
-                    <i class="bi bi-truck" style="font-size: 15rem;"></i>
+                    <i class="bi bi-bicycle" style="font-size: 15rem;"></i>
                 </div>
                 <div class="row align-items-center position-relative z-1">
                     <div class="col-lg-8">
                         <h2 class="fw-bold display-6">Malas Antri Obat?</h2>
-                        <p class="fs-5 mb-4">Gunakan layanan <strong>SITERBAT (Siap Antar Obat)</strong>. Obat diantar langsung ke rumah Anda dengan aman dan cepat.</p>
+                        <p class="fs-5 mb-4">Gunakan layanan <strong>SITERBAT "SIAP ANTAR OBAT (Tanpa Antri, Khusus Pasien Geriatri & Purnawirawan)"</strong>. Obat diantar langsung ke rumah Anda dengan aman dan cepat.</p>
                         <a href="{{ route('siterbat') }}" class="btn btn-warning btn-lg fw-bold rounded-pill shadow hover-lift px-5">
                             <i class="bi bi-cursor-fill me-2"></i> COBA SITERBAT SEKARANG
                         </a>

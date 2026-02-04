@@ -41,42 +41,80 @@
           display: flex;
           flex-direction: column;
           min-height: 100vh;
-          /* PERBAIKAN: Padding-top dihapus agar tidak ada jarak kosong */
           padding-top: 0 !important; 
           margin: 0;
       }
 
-      main {
-          flex: 1;
-      }
+      main { flex: 1; }
 
-      /* Custom Utilities */
       .transition { transition: all 0.3s ease; }
-
       .hover-shadow:hover, .card.hover-shadow:hover {
           transform: translateY(-5px); 
           box-shadow: 0 12px 28px rgba(0,0,0,0.2)!important;
       }
-
       .text-shadow { text-shadow: 0 2px 6px rgba(0,0,0,0.6); }
 
       /* ========================================= */
-      /* 2. FLOATING QUICK ACCESS (Tombol Melayang)*/
+      /* 2. FLOATING QUICK ACCESS (Compact)        */
       /* ========================================= */
       .floating-access {
           position: fixed;
           right: 20px;
           bottom: 20px; 
           z-index: 9999;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          align-items: flex-end;
       }
 
-      .hover-scale { transition: transform 0.2s; }
-      .hover-scale:hover { transform: scale(1.05); }
+      /* Style Tombol Compact */
+      .btn-floating {
+          border-radius: 50px;
+          padding: 8px 16px; /* Padding lebih kecil */
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+          transition: transform 0.2s ease;
+          border: 2px solid white;
+          text-decoration: none;
+          color: white;
+      }
 
+      .btn-floating:hover {
+          transform: scale(1.05);
+          color: white;
+      }
+
+      /* Teks di dalam tombol */
+      .btn-floating .text-group {
+          display: flex;
+          flex-direction: column;
+          line-height: 1.1;
+          text-align: left;
+      }
+
+      .btn-floating .main-text {
+          font-weight: 700;
+          font-size: 0.9rem;
+      }
+
+      .btn-floating .sub-text {
+          font-size: 0.65rem; /* Ukuran font kecil untuk keterangan */
+          opacity: 0.9;
+          white-space: nowrap;
+      }
+
+      /* Mobile Adjustment: Naikkan agar tidak ketutupan footer/navbar */
       @media (max-width: 768px) {
           .floating-access {
-              bottom: 90px; /* Naik agar tidak ketutupan navbar bawah di HP */
+              bottom: 80px; 
               right: 15px;
+          }
+          /* Sedikit perkecil padding di HP */
+          .btn-floating {
+              padding: 6px 14px;
           }
       }
 
@@ -90,102 +128,54 @@
           -webkit-backdrop-filter: blur(8px);
           padding: 10px 0;
           border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-          /* Pastikan navbar tidak 'fixed-top' jika ingin menempel, 
-             atau gunakan 'sticky-top' */
       }
-
+      .navbar-scrolled {
+          padding: 5px 0 !important;
+          background-color: rgba(255, 255, 255, 0.98) !important;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+      }
       .nav-link-custom {
-          font-weight: 600;
-          color: #444 !important;
-          padding: 6px 15px !important;
-          margin: 0 2px;
-          font-size: 0.9rem;
-          transition: all 0.2s ease;
-          border-radius: 8px;
+          font-weight: 600; color: #444 !important; padding: 6px 15px !important;
+          margin: 0 2px; font-size: 0.9rem; transition: all 0.2s ease; border-radius: 8px;
       }
-
-      .nav-link-custom:hover {
-          color: #2ecc71 !important;
-          background: rgba(46, 204, 113, 0.1);
-      }
-
-      .nav-link-custom.active {
-          color: #ffffff !important;
-          background-color: #2ecc71;
-      }
-
-      /* Mobile Nav Link */
+      .nav-link-custom:hover { color: #2ecc71 !important; background: rgba(46, 204, 113, 0.1); }
+      .nav-link-custom.active { color: #ffffff !important; background-color: #2ecc71; }
+      
       .nav-link-mobile {
           color: #3498db; text-align: center; padding: 10px 0;
-          text-decoration: none; font-size: 1.5rem; transition: all 0.3s;
-          flex-grow: 1;
+          text-decoration: none; font-size: 1.5rem; transition: all 0.3s; flex-grow: 1;
       }
-      .nav-link-mobile.active-mobile {
-          color: #2ecc71; border-top: 3px solid #2ecc71;
-      }
+      .nav-link-mobile.active-mobile { color: #2ecc71; border-top: 3px solid #2ecc71; }
 
       /* ========================================= */
       /* 4. HERO & CONTENT STYLES                  */
       /* ========================================= */
       .hero-section {
-          position: relative;
-          height: 500px; 
+          position: relative; height: 500px; 
           background: url('images/rumah sakit dkt.jpg') no-repeat center center/cover;
           border-radius: 15px; overflow: hidden;
-          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-          display: flex; align-items: center; 
+          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); display: flex; align-items: center; 
       }
-      @media (max-width: 992px) {
-          .hero-section { height: 380px; align-items: flex-end; }
-      }
-
-      .hero-overlay {
-          position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-          background-color: rgba(0, 50, 0, 0.65); z-index: 1;
-      }
-      .hero-content {
-          position: relative; z-index: 2; width: 100%; padding: 0 15px; 
-      }
+      @media (max-width: 992px) { .hero-section { height: 380px; align-items: flex-end; } }
+      .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 50, 0, 0.65); z-index: 1; }
+      .hero-content { position: relative; z-index: 2; width: 100%; padding: 0 15px; }
 
       /* ========================================= */
-      /* 5. TENTANG KAMI & GALERI (Dipulihkan)     */
+      /* 5. TENTANG KAMI & GALERI                  */
       /* ========================================= */
-      .tentang-kami-card {
-          display: flex; flex-direction: row; border-radius: 15px;
-          overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-      }
-      .tentang-kami-img {
-          background-color: #2ecc71; padding: 40px; flex: 0 0 35%; 
-          display: flex; align-items: center; justify-content: center;
-      }
-      .karumkit-photo-wrapper {
-          width: 150px; height: 150px; border-radius: 50%; overflow: hidden;
-          border: 5px solid rgba(255, 255, 255, 0.7); box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-      }
+      .tentang-kami-card { display: flex; flex-direction: row; border-radius: 15px; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+      .tentang-kami-img { background-color: #2ecc71; padding: 40px; flex: 0 0 35%; display: flex; align-items: center; justify-content: center; }
+      .karumkit-photo-wrapper { width: 150px; height: 150px; border-radius: 50%; overflow: hidden; border: 5px solid rgba(255, 255, 255, 0.7); box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); }
       .karumkit-photo-wrapper img { width: 100%; height: 100%; object-fit: cover; }
       .tentang-kami-content { background-color: #fff; flex: 1; }
+      @media (max-width: 768px) { .tentang-kami-card { flex-direction: column; } .tentang-kami-img { flex: 0 0 100%; padding: 30px; } }
 
-      @media (max-width: 768px) {
-          .tentang-kami-card { flex-direction: column; }
-          .tentang-kami-img { flex: 0 0 100%; padding: 30px; }
-      }
-
-      /* Galeri */
       .galeri-carousel { overflow-x: auto; white-space: nowrap; padding-bottom: 10px; }
       .galeri-track { display: inline-flex; gap: 15px; padding: 0 15px; }
-      .galeri-track img {
-          width: 300px; height: 200px; object-fit: cover; border-radius: 10px;
-          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); transition: transform 0.3s;
-      }
+      .galeri-track img { width: 300px; height: 200px; object-fit: cover; border-radius: 10px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); transition: transform 0.3s; }
       .galeri-track img:hover { transform: scale(1.03); }
 
-      /* Testimoni */
-      .testimoni-card {
-          background: #ffffff; border-left: 5px solid #f39c12;
-          border-radius: 10px; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-          padding: 30px; max-width: 350px; text-align: left;
-      }
-
+      .testimoni-card { background: #ffffff; border-left: 5px solid #f39c12; border-radius: 10px; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); padding: 30px; max-width: 350px; text-align: left; }
     </style>
     
     @stack('styles')
@@ -197,7 +187,6 @@
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     @endif
 
-    {{-- NAVBAR --}}
     @include('components.navbar')
 
     @isset($header)
@@ -208,26 +197,33 @@
         </header>
     @endisset
 
-    {{-- KONTEN UTAMA --}}
     <main> 
         @yield('content') 
     </main>
     
-    {{-- FLOATING QUICK ACCESS (Siterbat & WA) --}}
-    <div class="floating-access d-flex flex-column gap-2 align-items-end">
-        <a href="{{ route('siterbat') }}" class="btn btn-primary rounded-pill shadow-lg d-flex align-items-center px-4 py-2 transition-all hover-scale border-white border-2">
-            <i class="bi bi-truck fs-4 me-2"></i> 
-            <div class="text-start lh-1">
-                <span class="d-block small opacity-75">Layanan Antar</span>
-                <span class="fw-bold">SITERBAT</span>
+    {{-- FLOATING QUICK ACCESS (VERSI COMPACT) --}}
+    <div class="floating-access">
+        {{-- Tombol Siterbat Compact --}}
+        {{-- Sesuai Poster: "Siap Antar Obat" dan "Radius 10Km" / "Khusus Geriatri" --}}
+        {{-- Kita singkat agar tidak menutupi layar --}}
+        <a href="{{ route('siterbat') }}" class="btn-floating bg-primary">
+            <i class="bi bi-bicycle fs-5"></i> 
+            <div class="text-group">
+                <span class="main-text">SITERBAT</span>
+                <span class="sub-text">Antar Obat (Geriatri)</span>
             </div>
         </a>
-        <a href="https://wa.me/6285217077347" target="_blank" class="btn btn-success rounded-pill shadow-lg d-flex align-items-center px-3 py-2 transition-all hover-scale border-white border-2">
-            <i class="bi bi-whatsapp fs-4 me-2"></i> <span class="d-none d-md-inline fw-bold">Chat Admin</span>
+
+        {{-- Tombol WhatsApp Compact --}}
+        <a href="https://wa.me/6285217077347" target="_blank" class="btn-floating bg-success">
+            <i class="bi bi-whatsapp fs-5"></i> 
+            <div class="text-group">
+                <span class="main-text">Chat Admin</span>
+                <span class="sub-text">Online 24 Jam</span>
+            </div>
         </a>
     </div>
 
-    {{-- FOOTER --}}
     @include('components.footer')
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -235,7 +231,6 @@
     <script>
         AOS.init({ once: true, offset: 100, duration: 800 });
 
-        // Highlight Active Nav
         document.querySelectorAll('.nav-link-custom').forEach(link => {
             if (link.hasAttribute('data-bs-toggle') || link.classList.contains('dropdown-toggle')) { return; }
             const currentPath = window.location.pathname.replace(/\//g, ""); 
@@ -243,7 +238,6 @@
             if (linkPath === currentPath) { link.classList.add('active'); }
         });
 
-        // Navbar Scroll Effect
         const nav = document.getElementById('desktopNav');
         if(nav) {
             window.addEventListener('scroll', () => {
@@ -252,12 +246,10 @@
             });
         }
 
-        // Auto Scroll Galeri
         const galeriCarousel = document.querySelector('.galeri-carousel');
         if (galeriCarousel) {
             const scrollSpeed = 50; 
             let scrollInterval;
-            let scrollPosition = 0;
             function autoScroll() {
                 galeriCarousel.scrollLeft += 1;
                 if (galeriCarousel.scrollLeft >= (galeriCarousel.scrollWidth - galeriCarousel.clientWidth)) {

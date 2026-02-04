@@ -66,7 +66,7 @@
             <div class="col-lg-7">
                 <span class="badge bg-success px-3 py-2 rounded-pill mb-3">Layanan Prioritas</span>
                 <h1 class="display-4 fw-bold text-success mb-2">SITERBAT</h1>
-                <h4 class="fw-semibold text-dark mb-4">Siap Antar Obat</h4>
+                <h4 class="fw-semibold text-dark mb-4">(Tanpa Antri, Khusus Pasien Geriatri & Purnawirawan)</h4>
                 <div class="guide-box p-3 shadow-sm d-inline-block text-start">
                     <p class="small mb-0 text-muted">
                         <i class="bi bi-geo-alt-fill text-danger me-2"></i>
