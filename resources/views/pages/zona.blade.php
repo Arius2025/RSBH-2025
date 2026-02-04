@@ -32,19 +32,23 @@
     </section>
 
     {{-- Video Profil --}}
-    <section class="mb-5 bg-white rounded p-4 shadow-lg" data-aos="fade-up">
-      <h5 class="text-success fw-bold mb-3 text-center border-bottom border-success pb-2"><i class="bi bi-camera-video me-2"></i> Video Profil & Edukasi</h5>
-      <div class="ratio ratio-16x9 rounded shadow-lg mb-3">
-        <iframe 
-          src="https://www.youtube.com/embed/IUY4Kj2PHtI" 
-          title="Profil RS" 
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen 
-          loading="lazy">
-        </iframe>
-      </div>
-    </section>
+    {{-- Video Profil --}}
+<section class="mb-5 bg-white rounded p-4 shadow-lg" data-aos="fade-up">
+  <h5 class="text-success fw-bold mb-3 text-center border-bottom border-success pb-2">
+    <i class="bi bi-camera-video me-2"></i> Video Profil & Edukasi
+  </h5>
+  <div class="ratio ratio-16x9 rounded shadow-lg mb-3 overflow-hidden">
+    <iframe 
+      src="https://www.youtube.com/embed/IUY4Kj2PHtI?rel=0&enablejsapi=1&origin={{ urlencode(request()->getSchemeAndHttpHost()) }}" 
+      title="Profil RS Baladhika Husada" 
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+      referrerpolicy="no-referrer-when-downgrade"
+      allowfullscreen 
+      loading="lazy"
+      style="border: 0;">
+    </iframe>
+  </div>
+</section>
 
     {{-- Indeks Persepsi --}}
     <section class="bg-white rounded p-4 shadow-lg mb-5" data-aos="fade-up"> 
