@@ -1,4 +1,4 @@
-{{-- 1. Desktop Navbar (Hanya muncul di layar besar) --}}
+{{-- 1. Desktop Navbar --}}
 <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top py-2 shadow-sm d-none d-lg-block border-bottom" style="z-index: 1100;">
     <div class="container-fluid px-4">
         <div class="d-flex align-items-center justify-content-between w-100">
@@ -11,7 +11,7 @@
                     </div>
                 </a>
                 <div class="ps-2">
-                    <img src="{{ asset('images/logo.png') }}" alt="Logo Instansi" style="height: 40px; width: auto; object-fit: contain;">
+                    <img src="{{ asset('images/logo.png') }}" alt="Logo" style="height: 40px; width: auto; object-fit: contain;">
                 </div>
             </div>
 
@@ -35,16 +35,26 @@
                             <li><a class="dropdown-item rounded-2" href="{{ route('jadwaloperasi') }}">Jadwal Operasi</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item border-end pe-2 me-1">
                         <a class="nav-link px-2 {{ request()->routeIs('berita') ? 'text-success active' : '' }}" href="{{ route('berita') }}">Berita</a>
                     </li>
+                    
+                    {{-- MENU LAYANAN --}}
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle px-2" href="#" data-bs-toggle="dropdown">Layanan</a>
+                        <a class="nav-link dropdown-toggle px-2 {{ request()->routeIs('siterbat') ? 'text-success active' : '' }}" href="#" data-bs-toggle="dropdown">Layanan</a>
                         <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-3 p-2 rounded-3">
                             <li><a class="dropdown-item rounded-2" href="{{ route('ppid') }}">PPID</a></li>
                             <li><a class="dropdown-item rounded-2" href="{{ route('zona') }}">Zona Integritas</a></li>
                             <li><hr class="dropdown-divider opacity-50"></li>
                             <li><a class="dropdown-item rounded-2 text-danger fw-bold" href="{{ route('komplain') }}">Komplain</a></li>
+                            
+                            {{-- SITERBAT: Ikon Sepeda Listrik & Penanda PENTING --}}
+                            <li>
+                                <a class="dropdown-item rounded-2 fw-bold text-success d-flex justify-content-between align-items-center py-2" href="{{ route('siterbat') }}">
+                                    <span><i class="bi bi-bicycle me-2"></i>SITERBAT</span>
+                                    <span class="badge rounded-pill bg-primary ms-2" style="font-size: 0.55rem;">PENTING</span>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -56,18 +66,7 @@
     </div>
 </nav>
 
-{{-- 2. Mobile Header (Hanya muncul di HP - Diperbaiki agar tidak kepotong) --}}
-<header class="d-lg-none bg-white fixed-top shadow-sm border-bottom" style="z-index: 1100;">
-    <div class="d-flex justify-content-between align-items-center px-3 py-2">
-        <div class="lh-1">
-            <span class="fw-bold text-success d-block" style="font-size: 0.9rem;">RS Baladhika Husada</span>
-            <small class="text-muted fw-bold" style="font-size: 0.55rem; text-transform: uppercase;">Hesti Wira Sakti</small>
-        </div>
-        <img src="{{ asset('images/logo.png') }}" alt="Logo" style="height: 20px; width: auto; opacity: 0.9;">
-    </div>
-</header>
-
-{{-- 3. Mobile Bottom Nav (Tetap muncul di HP) --}}
+{{-- 2. Mobile Bottom Nav --}}
 <nav class="fixed-bottom d-lg-none bg-white border-top shadow-lg" style="z-index: 1100; height: 65px;">
     <div class="d-flex justify-content-around align-items-center h-100">
         <a class="nav-link-mobile {{ request()->routeIs('home') ? 'active-mobile' : '' }}" href="{{ route('home') }}">
@@ -78,13 +77,18 @@
             <i class="bi bi-calendar-check{{ request()->routeIs('jadwal') ? '-fill' : '' }} fs-5"></i>
             <span class="d-block" style="font-size: 0.65rem;">Jadwal</span>
         </a>
+        
+        {{-- SITERBAT MOBILE: Ikon Sepeda Listrik --}}
+        <a class="nav-link-mobile {{ request()->routeIs('siterbat') ? 'active-mobile' : '' }}" href="{{ route('siterbat') }}">
+            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center mx-auto shadow" style="width: 42px; height: 42px; margin-top: -20px; border: 4px solid white;">
+                <i class="bi bi-bicycle fs-5"></i>
+            </div>
+            <span class="d-block mt-1 fw-bold" style="font-size: 0.65rem;">Siterbat</span>
+        </a>
+
         <a class="nav-link-mobile {{ request()->routeIs('kontak') ? 'active-mobile' : '' }}" href="{{ route('kontak') }}">
             <i class="bi bi-whatsapp fs-5"></i>
             <span class="d-block" style="font-size: 0.65rem;">Kontak</span>
-        </a>
-        <a class="nav-link-mobile {{ request()->routeIs('ppid') ? 'active-mobile' : '' }}" href="{{ route('ppid') }}">
-            <i class="bi bi-file-earmark-lock{{ request()->routeIs('ppid') ? '-fill' : '' }} fs-5"></i>
-            <span class="d-block" style="font-size: 0.65rem;">PPID</span>
         </a>
         <a class="nav-link-mobile {{ request()->routeIs('komplain') ? 'active-mobile' : '' }}" href="{{ route('komplain') }}">
             <i class="bi bi-chat-right-text{{ request()->routeIs('komplain') ? '-fill' : '' }} fs-5"></i>

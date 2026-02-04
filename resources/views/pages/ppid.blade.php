@@ -13,37 +13,50 @@
   </div>
 
   {{-- Menu Layanan --}}
-  <section class="bg-white rounded shadow-lg p-4 mb-5" data-aos="fade-up"> 
-    <div class="text-center mb-5">
-      <h4 class="fw-bold text-success border-bottom border-success pb-2 mb-3"><i class="bi bi-list-check me-2"></i>Pilih Menu Informasi Publik</h4>
-    </div>
-    <div class="row g-4 justify-content-center">
+<section class="bg-white rounded shadow-lg p-4 mb-5" data-aos="fade-up"> 
+  <div class="text-center mb-5">
+    <h4 class="fw-bold text-success border-bottom border-success pb-2 mb-3"><i class="bi bi-list-check me-2"></i>Pilih Menu Informasi Publik</h4>
+  </div>
+  <div class="row g-4 justify-content-center">
 
-      @php
-        $menus = [
-          ['icon' => 'file-earmark-text', 'title' => 'Sprin', 'desc' => 'Surat Perintah Informasi', 'link' => 'https://drive.google.com/file/d/1GPzo5jJDu-MMuAuG33ifVrV_7tji_bCW/view?usp=sharing'],
-          ['icon' => 'envelope-paper', 'title' => 'Surat Struktur', 'desc' => 'Struktur Informasi Rumah Sakit', 'link' => 'https://drive.google.com/file/d/1MPjo6wxXfJwObpRitpQPoMFP-qmhgJbL/view?usp=sharing'],
-          ['icon' => 'info-circle', 'title' => 'Informasi RS', 'desc' => 'Fasilitas & Profil RS', 'link' => route('informasi')],
-          ['icon' => 'exclamation-triangle', 'title' => 'Komplain', 'desc' => 'Layanan Pengaduan Publik', 'link' => route('komplain')],
-          ['icon' => 'phone', 'title' => 'Pendaftaran Online (BPJS)', 'desc' => 'Melalui Mobile JKN', 'link' => 'https://play.google.com/store/apps/details?id=app.bpjs.mobile&hl=id&gl=US&pli=1'],
-        ];
-      @endphp
+    @php
+      $menus = [
+        ['icon' => 'file-earmark-text', 'title' => 'Sprin', 'desc' => 'Surat Perintah Informasi', 'link' => 'https://drive.google.com/file/d/1GPzo5jJDu-MMuAuG33ifVrV_7tji_bCW/view?usp=sharing', 'type' => 'normal'],
+        ['icon' => 'envelope-paper', 'title' => 'Surat Struktur', 'desc' => 'Struktur Informasi Rumah Sakit', 'link' => 'https://drive.google.com/file/d/1MPjo6wxXfJwObpRitpQPoMFP-qmhgJbL/view?usp=sharing', 'type' => 'normal'],
+        ['icon' => 'info-circle', 'title' => 'Informasi RS', 'desc' => 'Fasilitas & Profil RS', 'link' => route('informasi'), 'type' => 'normal'],
+        ['icon' => 'exclamation-triangle', 'title' => 'Komplain', 'desc' => 'Layanan Pengaduan Publik', 'link' => route('komplain'), 'type' => 'normal'],
+        
+        // Pendaftaran BPJS dengan Logic Deep Link
+        ['icon' => 'phone', 'title' => 'Pendaftaran Online (BPJS)', 'desc' => 'Melalui Mobile JKN', 'link' => 'https://play.google.com/store/apps/details?id=app.bpjs.mobile', 'type' => 'jkn'],
+        
+        ['icon' => 'phone', 'title' => 'Pendaftaran Online', 'desc' => 'Melalui Aplikasi DKT', 'link' => 'https://dkt-jember.promedika.id/pelayanan/pasien', 'type' => 'normal'],
+      ];
+    @endphp
 
-      @foreach($menus as $menu)
-      <div class="col-6 col-md-4 col-lg-3" data-aos="zoom-in" data-aos-delay="{{ $loop->index * 100 }}">
-        <div class="card h-100 text-center border-0 shadow-sm hover-shadow transition">
-          <div class="card-body">
-            <i class="bi bi-{{ $menu['icon'] }} fs-1 text-success mb-2"></i>
-            <h6 class="fw-bold text-success">{{ $menu['title'] }}</h6>
-            <p class="text-muted small">{{ $menu['desc'] }}</p>
+    @foreach($menus as $menu)
+    <div class="col-6 col-md-4 col-lg-3" data-aos="zoom-in" data-aos-delay="{{ $loop->index * 100 }}">
+      <div class="card h-100 text-center border-0 shadow-sm hover-shadow transition">
+        <div class="card-body">
+          <i class="bi bi-{{ $menu['icon'] }} fs-1 text-success mb-2"></i>
+          <h6 class="fw-bold text-success">{{ $menu['title'] }}</h6>
+          <p class="text-muted small">{{ $menu['desc'] }}</p>
+
+          @if($menu['type'] == 'jkn')
+            {{-- Tombol Khusus JKN --}}
+            <button onclick="smartOpenJKN()" class="btn btn-outline-success btn-sm mt-2">Buka</button>
+          @else
+            {{-- Tombol Normal --}}
             <a href="{{ $menu['link'] }}" class="btn btn-outline-success btn-sm mt-2">Buka</a>
-          </div>
+          @endif
         </div>
       </div>
-      @endforeach
-
     </div>
-  </section>
+    @endforeach
+
+  </div>
+</section>
+
+
 
   {{-- Galeri Foto IKP --}}
   <section class="mb-5">
@@ -115,6 +128,37 @@
   </div>
 </section>
 
+<script>
+function smartOpenJKN() {
+    const playStoreUrl = "https://play.google.com/store/apps/details?id=app.bpjs.mobile";
+    
+    // Intent URL: Cara paling ampuh untuk Android agar langsung buka aplikasi JKN
+    // Jika tidak ada, otomatis diarahkan ke package (Play Store)
+    const androidIntent = "intent://#Intent;scheme=mobilejkn;package=app.bpjs.mobile;end";
+    
+    // Deteksi User Agent
+    const isAndroid = /Android/i.test(navigator.userAgent);
+    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
+    if (isAndroid) {
+        // Langsung tembak Intent (Buka JKN atau Playstore otomatis)
+        window.location.href = androidIntent;
+    } else if (isIOS) {
+        // Untuk iOS menggunakan custom scheme
+        window.location.href = "mobilejkn://";
+        setTimeout(() => {
+            window.location.href = "https://apps.apple.com/id/app/mobile-jkn/id1237601115";
+        }, 2000);
+    } else {
+        // Jika Desktop buka Play Store
+        window.open(playStoreUrl, '_blank');
+    }
+}
+</script>
+
+<style>
+  .transition { transition: all 0.3s ease; }
+  .hover-shadow:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important; }
+</style>
 </div>
 @endsection

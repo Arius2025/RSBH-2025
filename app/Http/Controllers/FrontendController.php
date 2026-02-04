@@ -108,6 +108,7 @@ class FrontendController extends Controller
     public function zonaIntegritas() { return view('pages.zona'); }
     public function komplain() { return view('pages.komplain'); }
     public function kontak() { return view('pages.kontak'); }
+    public function siterbat() { return view('pages.siterbat    '); }
     public function informasi() { return view('pages.informasi'); }
     public function tidur() { return view('pages.tidur'); }
     public function jadwal() { 

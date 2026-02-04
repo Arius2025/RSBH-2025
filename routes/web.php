@@ -27,12 +27,13 @@ Route::get('/ppid', [FrontendController::class, 'ppid'])->name('ppid');
 Route::get('/zona', [FrontendController::class, 'zonaIntegritas'])->name('zona');
 Route::get('/komplain', [FrontendController::class, 'komplain'])->name('komplain');
 Route::get('/kontak',[FrontendController::class,'kontak'])->name('kontak');
+Route::get('/siterbat',[FrontendController::class,'siterbat'])->name('siterbat');
 Route::get('/tidur',[FrontendController::class,'tidur'])->name('tidur');
 Route::get('/api/bed-status', [FrontendController::class, 'getBedData'])->name('api.bed.status');
 Route::get('/jadwalOperasi',[FrontendController::class,'jadwalOperasi'])->name('jadwaloperasi');
 Route::get('/test-api-operasi', [FrontendController::class, 'testKoneksi']);
 // =========================================================================
-// 2. ROUTE AUTHENTICATION (BREEZE)
+// 2. ROUTE AUTHENTICATION (BREEZE) 
 // =========================================================================
 
 require __DIR__.'/auth.php'; 
