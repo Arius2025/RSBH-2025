@@ -99,28 +99,38 @@
   <div class="text-center mb-5" data-aos="fade-up">
     <h4 class="text-success fw-bold border-bottom border-success pb-2 mb-3"><i class="bi bi-play-circle me-2"></i> Video Edukasi Kesehatan</h4>
     <p class="lead text-muted">Informasi penting seputar layanan BPJS, fasilitas rumah sakit, jam kunjung, dan edukasi publik.</p>
-  </div>
 
-  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-    @foreach([
-      ['https://www.youtube.com/embed/0JI0aZKU9LA', 'Jam Kunjung Pasien – RS Tk III Baladhika Husada'],
-      ['https://www.youtube.com/embed/3pvq9bJuRfE', '144 Penyakit yang TIDAK DAPAT DIRUJUK ke Ruman Sakit'],
-      ['https://www.youtube.com/embed/8EOSLgoK8vw', 'SITERBAT (Siap Antar Obat)'],
-      ['https://www.youtube.com/embed/50h3kzWWPyo', 'Layanan ambulance gratis'],
-      ['https://www.youtube.com/embed/1iC1Yrt1xDI', 'Kegiatan Pemeriksaan Mata dan Jantung'],
-    ] as $video)
-    <div class="col" data-aos="zoom-in">
-      <div class="card border-0 shadow-lg hover-shadow transition h-100"> 
-        <div class="ratio ratio-16x9">
-          <iframe src="{{ $video[0] }}" title="{{ $video[1] }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+    
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @foreach([
+            ['https://www.youtube.com/embed/0JI0aZKU9LA', 'Jam Kunjung Pasien – RS Tk III Baladhika Husada'],
+            ['https://www.youtube.com/embed/3pvq9bJuRfE', '144 Penyakit yang TIDAK DAPAT DIRUJUK'],
+            ['https://www.youtube.com/embed/8EOSLgoK8vw', 'SITERBAT (Siap Antar Obat)'],
+            ['https://www.youtube.com/embed/50h3kzWWPyo', 'Layanan Ambulance Gratis'],
+            ['https://www.youtube.com/embed/1iC1Yrt1xDI', 'Kegiatan Pemeriksaan Mata dan Jantung'],
+        ] as $video)
+        <div class="col" data-aos="zoom-in">
+            <div class="card border-0 shadow-sm h-100 video-card"> 
+                <div class="ratio ratio-16x9">
+                    <iframe 
+                        src="{{ $video[0] }}?rel=0&enablejsapi=1&origin={{ urlencode(request()->getSchemeAndHttpHost()) }}" 
+                        title="{{ $video[1] }}" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen 
+                        loading="lazy">
+                    </iframe>
+                </div>
+                <div class="card-body p-3">
+                    <p class="fw-bold text-dark text-center mb-0" style="font-size: 0.95rem; line-height: 1.4;">
+                        {{ $video[1] }}
+                    </p>
+                </div>
+            </div>
         </div>
-        <div class="card-body text-center">
-          <p class="fw-semibold text-success mb-0">{{ $video[1] }}</p>
-        </div>
-      </div>
+        @endforeach
     </div>
-    @endforeach
-  </div>
+</div>
 
   <div class="text-center mt-5" data-aos="fade-up">
     <a href="/kontak" class="btn btn-success btn-lg shadow-lg transition hover-shadow">Hubungi Kami</a>
