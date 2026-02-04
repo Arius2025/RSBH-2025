@@ -17,13 +17,39 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           timeout: 60s
-          debug: true # Untuk melihat detail jika gagal koneksi
+          command_timeout: 15m # Waktu tunggu diperpanjang (penting untuk npm build)
+          debug: true
           script: |
+            # 1. Masuk ke direktori project
             cd /home/rsbaladhikahusada/htdocs/www.rsbaladhikahusada.com
+
+            # 2. Update Source Code dari GitHub
             git config --global --add safe.directory "*"
             git fetch origin main
             git reset --hard origin/main
+            
+            # (Hati-hati: ini menghapus file untracked. Pastikan .env aman)
             git clean -fd
+
+            # 3. Update Dependency Backend (Laravel)
+            # Wajib dijalankan agar tidak error "Class not found"
+            composer install --no-dev --optimize-autoloader
+
+            # 4. Update Database (Migrasi)
+            # --force diperlukan karena ini env production
+            php artisan migrate --force
+
+            # 5. Build Frontend (Vite/Mix)
             npm install
             npm run build
+
+            # 6. Optimasi & Bersihkan Cache
             php artisan optimize:clear
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
+            
+            # 7. Restart Queue (Opsional: Aktifkan jika pakai queue worker)
+            # php artisan queue:restart
+            
+            echo "Deployment Berhasil! 🚀"
