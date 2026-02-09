@@ -21,7 +21,7 @@
 
     @php
       $menus = [
-        ['icon' => 'file-earmark-text', 'title' => 'Sprin', 'desc' => 'Surat Perintah Informasi', 'link' => 'https://drive.google.com/file/d/1GPzo5jJDu-MMuAuG33ifVrV_7tji_bCW/view?usp=sharing', 'type' => 'normal'],
+        ['icon' => 'file-earmark-text', 'title' => 'Sprin', 'desc' => 'Surat Perintah Informasi', 'link' => 'https://drive.google.com/file/d/1ywXMNVDJD7hVEJt_ZAnGyiYbjOqyolF3/view', 'type' => 'normal'],
         ['icon' => 'envelope-paper', 'title' => 'Surat Struktur', 'desc' => 'Struktur Informasi Rumah Sakit', 'link' => 'https://drive.google.com/file/d/1MPjo6wxXfJwObpRitpQPoMFP-qmhgJbL/view?usp=sharing', 'type' => 'normal'],
         ['icon' => 'info-circle', 'title' => 'Informasi RS', 'desc' => 'Fasilitas & Profil RS', 'link' => route('informasi'), 'type' => 'normal'],
         ['icon' => 'exclamation-triangle', 'title' => 'Komplain', 'desc' => 'Layanan Pengaduan Publik', 'link' => route('komplain'), 'type' => 'normal'],
