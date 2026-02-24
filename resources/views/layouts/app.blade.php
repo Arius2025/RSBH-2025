@@ -201,28 +201,6 @@
         @yield('content') 
     </main>
     
-    {{-- FLOATING QUICK ACCESS (VERSI COMPACT) --}}
-    <div class="floating-access">
-        {{-- Tombol Siterbat Compact --}}
-        {{-- Sesuai Poster: "Siap Antar Obat" dan "Radius 10Km" / "Khusus Geriatri" --}}
-        {{-- Kita singkat agar tidak menutupi layar --}}
-        <a href="{{ route('siterbat') }}" class="btn-floating bg-primary">
-            <i class="bi bi-bicycle fs-5"></i> 
-            <div class="text-group">
-                <span class="main-text">SITERBAT</span>
-                <span class="sub-text">Antar Obat (Geriatri)</span>
-            </div>
-        </a>
-
-        {{-- Tombol WhatsApp Compact --}}
-        <a href="https://wa.me/6285217077347" target="_blank" class="btn-floating bg-success">
-            <i class="bi bi-whatsapp fs-5"></i> 
-            <div class="text-group">
-                <span class="main-text">Chat Admin</span>
-                <span class="sub-text">Online 24 Jam</span>
-            </div>
-        </a>
-    </div>
 
     @include('components.footer')
 
