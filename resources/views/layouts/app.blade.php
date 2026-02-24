@@ -200,6 +200,21 @@
     <main> 
         @yield('content') 
     </main>
+
+{{-- FLOATING QUICK ACCESS (VERSI COMPACT) --}}
+    <div class="floating-access">
+        {{-- Tombol Siterbat Compact --}}
+        {{-- Sesuai Poster: "Siap Antar Obat" dan "Radius 10Km" / "Khusus Geriatri" --}}
+        {{-- Kita singkat agar tidak menutupi layar --}}
+        <a href="{{ route('siterbat') }}" class="btn-floating bg-primary">
+            <i class="bi bi-bicycle fs-5"></i> 
+            <div class="text-group">
+                <span class="main-text">SITERBAT</span>
+                <span class="sub-text">Antar Obat (Geriatri)</span>
+            </div>
+        </a>
+    </div>
+
     
 
     @include('components.footer')
