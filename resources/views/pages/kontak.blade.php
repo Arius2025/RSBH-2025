@@ -93,7 +93,7 @@
 <script>
 function sendToWhatsApp() {
     // Nomor WA RS (Ganti dengan nomor aslinya, awali dengan 62)
-    const phoneNumber = "081387841253"; 
+    const phoneNumber = "6281387841253"; 
     
     const name = document.getElementById('wa_name').value;
     const subject = document.getElementById('wa_subject').value;
