@@ -17,39 +17,42 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           timeout: 60s
-          command_timeout: 15m # Waktu tunggu diperpanjang (penting untuk npm build)
+          command_timeout: 15m
           debug: true
           script: |
             # 1. Masuk ke direktori project
             cd /home/rsbaladhikahusada/htdocs/www.rsbaladhikahusada.com
 
-            # 2. Update Source Code dari GitHub
+            # 2. Mode Maintenance (Opsional tapi disarankan)
+            php artisan down || true
+
+            # 3. Update Source Code
             git config --global --add safe.directory "*"
             git fetch origin main
             git reset --hard origin/main
             
-            # (Hati-hati: ini menghapus file untracked. Pastikan .env aman)
-            git clean -fd
+            # PROTEKSI: Jangan hapus .env dan folder storage/uploads
+            git clean -fd -e .env -e storage/app/public
 
-            # 3. Update Dependency Backend (Laravel)
-            # Wajib dijalankan agar tidak error "Class not found"
+            # 4. Update Dependency Backend
+            # Jika 'composer' tidak ditemukan, gunakan: /usr/local/bin/composer
             composer install --no-dev --optimize-autoloader
 
-            # 4. Update Database (Migrasi)
-            # --force diperlukan karena ini env production
+            # 5. Update Database
             php artisan migrate --force
 
-            # 5. Build Frontend (Vite/Mix)
+            # 6. Build Frontend
+            # Gunakan npm ci jika ada package-lock.json untuk install yang lebih cepat/bersih
             npm install
             npm run build
 
-            # 6. Optimasi & Bersihkan Cache
+            # 7. Optimasi & Bersihkan Cache
             php artisan optimize:clear
             php artisan config:cache
             php artisan route:cache
             php artisan view:cache
-            
-            # 7. Restart Queue (Opsional: Aktifkan jika pakai queue worker)
-            # php artisan queue:restart
-            
+
+            # 8. Matikan Mode Maintenance
+            php artisan up
+
             echo "Deployment Berhasil! 🚀"
