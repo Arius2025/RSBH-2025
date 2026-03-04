@@ -32,12 +32,16 @@ class FrontendController extends Controller
                         $cleanText = preg_replace('/(@\w+|#\w+)/', '', $rawCaption);
                         $lines = explode("\n", trim($cleanText));
                         
+                        // Extract Media URL - Behold often provides direct mediaUrl or full.mediaUrl
+                        $mediaUrl = $item['mediaUrl'] ?? ($item['full']['mediaUrl'] ?? null);
+                        
                         return (object) [
                             'judul' => \Illuminate\Support\Str::limit($lines[0], 65),
                             'isi'   => count($lines) > 1 ? \Illuminate\Support\Str::limit(implode(" ", array_slice($lines, 1)), 120) : 'Klik untuk info selengkapnya...',
-                            'img'   => $item['full']['mediaUrl'] ?? ($item['mediaUrl'] ?? null),
+                            'img'   => $mediaUrl,
                             'url'   => $item['permalink'] ?? '#',
                             'tgl'   => $item['timestamp'] ?? now(),
+                            'type'  => $item['mediaType'] ?? 'IMAGE',
                         ];
                     });
                 }

@@ -164,14 +164,19 @@
             <div class="modal-body p-0">
                 <div class="row g-0">
                     
-                    {{-- BAGIAN KIRI: GAMBAR --}}
+                    {{-- BAGIAN KIRI: MEDIA --}}
                     <div class="col-md-5 d-none d-md-block position-relative">
                         @if(isset($beritas) && count($beritas) > 0)
                             {{-- SKENARIO 1: Cache Instagram Ada --}}
-                            {{-- Menggunakan -> (tanda panah) karena datanya Object --}}
-                            <img src="{{ $beritas[0]->media_url ?? $beritas[0]->img ?? asset('images/hero-rs.jpg') }}" 
-                                 class="news-side-img w-100 h-100 object-fit-cover" 
-                                 alt="Instagram Update">
+                            @if(isset($beritas[0]->type) && $beritas[0]->type == 'VIDEO')
+                                <video class="news-side-img w-100 h-100 object-fit-cover" autoplay muted loop playsinline preload="metadata">
+                                    <source src="{{ $beritas[0]->img }}" type="video/mp4">
+                                </video>
+                            @else
+                                <img src="{{ $beritas[0]->img ?? asset('images/hero-rs.jpg') }}" 
+                                     class="news-side-img w-100 h-100 object-fit-cover" 
+                                     alt="Instagram Update">
+                            @endif
                             <div class="position-absolute top-0 start-0 m-3 badge bg-danger shadow-sm">
                                 <i class="bi bi-instagram me-1"></i> UPDATE TERBARU
                             </div>

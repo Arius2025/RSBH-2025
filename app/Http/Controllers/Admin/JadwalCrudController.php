@@ -34,24 +34,28 @@ class JadwalCrudController extends Controller
     // Menggunakan ID tetap agar data hanya ada satu baris
     $jadwal = JadwalDokter::firstOrCreate(['id' => 1]);
 
-    if ($request->hasFile('gambar_pagi')) {
-        if ($jadwal->gambar_pagi) {
-            Storage::disk('public')->delete($jadwal->gambar_pagi);
+    try {
+        if ($request->hasFile('gambar_pagi')) {
+            if ($jadwal->gambar_pagi) {
+                Storage::disk('public')->delete($jadwal->gambar_pagi);
+            }
+            // Simpan ke folder 'jadwal_dokter' di disk 'public'
+            $jadwal->gambar_pagi = $request->file('gambar_pagi')->store('jadwal_dokter', 'public');
         }
-        // Simpan ke folder 'jadwal_dokter' di disk 'public'
-        $jadwal->gambar_pagi = $request->file('gambar_pagi')->store('jadwal_dokter', 'public');
-    }
 
-    if ($request->hasFile('gambar_sore')) {
-        if ($jadwal->gambar_sore) {
-            Storage::disk('public')->delete($jadwal->gambar_sore);
+        if ($request->hasFile('gambar_sore')) {
+            if ($jadwal->gambar_sore) {
+                Storage::disk('public')->delete($jadwal->gambar_sore);
+            }
+            $jadwal->gambar_sore = $request->file('gambar_sore')->store('jadwal_dokter', 'public');
         }
-        $jadwal->gambar_sore = $request->file('gambar_sore')->store('jadwal_dokter', 'public');
+
+        $jadwal->save(); // Pastikan tersimpan ke database
+        return redirect()->back()->with('success', 'Jadwal berhasil diperbarui!');
+    } catch (\Exception $e) {
+        \Illuminate\Support\Facades\Log::error('Gagal upload jadwal dokter: ' . $e->getMessage());
+        return redirect()->back()->with('error', 'Gagal mengunggah gambar. Silakan cek koneksi storage atau hubungi IT.');
     }
-
-    $jadwal->save(); // Pastikan tersimpan ke database
-
-    return redirect()->back()->with('success', 'Jadwal berhasil diperbarui!');
 }
 
 

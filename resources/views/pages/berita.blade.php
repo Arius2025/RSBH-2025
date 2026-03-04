@@ -44,7 +44,15 @@
                                 <span class="d-block small text-uppercase">{{ \Carbon\Carbon::parse($b->tgl)->format('M') }}</span>
                             </div>
                             
-                            <img src="{{ $b->img }}" class="w-100 h-100 object-fit-cover transition-img" alt="{{ $b->judul }}">
+                            @if(isset($b->type) && $b->type == 'VIDEO')
+                                <video class="w-100 h-100 object-fit-cover transition-img" 
+                                       autoplay muted loop playsinline preload="metadata">
+                                    <source src="{{ $b->img }}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            @else
+                                <img src="{{ $b->img }}" class="w-100 h-100 object-fit-cover transition-img" alt="{{ $b->judul }}">
+                            @endif
                             
                             {{-- Overlay Gradient saat Hover --}}
                             <div class="overlay-hover d-flex align-items-center justify-content-center">

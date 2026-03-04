@@ -22,8 +22,8 @@
     {{-- Container Gambar 1 --}}
     <div class="position-relative bg-white">
             @if(isset($jadwal) && $jadwal->gambar_pagi && Storage::disk('public')->exists($jadwal->gambar_pagi))
-                <a href="{{ asset('storage/' . $jadwal->gambar_pagi) }}" target="_blank" class="d-block">
-                    <img src="{{ asset('storage/' . $jadwal->gambar_pagi) }}" 
+                <a href="{{ Storage::url($jadwal->gambar_pagi) }}" target="_blank" class="d-block">
+                    <img src="{{ Storage::url($jadwal->gambar_pagi) }}" 
                          alt="Jadwal Dokter Bagian 1" 
                          class="w-100 d-block img-main" 
                          onerror="this.onerror=null;this.src='{{ asset('images/no-image.png') }}';">
@@ -39,8 +39,8 @@
         {{-- Container Gambar 2 --}}
         <div class="position-relative bg-white border-top">
             @if(isset($jadwal) && $jadwal->gambar_sore && Storage::disk('public')->exists($jadwal->gambar_sore))
-                <a href="{{ asset('storage/' . $jadwal->gambar_sore) }}" target="_blank" class="d-block">
-                    <img src="{{ asset('storage/' . $jadwal->gambar_sore) }}" 
+                <a href="{{ Storage::url($jadwal->gambar_sore) }}" target="_blank" class="d-block">
+                    <img src="{{ Storage::url($jadwal->gambar_sore) }}" 
                          alt="Jadwal Dokter Bagian 2" 
                          class="w-100 d-block img-main" 
                          onerror="this.onerror=null;this.src='{{ asset('images/no-image.png') }}';">
