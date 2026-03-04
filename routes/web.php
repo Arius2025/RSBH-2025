@@ -48,24 +48,27 @@ require __DIR__.'/auth.php';
 | Admin Routes (Backend)
 |--------------------------------------------------------------------------
 */
+use App\Http\Controllers\Admin\AdminController;
+
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     
     // Route Dashboard Admin (contoh)
     Route::view('/', 'admin.dashboard')->name('dashboard');
 
+    // Reset Cache Instagram
+    Route::post('/refresh-instagram', [AdminController::class, 'refreshInstagram'])->name('refresh_instagram');
+
     // 1. Kelola Berita: Menggunakan BeritaCrudController
-    // Route ini yang menyebabkan error Anda, pastikan import BeritaCrudController sudah benar!
     Route::resource('berita', BeritaCrudController::class);
 
     // 2. Kelola Jadwal Dokter: Menggunakan JadwalCrudController
     Route::get('/jadwal', [JadwalCrudController::class, 'index'])->name('jadwal.index');
     Route::post('/jadwal/update', [JadwalCrudController::class, 'update'])->name('jadwal.update');
 
-
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-Route::put('/password', [ProfileController::class, 'passwordUpdate'])->name('password.update'); // Biasanya ada di UpdatePasswordController
-Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/password', [ProfileController::class, 'passwordUpdate'])->name('password.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 });
 

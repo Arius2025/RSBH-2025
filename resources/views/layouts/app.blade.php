@@ -238,6 +238,23 @@
             galeriCarousel.addEventListener('mouseenter', () => clearInterval(scrollInterval));
             galeriCarousel.addEventListener('mouseleave', () => scrollInterval = setInterval(autoScroll, scrollSpeed));
         }
+
+        /* SCROLL TO TOP */
+        const scrollBtn = document.createElement('button');
+        scrollBtn.innerHTML = '<i class="bi bi-arrow-up"></i>';
+        scrollBtn.setAttribute('id', 'scrollToTopBtn');
+        scrollBtn.setAttribute('class', 'btn btn-success shadow-lg rounded-circle position-fixed');
+        scrollBtn.style.cssText = 'bottom: 85px; right: 20px; display: none; z-index: 9999; width: 45px; height: 45px; line-height: 45px; padding: 0;';
+        document.body.appendChild(scrollBtn);
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) { scrollBtn.style.display = 'block'; } 
+            else { scrollBtn.style.display = 'none'; }
+        });
+
+        scrollBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
     </script>
     @stack('scripts')
 </body>

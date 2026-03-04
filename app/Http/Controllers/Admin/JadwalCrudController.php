@@ -39,23 +39,67 @@ class JadwalCrudController extends Controller
             if ($jadwal->gambar_pagi) {
                 Storage::disk('public')->delete($jadwal->gambar_pagi);
             }
-            // Simpan ke folder 'jadwal_dokter' di disk 'public'
-            $jadwal->gambar_pagi = $request->file('gambar_pagi')->store('jadwal_dokter', 'public');
+            $file = $request->file('gambar_pagi');
+            $path = $this->compressAndStore($file, 'jadwal_dokter');
+            $jadwal->gambar_pagi = $path;
         }
 
         if ($request->hasFile('gambar_sore')) {
             if ($jadwal->gambar_sore) {
                 Storage::disk('public')->delete($jadwal->gambar_sore);
             }
-            $jadwal->gambar_sore = $request->file('gambar_sore')->store('jadwal_dokter', 'public');
+            $file = $request->file('gambar_sore');
+            $path = $this->compressAndStore($file, 'jadwal_dokter');
+            $jadwal->gambar_sore = $path;
         }
 
         $jadwal->save(); // Pastikan tersimpan ke database
-        return redirect()->back()->with('success', 'Jadwal berhasil diperbarui!');
+        return redirect()->back()->with('success', 'Jadwal berhasil diperbarui dengan optimasi gambar!');
     } catch (\Exception $e) {
         \Illuminate\Support\Facades\Log::error('Gagal upload jadwal dokter: ' . $e->getMessage());
-        return redirect()->back()->with('error', 'Gagal mengunggah gambar. Silakan cek koneksi storage atau hubungi IT.');
+        return redirect()->back()->with('error', 'Gagal mengunggah gambar: ' . $e->getMessage());
     }
+}
+
+/**
+ * Kompres gambar sebelum disimpan untuk menghemat bandwidth
+ */
+private function compressAndStore($file, $folder)
+{
+    $extension = $file->getClientOriginalExtension();
+    $filename = time() . '_' . uniqid() . '.jpg'; // Simpan sebagai jpg untuk kompresi terbaik
+    $tempPath = storage_path('app/temp_' . $filename);
+    
+    // Ambil info gambar
+    $info = getimagesize($file->getRealPath());
+    if ($info['mime'] == 'image/jpeg') $image = imagecreatefromjpeg($file->getRealPath());
+    elseif ($info['mime'] == 'image/png') $image = imagecreatefrompng($file->getRealPath());
+    elseif ($info['mime'] == 'image/webp') $image = imagecreatefromwebp($file->getRealPath());
+    else throw new \Exception('Format file tidak didukung untuk kompresi');
+
+    // Resize jika terlalu lebar (max 1200px)
+    $width = imagesx($image);
+    $height = imagesy($image);
+    if ($width > 1200) {
+        $newWidth = 1200;
+        $newHeight = ($height / $width) * $newWidth;
+        $tmp = imagecreatetruecolor($newWidth, $newHeight);
+        imagecopyresampled($tmp, $image, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+        imagedestroy($image);
+        $image = $tmp;
+    }
+
+    // Simpan dengan kualitas 70%
+    imagejpeg($image, $tempPath, 70);
+    imagedestroy($image);
+
+    // Upload ke storage public
+    $finalPath = Storage::disk('public')->putFileAs($folder, new \Illuminate\Http\File($tempPath), $filename);
+    
+    // Hapus file temp
+    unlink($tempPath);
+
+    return $finalPath;
 }
 
 

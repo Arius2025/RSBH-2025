@@ -65,8 +65,30 @@
             </div>
         </div>
         
-        {{-- Card 4: Lihat Frontend --}}
+        {{-- Card 4: Refresh Instagram --}}
         <div class="col-xl-3 col-md-6">
+            <div class="card bg-white border-0 shadow-lg h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-arrow-clockwise me-3 fs-1 text-danger"></i>
+                        <div>
+                            <h5 class="card-title fw-bold text-danger mb-1">Refresh Instagram</h5>
+                            <p class="card-text text-muted small">Paksa perbarui feed Instagram ke yang terbaru.</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <form action="{{ route('admin.refresh_instagram') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-outline-danger w-100 mt-2">
+                            <i class="bi bi-arrow-repeat me-1"></i> Refresh Sekarang
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        {{-- Card 5: Lihat Frontend --}}
+        <div class="col-xl-3 col-md-6 mt-xl-0 mt-4">
             <div class="card bg-white border-0 shadow-lg h-100">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
