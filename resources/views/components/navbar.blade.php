@@ -49,12 +49,10 @@
                             <li><a class="dropdown-item rounded-2 text-danger fw-bold" href="{{ route('komplain') }}">Komplain</a></li>
                             
                             {{-- SITERBAT: Ikon Sepeda Listrik & Penanda PENTING --}}
-                            <li>
                                 <a class="dropdown-item rounded-2 fw-bold text-success d-flex justify-content-between align-items-center py-2" href="{{ route('siterbat') }}">
-                                    <span><i class="bi bi-bicycle me-2"></i>SITERBAT</span>
+                                    <span><i class="bi bi-lightning-fill me-2"></i>SIGAP</span>
                                     <span class="badge rounded-pill bg-primary ms-2" style="font-size: 0.55rem;">PENTING</span>
                                 </a>
-                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -81,9 +79,9 @@
         {{-- SITERBAT MOBILE: Ikon Sepeda Listrik --}}
         <a class="nav-link-mobile {{ request()->routeIs('siterbat') ? 'active-mobile' : '' }}" href="{{ route('siterbat') }}">
             <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center mx-auto shadow" style="width: 42px; height: 42px; margin-top: -20px; border: 4px solid white;">
-                <i class="bi bi-bicycle fs-5"></i>
+                <i class="bi bi-lightning-fill fs-5"></i>
             </div>
-            <span class="d-block mt-1 fw-bold" style="font-size: 0.65rem;">Siterbat</span>
+            <span class="d-block mt-1 fw-bold" style="font-size: 0.65rem;">SIGAP</span>
         </a>
 
         <a class="nav-link-mobile {{ request()->routeIs('kontak') ? 'active-mobile' : '' }}" href="{{ route('kontak') }}">

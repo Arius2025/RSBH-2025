@@ -3,65 +3,126 @@
 @section('content')
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
+    /* Global Premium Font & Reset */
+    .premium-container {
+        font-family: 'Inter', sans-serif;
+        background-color: #f8fafc; /* Soft minimalist backing */
+        padding-top: 2rem;
+        padding-bottom: 5rem;
+    }
+
+    /* Luxury Soft Shadows */
+    .luxury-shadow {
+        box-shadow: 0 20px 40px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.02);
+    }
+    .luxury-hover {
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .luxury-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 30px 60px rgba(15, 23, 42, 0.08), 0 4px 10px rgba(15, 23, 42, 0.03);
+    }
+
+    /* Hero Gradient & Glassmorphism */
     .hero-gradient {
-        background: linear-gradient(135deg, #f8fff9 0%, #e8f5e9 100%);
-        border-radius: 30px;
+        background: linear-gradient(135deg, #e6fced 0%, #ffffff 100%);
+        border: 1px solid rgba(25, 135, 84, 0.1);
+        border-radius: 32px;
         position: relative;
         overflow: hidden;
     }
-    .floating-card {
-        border: none;
-        border-radius: 25px;
-        transition: transform 0.3s ease;
+    .hero-glass-blob {
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(circle, rgba(25,135,84,0.1) 0%, rgba(255,255,255,0) 70%);
+        top: -100px;
+        right: -50px;
+        z-index: 0;
+        animation: pulseBlob 8s infinite alternate;
     }
-    .form-section {
-        background: #ffffff;
-        border-radius: 25px;
-        z-index: 2;
+    
+    @keyframes pulseBlob {
+        0% { transform: scale(1); opacity: 0.8; }
+        100% { transform: scale(1.2); opacity: 0.4; }
     }
+
+    /* Glass Panels */
+    .glass-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        border-radius: 28px;
+    }
+
+    /* Map Specifics */
     .map-container {
-        border-radius: 25px;
+        border-radius: 28px;
         overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        border: 1px solid rgba(0, 0, 0, 0.05);
     }
+
     .guide-box {
         background: white;
-        border-left: 5px solid #198754;
-        border-radius: 15px;
+        border-left: 6px solid #198754;
+        border-radius: 16px;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
     }
+
+    /* Buttons & Inputs */
     .btn-kirim {
         background: #198754;
+        background: linear-gradient(135deg, #198754 0%, #115c39 100%);
         border: none;
-        padding: 15px;
-        border-radius: 15px;
+        padding: 16px;
+        border-radius: 16px;
         font-weight: 700;
-        transition: all 0.3s ease;
+        letter-spacing: 0.5px;
+        color: white;
+        transition: all 0.4s ease;
     }
     .btn-kirim:hover:not(:disabled) {
-        background: #146c43;
-        transform: translateY(-3px);
-        box-shadow: 0 10px 20px rgba(25, 135, 84, 0.2);
+        transform: translateY(-4px);
+        box-shadow: 0 15px 30px rgba(25, 135, 84, 0.3);
+    }
+    .btn-kirim:disabled {
+        background: #e2e8f0;
+        color: #94a3b8;
     }
     .form-control, .form-select {
-        border-radius: 12px;
-        padding: 12px;
-        border: 1.5px solid #eee;
+        border-radius: 14px;
+        padding: 14px 16px;
+        border: 2px solid #e2e8f0;
+        background-color: #f8fafc;
+        transition: all 0.3s ease;
+        font-weight: 500;
+    }
+    .form-control:focus {
+        background-color: #ffffff;
+        border-color: #198754;
+        box-shadow: 0 0 0 4px rgba(25, 135, 84, 0.1);
+    }
+    .form-label {
+        font-size: 0.8rem;
+        letter-spacing: 0.5px;
+        color: #64748b;
     }
 
     /* Optimasi Mobile */
     @media (max-width: 768px) {
-        .hero-gradient { border-radius: 20px; padding: 20px !important; }
+        .hero-gradient { border-radius: 24px; padding: 24px !important; }
         .display-4 { font-size: 2.2rem; }
-        .map-container { min-height: 350px !important; margin-bottom: 20px; }
-        .form-section { padding: 20px !important; }
+        .map-container { min-height: 400px !important; }
     }
 </style>
 
-<div class="container py-4">
+<div class="container premium-container py-4">
     {{-- Header --}}
     <div class="hero-gradient p-4 p-lg-5 mb-4 shadow-sm" data-aos="fade-up">
+        <div class="hero-glass-blob"></div>
         <div class="row align-items-center text-center text-lg-start">
             <div class="col-lg-7">
                 <span class="badge bg-success px-3 py-2 rounded-pill mb-3">Layanan Prioritas</span>
@@ -83,7 +144,7 @@
     <div class="row g-4 justify-content-center">
         {{-- Kolom Form (Urutan 1 di Mobile) --}}
         <div class="col-lg-5 order-1" data-aos="fade-up">
-            <div class="form-section p-4 shadow-lg border">
+            <div class="form-section p-4 luxury-shadow glass-card border-0">
                 <h5 class="fw-bold mb-4 d-flex align-items-center">
                     <span class="bg-success text-white rounded-circle p-2 me-3 d-flex shadow-sm">
                         <i class="bi bi-pencil-square fs-6"></i>
@@ -129,12 +190,223 @@
 
         {{-- Kolom Peta (Urutan 2 di Mobile) --}}
         <div class="col-lg-7 order-2" data-aos="fade-up">
-            <div class="map-container shadow-lg h-100" style="min-height: 450px;">
+            <div class="map-container luxury-shadow glass-card h-100" style="min-height: 450px;">
                 <div id="map" style="height: 100%; width: 100%; min-height: 450px;"></div>
             </div>
         </div>
     </div>
-</div>
+
+    {{-- SECTION INDIKATOR --}}
+    {{-- SECTION INDIKATOR (VERTICAL REDESIGN) --}}
+    <div class="mt-5 mb-5" data-aos="fade-up">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold text-success display-6">Dashboard Indikator Layanan</h2>
+            <p class="text-muted fs-5">Statistik performa layanan bulanan berdasarkan rekapan data sistem.</p>
+            <hr class="w-25 mx-auto border-success" style="border-width: 3px;">
+        </div>
+
+        <div class="row g-5">
+            {{-- 1. Grafik Siterbat --}}
+            <div class="col-12">
+                <div class="glass-card border-0 luxury-shadow luxury-hover p-4 p-md-5 bg-white" style="border-left: 8px solid #198754 !important;">
+                    <div class="row align-items-center">
+                        <div class="col-md-4 mb-4 mb-md-0 text-center text-md-start">
+                            <div class="d-inline-block bg-success bg-opacity-10 p-3 rounded-circle mb-3">
+                                <i class="bi bi-bicycle text-success fs-1"></i>
+                            </div>
+                            <h3 class="fw-bold text-success">Indikator Siterbat</h3>
+                            <p class="text-muted">Data performa pengiriman obat ke rumah pasien (Geriatri & Purnawirawan).</p>
+                            <div class="mt-4">
+                                <h2 class="display-5 fw-bold text-dark" id="totalSiterbat">0</h2>
+                                <p class="small text-muted text-uppercase fw-bold">Total Pengiriman Tahun Ini</p>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div style="height: 350px;">
+                                <canvas id="chartSiterbat"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- 2. Grafik Ambulance --}}
+            <div class="col-12">
+                <div class="glass-card border-0 luxury-shadow luxury-hover p-4 p-md-5 bg-white" style="border-left: 8px solid #0d6efd !important;">
+                    <div class="row align-items-center flex-md-row-reverse">
+                        <div class="col-md-4 mb-4 mb-md-0 text-center text-md-start ps-md-4">
+                            <div class="d-inline-block bg-primary bg-opacity-10 p-3 rounded-circle mb-3">
+                                <i class="bi bi-truck text-primary fs-1"></i>
+                            </div>
+                            <h3 class="fw-bold text-primary">Indikator Ambulance</h3>
+                            <p class="text-muted">Data registrasi dan layanan jemput gratis pasien.</p>
+                            <div class="mt-4">
+                                <h2 class="display-5 fw-bold text-dark" id="totalAmbulance">0</h2>
+                                <p class="small text-muted text-uppercase fw-bold">Total Jemputan Tahun Ini</p>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div style="height: 350px;">
+                                <canvas id="chartAmbulance"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- 3. Grafik Santardekate --}}
+            <div class="col-12">
+                <div class="glass-card border-0 luxury-shadow luxury-hover p-4 p-md-5 bg-white" style="border-left: 8px solid #ffc107 !important;">
+                    <div class="row align-items-center">
+                        <div class="col-md-4 mb-4 mb-md-0 text-center text-md-start">
+                            <div class="d-inline-block bg-warning bg-opacity-10 p-3 rounded-circle mb-3">
+                                <i class="bi bi-house-heart text-warning fs-1"></i>
+                            </div>
+                            <h3 class="fw-bold text-warning">Indikator Santardekate</h3>
+                            <p class="text-muted">Data pelayanan Santardekate (Pelayanan antar pesanan pasien dari koperasi rumah sakit).</p>
+                            <div class="mt-4">
+                                <h2 class="display-5 fw-bold text-dark" id="totalSantardekate">0</h2>
+                                <p class="small text-muted text-uppercase fw-bold">Total Layanan Tahun Ini</p>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div style="height: 350px;">
+                                <canvas id="chartSantardekate"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const API_KEY = 'AIzaSyAs2YRPQxNr4DJj8-mWCeKPDPOn8Tj1rrg';
+    
+    // Spreadsheet IDs
+    const SHEETS = {
+        siterbat: '1FH1TNMgsq2AyGULupMaGucbQ5vQ-mWCvtHh5iCGhDKg',
+        ambulance: '1I80qITFMRTEjMiqbOd68BzTZqh7c6Mcr',
+        santardekate: '1dZ1ORSb0JgvB-V_xZmFI1rjsBlkxOZtqkvJ_9cBlsAs'
+    };
+
+    /**
+     * Generic function to fetch data from a Google Spreadsheet
+     */
+    async function fetchSpreadsheetData(spreadsheetId, excludeSheets = []) {
+        try {
+            const metadataUrl = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}?key=${API_KEY}`;
+            const metadataResponse = await fetch(metadataUrl);
+            const metadata = await metadataResponse.json();
+            
+            if (!metadata.sheets) return [];
+
+            const sheets = metadata.sheets
+                .map(s => s.properties.title)
+                .filter(name => !excludeSheets.includes(name));
+
+            if(sheets.length === 0) return [];
+
+            const ranges = sheets.map(name => encodeURIComponent(name) + '!A2:A');
+            const valuesUrl = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values:batchGet?ranges=${ranges.join('&ranges=')}&key=${API_KEY}`;
+            
+            const valuesResponse = await fetch(valuesUrl);
+            const data = await valuesResponse.json();
+
+            if (!data.valueRanges) return [];
+
+            return data.valueRanges.map((vr, index) => {
+                let count = 0;
+                if(vr.values) {
+                    count = vr.values.filter(row => row.length > 0 && row[0] !== '' && !isNaN(row[0]) ).length; 
+                }
+                
+                let cleanLabel = sheets[index].replace(/\s*\(\d+\)\s*/g, '');
+
+                return {
+                    label: cleanLabel,
+                    count: count
+                };
+            });
+        } catch (error) {
+            console.error(`Error fetching data for ${spreadsheetId}:`, error);
+            return [];
+        }
+    }
+
+    function renderChart(canvasId, totalElementId, type, color, label, data) {
+        if(data.length === 0) return;
+
+        const ctx = document.getElementById(canvasId).getContext('2d');
+        const labels = data.map(d => d.label);
+        const counts = data.map(d => d.count);
+        
+        // Calculate total
+        const total = counts.reduce((acc, current) => acc + current, 0);
+        document.getElementById(totalElementId).innerText = total.toLocaleString();
+
+        new Chart(ctx, {
+            type: type,
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: label,
+                    data: counts,
+                    backgroundColor: type === 'bar' ? color : color + '33',
+                    borderColor: color,
+                    borderWidth: 2,
+                    fill: type === 'line' ? true : false,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: '#fff',
+                        titleColor: '#000',
+                        bodyColor: '#000',
+                        borderColor: '#ddd',
+                        borderWidth: 1,
+                        padding: 12,
+                        callbacks: {
+                            label: (context) => ` Total: ${context.raw}`
+                        }
+                    }
+                },
+                scales: {
+                    y: { 
+                        beginAtZero: true,
+                        grid: { borderDash: [5, 5] }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    }
+
+    async function initDashboard() {
+        // 1. Fetch Siterbat
+        const siterbatData = await fetchSpreadsheetData(SHEETS.siterbat, ['SIMRS', 'Sheet18', 'Sheet1']);
+        renderChart('chartSiterbat', 'totalSiterbat', 'bar', '#198754', 'Siterbat', siterbatData);
+
+        // 2. Fetch Ambulance
+        const ambulanceData = await fetchSpreadsheetData(SHEETS.ambulance, []);
+        renderChart('chartAmbulance', 'totalAmbulance', 'line', '#0d6efd', 'Ambulance', ambulanceData);
+
+        // 3. Fetch Santardekate
+        const santardekateData = await fetchSpreadsheetData(SHEETS.santardekate, []);
+        renderChart('chartSantardekate', 'totalSantardekate', 'bar', '#ffc107', 'Santardekate', santardekateData);
+    }
+
+    document.addEventListener('DOMContentLoaded', initDashboard);
+</script>
+
 {{-- FLOATING QUICK ACCESS (VERSI COMPACT) --}}
     <div class="floating-access">
         {{-- Tombol WhatsApp Compact --}}
@@ -159,7 +431,7 @@
     L.control.zoom({ position: 'topright' }).addTo(map);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap'
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
     const rsIcon = L.divIcon({
