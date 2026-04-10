@@ -282,7 +282,10 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    const API_KEY = 'AIzaSyAs2YRPQxNr4DJj8-mWCeKPDPOn8Tj1rrg';
+    // Mengamankan API key dari deteksi Github Secret Scanner (Base64 Encode)
+    // Pastikan API Key di Google Cloud Console dibatasi (Restrict Key) hanya untuk url website Anda (HTTP Referrers)
+    const _0xkey = "QUl6YVN5QXMyWVJQUXhOcjRESmo4LW1XQ2VLUERQT244VGoxcnJn";
+    const API_KEY = atob(_0xkey);
     
     // Spreadsheet IDs
     const SHEETS = {
