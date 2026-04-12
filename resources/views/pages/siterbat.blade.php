@@ -290,14 +290,14 @@
     // Spreadsheet IDs
     const SHEETS = {
         siterbat: '1FH1TNMgsq2AyGULupMaGucbQ5vQ-mWCvtHh5iCGhDKg',
-        ambulance: '1I80qITFMRTEjMiqbOd68BzTZqh7c6Mcr',
+        ambulance: '1UzNv48klEbvLgh-kXas1OkBVTo9YvI8vK4blegJZdBY',
         santardekate: '1dZ1ORSb0JgvB-V_xZmFI1rjsBlkxOZtqkvJ_9cBlsAs'
     };
 
     /**
      * Generic function to fetch data from a Google Spreadsheet
      */
-    async function fetchSpreadsheetData(spreadsheetId, excludeSheets = []) {
+    async function fetchSpreadsheetData(spreadsheetId, excludeSheets = [], checkRange = '!A2:A', colIndex = 0) {
         try {
             const metadataUrl = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}?key=${API_KEY}`;
             const metadataResponse = await fetch(metadataUrl);
@@ -311,7 +311,7 @@
 
             if(sheets.length === 0) return [];
 
-            const ranges = sheets.map(name => encodeURIComponent(name) + '!A2:A');
+            const ranges = sheets.map(name => encodeURIComponent(name) + checkRange);
             const valuesUrl = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values:batchGet?ranges=${ranges.join('&ranges=')}&key=${API_KEY}`;
             
             const valuesResponse = await fetch(valuesUrl);
@@ -322,7 +322,7 @@
             return data.valueRanges.map((vr, index) => {
                 let count = 0;
                 if(vr.values) {
-                    count = vr.values.filter(row => row.length > 0 && row[0] !== '' && !isNaN(row[0]) ).length; 
+                    count = vr.values.filter(row => row.length > colIndex && row[colIndex] !== '' && !isNaN(row[colIndex]) ).length; 
                 }
                 
                 let cleanLabel = sheets[index].replace(/\s*\(\d+\)\s*/g, '');
@@ -399,7 +399,7 @@
         renderChart('chartSiterbat', 'totalSiterbat', 'bar', '#198754', 'Siterbat', siterbatData);
 
         // 2. Fetch Ambulance
-        const ambulanceData = await fetchSpreadsheetData(SHEETS.ambulance, []);
+        const ambulanceData = await fetchSpreadsheetData(SHEETS.ambulance, [], '!A2:B', 1);
         renderChart('chartAmbulance', 'totalAmbulance', 'line', '#0d6efd', 'Ambulance', ambulanceData);
 
         // 3. Fetch Santardekate
