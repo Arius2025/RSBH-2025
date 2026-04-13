@@ -145,25 +145,40 @@
 
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
             @foreach([
-                ['Letkol dr. Soebandi', '1946 - 1949'], ['Mayor Cdm dr. Soedjono', '1959 - 1962'],
-                ['Mayor Cdm dr. Karno Supojo', '1966 - 1969'], ['Kapten Cdm dr. Sam Pakpahan', '1969 - 1972'],
-                ['Kapten Cdm dr. Soedomo Pradono', '1972 - 1973'], ['Mayor Cdm dr. Tom Uripan', '1973 - 1976'],
-                ['Mayor Cdm dr. Suryono', '1977 - 1983'], ['Letkol Ckm dr. Koesnan D', '1983 - 1990'],
-                ['Mayor Ckm dr. Budiharto', 'Jan - Apr 1991'], ['Mayor Ckm dr. H. Zularnain Pohan', '1991 - 1995'],
-                ['Letkol Ckm Drs. Basuki, MS', '1997 - 2001'], ['Letkol Ckm dr. Bambang Haryatno', '2001 - 2004'],
-                ['Letkol Ckm dr. Muhammad Ilyas', '2004 - 2006'], ['Letkol Ckm dr. Agus Sunandar', '2006 - 2009'],
-                ['Letkol Ckm dr. Trio Tangkas W.M', '2009 - 2013'], ['Letkol Ckm (K) dr. Dwi Ana W', 'Feb - Des 2013'],
-                ['Letkol Ckm dr. A Rusli Budi A', '2013 - 2016'], ['Letkol Ckm dr. Masri Sihombing', '2016 - 2018'],
-                ['Letkol Ckm dr. Maksum Pandelima', '2018 - 2021'], ['Letkol Ckm dr. Mahyudi', '2021 - 2023'],
-                ['Letkol Ckm dr. Arif Puguh Santoso', '2023 - 2025'], ['Letkol Ckm dr. Zaltonys Tolombot', '2025 - Sekarang', 'active']
+                ['Letkol dr. Soebandi', '1946 - 1949', null, '00 LETKOL dr. SOEBANDI.jpg'], 
+                ['Mayor Cdm dr. Soedjono', '1959 - 1962', null, '01 MAYOR CDM dr. SOEDJONO.jpg'],
+                ['Mayor Cdm dr. Karno Supojo', '1966 - 1969', null, '02 MAYOR CDM dr. KARNO SUPOJO.jpg'], 
+                ['Kapten Cdm dr. Samuel Pakpahan', '1969 - 1972', null, '03 KAPTEN CDM dr. SAMUEL.jpg'],
+                ['Kapten Cdm dr. Soedomo Pradono', '1972 - 1973', null, '04 KAPTEN CDM dr. SOEDOMO PRADONO.jpg'], 
+                ['Mayor Cdm dr. Tom Uripan', '1973 - 1976', null, '05 MAYOR CDM dr. TOM URIPAN.jpg'],
+                ['Mayor Cdm dr. Suryono', '1977 - 1983', null, '06 MAYOR CDM dr. SURYONO.jpg'], 
+                ['Letkol Ckm dr. Koesnan D', '1983 - 1990', null, '07 LETKOL CKM dr. KOESNAN D.jpg'],
+                ['Mayor Ckm dr. Budiharto', 'Januari 1991  - April 1991', null, '08 LETKOL CKM dr. BUDIARTO.jpg'], 
+                ['Mayor Ckm dr. H. Zularnain Pohan', '91 Januari 1991 - 01 Juli 1995', null, '09 MAYOR CKM dr. H. ZULARNAIN POHAN.jpg'],
+                ['Letkol Ckm Drs. Basuki, MS', '1997 - 2001', null, '10 LETKOL CKM Drs. BASUKI, MS.jpg'], 
+                ['Letkol Ckm dr. Bambang Haryatno,Sp. S', '02 Agustus 2001 - 13 Agustus 2004', null, '11 LETKOL CKM dr. BAMBANG HARYATNO, Sp. S.jpg'],
+                ['Letkol Ckm dr. Muhammad Ilyas, Sp.An', '13 Agustus 2004 - 24 Maret 2006', null, '12 LETKOL CKM dr. MUHAMMAD ILYAS, Sp. An.jpg'], 
+                ['Letkol Ckm dr. Agus Sunandar,Sp.An', '2006 - 2009', null, '13 LETKOL CKM dr. AGUS SUNANDAR, Sp. An.jpg'],
+                ['Letkol Ckm dr. Trio Tangkas W.M,Sp.PD', '2009 - 2013', null, '14 LETKOL CKM dr. TRIO TANGKAS W.M, Sp. PD.jpg'], 
+                ['Letkol Ckm (K) dr. Dwi Ana Wahyuningrum', 'Februari 2013 - Desember 2013', null, '15 LETKOL CKM (K) dr. DWI ANA WAHYUNINGRUM.jpg'],
+                ['Letkol Ckm dr. A Rusli Budi Ansyah, Sp. B., MARS', '01 Maret 2013 - 31 Maret 2016', null, '16 LETKOL CKM dr. A. RUSLI BUDI ANSYAH, Sp. B., MARS.jpg'], 
+                ['Letkol Ckm dr. Masri Sihombing, Sp.OT (K).,M.Kes', '01 April 2016 - 31 Agustus 2018', null, '17 LETKOL CKM dr. MASRI SIHOMBING, Sp.OT (K)., M.Kes.jpg'],
+                ['Letkol Ckm dr. Maksum Pandelima,Sp.OT', '01 September 2018 - 04 Januari 2021', null, '18 LETKOL CKM dr. MAKSUM PANDELIMA, Sp.OT.jpg'], 
+                ['Letkol Ckm dr. MahyudimSp.M., M.Kes', '04 Januari 2021 - 25 Mei 2023', null, '19 LETKOL CKM dr. MAHYUDI, Sp.M., M.Kes.jpg'],
+                ['Letkol Ckm dr. Arif Puguh Santoso, Sp.PD., M.Kes', '25 Mei 2023 - 26 Juni 2025', null, '20 LETKOL CKM dr. ARIF PUGUH SANTOSO, Sp.PD., M.Kes.jpg'], 
+                ['Letkol Ckm dr. Zaltonys Tolombot,Sp.M.', '01 September 2025 - Sekarang', 'active', '21 LETKOL CKM dr. ZALTONYS TOLOMBOT, Sp.M..jpg']
             ] as $pimpinan)
             <div class="col" data-aos="fade-up" data-aos-delay="50">
                 <div class="card h-100 border-0 shadow-sm hover-shadow rounded-3 {{ isset($pimpinan[2]) ? 'bg-success text-white' : 'bg-white' }}">
                     <div class="card-body d-flex align-items-center gap-3">
                         <div class="flex-shrink-0">
-                            <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold fs-5 {{ isset($pimpinan[2]) ? 'bg-white text-success' : 'bg-light text-secondary' }}" style="width: 50px; height: 50px;">
-                                {{ substr($pimpinan[0], 0, 1) }}
-                            </div>
+                            @if(isset($pimpinan[3]) && $pimpinan[3] !== '')
+                                <img src="{{ asset('images/Ka_terdahulu/' . $pimpinan[3]) }}" alt="{{ $pimpinan[0] }}" class="rounded-3 shadow-sm border {{ isset($pimpinan[2]) ? 'border-white' : 'border-light' }}" style="width: 70px; height: 90px; object-fit: cover; object-position: top;">
+                            @else
+                                <div class="rounded-3 d-flex align-items-center justify-content-center fw-bold fs-3 {{ isset($pimpinan[2]) ? 'bg-white text-success' : 'bg-light text-secondary' }} shadow-sm" style="width: 70px; height: 90px;">
+                                    {{ substr($pimpinan[0], 0, 1) }}
+                                </div>
+                            @endif
                         </div>
                         <div>
                             <h6 class="fw-bold mb-1 {{ isset($pimpinan[2]) ? 'text-white' : 'text-dark' }}">{{ $pimpinan[0] }}</h6>
