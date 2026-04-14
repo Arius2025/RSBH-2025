@@ -87,12 +87,95 @@
             <i class="bi bi-whatsapp fs-5"></i>
             <span class="d-block" style="font-size: 0.65rem;">Kontak</span>
         </a>
-        <a class="nav-link-mobile {{ request()->routeIs('komplain') ? 'active-mobile' : '' }}" href="{{ route('komplain') }}">
-            <i class="bi bi-chat-right-text{{ request()->routeIs('komplain') ? '-fill' : '' }} fs-5"></i>
-            <span class="d-block" style="font-size: 0.65rem;">Aduan</span>
-        </a>
+        <button class="nav-link-mobile border-0 bg-transparent" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenuOffcanvas">
+            <i class="bi bi-grid-fill fs-5"></i>
+            <span class="d-block" style="font-size: 0.65rem;">Lainnya</span>
+        </button>
     </div>
 </nav>
+
+{{-- Mobile Offcanvas Bottom Menu --}}
+<div class="offcanvas offcanvas-bottom rounded-top-4 shadow-lg border-0" tabindex="-1" id="mobileMenuOffcanvas" aria-labelledby="mobileMenuLabel" style="height: auto; max-height: 85vh;">
+    <div class="offcanvas-header border-bottom px-4 pt-4 pb-3">
+        <h5 class="offcanvas-title fw-bold text-success d-flex align-items-center" id="mobileMenuLabel">
+            <i class="bi bi-grid-fill me-2 fs-4"></i> Menu Utama
+        </h5>
+        <button type="button" class="btn-close shadow-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body p-4 pt-1 small">
+        <p class="text-muted mb-4 mt-3 fw-medium" style="font-size: 0.8rem;">Jelajahi seluruh layanan dan informasi Rumah Sakit.</p>
+        
+        <div class="row g-4 text-center">
+            <!-- Informasi / Profil -->
+            <div class="col-4">
+                <a href="{{ route('informasi') }}" class="text-decoration-none text-dark d-block hover-shadow-menu">
+                    <div class="p-3 bg-light rounded-4 mb-2 mx-auto d-flex align-items-center justify-content-center text-success" style="width: 55px; height: 55px;">
+                        <i class="bi bi-info-circle fs-3"></i>
+                    </div>
+                    <span class="fw-medium" style="font-size: 0.75rem;">Profil</span>
+                </a>
+            </div>
+            <!-- Dokter RS -->
+            <div class="col-4">
+                <a href="{{ route('dokter') }}" class="text-decoration-none text-dark d-block hover-shadow-menu">
+                    <div class="p-3 bg-light rounded-4 mb-2 mx-auto d-flex align-items-center justify-content-center text-success" style="width: 55px; height: 55px;">
+                        <i class="bi bi-person-badge fs-3"></i>
+                    </div>
+                    <span class="fw-medium" style="font-size: 0.75rem;">Dokter RS</span>
+                </a>
+            </div>
+            <!-- Kamar -->
+            <div class="col-4">
+                <a href="{{ route('tidur') }}" class="text-decoration-none text-dark d-block hover-shadow-menu">
+                    <div class="p-3 bg-light rounded-4 mb-2 mx-auto d-flex align-items-center justify-content-center text-success" style="width: 55px; height: 55px;">
+                        <i class="bi bi-hospital fs-3"></i>
+                    </div>
+                    <span class="fw-medium" style="font-size: 0.75rem;">Kamar Bed</span>
+                </a>
+            </div>
+            <!-- Jadwal Operasi -->
+            <div class="col-4">
+                <a href="{{ route('jadwaloperasi') }}" class="text-decoration-none text-dark d-block hover-shadow-menu">
+                    <div class="p-3 bg-light rounded-4 mb-2 mx-auto d-flex align-items-center justify-content-center text-success" style="width: 55px; height: 55px;">
+                        <i class="bi bi-heart-pulse fs-3"></i>
+                    </div>
+                    <span class="fw-medium" style="font-size: 0.75rem;">Op. Jadwal</span>
+                </a>
+            </div>
+            <!-- PPID -->
+            <div class="col-4">
+                <a href="{{ route('ppid') }}" class="text-decoration-none text-dark d-block hover-shadow-menu">
+                    <div class="p-3 bg-light rounded-4 mb-2 mx-auto d-flex align-items-center justify-content-center text-success" style="width: 55px; height: 55px;">
+                        <i class="bi bi-shield-check fs-3"></i>
+                    </div>
+                    <span class="fw-medium" style="font-size: 0.75rem;">PPID</span>
+                </a>
+            </div>
+            <!-- Zona Integritas -->
+            <div class="col-4">
+                <a href="{{ route('zona') }}" class="text-decoration-none text-dark d-block hover-shadow-menu">
+                    <div class="p-3 bg-light rounded-4 mb-2 mx-auto d-flex align-items-center justify-content-center text-success" style="width: 55px; height: 55px;">
+                        <i class="bi bi-award fs-3"></i>
+                    </div>
+                    <span class="fw-medium" style="font-size: 0.75rem;">Zona Intg.</span>
+                </a>
+            </div>
+            <!-- Aduan -->
+            <div class="col-4">
+                <a href="{{ route('komplain') }}" class="text-decoration-none text-dark d-block hover-shadow-menu">
+                    <div class="p-3 bg-danger bg-opacity-10 rounded-4 mb-2 mx-auto d-flex align-items-center justify-content-center text-danger" style="width: 55px; height: 55px;">
+                        <i class="bi bi-chat-right-text fs-3"></i>
+                    </div>
+                    <span class="fw-bold text-danger" style="font-size: 0.75rem;">Aduan</span>
+                </a>
+            </div>
+        </div>
+        
+        <div class="mt-4 pb-2 text-center">
+            <button type="button" class="btn btn-outline-success rounded-pill px-4 btn-sm fw-bold" data-bs-dismiss="offcanvas">Tutup Menu</button>
+        </div>
+    </div>
+</div>
 
 {{-- Spacer agar konten tidak tertutup navbar yang melayang --}}
 <div class="d-none d-lg-block" style="height: 80px;"></div>
@@ -104,6 +187,11 @@
         transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba(25, 135, 84, 0.2) !important;
     }
+    .hover-shadow-menu > div { transition: all 0.2s ease; }
+    .hover-shadow-menu:active > div { 
+        transform: scale(0.92);
+        background-color: #e6fced !important;
+    }
     .nav-link { color: #4a4a4a !important; }
     .nav-link:hover, .nav-link.active { color: #198754 !important; }
     
@@ -112,6 +200,7 @@
         text-decoration: none;
         color: #6c757d;
         flex: 1;
+        cursor: pointer;
     }
     .active-mobile { 
         color: #198754 !important; 
