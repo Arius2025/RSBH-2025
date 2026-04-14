@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
-@section('content')
+@push('styles')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
 <style>
     .glass-card {
         background: rgba(255, 255, 255, 0.95);
@@ -11,15 +12,16 @@
     }
     
     .media-container {
-        border-radius: 20px;
+        border-radius: 16px;
         overflow: hidden;
-        background: #f8fafc;
-        box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+        background: #000;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     }
 
     .media-container img, .media-container video {
         width: 100%;
-        max-height: 800px;
+        height: auto;
+        max-height: 1200px;
         object-fit: contain;
         display: block;
     }
@@ -32,8 +34,28 @@
         text-align: center;
         margin-bottom: 3rem;
     }
-</style>
 
+    /* Full width on mobile/tablet */
+    @media (max-width: 991.98px) {
+        .glass-card-body {
+            padding: 1.5rem 0 !important;
+        }
+        .media-container {
+            border-radius: 0;
+        }
+    }
+    
+    .img-zoom-hover {
+        cursor: zoom-in;
+        transition: transform 0.3s ease;
+    }
+    .img-zoom-hover:hover {
+        opacity: 0.95;
+    }
+</style>
+@endpush
+
+@section('content')
 <div class="container py-5" style="font-family: 'Inter', sans-serif;">
     <div class="hero-gradient shadow-sm" data-aos="fade-up">
         <h1 class="fw-bold text-success display-5 mb-2">Jadwal Harian Dokter</h1>
@@ -41,7 +63,7 @@
     </div>
 
     <div class="row justify-content-center">
-        <div class="col-lg-10">
+        <div class="col-lg-12"> {{-- Wider container --}}
             @if($items->isEmpty())
                 <div class="glass-card p-5 text-center" data-aos="fade-up">
                     <i class="bi bi-calendar-x display-1 text-muted opacity-50"></i>
@@ -49,42 +71,62 @@
                     <p class="text-muted">Jadwal harian untuk hari ini belum diunggah.</p>
                 </div>
             @else
-                <div class="glass-card p-4" data-aos="fade-up">
-                    <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
-                        <div>
-                            <span class="badge bg-success rounded-pill px-3 py-2 mb-2">
-                                <i class="bi bi-clock-history me-1"></i> Update Terbaru
-                            </span>
-                            <h4 class="fw-bold text-dark mb-0">Jadwal Tanggal: <span class="text-success">{{ \Carbon\Carbon::parse($items->first()->tanggal)->translatedFormat('l, d F Y') }}</span></h4>
+                <div class="glass-card p-0 overflow-hidden" data-aos="fade-up">
+                    <div class="p-4 border-bottom glass-card-header bg-white">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="badge bg-success rounded-pill px-3 py-2 mb-2">
+                                    <i class="bi bi-clock-history me-1"></i> Update Terbaru
+                                </span>
+                                <h4 class="fw-bold text-dark mb-0">Jadwal Tanggal: <span class="text-success">{{ \Carbon\Carbon::parse($items->first()->tanggal)->translatedFormat('l, d F Y') }}</span></h4>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="row g-4">
-                        @foreach($items as $item)
-                        <div class="col-12" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
-                            <div class="media-container border shadow-sm">
-                                @if($item->type === 'video')
-                                    <video controls playsinline>
-                                        <source src="{{ asset('storage/' . $item->file_path) }}" type="video/mp4">
-                                        Browser Anda tidak mendukung tag video.
-                                    </video>
-                                @else
-                                    <a href="{{ asset('storage/' . $item->file_path) }}" target="_blank">
-                                        <img src="{{ asset('storage/' . $item->file_path) }}" alt="{{ $item->keterangan ?? 'Jadwal' }}">
-                                    </a>
+                    <div class="glass-card-body p-4">
+                        <div class="row g-4">
+                            @foreach($items as $item)
+                            <div class="col-12" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
+                                <div class="media-container shadow-sm">
+                                    @if($item->type === 'video')
+                                        <video controls playsinline class="w-100">
+                                            <source src="{{ asset('storage/' . $item->file_path) }}" type="video/mp4">
+                                            Browser Anda tidak mendukung tag video.
+                                        </video>
+                                    @else
+                                        <a href="{{ asset('storage/' . $item->file_path) }}" class="glightbox" data-gallery="jadwal-gallery" data-title="Jadwal Dokter - {{ \Carbon\Carbon::parse($item->tanggal)->translatedFormat('d F Y') }}">
+                                            <img src="{{ asset('storage/' . $item->file_path) }}" 
+                                                 alt="{{ $item->keterangan ?? 'Jadwal Dokter' }}" 
+                                                 class="img-zoom-hover">
+                                        </a>
+                                    @endif
+                                </div>
+                                @if($item->keterangan)
+                                    <div class="mt-3 px-4 text-center">
+                                        <p class="fs-5 fw-medium text-dark mx-auto" style="max-width: 800px;"><i class="bi bi-info-circle text-success me-2"></i>{{ $item->keterangan }}</p>
+                                    </div>
                                 @endif
                             </div>
-                            @if($item->keterangan)
-                                <div class="mt-3 text-center">
-                                    <p class="fs-5 fw-medium text-dark"><i class="bi bi-info-circle text-success me-2"></i>{{ $item->keterangan }}</p>
-                                </div>
-                            @endif
+                            @endforeach
                         </div>
-                        @endforeach
                     </div>
                 </div>
             @endif
         </div>
     </div>
 </div>
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const lightbox = GLightbox({
+            selector: '.glightbox',
+            touchNavigation: true,
+            loop: true,
+            autoplayVideos: true
+        });
+    });
+</script>
+@endpush
 @endsection

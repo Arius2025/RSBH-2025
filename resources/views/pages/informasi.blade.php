@@ -28,7 +28,7 @@
         <ul class="nav nav-pills justify-content-start justify-content-lg-center flex-nowrap overflow-auto no-scrollbar px-3 px-md-0" id="infoNav">
             <li class="nav-item"><a class="nav-link nav-scroll text-success fw-bold" href="#visi-misi">Visi & Misi</a></li>
             <li class="nav-item"><a class="nav-link nav-scroll text-success fw-bold" href="#sejarah">Sejarah</a></li>
-            <li class="nav-item"><a class="nav-link nav-scroll text-success fw-bold" href="#organisasi">Organisasi</a></li>
+
 
             <li class="nav-item"><a class="nav-link nav-scroll text-success fw-bold" href="#karumkit">Pimpinan</a></li>
         </ul>
@@ -122,15 +122,7 @@
         </div>
     </section>
 
-    {{-- 5. ORGANISASI --}}
-    <section id="organisasi" class="info-section mb-5 pt-5 text-center">
-        <h2 class="fw-bold text-success mb-4">Struktur Organisasi</h2>
-        <div class="card border-0 shadow-sm rounded-4 p-5 d-inline-block bg-light" style="min-width: 300px;">
-             <div class="mb-3 text-muted display-4"><i class="bi bi-diagram-3"></i></div>
-             <h5 class="fw-bold text-dark">Bagan Organisasi</h5>
-             <p class="text-muted mb-0">Struktur organisasi RS Tk. III Baladhika Husada</p>
-        </div>
-    </section>
+
 
     {{-- 6. RIWAYAT KARUMKIT --}}
     <section id="karumkit" class="info-section mb-5 pt-5">
@@ -174,7 +166,7 @@
                     <div class="card-body d-flex align-items-center gap-3">
                         <div class="flex-shrink-0">
                             @if(isset($pimpinan[3]) && $pimpinan[3] !== '')
-                                <img src="{{ asset('images/Ka_terdahulu/' . $pimpinan[3]) }}" alt="{{ $pimpinan[0] }}" class="rounded-3 shadow-sm border {{ isset($pimpinan[2]) ? 'border-white' : 'border-light' }}" style="width: 70px; height: 90px; object-fit: cover; object-position: top;">
+                                <img src="{{ asset('images/Ka_terdahulu/' . $pimpinan[3]) }}" alt="{{ $pimpinan[0] }}" class="rounded-3 shadow-sm border {{ isset($pimpinan[2]) ? 'border-white' : 'border-light' }}" style="width: 70px; height: 90px; object-fit: cover; object-position: top;" loading="lazy" decoding="async">
                             @else
                                 <div class="rounded-3 d-flex align-items-center justify-content-center fw-bold fs-3 {{ isset($pimpinan[2]) ? 'bg-white text-success' : 'bg-light text-secondary' }} shadow-sm" style="width: 70px; height: 90px;">
                                     {{ substr($pimpinan[0], 0, 1) }}
