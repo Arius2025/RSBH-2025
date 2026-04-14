@@ -8,34 +8,15 @@
     
     <div class="row g-4 mt-4">
         
-        {{-- Card 1: Kelola Berita --}}
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-white border-0 shadow-lg h-100">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <i class="bi bi-newspaper me-3 fs-1 text-success"></i>
-                        <div>
-                            <h5 class="card-title fw-bold text-success mb-1">Kelola Berita</h5>
-                            <p class="card-text text-muted small">Publikasikan informasi terbaru rumah sakit.</p>
-                        </div>
-                    </div>
-                    <hr>
-                    <a href="{{ route('admin.berita.index') }}" class="btn btn-outline-success w-100 mt-2">
-                        <i class="bi bi-arrow-right-circle me-1"></i> Mulai Kelola
-                    </a>
-                </div>
-            </div>
-        </div>
-        
-        {{-- Card 2: Kelola Jadwal --}}
+        {{-- Card 1: Kelola Jadwal --}}
         <div class="col-xl-3 col-md-6">
             <div class="card bg-white border-0 shadow-lg h-100">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <i class="bi bi-calendar-check me-3 fs-1 text-warning"></i>
                         <div>
-                            <h5 class="card-title fw-bold text-warning mb-1">Kelola Jadwal Dokter</h5>
-                            <p class="card-text text-muted small">Perbarui gambar jadwal dokter spesialis.</p>
+                            <h5 class="card-title fw-bold text-warning mb-1">Dokter di Rumah Sakit</h5>
+                            <p class="card-text text-muted small">Perbarui gambar dokter di rumah sakit.</p>
                         </div>
                     </div>
                     <hr>

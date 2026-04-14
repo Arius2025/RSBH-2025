@@ -114,6 +114,7 @@ class FrontendController extends Controller
     public function kontak() { return view('pages.kontak'); }
     public function siterbat() { return view('pages.siterbat    '); }
     public function informasi() { return view('pages.informasi'); }
+    public function dokter() { return view('pages.jadwal_dokter'); }
     public function tidur() { return view('pages.tidur'); }
     public function jadwal() { 
         $jadwal = \App\Models\JadwalDokter::first();

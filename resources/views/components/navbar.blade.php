@@ -24,8 +24,9 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle px-2" href="#" data-bs-toggle="dropdown">Informasi</a>
                         <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-3 p-2 rounded-3">
-                            <li><a class="dropdown-item rounded-2" href="{{ route('informasi') }}">Visi & Misi</a></li>
-                            <li><a class="dropdown-item rounded-2" href="{{ route('tidur') }}">Ketersedian Tempat Tidur</a></li>
+                            <li><a class="dropdown-item rounded-2" href="{{ route('informasi') }}">Profil Singkat</a></li>
+                            <li><a class="dropdown-item rounded-2" href="{{ route('dokter') }}">Dokter RS</a></li>
+                            <li><a class="dropdown-item rounded-2" href="{{ route('tidur') }}">Ketersediaan Tempat Tidur</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -35,9 +36,7 @@
                             <li><a class="dropdown-item rounded-2" href="{{ route('jadwaloperasi') }}">Jadwal Operasi</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item border-end pe-2 me-1">
-                        <a class="nav-link px-2 {{ request()->routeIs('berita') ? 'text-success active' : '' }}" href="{{ route('berita') }}">Berita</a>
-                    </li>
+
                     
                     {{-- MENU LAYANAN --}}
                     <li class="nav-item dropdown">

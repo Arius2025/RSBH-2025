@@ -4,7 +4,7 @@
 @section('content')
 <div class="container py-5">
     <div class="mx-auto" style="max-width: 900px;">
-        <h2 class="fw-bold text-success mb-4"><i class="bi bi-calendar-week me-2"></i> Kelola Jadwal Dokter</h2>
+        <h2 class="fw-bold text-success mb-4"><i class="bi bi-calendar-week me-2"></i> Dokter di Rumah Sakit</h2>
         <hr>
 
         {{-- Notifikasi Sukses --}}

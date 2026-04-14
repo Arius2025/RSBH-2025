@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\BeritaCrudController;
 use App\Http\Controllers\Admin\JadwalCrudController;
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\JadwalHarianController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,9 +21,14 @@ use App\Http\Controllers\FrontendController;
 
 Route::get('/', [FrontendController::class, 'home'])->name('home');
 Route::get('/informasi', [FrontendController::class, 'informasi'])->name('informasi');
-Route::get('/jadwal', [FrontendController::class, 'jadwal'])->name('jadwal');
-Route::get('/berita', [FrontendController::class, 'berita'])->name('berita');
-Route::get('/berita/{slug}', [FrontendController::class, 'detailBerita'])->name('berita.detail'); 
+Route::get('/dokter', [FrontendController::class, 'dokter'])->name('dokter');
+
+// Jadwal Harian
+Route::get('/jadwal', [JadwalHarianController::class, 'index'])->name('jadwal');
+Route::get('/update-jadwal-rahasia-x912', [JadwalHarianController::class, 'uploadForm']);
+Route::post('/update-jadwal-rahasia-x912', [JadwalHarianController::class, 'upload'])->name('jadwal-harian.upload');
+Route::delete('/update-jadwal-rahasia-x912/{id}', [JadwalHarianController::class, 'destroy'])->name('jadwal-harian.destroy');
+
 Route::get('/ppid', [FrontendController::class, 'ppid'])->name('ppid');
 Route::get('/zona', [FrontendController::class, 'zonaIntegritas'])->name('zona');
 Route::get('/komplain', [FrontendController::class, 'komplain'])->name('komplain');
@@ -57,9 +63,6 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 
     // Reset Cache Instagram
     Route::post('/refresh-instagram', [AdminController::class, 'refreshInstagram'])->name('refresh_instagram');
-
-    // 1. Kelola Berita: Menggunakan BeritaCrudController
-    Route::resource('berita', BeritaCrudController::class);
 
     // 2. Kelola Jadwal Dokter: Menggunakan JadwalCrudController
     Route::get('/jadwal', [JadwalCrudController::class, 'index'])->name('jadwal.index');

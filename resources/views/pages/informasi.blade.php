@@ -29,6 +29,7 @@
             <li class="nav-item"><a class="nav-link nav-scroll text-success fw-bold" href="#visi-misi">Visi & Misi</a></li>
             <li class="nav-item"><a class="nav-link nav-scroll text-success fw-bold" href="#sejarah">Sejarah</a></li>
             <li class="nav-item"><a class="nav-link nav-scroll text-success fw-bold" href="#organisasi">Organisasi</a></li>
+
             <li class="nav-item"><a class="nav-link nav-scroll text-success fw-bold" href="#karumkit">Pimpinan</a></li>
         </ul>
     </div>
