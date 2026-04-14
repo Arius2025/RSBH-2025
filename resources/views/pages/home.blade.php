@@ -5,7 +5,7 @@
 
 <main>
     {{-- 1. HERO SECTION --}}
-    <section class="hero-section position-relative d-flex align-items-center justify-content-center overflow-hidden" style="min-height: 85vh;" data-aos="zoom-in"> 
+    <section class="hero-section position-relative d-flex align-items-center justify-content-center overflow-hidden hero-min-height" data-aos="zoom-in"> 
         <div class="hero-bg" style="background: url('images/hero-rs.jpg') center/cover no-repeat; position: absolute; top:0; left:0; width:100%; height:100%; animation: slowZoom 20s infinite alternate;"></div>
         <div class="hero-overlay" style="background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(25, 135, 84, 0.8) 100%); position: absolute; top:0; left:0; width:100%; height:100%; z-index: 1;"></div>
         
@@ -31,8 +31,8 @@
     </section>
 
     {{-- 2. TENTANG KAMI --}}
-    <section class="container py-5">
-        <div class="bg-white rounded-5 shadow-lg p-4 p-md-5 position-relative border-top border-5 border-success" style="margin-top: -60px; z-index: 3;" data-aos="fade-up"> 
+    <section class="container py-4 py-md-5">
+        <div class="bg-white rounded-5 shadow-lg p-3 p-md-5 position-relative border-top border-5 border-success" style="margin-top: -40px; z-index: 3;" data-aos="fade-up"> 
             <div class="row align-items-center g-5">
                 {{-- Profil Karumkit --}}
                 <div class="col-md-4 col-lg-3 text-center">
@@ -83,9 +83,9 @@
     </section>
 
     {{-- 3. BANNER SITERBAT --}}
-    <section class="py-5 bg-light">
+    <section class="py-4 py-md-5 bg-light">
         <div class="container" data-aos="zoom-in">
-            <div class="bg-success rounded-4 p-4 p-md-5 text-white position-relative overflow-hidden shadow-lg">
+            <div class="bg-success rounded-4 p-3 p-md-5 text-white position-relative overflow-hidden shadow-lg">
                 <div class="position-absolute end-0 bottom-0 opacity-25 me-n5 mb-n5">
                     <i class="bi bi-bicycle" style="font-size: 15rem;"></i>
                 </div>
@@ -103,8 +103,8 @@
     </section>
 
     {{-- 4. GALERI MARQUEE (Jalan Otomatis) --}}
-    <section class="py-5 bg-white overflow-hidden">
-        <div class="container mb-4 text-center">
+    <section class="py-4 py-md-5 bg-white overflow-hidden">
+        <div class="container mb-3 text-center">
             <h2 class="fw-bold text-success"><i class="bi bi-images me-2"></i> Galeri Fasilitas</h2>
             <p class="text-muted">Fasilitas penunjang medis yang modern dan nyaman</p>
         </div>
@@ -126,9 +126,9 @@
     </section>
 
     {{-- 5. TESTIMONI --}}
-    <section class="py-5 bg-light"> 
+    <section class="py-4 py-md-5 bg-light"> 
         <div class="container">
-            <div class="text-center mb-5" data-aos="fade-down">
+            <div class="text-center mb-4" data-aos="fade-down">
                 <h2 class="fw-bold text-dark mb-2">Apa Kata Mereka?</h2> 
                 <div class="d-flex justify-content-center align-items-center gap-2">
                     <i class="bi bi-google text-primary"></i>
@@ -261,6 +261,11 @@
     .hover-lift { transition: transform 0.3s ease; }
     .hover-lift:hover { transform: translateY(-5px); }
     .hover-scale:hover { transform: scale(1.05); }
+
+    .hero-min-height { min-height: 85vh; }
+    @media (max-width: 768px) {
+        .hero-min-height { min-height: 60vh; }
+    }
 
     /* MARQUEE GALERI */
     .marquee-wrapper { width: 100%; overflow: hidden; position: relative; padding-bottom: 20px; background: #fff; }
