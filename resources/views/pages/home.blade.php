@@ -5,12 +5,12 @@
 
 <main>
     {{-- 1. HERO SECTION --}}
-    <section class="hero-section position-relative d-flex align-items-center justify-content-center overflow-hidden hero-min-height" data-aos="zoom-in"> 
+    <section class="hero-section position-relative d-flex align-items-center align-items-md-center justify-content-center overflow-hidden hero-min-height" data-aos="zoom-in"> 
         <div class="hero-bg" style="background: url('images/hero-rs.jpg') center/cover no-repeat; position: absolute; top:0; left:0; width:100%; height:100%; animation: slowZoom 20s infinite alternate;"></div>
         <div class="hero-overlay" style="background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(25, 135, 84, 0.8) 100%); position: absolute; top:0; left:0; width:100%; height:100%; z-index: 1;"></div>
         
-        <div class="container position-relative text-white text-center" style="z-index: 2;">
-            <span class="badge bg-warning text-dark mb-3 px-3 py-2 rounded-pill fw-bold shadow-sm" data-aos="fade-down">
+        <div class="container position-relative text-white text-center py-5 py-md-0" style="z-index: 2;">
+            <span class="badge bg-warning text-dark mb-2 px-3 py-2 rounded-pill fw-bold shadow-sm" data-aos="fade-down">
                 <i class="bi bi-star-fill me-1"></i> Terakreditasi Paripurna
             </span>
             <h1 class="fw-extrabold display-4 text-shadow mb-3" data-aos="fade-up">
@@ -31,8 +31,8 @@
     </section>
 
     {{-- 2. TENTANG KAMI --}}
-    <section class="container py-4 py-md-5">
-        <div class="bg-white rounded-5 shadow-lg p-3 p-md-5 position-relative border-top border-5 border-success" style="margin-top: -40px; z-index: 3;" data-aos="fade-up"> 
+    <section class="container py-3 py-md-4">
+        <div class="bg-white rounded-5 shadow-lg p-3 p-md-5 position-relative border-top border-5 border-success" style="margin-top: -30px; z-index: 3;" data-aos="fade-up"> 
             <div class="row align-items-center g-5">
                 {{-- Profil Karumkit --}}
                 <div class="col-md-4 col-lg-3 text-center">

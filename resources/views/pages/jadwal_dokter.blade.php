@@ -31,7 +31,7 @@
     }
 </style>
 
-<div class="container py-5 mt-4" style="font-family: 'Inter', sans-serif;">
+<div class="container py-3 py-md-4" style="font-family: 'Inter', sans-serif;">
     <div class="hero-gradient shadow-sm" data-aos="fade-up">
         <span class="badge bg-success px-3 py-2 rounded-pill mb-3 shadow-sm">Pelayanan Maksimal</span>
         <h1 class="fw-bold text-success display-5 mb-2">Dokter di Rumah Sakit</h1>

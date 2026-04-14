@@ -35,7 +35,7 @@
     </div>
 </div>
 
-<div class="container py-5">
+<div class="container py-3 py-md-5">
     
     {{-- 3. VISI & MISI --}}
     <section id="visi-misi" class="info-section mb-5 pt-3">

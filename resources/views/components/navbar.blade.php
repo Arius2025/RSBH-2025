@@ -178,8 +178,8 @@
 </div>
 
 {{-- Spacer agar konten tidak tertutup navbar yang melayang --}}
-<div class="d-none d-lg-block" style="height: 80px;"></div>
-<div class="d-lg-none" style="height: 60px;"></div>
+<div class="d-none d-lg-block bg-white" style="height: 70px;"></div>
+<div class="d-lg-none bg-white" style="height: 55px;"></div>
 
 <style>
     .transition-all { transition: all 0.3s ease; }

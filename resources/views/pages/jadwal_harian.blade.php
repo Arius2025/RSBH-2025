@@ -51,7 +51,7 @@
 @endpush
 
 @section('content')
-<div class="container py-3 py-md-5" style="font-family: 'Inter', sans-serif;">
+<div class="container py-2 py-md-4" style="font-family: 'Inter', sans-serif;">
     <div class="row justify-content-center">
         <div class="col-lg-12">
             @if($items->isEmpty())
