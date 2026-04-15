@@ -13,16 +13,20 @@ class JadwalHarianController extends Controller
      */
     public function index()
     {
+        // Ambil hanya 1 record terbaru untuk hari ini
         $items = JadwalHarian::whereDate('tanggal', today())
-            ->orderBy('type', 'asc')
             ->orderBy('created_at', 'desc')
+            ->take(1)
             ->get();
 
-        // Jika tidak ada hari ini, ambil yang terbaru
+        // Jika tidak ada hari ini, ambil 1 record terbaru dari tanggal terakhir yang tersedia
         if ($items->isEmpty()) {
             $lastDate = JadwalHarian::max('tanggal');
             $items    = $lastDate
-                ? JadwalHarian::whereDate('tanggal', $lastDate)->orderBy('type', 'asc')->orderBy('created_at', 'desc')->get()
+                ? JadwalHarian::whereDate('tanggal', $lastDate)
+                    ->orderBy('created_at', 'desc')
+                    ->take(1)
+                    ->get()
                 : collect();
         }
 
