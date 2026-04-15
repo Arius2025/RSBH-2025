@@ -16,6 +16,22 @@
     .form-control { border-radius: 14px; padding: 14px 16px; border: 2px solid #e2e8f0; background-color: #f8fafc; transition: all 0.3s ease; font-weight: 500; }
     .form-control:focus { background-color: #ffffff; border-color: #dc3545; box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.1); }
     @media (max-width: 768px) { .map-container { min-height: 400px !important; } }
+
+    /* Pulse Animation */
+    @keyframes pulse-red {
+        0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7); }
+        70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(220, 53, 69, 0); }
+        100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
+    }
+    .pulse-indicator-red {
+        width: 10px; height: 10px; background: #dc3545; border-radius: 50%;
+        display: inline-block; animation: pulse-red 2s infinite; margin-right: 8px;
+    }
+    .status-badge-red {
+        background: rgba(220, 53, 69, 0.08); color: #dc3545; font-size: 0.65rem;
+        font-weight: 800; padding: 6px 12px; border-radius: 50px; text-transform: uppercase;
+        letter-spacing: 0.5px; border: 1px solid rgba(220, 53, 69, 0.2);
+    }
 </style>
 
 <div class="container premium-container py-4">
@@ -28,6 +44,12 @@
                     </span>
                     Ambulan Jemput Gratis
                 </h5>
+
+                <div class="mb-4 text-center">
+                    <span class="status-badge-red text-shadow-none">
+                        <span class="pulse-indicator-red"></span> SIAGA 24 JAM - EMERGENCY READY
+                    </span>
+                </div>
                 
                 <form id="ambulanForm">
                     <div class="mb-3">
@@ -83,8 +105,9 @@
     function initMap() {
         map = L.map('map', { zoomControl: false }).setView(RS_COORDS, 13);
         L.control.zoom({ position: 'topright' }).addTo(map);
-        L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_toner_lite/{z}/{x}/{y}{r}.png', {
-            attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://www.stamen.com/" target="_blank">Stamen Design</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            subdomains: 'abcd',
             maxZoom: 20
         }).addTo(map);
 
