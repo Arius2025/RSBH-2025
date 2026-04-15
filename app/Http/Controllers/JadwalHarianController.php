@@ -13,22 +13,27 @@ class JadwalHarianController extends Controller
      */
     public function index()
     {
-        // Ambil hanya 1 record terbaru untuk hari ini
-        $items = JadwalHarian::whereDate('tanggal', today())
-            ->orderBy('created_at', 'desc')
-            ->take(1)
-            ->get();
+        // Cari tanggal target (hari ini atau tanggal terakhir yang ada datanya)
+        $targetDate = JadwalHarian::whereDate('tanggal', today())->exists() 
+            ? today() 
+            : JadwalHarian::max('tanggal');
 
-        // Jika tidak ada hari ini, ambil 1 record terbaru dari tanggal terakhir yang tersedia
-        if ($items->isEmpty()) {
-            $lastDate = JadwalHarian::max('tanggal');
-            $items    = $lastDate
-                ? JadwalHarian::whereDate('tanggal', $lastDate)
-                    ->orderBy('created_at', 'desc')
-                    ->take(1)
-                    ->get()
-                : collect();
+        if (!$targetDate) {
+            return view('pages.jadwal_harian', ['items' => collect()]);
         }
+
+        // Ambil 1 foto terbaru dan 1 video terbaru untuk tanggal target
+        $latestFoto = JadwalHarian::whereDate('tanggal', $targetDate)
+            ->where('type', 'foto')
+            ->latest()
+            ->first();
+
+        $latestVideo = JadwalHarian::whereDate('tanggal', $targetDate)
+            ->where('type', 'video')
+            ->latest()
+            ->first();
+
+        $items = collect([$latestFoto, $latestVideo])->filter();
 
         return view('pages.jadwal_harian', compact('items'));
     }
