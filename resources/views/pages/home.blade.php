@@ -13,6 +13,7 @@
             <span class="badge bg-warning text-dark mb-2 px-3 py-2 rounded-pill fw-bold shadow-sm" data-aos="fade-down">
                 <i class="bi bi-star-fill me-1"></i> Terakreditasi Paripurna
             </span>
+            <p id="greeting" class="text-white-50 small fw-bold mb-0 text-uppercase ls-1" style="letter-spacing: 2px;" data-aos="fade-down" data-aos-delay="50">Selamat Datang</p>
             <h1 class="text-shadow mb-3 hero-title" data-aos="fade-up">
                 RS Tk. III Baladhika Husada
             </h1>
@@ -330,4 +331,27 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const greetingElement = document.getElementById('greeting');
+        const hour = new Date().getHours();
+        let greeting = "Selamat Datang";
+
+        if (hour >= 5 && hour < 11) {
+            greeting = "Selamat Pagi";
+        } else if (hour >= 11 && hour < 15) {
+            greeting = "Selamat Siang";
+        } else if (hour >= 15 && hour < 18) {
+            greeting = "Selamat Sore";
+        } else {
+            greeting = "Selamat Malam";
+        }
+
+        if (greetingElement) {
+            greetingElement.textContent = greeting;
+        }
+    });
+</script>
+@endpush
 @endsection

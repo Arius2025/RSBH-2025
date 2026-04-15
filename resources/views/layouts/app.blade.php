@@ -38,6 +38,17 @@
       /* ========================================= */
       /* 1. GLOBAL LAYOUT FIX                      */
       /* ========================================= */
+      
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar { width: 12px; }
+      ::-webkit-scrollbar-track { background: rgba(25, 135, 84, 0.05); }
+      ::-webkit-scrollbar-thumb { 
+          background: linear-gradient(to bottom, #198754, #115c39); 
+          border-radius: 10px;
+          border: 3px solid #E6F4EA; 
+      }
+      ::-webkit-scrollbar-thumb:hover { background: #0e4b2e; }
+
       body {
           background-color: #E6F4EA;
           display: flex;

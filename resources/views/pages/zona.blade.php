@@ -26,7 +26,7 @@
         <li class="list-group-item bg-light"><i class="bi bi-check-circle-fill text-success me-2"></i>Konflik Kepentingan</li>
       </ul>
       <div class="text-center">
-        <img src="{{ asset('images/Zona/qrzona.png') }}" alt="QR WBS" class="img-fluid mb-2 rounded shadow-sm border p-1" style="max-width: 200px;">
+        <img src="{{ asset('images/Zona/qrzona.png') }}" alt="QR WBS" class="img-fluid mb-2 rounded shadow-sm border p-1 mx-auto d-block" style="max-width: 200px;">
         <p class="small text-muted fw-semibold">Scan QR untuk pengaduan anonim</p>
       </div>
     </section>

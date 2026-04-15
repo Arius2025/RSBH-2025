@@ -91,7 +91,7 @@
 </div>
 
 <script>
-    const RS_COORDS = [-8.165187, 113.704256];
+    const RS_COORDS = [-8.1639486, 113.7061723];
     const CONFIG = {
         radius: 15000,
         wa: "628113650118",
