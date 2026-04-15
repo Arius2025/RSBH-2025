@@ -13,19 +13,33 @@
             <span class="badge bg-warning text-dark mb-2 px-3 py-2 rounded-pill fw-bold shadow-sm" data-aos="fade-down">
                 <i class="bi bi-star-fill me-1"></i> Terakreditasi Paripurna
             </span>
-            <h1 class="fw-extrabold display-4 text-shadow mb-3" data-aos="fade-up">
+            <h1 class="text-shadow mb-3 hero-title" data-aos="fade-up">
                 RS Tk. III Baladhika Husada
             </h1>
-            <p class="lead mb-5 text-shadow-sm opacity-90 mx-auto fs-5" style="max-width: 750px;" data-aos="fade-up" data-aos-delay="100">
+            <p class="lead mb-4 text-shadow-sm opacity-90 mx-auto fs-6" style="max-width: 600px;" data-aos="fade-up" data-aos-delay="100">
                 Rumah Sakit Umum Kelas C yang melayani masyarakat umum, BPJS, serta TNI/POLRI dengan sepenuh hati.
             </p>
-            <div class="d-flex justify-content-center flex-wrap gap-3 mt-4">
-                <a href="{{ route('jadwal') }}" class="btn btn-light text-success btn-lg shadow fw-bold px-4 py-3 rounded-pill transition-all hover-lift" data-aos="zoom-in" data-aos-delay="200">
-                    <i class="bi bi-calendar-check me-2"></i> JADWAL DOKTER
-                </a>
-                <a href="{{ route('siterbat') }}" class="btn btn-outline-light btn-lg shadow fw-bold px-4 py-3 rounded-pill transition-all hover-lift" data-aos="zoom-in" data-aos-delay="250">
-                    <i class="bi bi-bicycle me-2"></i> PESAN OBAT DIANTAR
-                </a>
+            <div class="row g-2 g-md-3 justify-content-center mt-3">
+                <div class="col-6 col-md-auto" data-aos="zoom-in" data-aos-delay="200">
+                    <a href="{{ route('jadwal') }}" class="btn btn-outline-light w-100 shadow fw-bold p-3 rounded-pill transition-all hover-lift d-flex align-items-center justify-content-center h-100" style="font-size: 0.75rem;">
+                        <i class="bi bi-calendar-check me-1"></i> JADWAL DOKTER
+                    </a>
+                </div>
+                <div class="col-6 col-md-auto" data-aos="zoom-in" data-aos-delay="250">
+                    <a href="{{ route('siterbat') }}" class="btn btn-outline-light w-100 shadow fw-bold p-3 rounded-pill transition-all hover-lift d-flex align-items-center justify-content-center h-100" style="font-size: 0.75rem;">
+                        <i class="bi bi-bicycle me-1"></i> SITERBAT
+                    </a>
+                </div>
+                <div class="col-6 col-md-auto" data-aos="zoom-in" data-aos-delay="300">
+                    <a href="{{ route('ambulance') }}" class="btn btn-outline-light w-100 shadow fw-bold p-3 rounded-pill transition-all hover-lift d-flex align-items-center justify-content-center h-100" style="font-size: 0.75rem;">
+                        <i class="bi bi-truck me-1"></i> AMBULAN
+                    </a>
+                </div>
+                <div class="col-6 col-md-auto" data-aos="zoom-in" data-aos-delay="350">
+                    <a href="https://wa.me/628132683521" target="_blank" class="btn btn-outline-light w-100 shadow fw-bold p-3 rounded-pill transition-all hover-lift d-flex align-items-center justify-content-center h-100" style="font-size: 0.75rem;">
+                        <i class="bi bi-house-heart me-1"></i> SANTARDEKATE
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -57,7 +71,7 @@
         </div>
 
         {{-- Nama Pejabat --}}
-        <h5 class="mt-4 fw-bold text-dark mb-1">Letkol CKM dr. Zaltonys Tolombot, Sp.M</h5>
+        <h6 class="mt-3 fw-bold text-dark mb-1 d-block mx-auto px-2" style="font-size: 0.8rem; line-height: 1.4; max-width: 250px;">Letkol CKM dr. Zaltonys Tolombot, Sp.M</h6>
     </div>
 </div>
                 
@@ -252,11 +266,22 @@
 
 <style>
     /* Animasi & Utility */
-    @keyframes slowZoom {
-        0% { transform: scale(1); }
-        100% { transform: scale(1.1); }
+    .hero-title {
+        font-weight: 950 !important;
+        font-size: 4.5rem;
+        letter-spacing: -2.5px;
+        line-height: 1.1;
+        text-transform: uppercase;
+        filter: drop-shadow(0 4px 15px rgba(0,0,0,0.5));
     }
-    
+
+    @media (max-width: 992px) {
+        .hero-title { font-size: 3rem; letter-spacing: -1.5px; }
+    }
+    @media (max-width: 576px) {
+        .hero-title { font-size: 2.2rem; letter-spacing: -1px; }
+    }
+
     .text-shadow { text-shadow: 2px 2px 8px rgba(0,0,0,0.6); }
     .hover-lift { transition: transform 0.3s ease; }
     .hover-lift:hover { transform: translateY(-5px); }

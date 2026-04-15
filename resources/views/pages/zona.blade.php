@@ -52,7 +52,7 @@
 
     {{-- Indeks Persepsi --}}
     <section class="bg-white rounded p-4 shadow-lg mb-5" data-aos="fade-up"> 
-      <h5 class="text-success fw-bold mb-4 text-center border-bottom border-success pb-2"><i class="bi bi-clipboard-data me-2"></i> Hasil Indeks Persepsi Triwulan III 2025</h5>
+      <h5 class="text-success fw-bold mb-4 text-center border-bottom border-success pb-2"><i class="bi bi-clipboard-data me-2"></i> Hasil Indeks Persepsi Triwulan I 2026</h5>
       <div class="row g-4">
         {{-- IPAK --}}
         <div class="col-md-6">
@@ -60,46 +60,46 @@
           <ul class="list-group list-group-flush border rounded shadow-sm">
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 Diskriminasi Pelayanan
-                <span class="badge bg-success rounded-pill p-2">94.75</span>
+                <span class="badge bg-success rounded-pill p-2">90.18</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 Kecurangan Pelayanan
-                <span class="badge bg-success rounded-pill p-2">95.00</span>
+                <span class="badge bg-success rounded-pill p-2">89.87</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 Gratifikasi
-                <span class="badge bg-success rounded-pill p-2">95.75</span>
+                <span class="badge bg-success rounded-pill p-2">90.43</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 Pungutan Liar
-                <span class="badge bg-success rounded-pill p-2">96.00</span>
+                <span class="badge bg-success rounded-pill p-2">96.15</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 Percaloan
-                <span class="badge bg-success rounded-pill p-2">96.00</span>
+                <span class="badge bg-success rounded-pill p-2">90.15</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center bg-success text-white fw-bold">
                 Rata-rata Konversi
-                <span class="badge bg-light text-success p-2">95.99 – A / Bersih dari Korupsi</span>
+                <span class="badge bg-light text-success p-2">90.24 – A / Bersih dari Korupsi</span>
             </li>
           </ul>
         </div>
 
         {{-- IKP --}}
         <div class="col-md-6">
-          <h6 class="fw-bold text-success mb-3">💬 Indeks Persepsi Kualitas Pelayanan (IKP)</h6>
+          <h6 class="fw-bold text-success mb-3">🛡️ Indeks Persepsi Kualitas Pelayanan (IPKP)</h6>
           <ul class="list-group list-group-flush border rounded shadow-sm">
-            <li class="list-group-item d-flex justify-content-between align-items-center">Informasi <span class="badge bg-success rounded-pill p-2">94.68</span></li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">Persyaratan <span class="badge bg-success rounded-pill p-2">94.68</span></li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">Prosedur <span class="badge bg-success rounded-pill p-2">94.68</span></li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">Jangka Waktu <span class="badge bg-success rounded-pill p-2">92.09</span></li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">Tarif/Biaya <span class="badge bg-success rounded-pill p-2">93.22</span></li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">Sarana dan Prasarana <span class="badge bg-success rounded-pill p-2">94.68</span></li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">Petugas Pelayanan <span class="badge bg-success rounded-pill p-2">95.92</span></li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">Layanan Pengaduan/Konsultasi <span class="badge bg-success rounded-pill p-2">95.92</span></li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">Informasi <span class="badge bg-success rounded-pill p-2">90.96</span></li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">Persyaratan <span class="badge bg-success rounded-pill p-2">90.53</span></li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">Prosedur <span class="badge bg-success rounded-pill p-2">90.43</span></li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">Jangka Waktu <span class="badge bg-success rounded-pill p-2">89.65</span></li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">Tarif/Biaya <span class="badge bg-success rounded-pill p-2">90.03</span></li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">Sarana dan Prasarana <span class="badge bg-success rounded-pill p-2">89.90</span></li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">Petugas Pelayanan <span class="badge bg-success rounded-pill p-2">90.32</span></li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">Layanan Pengaduan/Konsultasi <span class="badge bg-success rounded-pill p-2">89.93</span></li>
             <li class="list-group-item d-flex justify-content-between align-items-center bg-success text-white fw-bold">
                 Rata-rata Konversi
-                <span class="badge bg-light text-success p-2">94.89 – A / Sangat Baik</span>
+                <span class="badge bg-light text-success p-2">90.22 – A / Sangat Baik</span>
             </li>
           </ul>
         </div>

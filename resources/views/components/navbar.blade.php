@@ -2,11 +2,10 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top py-2 shadow-sm d-none d-lg-block border-bottom" style="z-index: 1100;">
     <div class="container-fluid px-4">
         <div class="d-flex align-items-center justify-content-between w-100">
-            {{-- KIRI: Nama RS & Logo --}}
             <div class="d-flex align-items-center">
                 <a class="navbar-brand d-flex align-items-center me-3" href="{{ route('home') }}">
                     <div class="lh-1 border-end pe-3">
-                        <span class="fw-bold text-success d-block" style="font-size: 1.2rem; letter-spacing: -0.5px;">RS Baladhika Husada</span>
+                        <span class="text-success d-block fw-black" style="font-size: 1.3rem; letter-spacing: -0.8px; font-weight: 900 !important; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.1));">RS Tk. III Baladhika Husada</span>
                         <small class="text-muted fw-bold" style="font-size: 0.6rem; letter-spacing: 1px;">HESTI WIRA SAKTI</small>
                     </div>
                 </a>
@@ -40,18 +39,34 @@
                     
                     {{-- MENU LAYANAN --}}
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle px-2 {{ request()->routeIs('siterbat') ? 'text-success active' : '' }}" href="#" data-bs-toggle="dropdown">Layanan</a>
-                        <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-3 p-2 rounded-3">
+                        <a class="nav-link dropdown-toggle px-2 {{ (request()->is('siterbat*') || request()->is('ambulance*') || request()->is('dashboard-indikator*')) ? 'text-success active' : '' }}" href="#" data-bs-toggle="dropdown">Layanan</a>
+                        <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-3 p-2 rounded-3" style="min-width: 250px;">
                             <li><a class="dropdown-item rounded-2" href="{{ route('ppid') }}">PPID</a></li>
                             <li><a class="dropdown-item rounded-2" href="{{ route('zona') }}">Zona Integritas</a></li>
-                            <li><hr class="dropdown-divider opacity-50"></li>
-                            <li><a class="dropdown-item rounded-2 text-danger fw-bold" href="{{ route('komplain') }}">Komplain</a></li>
                             
-                            {{-- SITERBAT: Ikon Sepeda Listrik & Penanda PENTING --}}
-                                <a class="dropdown-item rounded-2 fw-bold text-success d-flex justify-content-between align-items-center py-2" href="{{ route('siterbat') }}">
+                            <li><hr class="dropdown-divider opacity-50"></li>
+                            
+                            {{-- NESTED DROPDOWN SIGAP --}}
+                            <li class="dropdown-submenu">
+                                <a class="dropdown-item rounded-2 py-2 fw-bold text-success d-flex justify-content-between align-items-center" href="#">
                                     <span><i class="bi bi-lightning-fill me-2"></i>SIGAP</span>
-                                    <span class="badge rounded-pill bg-primary ms-2" style="font-size: 0.55rem;">PENTING</span>
+                                    <i class="bi bi-chevron-right small"></i>
                                 </a>
+                                <ul class="dropdown-menu border-0 shadow-lg p-2 rounded-3">
+                                    <li><a class="dropdown-item rounded-2 py-2 {{ request()->routeIs('siterbat') ? 'bg-success text-white' : '' }}" href="{{ route('siterbat') }}">
+                                        <i class="bi bi-bicycle me-2"></i>Siterbat
+                                    </a></li>
+                                    <li><a class="dropdown-item rounded-2 py-2 {{ request()->routeIs('ambulance') ? 'bg-danger text-white' : '' }}" href="{{ route('ambulance') }}">
+                                        <i class="bi bi-truck me-2"></i>Ambulan
+                                    </a></li>
+                                    <li><a class="dropdown-item rounded-2 py-2 {{ request()->routeIs('dashboard-indikator') ? 'bg-info bg-opacity-10 text-dark fw-bold' : '' }}" href="{{ route('dashboard-indikator') }}">
+                                        <i class="bi bi-graph-up-arrow me-2 text-info"></i>Dashboard
+                                    </a></li>
+                                </ul>
+                            </li>
+
+                            <li><hr class="dropdown-divider opacity-50"></li>
+                            <li><a class="dropdown-item rounded-2 text-danger fw-bold" href="{{ route('komplain') }}">Komplain / Aduan</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -75,8 +90,8 @@
             <span class="d-block" style="font-size: 0.65rem;">Jadwal</span>
         </a>
         
-        {{-- SITERBAT MOBILE: Ikon Sepeda Listrik --}}
-        <a class="nav-link-mobile {{ request()->routeIs('siterbat') ? 'active-mobile' : '' }}" href="{{ route('siterbat') }}">
+        {{-- SIGAP MOBILE --}}
+        <a class="nav-link-mobile {{ (request()->is('siterbat*') || request()->is('ambulance*') || request()->is('dashboard-indikator*')) ? 'active-mobile' : '' }}" href="#" data-bs-toggle="offcanvas" data-bs-target="#mobileMenuOffcanvas">
             <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center mx-auto shadow" style="width: 42px; height: 42px; margin-top: -20px; border: 4px solid white;">
                 <i class="bi bi-lightning-fill fs-5"></i>
             </div>
@@ -151,6 +166,41 @@
                     <span class="fw-medium" style="font-size: 0.75rem;">PPID</span>
                 </a>
             </div>
+            <!-- SIGAP SECTION -->
+            <div class="col-12 mt-4">
+                <div class="p-3 bg-success bg-opacity-10 rounded-4">
+                    <h6 class="fw-bold text-success mb-3 d-flex align-items-center">
+                        <i class="bi bi-lightning-fill me-2"></i> LAYANAN SIGAP
+                    </h6>
+                    <div class="row g-3">
+                        <div class="col-4">
+                            <a href="{{ route('siterbat') }}" class="text-decoration-none text-dark d-block">
+                                <div class="p-2 bg-white rounded-3 mb-1 mx-auto d-flex align-items-center justify-content-center text-success shadow-sm" style="width: 45px; height: 45px;">
+                                    <i class="bi bi-bicycle fs-4"></i>
+                                </div>
+                                <span style="font-size: 0.65rem;">Siterbat</span>
+                            </a>
+                        </div>
+                        <div class="col-4">
+                            <a href="{{ route('ambulance') }}" class="text-decoration-none text-dark d-block">
+                                <div class="p-2 bg-white rounded-3 mb-1 mx-auto d-flex align-items-center justify-content-center text-danger shadow-sm" style="width: 45px; height: 45px;">
+                                    <i class="bi bi-truck fs-4"></i>
+                                </div>
+                                <span style="font-size: 0.65rem;">Ambulan</span>
+                            </a>
+                        </div>
+                        <div class="col-4">
+                            <a href="{{ route('dashboard-indikator') }}" class="text-decoration-none text-dark d-block">
+                                <div class="p-2 bg-white rounded-3 mb-1 mx-auto d-flex align-items-center justify-content-center text-info shadow-sm" style="width: 45px; height: 45px;">
+                                    <i class="bi bi-graph-up-arrow fs-4"></i>
+                                </div>
+                                <span style="font-size: 0.65rem;">Dashboard</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Zona Integritas -->
             <div class="col-4">
                 <a href="{{ route('zona') }}" class="text-decoration-none text-dark d-block hover-shadow-menu">
@@ -177,9 +227,8 @@
     </div>
 </div>
 
-{{-- Spacer agar konten tidak tertutup navbar yang melayang --}}
-<div class="d-none d-lg-block bg-white" style="height: 70px;"></div>
-<div class="d-lg-none bg-white" style="height: 55px;"></div>
+{{-- Spacer agar konten tidak tertutup navbar yang melayang (Desktop Only) --}}
+<div class="d-none d-lg-block bg-white" style="height: 75px;"></div>
 
 <style>
     .transition-all { transition: all 0.3s ease; }
@@ -215,5 +264,21 @@
     @keyframes slideIn {
         from { opacity: 0; transform: translateY(10px); }
         to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* NESTED DROPDOWN SIGAP */
+    @media (min-width: 992px) {
+        .dropdown-submenu { position: relative; }
+        .dropdown-submenu .dropdown-menu {
+            top: 0;
+            left: 100%;
+            margin-top: -10px;
+            margin-left: 5px;
+            display: none;
+            min-width: 180px;
+        }
+        .dropdown-submenu:hover > .dropdown-menu {
+            display: block;
+        }
     }
 </style>

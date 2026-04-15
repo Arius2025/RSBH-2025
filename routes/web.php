@@ -34,6 +34,8 @@ Route::get('/zona', [FrontendController::class, 'zonaIntegritas'])->name('zona')
 Route::get('/komplain', [FrontendController::class, 'komplain'])->name('komplain');
 Route::get('/kontak',[FrontendController::class,'kontak'])->name('kontak');
 Route::get('/siterbat',[FrontendController::class,'siterbat'])->name('siterbat');
+Route::get('/ambulance',[FrontendController::class,'ambulance'])->name('ambulance');
+Route::get('/dashboard-indikator',[FrontendController::class,'dashboardIndikator'])->name('dashboard-indikator');
 Route::get('/tidur',[FrontendController::class,'tidur'])->name('tidur');
 Route::get('/api/bed-status', [FrontendController::class, 'getBedData'])->name('api.bed.status');
 Route::get('/jadwalOperasi',[FrontendController::class,'jadwalOperasi'])->name('jadwaloperasi');

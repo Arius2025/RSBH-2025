@@ -62,17 +62,18 @@
   <section class="mb-5">
     <div class="text-center mb-5" data-aos="fade-up">
       <h4 class="text-success fw-bold border-bottom border-success pb-2 mb-3"><i class="bi bi-graph-up me-2"></i> Indeks Kepuasan Pasien (IKP)</h4>
-      <p class="lead text-muted">Transparansi hasil survey kepuasan pasien per bulan.</p>
+      <p class="lead text-muted">Transparansi hasil survey kepuasan pasien per Triwulan.</p>
     </div>
 
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 justify-content-center">
       @php
         // PATH MENGGUNAKAN public/images/smile/ DAN EKSTENSI .jpg SESUAI FILE YANG DIUPLOAD
         $ikp_photos = [
-          ['src' => asset('images/smile/oktober25.jpeg'), 'alt' => 'IKP Oktober 2025'],
-          ['src' => asset('images/smile/september25.jpeg'), 'alt' => 'IKP September 2025'],
-          ['src' => asset('images/smile/agustus25.jpeg'), 'alt' => 'IKP Agustus 2025'],
-          ['src' => asset('images/smile/juli25.jpeg'), 'alt' => 'IKP Juli 2025'],
+          ['src' => asset('images/smile/IKP TRIWULAN I 2025.jpg'), 'alt' => 'IKP TRIWULAN I 2025'],
+          ['src' => asset('images/smile/IKP TRIWULAN II 2025.jpg'), 'alt' => 'IKP TRIWULAN II 2025'],
+          ['src' => asset('images/smile/IKP TRIWULAN III 2025.jpg'), 'alt' => 'IKP TRIWULAN III 2025'],
+          ['src' => asset('images/smile/IKP TRIWULAN IV 2025.jpg'), 'alt' => 'IKP TRIWULAN IV 2025'],
+          ['src' => asset('images/smile/IKP TRIWULAN I 2026.jpeg'), 'alt' => 'IKP TRIWULAN I 2026'],
         ];
       @endphp
 
