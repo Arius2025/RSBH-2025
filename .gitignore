@@ -22,3 +22,7 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Google Cloud Credentials
+sigap-credentials.json
+sigap-dkt-*.json

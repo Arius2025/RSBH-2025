@@ -13,7 +13,7 @@ class GoogleSheetService
     public function __construct($spreadsheetId = null)
     {
         $this->spreadsheetId = $spreadsheetId ?? '1zZHjcIYoal75rbikPZ6oElTMyGpKjzS2OdzzCKm__4c';
-        $this->jsonPath = base_path('sigap-dkt-30d10a90662e.json');
+        $this->jsonPath = base_path('sigap-credentials.json');
     }
 
     public function setSpreadsheetId($id)
@@ -30,7 +30,8 @@ class GoogleSheetService
                 throw new \Exception("Failed to get Google Access Token");
             }
 
-            $url = "https://sheets.googleapis.com/v4/spreadsheets/{$this->spreadsheetId}/values/{$range}:append?valueInputOption=RAW";
+            $encodedRange = urlencode($range);
+            $url = "https://sheets.googleapis.com/v4/spreadsheets/{$this->spreadsheetId}/values/{$encodedRange}:append?valueInputOption=RAW";
 
             $response = Http::withOptions(['verify' => false])
                 ->withToken($token)
@@ -54,54 +55,47 @@ class GoogleSheetService
 
     private function getAccessToken()
     {
-        $config = json_decode(file_get_contents($this->jsonPath), true);
-        $privateKey = $config['private_key'];
-        $clientEmail = $config['client_email'];
+        try {
+            $config = json_decode(file_get_contents($this->jsonPath), true);
+            $privateKey = $config['private_key'];
+            $clientEmail = $config['client_email'];
 
-        $header = json_encode(['alg' => 'RS256', 'typ' => 'JWT']);
-        $iat = time();
-        $exp = $iat + 3600;
-        $payload = json_encode([
-            'iss' => trim($clientEmail),
-            'scope' => 'https://www.googleapis.com/auth/spreadsheets',
-            'aud' => 'https://oauth2.googleapis.com/token',
-            'exp' => $exp,
-            'iat' => $iat
-        ]);
-        // Note: Not using JSON_UNESCAPED_SLASHES here to see if default behavior works
+            $header = ['alg' => 'RS256', 'typ' => 'JWT'];
+            $now = time();
+            $payload = [
+                'iss' => $clientEmail,
+                'scope' => 'https://www.googleapis.com/auth/spreadsheets',
+                'aud' => 'https://oauth2.googleapis.com/token',
+                'exp' => $now + 3600,
+                'iat' => $now - 60 // Compensate for small clock differences
+            ];
 
-        $base64UrlHeader = $this->base64UrlEncode($header);
-        $base64UrlPayload = $this->base64UrlEncode($payload);
+            $base64UrlHeader = $this->base64UrlEncode(json_encode($header));
+            $base64UrlPayload = $this->base64UrlEncode(json_encode($payload, JSON_UNESCAPED_SLASHES));
 
-        $signature = '';
-        $resKey = openssl_get_privatekey($privateKey);
-        if (!$resKey) {
-            Log::error("OpenSSL Get Private Key Error: " . openssl_error_string());
-            return null;
-        }
+            $signature = '';
+            if (!openssl_sign($base64UrlHeader . "." . $base64UrlPayload, $signature, $privateKey, OPENSSL_ALGO_SHA256)) {
+                throw new \Exception("openssl_sign failed: " . openssl_error_string());
+            }
+            $base64UrlSignature = $this->base64UrlEncode($signature);
 
-        if (!openssl_sign($base64UrlHeader . "." . $base64UrlPayload, $signature, $resKey, OPENSSL_ALGO_SHA256)) {
-            Log::error("OpenSSL Sign Error: " . openssl_error_string());
-            return null;
-        }
-        openssl_free_key($resKey);
-        $base64UrlSignature = $this->base64UrlEncode($signature);
+            $jwt = $base64UrlHeader . "." . $base64UrlPayload . "." . $base64UrlSignature;
 
-        $jwt = $base64UrlHeader . "." . $base64UrlPayload . "." . $base64UrlSignature;
-
-        $response = Http::withOptions(['verify' => false])
-            ->asForm()
-            ->post('https://oauth2.googleapis.com/token', [
+            $response = Http::withOptions(['verify' => false])->asForm()->post('https://oauth2.googleapis.com/token', [
                 'grant_type' => 'urn:ietf:params:oauth:grant-type:jwt-bearer',
                 'assertion' => $jwt
             ]);
 
-        if ($response->successful()) {
-            return $response->json('access_token');
-        }
+            if ($response->successful()) {
+                return $response->json('access_token');
+            }
 
-        Log::error("Google Token Error: " . $response->body());
-        return null;
+            Log::error("Google Token Error: " . $response->body());
+            return null;
+        } catch (\Exception $e) {
+            Log::error("Get Access Token Exception: " . $e->getMessage());
+            return null;
+        }
     }
 
     private function base64UrlEncode($data)
