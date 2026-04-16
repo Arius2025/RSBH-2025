@@ -51,12 +51,56 @@
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                       <a class="nav-link dropdown-toggle px-2" href="#" data-bs-toggle="dropdown"><span class="fw-bold text-success"><i class="bi bi-lightning-fill me-2 "></i>SIGAP</span></a>
-                        <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-3 p-2 rounded-3">
-                            <li><a class="dropdown-item rounded-2 text-success" href="{{ route('siterbat') }}"><i class="bi bi-bicycle me-2"></i>SITERBAT</a></li>
-                            <li><a class="dropdown-item rounded-2 text-danger" href="{{ route('ambulance') }}"> <i class="bi bi-truck me-2"></i>AMBULAN</a></li>
-                            <li><a class="dropdown-item rounded-2 text-primary" href="{{ route('santardekate') }}"> <i class="bi bi-house-heart me-2"></i>SANTARDEKATE</a></li>
-                            <li><a class="dropdown-item rounded-2 text-warning" href="{{ route('dashboard-indikator') }}"><i class="bi bi-graph-up-arrow me-2 text-info"></i>DASHBOARD INDIKATOR</a></li>
+                        <a class="nav-link dropdown-toggle px-2" href="#" data-bs-toggle="dropdown">
+                            <span class="fw-bold text-success"><i class="bi bi-lightning-fill me-1 text-warning"></i>SIGAP</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-3 p-3 rounded-4" style="min-width: 250px;">
+                            <li><h6 class="dropdown-header fw-bold text-success" style="font-size:0.75rem; letter-spacing:0.5px;">LAYANAN TERPADU</h6></li>
+                            <li>
+                                <a class="dropdown-item rounded-3 py-2 d-flex align-items-center mb-1 hover-bg-light" href="{{ route('siterbat') }}">
+                                    <div class="bg-success-subtle text-success rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 38px; height: 38px;">
+                                        <i class="bi bi-bicycle fs-5"></i>
+                                    </div>
+                                    <div>
+                                        <div class="fw-bold mb-0 text-success" style="font-size: 0.9rem;">SITERBAT</div>
+                                        <div class="text-muted" style="font-size: 0.70rem;">Siap Terjun Obat</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item rounded-3 py-2 d-flex align-items-center mb-1 hover-bg-light" href="{{ route('ambulance') }}">
+                                    <div class="bg-danger-subtle text-danger rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 38px; height: 38px;">
+                                        <i class="bi bi-truck fs-5"></i>
+                                    </div>
+                                    <div>
+                                        <div class="fw-bold mb-0 text-danger" style="font-size: 0.9rem;">AMBULAN</div>
+                                        <div class="text-muted" style="font-size: 0.70rem;">Layanan 24 Jam</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item rounded-3 py-2 d-flex align-items-center mb-1 hover-bg-light" href="{{ route('santardekate') }}">
+                                    <div class="bg-primary-subtle text-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 38px; height: 38px;">
+                                        <i class="bi bi-house-heart fs-5"></i>
+                                    </div>
+                                    <div>
+                                        <div class="fw-bold mb-0 text-primary" style="font-size: 0.9rem;">SANTAR DEKATE</div>
+                                        <div class="text-muted" style="font-size: 0.70rem;">Pengantaran Pasien</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider opacity-25 my-2"></li>
+                            <li>
+                                <a class="dropdown-item rounded-3 py-2 d-flex align-items-center hover-bg-light" href="{{ route('dashboard-indikator') }}">
+                                    <div class="bg-info-subtle text-info rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 38px; height: 38px;">
+                                        <i class="bi bi-graph-up-arrow fs-5"></i>
+                                    </div>
+                                    <div>
+                                        <div class="fw-bold mb-0 text-dark" style="font-size: 0.9rem;">INDIKATOR</div>
+                                        <div class="text-muted" style="font-size: 0.70rem;">Pantau Data Layanan</div>
+                                    </div>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -105,26 +149,26 @@
 {{-- SIGAP CUSTOM FLOATING MENU (MOBILE) --}}
 <div id="sigapBackdrop" class="sigap-backdrop" onclick="closeAllMenus()"></div>
 
-<div id="sigapQuickMenu" class="sigap-quick-popup">
-    <div class="sigap-popup-header mb-3 stagger-1">
-        <h6 class="fw-bold text-white mb-0 text-shadow-sm"><i class="bi bi-lightning-fill me-2"></i> LAYANAN SIGAP</h6>
+<div id="sigapQuickMenu" class="sigap-quick-popup premium-glass">
+    <div class="sigap-popup-header mb-4 stagger-1">
+        <h6 class="fw-black text-dark mb-0" style="font-weight: 800;"><i class="bi bi-lightning-fill me-1 text-warning fs-5"></i> LAYANAN SIGAP</h6>
     </div>
     <div class="d-flex justify-content-around align-items-center">
-        <a href="{{ route('siterbat') }}" class="sigap-pop-item stagger-2">
-            <div class="icon-wrap bg-success"><i class="bi bi-bicycle"></i></div>
-            <span>Siterbat</span>
+        <a href="{{ route('siterbat') }}" class="sigap-pop-item text-dark stagger-2">
+            <div class="icon-wrap custom-glow-success bg-white text-success"><i class="bi bi-bicycle"></i></div>
+            <span class="text-dark fw-bold">Siterbat</span>
         </a>
-        <a href="{{ route('ambulance') }}" class="sigap-pop-item stagger-3">
-            <div class="icon-wrap bg-danger"><i class="bi bi-truck"></i></div>
-            <span>Ambulan</span>
+        <a href="{{ route('ambulance') }}" class="sigap-pop-item text-dark stagger-3">
+            <div class="icon-wrap custom-glow-danger bg-white text-danger"><i class="bi bi-truck"></i></div>
+            <span class="text-dark fw-bold">Ambulan</span>
         </a>
-        <a href="{{ route('santardekate') }}" class="sigap-pop-item stagger-3">
-            <div class="icon-wrap bg-warning"><i class="bi bi-house-heart"></i></div>
-            <span>Santardekate</span>
+        <a href="{{ route('santardekate') }}" class="sigap-pop-item text-dark stagger-3">
+            <div class="icon-wrap custom-glow-primary bg-white text-primary"><i class="bi bi-house-heart"></i></div>
+            <span class="text-dark fw-bold">SantarDkt</span>
         </a>
-        <a href="{{ route('dashboard-indikator') }}" class="sigap-pop-item stagger-4">
-            <div class="icon-wrap bg-info"><i class="bi bi-graph-up-arrow"></i></div>
-            <span>Indikator</span>
+        <a href="{{ route('dashboard-indikator') }}" class="sigap-pop-item text-dark stagger-4">
+            <div class="icon-wrap custom-glow-info bg-white text-info"><i class="bi bi-graph-up-arrow"></i></div>
+            <span class="text-dark fw-bold">Indikator</span>
         </a>
     </div>
 </div>
@@ -219,11 +263,27 @@
         transition: transform 0.2s ease;
     }
     .sigap-pop-item:active .icon-wrap { transform: scale(0.9); }
-    .sigap-pop-item span { font-size: 0.75rem; font-weight: bold; text-shadow: 1px 1px 4px rgba(0,0,0,0.5); }
+    .sigap-pop-item span { font-size: 0.75rem; transition: color 0.3s ease; }
     
     .text-shadow-sm { text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
     
-    .transition-all { transition: all 0.3s ease; }
+    .premium-glass {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border: 1px solid rgba(255,255,255,0.7);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.15) !important;
+        border-radius: 20px;
+        padding: 20px 10px;
+    }
+    
+    .custom-glow-success { box-shadow: 0 8px 15px rgba(25, 135, 84, 0.25) !important; border: 1px solid #19875420 !important; }
+    .custom-glow-danger { box-shadow: 0 8px 15px rgba(220, 53, 69, 0.25) !important; border: 1px solid #dc354520 !important; }
+    .custom-glow-primary { box-shadow: 0 8px 15px rgba(13, 110, 253, 0.25) !important; border: 1px solid #0d6efd20 !important; }
+    .custom-glow-info { box-shadow: 0 8px 15px rgba(13, 202, 240, 0.25) !important; border: 1px solid #0dcaf020 !important; }
+    
+    .hover-bg-light:hover { background-color: #f8f9fa !important; }
+
     .transition-all { transition: all 0.3s ease; }
     .hover-shadow:hover { 
         transform: translateY(-2px);
