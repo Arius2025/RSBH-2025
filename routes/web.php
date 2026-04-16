@@ -34,6 +34,12 @@ Route::get('/zona', [FrontendController::class, 'zonaIntegritas'])->name('zona')
 Route::get('/komplain', [FrontendController::class, 'komplain'])->name('komplain');
 Route::get('/kontak',[FrontendController::class,'kontak'])->name('kontak');
 Route::get('/siterbat',[FrontendController::class,'siterbat'])->name('siterbat');
+Route::post('/siterbat/submit', [\App\Http\Controllers\SiterbatController::class, 'submit'])->name('siterbat.submit');
+Route::post('/ambulance/submit', [\App\Http\Controllers\AmbulanceController::class, 'submit'])->name('ambulance.submit');
+
+Route::get('/santardekate', [\App\Http\Controllers\SantardekateController::class, 'index'])->name('santardekate');
+Route::post('/santardekate/submit', [\App\Http\Controllers\SantardekateController::class, 'submit'])->name('santardekate.submit');
+
 Route::get('/ambulance',[FrontendController::class,'ambulance'])->name('ambulance');
 Route::get('/dashboard-indikator',[FrontendController::class,'dashboardIndikator'])->name('dashboard-indikator');
 Route::get('/tidur',[FrontendController::class,'tidur'])->name('tidur');

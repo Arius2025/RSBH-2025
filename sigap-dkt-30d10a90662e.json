@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "sigap-dkt",
+  "private_key_id": "30d10a90662e1ea9607ece8a8f34b7731787b658",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDXFWlMVDIsw6B/\nG4lOl33DMK82q0c/bcdoein4FGpfGq5lJ5z4Ps/PhEWIVslAhERfP3Ex9RclePdU\nvyULa5rlcrsRGmL5WVwzLy25ARq4J3gfki6eJccoOUz60DO0QjoSZsCA0tpRliAo\nAsp3LQMFpEQ+FOA7u1EH336FAh50lq6TtP4LZC49g6oJxmsrzofG3vf2oh0gEWfR\nXxQC/n46K+T/NQ9hxrWS6AFJRsnGsHBUhF1LJ+eTPgA+eAuMNLZojAzi/w1Xy1Ve\nEJz+kewHtfMIfs/XR/mVCGJW5HUM1YXfwBHNGQCYps3zmRWIiSvLYyFro4B8kk8g\ng5SDLZ6dAgMBAAECggEABcjHIKzg/pAySEjSzADJ+o5cH/HCREPtCXPDni7aX31l\ntEW49Hon95I8lnqTBf+ooREhN7E6MqFKsYZEdkaqD0KjIkYd5EvRbXT221NaxxoU\nonC5fTpR3VSRK+uegFoJmsYVpkFFas1JRxowHL1ip+uvhCXmk+SpPLd3fRc9/2+j\nTq2RJeLptQwtKTpyu9TLv98TRTF2tgOVOp4ZqwQKZkmc0HTPPwkhunzITuOqpJ/x\n7FytC66RD1JSyw3tHv+3Dzw0Z6dKw3OHSv5KyUdTj5VU12hApb9PuYYpkI+fpc5p\nz/73RlHu9pL/+hGhJ9INa/W4idpL1ifBzUf7HKSl0QKBgQD/XDXx0T74g7/+d3gC\nEco+j2rEQ8Ae7yGRwVLb4vy9krd+/6czaBcmmBv2l+DWcVCHLVjS2nVzd5Dm1nnf\n28g/ypOO35x386JUFtiZ+hLPMp2FZyH7cSkH6vRslvGwz9vHA8RuqRH5IPATQ4DS\n3vpY6MWeO+Q9JzLvM8S1/Y8dqQKBgQDXn1302VQch+NzAtuY65sKvE8SCOiLAzau\nmUJtjzyXI1mDQXqVoANBePGLpf/7R6LKY28FoaEiRueLhDY2Az0tM4m4WdoP8gZ5\nGtVGZwf1s3xxTKtUEnbAKJsHJarWn0y81slE+nTLsmZBGujN49hIwJtC50rRrwy8\nFEje3fcJ1QKBgBE64ZDtc3hFO4EqAnjxRlouRx/zClWMARHan4KisDcCXUs+aMO5\nNEawYMKkwND3WF2mm6Wug9pEqQxKUHLgW4SiYI51XBNj5wIRgI/zJa3BVouXx901\nZ3VXTyK8lJY/kC6/fFOTKNlMdaZ3GYwg63dwTVU96UqPCIrHTXCSKUPxAoGAHE38\nTHb29qPT9LYMU5+iA5/ClXB77jumwva1ZKJn5sMqLfO7fsa5hq+0rYtF9htqQD0b\nRtb3ywMZxBO/9gkoz7UzP/LzkCJKPT2Lf6lovxUnocvZtbiSxBjQePi122Sf8y4S\nz649BLxPdf5tTxG4w5wdBYRNKwdamZnkEvV6R10CgYB+fZ4MhAFoBulLNMuQGpBX\nIMd6pc8O1OL1oaMqX+6MQsM5/hVxKAhvdWpG9OTT0UiizMtJAzNCADtPZA+Jv/Jn\nUEUUE4GMvUJrW4m/clP95uM2/B0GHdrbLnovnvq8amT+9y0T3QH3KuIa3e3vmQKB\nDwJOhf3linZh4y4fiHxSvg==\n-----END PRIVATE KEY-----\n",
+  "client_email": "sigap-sheet@sigap-dkt.iam.gserviceaccount.com",
+  "client_id": "112334047998544296853",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/sigap-sheet%40sigap-dkt.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

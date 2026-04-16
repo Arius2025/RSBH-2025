@@ -39,34 +39,23 @@
                     
                     {{-- MENU LAYANAN --}}
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle px-2 {{ (request()->is('siterbat*') || request()->is('ambulance*') || request()->is('dashboard-indikator*')) ? 'text-success active' : '' }}" href="#" data-bs-toggle="dropdown">Layanan</a>
+                        <a class="nav-link dropdown-toggle px-2 {{ (request()->is('siterbat*') || request()->is('ambulance*') || request()->is('dashboard-indikator*')) ? 'text-success' : '' }}" href="#" data-bs-toggle="dropdown">Layanan</a>
                         <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-3 p-2 rounded-3" style="min-width: 250px;">
                             <li><a class="dropdown-item rounded-2" href="{{ route('ppid') }}">PPID</a></li>
                             <li><a class="dropdown-item rounded-2" href="{{ route('zona') }}">Zona Integritas</a></li>
                             
-                            <li><hr class="dropdown-divider opacity-50"></li>
-                            
-                            {{-- NESTED DROPDOWN SIGAP --}}
-                            <li class="dropdown-submenu">
-                                <a class="dropdown-item rounded-2 py-2 fw-bold text-success d-flex justify-content-between align-items-center" href="#">
-                                    <span><i class="bi bi-lightning-fill me-2"></i>SIGAP</span>
-                                    <i class="bi bi-chevron-right small"></i>
-                                </a>
-                                <ul class="dropdown-menu border-0 shadow-lg p-2 rounded-3">
-                                    <li><a class="dropdown-item rounded-2 py-2 {{ request()->routeIs('siterbat') ? 'bg-success text-white' : '' }}" href="{{ route('siterbat') }}">
-                                        <i class="bi bi-bicycle me-2"></i>Siterbat
-                                    </a></li>
-                                    <li><a class="dropdown-item rounded-2 py-2 {{ request()->routeIs('ambulance') ? 'bg-danger text-white' : '' }}" href="{{ route('ambulance') }}">
-                                        <i class="bi bi-truck me-2"></i>Ambulan
-                                    </a></li>
-                                    <li><a class="dropdown-item rounded-2 py-2 {{ request()->routeIs('dashboard-indikator') ? 'bg-info bg-opacity-10 text-dark fw-bold' : '' }}" href="{{ route('dashboard-indikator') }}">
-                                        <i class="bi bi-graph-up-arrow me-2 text-info"></i>Dashboard
-                                    </a></li>
-                                </ul>
-                            </li>
-
+                 
+                    
                             <li><hr class="dropdown-divider opacity-50"></li>
                             <li><a class="dropdown-item rounded-2 text-danger fw-bold" href="{{ route('komplain') }}">Komplain / Aduan</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                       <a class="nav-link dropdown-toggle px-2" href="#" data-bs-toggle="dropdown"><span class="fw-bold text-success"><i class="bi bi-lightning-fill me-2 "></i>SIGAP</span></a>
+                        <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-3 p-2 rounded-3">
+                            <li><a class="dropdown-item rounded-2 text-success" href="{{ route('siterbat') }}"><i class="bi bi-bicycle me-2"></i>SITERBAT</a></li>
+                            <li><a class="dropdown-item rounded-2 text-danger" href="{{ route('ambulance') }}"> <i class="bi bi-truck me-2"></i>AMBULAN</a></li>
+                            <li><a class="dropdown-item rounded-2 text-info" href="{{ route('dashboard-indikator') }}"><i class="bi bi-graph-up-arrow me-2 text-info"></i>DASHBOARD INDIKATOR</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -130,7 +119,7 @@
         </a>
         <a href="{{ route('dashboard-indikator') }}" class="sigap-pop-item stagger-4">
             <div class="icon-wrap bg-info"><i class="bi bi-graph-up-arrow"></i></div>
-            <span>Statistik</span>
+            <span>Indikator</span>
         </a>
     </div>
 </div>

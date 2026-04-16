@@ -19,6 +19,13 @@
                 <h2 class="fw-bold text-success display-6 mb-0">Dashboard Indikator Layanan</h2>
                 <p class="text-muted fs-5">Statistik performa layanan bulanan berdasarkan rekapan data sistem.</p>
             </div>
+            <div class="d-flex align-items-center bg-white luxury-shadow px-4 py-2 rounded-pill border">
+                <label class="small fw-bold text-uppercase text-muted me-3 mb-0">Filter Tahun:</label>
+                <select class="form-select form-select-sm border-0 fw-bold text-success shadow-none" onchange="changeYear(this.value)" style="width: auto; cursor: pointer;">
+                    <option value="2025" selected >2025</option>
+                    <option value="2026">2026</option>
+                </select>
+            </div>
         </div>
         <hr class="w-100 mb-5 border-success" style="border-width: 2px; opacity: 0.1;">
 
@@ -101,22 +108,84 @@
 <script>
     const SHEETS_MAP = {
         2025: {
-            siterbat: '1FH1TNMgsq2AyGULupMaGucbQ5vQ-mWCvtHh5iCGhDKg',
-            ambulance: '1y43wfA8FGsMp8-jxm0NNF-QSKw5PdMJZlAZr1h5pcBg',
+            siterbat: '1zZHjcIYoal75rbikPZ6oElTMyGpKjzS2OdzzCKm__4c',
+            ambulance: '1ZiowxZoBCRvqcRlkrkIPueJ2Tzr9uApluGGY5koy9SY',
             santardekate: '1j3TCQp_klvX60SPQPglb-whTkfLhI4xjr2M7OTWGIS8'
         },
         2026: {
-            siterbat: '1FH1TNMgsq2AyGULupMaGucbQ5vQ-mWCvtHh5iCGhDKg',
-            ambulance: '1y43wfA8FGsMp8-jxm0NNF-QSKw5PdMJZlAZr1h5pcBg',
-            santardekate: '1j3TCQp_klvX60SPQPglb-whTkfLhI4xjr2M7OTWGIS8'
+            siterbat: '1zZHjcIYoal75rbikPZ6oElTMyGpKjzS2OdzzCKm__4c',
+            ambulance: '1ZiowxZoBCRvqcRlkrkIPueJ2Tzr9uApluGGY5koy9SY',
+            santardekate: '1-tb2VzBFPE12QOecySExK4s3r_lwrc8mVkyu8kLL3ys'
         }
     };
 
-    let currentYear = "2025";
+    let currentYear = "2026";
     const _0xkey = "QUl6YVN5QXMyWVJQUXhOcjRESmo4LW1XQ2VLUERQT244VGoxcnJn";
     const API_KEY = atob(_0xkey);
 
-    async function fetchSpreadsheetData(spreadsheetId, excludeSheets = [], checkRange = '!A2:A', colIndex = 0) {
+    const MONTH_NAMES = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+
+    async function fetchMonthlyData(spreadsheetId, sheetName) {
+        try {
+            const range = `${sheetName}!A2:A`;
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${API_KEY}`;
+            console.log("Fetching:", url);
+            const response = await fetch(url);
+            const data = await response.json();
+            
+            if (data.error) {
+                console.error("Sheets API Error:", data.error);
+                alert("Kesalahan Dashboard: " + data.error.message + ". Pastikan Spreadsheet sudah di-SHARE ke 'Anyone with link' (Viewer).");
+                return [];
+            }
+
+            // Initialize monthly counts
+            let monthlyCounts = MONTH_NAMES.map(name => ({ label: name, count: 0 }));
+
+            if (data.values) {
+                console.log("Monthly Data Found:", data.values.length, "rows");
+                data.values.forEach(row => {
+                    if (row[0]) {
+                        let date;
+                        const dateStr = row[0].split(' ')[0]; // Take only date part
+                        
+                        // Try DD/MM/YYYY format
+                        if (dateStr.includes('/')) {
+                            const parts = dateStr.split('/');
+                            if (parts.length === 3) {
+                                // DD/MM/YYYY -> MM/DD/YYYY (for JS Date) or YYYY, MM-1, DD
+                                if (parts[2].length === 4) { // Year is at the end
+                                    date = new Date(parts[2], parts[1] - 1, parts[0]);
+                                } else if (parts[0].length === 4) { // Year is at the beginning
+                                    date = new Date(parts[0], parts[1] - 1, parts[2]);
+                                }
+                            }
+                        }
+                        
+                        if (!date || isNaN(date)) {
+                            date = new Date(dateStr);
+                        }
+
+                        if (date && !isNaN(date)) {
+                            const monthIndex = date.getMonth();
+                            const year = date.getFullYear();
+                            if (year.toString() === currentYear) {
+                                monthlyCounts[monthIndex].count++;
+                            }
+                        }
+                    }
+                });
+            } else {
+                console.warn("No values found in range");
+            }
+            return monthlyCounts;
+        } catch (error) {
+            console.error(`Error fetching monthly data:`, error);
+            return [];
+        }
+    }
+
+    async function fetchLegacySheetData(spreadsheetId, excludeSheets = []) {
         try {
             const metadataUrl = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}?key=${API_KEY}`;
             const metadataResponse = await fetch(metadataUrl);
@@ -124,25 +193,22 @@
             if (!metadata.sheets) return [];
             const sheets = metadata.sheets.map(s => s.properties.title).filter(name => !excludeSheets.includes(name));
             if(sheets.length === 0) return [];
-            const ranges = sheets.map(name => encodeURIComponent(name) + checkRange);
+            const ranges = sheets.map(name => encodeURIComponent(name) + '!A2:A');
             const valuesUrl = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values:batchGet?ranges=${ranges.join('&ranges=')}&key=${API_KEY}`;
             const valuesResponse = await fetch(valuesUrl);
             const data = await valuesResponse.json();
             if (!data.valueRanges) return [];
             return data.valueRanges.map((vr, index) => {
-                let count = 0;
-                if(vr.values) {
-                    count = vr.values.filter(row => row.length > colIndex && row[colIndex] !== '' && !isNaN(row[colIndex]) ).length; 
-                }
+                let count = vr.values ? vr.values.filter(row => row[0] !== '').length : 0;
                 let cleanLabel = sheets[index].replace(/\s*\(\d+\)\s*/g, '');
                 return { label: cleanLabel, count: count };
             });
-        } catch (error) { console.error(`Error fetching data:`, error); return []; }
+        } catch (error) { console.error(`Error fetching legacy data:`, error); return []; }
     }
 
     let charts = {};
     function renderChart(canvasId, totalElementId, type, color, label, data) {
-        if(data.length === 0) return;
+        if(!data || data.length === 0) return;
         const ctx = document.getElementById(canvasId).getContext('2d');
         const labels = data.map(d => d.label);
         const counts = data.map(d => d.count);
@@ -168,13 +234,24 @@
     }
 
     async function initDashboard() {
-        const sheets = SHEETS_MAP[currentYear];
-        const siterbatData = await fetchSpreadsheetData(sheets.siterbat, ['SIMRS', 'Sheet18', 'Sheet1']);
+        // Fallback to 2025 if currentYear not found
+        const sheets = SHEETS_MAP[currentYear] || SHEETS_MAP["2025"];
+        if (!sheets) {
+            console.error("No sheet mapping found for year:", currentYear);
+            return;
+        }
+        
+        // Siterbat & Ambulance now use the new single-sheet monthly logic
+        const siterbatData = await fetchMonthlyData(sheets.siterbat, 'SITERBAT');
         renderChart('chartSiterbat', 'totalSiterbat', 'bar', '#198754', 'Siterbat', siterbatData);
-        const ambulanceData = await fetchSpreadsheetData(sheets.ambulance, [], '!A2:B', 1);
+        
+        const ambulanceData = await fetchMonthlyData(sheets.ambulance, 'AMBULAN');
         renderChart('chartAmbulance', 'totalAmbulance', 'bar', '#dc3545', 'Ambulance', ambulanceData);
-        const santardekateData = await fetchSpreadsheetData(sheets.santardekate, []);
+        
+        // Santardekate remains using the legacy sheet-per-category structure if it hasn't changed
+        const santardekateData = await fetchLegacySheetData(sheets.santardekate, []);
         renderChart('chartSantardekate', 'totalSantardekate', 'bar', '#ffc107', 'Santardekate', santardekateData);
+        
         document.querySelectorAll('.selectedYearText').forEach(el => el.innerText = currentYear);
     }
 

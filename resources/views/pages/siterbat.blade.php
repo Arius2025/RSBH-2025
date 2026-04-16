@@ -52,13 +52,14 @@
                 </div>
                 
                 <form id="siterbatForm">
+                    @csrf
                     <div class="mb-3">
                         <label class="form-label small fw-bold text-secondary text-uppercase">No. Rekam Medis (RM)</label>
-                        <input type="text" id="wa_rm" class="form-control" placeholder="Contoh: 12.34.56" oninput="validateForm()">
+                        <input type="text" id="wa_rm" class="form-control" placeholder="Contoh: 123456" oninput="validateForm()">
                     </div>
                     <div class="mb-3">
                         <label class="form-label small fw-bold text-secondary text-uppercase">Nama Lengkap Pasien</label>
-                        <input type="text" id="wa_name" class="form-control" placeholder="Nama pasien sesuai kartu" oninput="validateForm()">
+                        <input type="text" id="wa_name" class="form-control" placeholder="Nama pasien sesuai KTP" oninput="validateForm()">
                     </div>
                     <div class="mb-3 text-center">
                         <button type="button" onclick="getLocation()" class="btn btn-outline-success btn-sm rounded-pill px-4">
@@ -66,18 +67,22 @@
                         </button>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label small fw-bold text-secondary text-uppercase">Alamat (Auto dari Peta)</label>
-                        <textarea id="wa_address" class="form-control bg-light" rows="3" readonly placeholder="Titik lokasi akan muncul di sini..."></textarea>
+                        <label class="form-label small fw-bold text-secondary text-uppercase">Alamat (Bisa Diisi Manual)</label>
+                        <textarea id="wa_address" class="form-control" rows="3" placeholder="Isi alamat manual atau pilih dari peta..." oninput="validateForm()"></textarea>
                         <div id="dist-status" class="mt-2 text-center"></div>
                     </div>
                     <div class="mb-4">
                         <label class="form-label small fw-bold text-secondary text-uppercase">Detail Rumah</label>
                         <textarea id="wa_detail" class="form-control" rows="2" placeholder="Contoh: Depan Mushola, Pagar Hitam No. 12" oninput="validateForm()"></textarea>
                     </div>
-                    <button type="button" id="btnSubmit" onclick="sendToWhatsApp()" class="btn btn-success btn-kirim w-100 shadow" disabled>
-                        <i class="bi bi-whatsapp me-2"></i> KIRIM PESANAN SEKARANG
+                    <div class="mb-4">
+                        <label class="form-label small fw-bold text-secondary text-uppercase">No. Telepon / WhatsApp</label>
+                        <input type="tel" id="wa_phone" class="form-control" placeholder="Contoh: 081234567890" oninput="validateForm()">
+                    </div>
+                    <button type="button" id="btnSubmit" onclick="handleSubmit()" class="btn btn-success btn-kirim w-100 shadow" disabled>
+                        <i class="bi bi-send me-2"></i> <span id="btnText">KIRIM DATA PERMINTAAN OBAT</span>
                     </button>
-                    <p id="error-msg" class="text-danger small mt-3 text-center fw-bold">Lengkapi data & titik peta (Maks. 10KM)</p>
+                    <p id="error-msg" class="text-danger small mt-3 text-center fw-bold">Lengkapi data untuk mengirim pesanan</p>
                 </form>
             </div>
         </div>
@@ -90,16 +95,30 @@
     </div>
 </div>
 
+<!-- Modal Success -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 20px;">
+            <div class="modal-body text-center p-5">
+                <div class="mb-4">
+                    <i class="bi bi-check-circle-fill text-success" style="font-size: 5rem;"></i>
+                </div>
+                <h3 class="fw-bold text-dark mb-3">Permintaan Terkirim!</h3>
+                <p class="text-muted mb-4">Silahkan tunggu, petugas kami akan menghubungi anda.</p>
+                <button type="button" class="btn btn-success px-5 rounded-pill" data-bs-dismiss="modal">OKE</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     const RS_COORDS = [-8.1639486, 113.7061723];
     const CONFIG = {
         radius: 10000,
-        wa: "6285217077347",
-        template: "*PESANAN SITERBAT*\n\n*No. RM:* {rm}\n*Pasien:* {name}\n*Alamat:* {address}\n*Detail:* {detail}\n\n_Mohon segera diproses, Terimakasih._",
         prefix: "wa_"
     };
 
-    let isWithinRadius = false;
+    let isWithinRadius = true; // Default true to allow manual address even if map not used
     let userMarker, rsCircle, map;
 
     function initMap() {
@@ -149,7 +168,6 @@
         if (distance > CONFIG.radius) {
             statusEl.innerHTML = `<span class="badge bg-danger text-white">Terlalu Jauh (${(distance/1000).toFixed(1)} km)</span>`;
             isWithinRadius = false;
-            addrField.value = `Lokasi di luar jangkauan (Maks 10 KM).`;
         } else {
             statusEl.innerHTML = `<span class="badge bg-success text-white">Lokasi Terjangkau (${(distance/1000).toFixed(1)} km)</span>`;
             isWithinRadius = true;
@@ -167,31 +185,70 @@
         const name = document.getElementById('wa_name').value;
         const address = document.getElementById('wa_address').value;
         const detail = document.getElementById('wa_detail').value;
+        const phone = document.getElementById('wa_phone').value;
         const btn = document.getElementById('btnSubmit');
         const errMsg = document.getElementById('error-msg');
 
-        if (rm && name && address && detail && isWithinRadius && !address.includes("luar jangkauan")) {
+        // Regex: Only numbers, at least 10 digits
+        const phoneRegex = /^[0-9]+$/;
+        const isPhoneValid = phoneRegex.test(phone) && phone.length >= 10;
+
+        if (rm && name && address && detail && isPhoneValid && isWithinRadius) {
             btn.disabled = false;
             errMsg.style.display = 'none';
         } else {
             btn.disabled = true;
             errMsg.style.display = 'block';
+            if (!isWithinRadius) {
+                errMsg.innerText = "Lokasi di luar jangkauan (Maks 10 KM)";
+            } else if (phone && !isPhoneValid) {
+                errMsg.innerText = "Nomor WhatsApp harus angka (Min. 10 digit)";
+            } else {
+                errMsg.innerText = "Lengkapi data untuk mengirim pesanan";
+            }
         }
     }
 
-    function sendToWhatsApp() {
+    async function handleSubmit() {
         const rm = document.getElementById('wa_rm').value;
         const name = document.getElementById('wa_name').value;
         const address = document.getElementById('wa_address').value;
         const detail = document.getElementById('wa_detail').value;
+        const phone = document.getElementById('wa_phone').value;
+        const btn = document.getElementById('btnSubmit');
+        const btnText = document.getElementById('btnText');
 
-        const text = CONFIG.template
-            .replace('{rm}', rm)
-            .replace('{name}', name)
-            .replace('{address}', address)
-            .replace('{detail}', detail);
+        btn.disabled = true;
+        btnText.innerText = "MENGIRIM...";
 
-        window.open(`https://wa.me/${CONFIG.wa}?text=${encodeURIComponent(text)}`, '_blank');
+        try {
+            const response = await fetch("{{ route('siterbat.submit') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": document.querySelector('input[name="_token"]').value
+                },
+                body: JSON.stringify({ rm, name, address, detail, phone })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                const myModal = new bootstrap.Modal(document.getElementById('successModal'));
+                myModal.show();
+                
+                document.getElementById('siterbatForm').reset();
+                validateForm();
+            } else {
+                alert("Gagal menyimpan pesanan: " + (result.message || "Unknown error"));
+            }
+        } catch (error) {
+            console.error("Error submitting form:", error);
+            alert("Terjadi kesalahan teknis. Silakan coba lagi.");
+        } finally {
+            btn.disabled = false;
+            btnText.innerText = "KIRIM DATA PESANAN";
+        }
     }
 
     document.addEventListener('DOMContentLoaded', initMap);

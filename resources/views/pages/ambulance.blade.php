@@ -54,7 +54,7 @@
                 <form id="ambulanForm">
                     <div class="mb-3">
                         <label class="form-label small fw-bold text-secondary text-uppercase">Nama Lengkap Pasien</label>
-                        <input type="text" id="amb_name" class="form-control" placeholder="Nama pasien sesuai kartu" oninput="validateForm()">
+                        <input type="text" id="amb_name" class="form-control" placeholder="Nama pasien sesuai KTP" oninput="validateForm()">
                     </div>
                     <div class="mb-3 text-center">
                         <button type="button" onclick="getLocation()" class="btn btn-outline-danger btn-sm rounded-pill px-4">
@@ -62,20 +62,24 @@
                         </button>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label small fw-bold text-secondary text-uppercase">Alamat (Auto dari Peta)</label>
-                        <textarea id="amb_address" class="form-control bg-light" rows="3" readonly placeholder="Titik lokasi akan muncul di sini..."></textarea>
+                        <label class="form-label small fw-bold text-secondary text-uppercase">Alamat (Bisa Diisi Manual)</label>
+                        <textarea id="amb_address" class="form-control" rows="3" placeholder="Isi alamat manual atau pilih dari peta..." oninput="validateForm()"></textarea>
                         <div id="amb_dist-status" class="mt-2 text-center"></div>
                     </div>
-                    <div class="mb-4">
+                    <div class="mb-3">
                         <label class="form-label small fw-bold text-secondary text-uppercase">Detail Rumah</label>
                         <textarea id="amb_detail" class="form-control" rows="2" placeholder="Contoh: Depan Mushola, Pagar Hitam No. 12" oninput="validateForm()"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold text-secondary text-uppercase">No. Telepon / WhatsApp</label>
+                        <input type="tel" id="amb_phone" class="form-control" placeholder="Contoh: 081234567890" oninput="validateForm()">
                     </div>
                     <div class="mb-3">
                         <label class="form-label small fw-bold text-secondary text-uppercase">Gejala</label>
                         <textarea id="amb_gejala" class="form-control" rows="3" placeholder="Contoh: Batuk, meriang, panas, tidak sadar, kejang" oninput="validateForm()"></textarea>
                     </div>
-                    <button type="button" id="amb_btnSubmit" onclick="sendToWhatsApp()" class="btn btn-danger btn-kirim w-100 shadow" disabled>
-                        <i class="bi bi-whatsapp me-2"></i> PESAN AMBULAN SEKARANG
+                    <button type="button" id="amb_btnSubmit" onclick="handleSubmit()" class="btn btn-danger btn-kirim w-100 shadow" disabled>
+                        <i class="bi bi-send me-2"></i> <span id="amb_btnText">KIRIM DATA PERMINTAAN AMBULAN</span>
                     </button>
                     <p id="amb_error-msg" class="text-danger small mt-3 text-center fw-bold">Lengkapi data & titik peta (Maks. 15KM)</p>
                 </form>
@@ -90,16 +94,30 @@
     </div>
 </div>
 
+<!-- Modal Success -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 20px;">
+            <div class="modal-body text-center p-5">
+                <div class="mb-4">
+                    <i class="bi bi-check-circle-fill text-success" style="font-size: 5rem;"></i>
+                </div>
+                <h3 class="fw-bold text-dark mb-3">Permintaan Terkirim!</h3>
+                <p class="text-muted mb-4">Silahkan tunggu, petugas kami akan menghubungi anda.</p>
+                <button type="button" class="btn btn-success px-5 rounded-pill" data-bs-dismiss="modal">OKE</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     const RS_COORDS = [-8.1639486, 113.7061723];
     const CONFIG = {
         radius: 15000,
-        wa: "628113650118",
-        template: "*PERMINTAAN PENJEMPUTAN AMBULAN (15KM)*\n\n*Pasien:* {name}\n*Gejala:* {gejala}\n*Alamat:* {address}\n*Detail:* {detail}\n\n_Mohon kirimkan ambulan segera, Terimakasih._",
         prefix: "amb_"
     };
 
-    let isWithinRadius = false;
+    let isWithinRadius = true; // Default true to allow manual address
     let userMarker, rsCircle, map;
 
     function initMap() {
@@ -149,7 +167,6 @@
         if (distance > CONFIG.radius) {
             statusEl.innerHTML = `<span class="badge bg-danger text-white">Terlalu Jauh (${(distance/1000).toFixed(1)} km)</span>`;
             isWithinRadius = false;
-            addrField.value = `Lokasi di luar jangkauan (Maks 15 KM).`;
         } else {
             statusEl.innerHTML = `<span class="badge bg-success text-white">Lokasi Terjangkau (${(distance/1000).toFixed(1)} km)</span>`;
             isWithinRadius = true;
@@ -166,32 +183,69 @@
         const name = document.getElementById('amb_name').value;
         const address = document.getElementById('amb_address').value;
         const detail = document.getElementById('amb_detail').value;
+        const phone = document.getElementById('amb_phone').value;
         const gejala = document.getElementById('amb_gejala').value;
         const btn = document.getElementById('amb_btnSubmit');
         const errMsg = document.getElementById('amb_error-msg');
 
-        if (name && address && detail && gejala && isWithinRadius && !address.includes("luar jangkauan")) {
+        const phoneRegex = /^[0-9]+$/;
+        const isPhoneValid = phoneRegex.test(phone) && phone.length >= 10;
+
+        if (name && address && detail && gejala && isPhoneValid && isWithinRadius) {
             btn.disabled = false;
             errMsg.style.display = 'none';
         } else {
             btn.disabled = true;
             errMsg.style.display = 'block';
+            if (!isWithinRadius) {
+                errMsg.innerText = "Lokasi di luar jangkauan (Maks 15 KM)";
+            } else if (phone && !isPhoneValid) {
+                errMsg.innerText = "Nomor WhatsApp harus angka (Min. 10 digit)";
+            } else {
+                errMsg.innerText = "Lengkapi data & titik peta (Maks. 15KM)";
+            }
         }
     }
 
-    function sendToWhatsApp() {
+    async function handleSubmit() {
         const name = document.getElementById('amb_name').value;
         const address = document.getElementById('amb_address').value;
         const detail = document.getElementById('amb_detail').value;
+        const phone = document.getElementById('amb_phone').value;
         const gejala = document.getElementById('amb_gejala').value;
+        const btn = document.getElementById('amb_btnSubmit');
+        const btnText = document.getElementById('amb_btnText');
 
-        const text = CONFIG.template
-            .replace('{name}', name)
-            .replace('{gejala}', gejala)
-            .replace('{address}', address)
-            .replace('{detail}', detail);
+        btn.disabled = true;
+        btnText.innerText = "MENGIRIM...";
 
-        window.open(`https://wa.me/${CONFIG.wa}?text=${encodeURIComponent(text)}`, '_blank');
+        try {
+            const response = await fetch("{{ route('ambulance.submit') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({ name, address, detail, phone, gejala })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                const myModal = new bootstrap.Modal(document.getElementById('successModal'));
+                myModal.show();
+                document.getElementById('ambulanForm').reset();
+                validateForm();
+            } else {
+                alert("Gagal menyimpan pesanan: " + (result.message || "Unknown error"));
+            }
+        } catch (error) {
+            console.error("Error submitting form:", error);
+            alert("Terjadi kesalahan teknis. Silakan coba lagi.");
+        } finally {
+            btn.disabled = false;
+            btnText.innerText = "PESAN AMBULAN SEKARANG";
+        }
     }
 
     document.addEventListener('DOMContentLoaded', initMap);
