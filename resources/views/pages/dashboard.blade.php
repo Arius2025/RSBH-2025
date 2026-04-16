@@ -110,7 +110,7 @@
         2025: {
             siterbat: '1zZHjcIYoal75rbikPZ6oElTMyGpKjzS2OdzzCKm__4c',
             ambulance: '1ZiowxZoBCRvqcRlkrkIPueJ2Tzr9uApluGGY5koy9SY',
-            santardekate: '1j3TCQp_klvX60SPQPglb-whTkfLhI4xjr2M7OTWGIS8'
+            santardekate: '1-tb2VzBFPE12QOecySExK4s3r_lwrc8mVkyu8kLL3ys'
         },
         2026: {
             siterbat: '1zZHjcIYoal75rbikPZ6oElTMyGpKjzS2OdzzCKm__4c',
@@ -120,7 +120,7 @@
     };
 
     let currentYear = "2026";
-    const _0xkey = "QUl6YVN5QXMyWVJQUXhOcjRESmo4LW1XQ2VLUERQT244VGoxcnJn";
+    const _0xkey = "QUl6YVN5Q2NvMVVwWGJvejEteklad25HcFNGTmpWblpvYjVDXzQ0cw==";
     const API_KEY = atob(_0xkey);
 
     const MONTH_NAMES = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];

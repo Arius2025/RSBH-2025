@@ -37,7 +37,7 @@
                     </a>
                 </div>
                 <div class="col-6 col-md-auto" data-aos="zoom-in" data-aos-delay="350">
-                    <a href="https://wa.me/628132683521" target="_blank" class="btn btn-outline-light w-100 shadow fw-bold p-3 rounded-pill transition-all hover-lift d-flex align-items-center justify-content-center h-100" style="font-size: 0.75rem;">
+                    <a href="{{ route('santardekate') }}" target="_blank" class="btn btn-outline-light w-100 shadow fw-bold p-3 rounded-pill transition-all hover-lift d-flex align-items-center justify-content-center h-100" style="font-size: 0.75rem;">
                         <i class="bi bi-house-heart me-1"></i> SANTARDEKATE
                     </a>
                 </div>

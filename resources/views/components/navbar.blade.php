@@ -55,7 +55,8 @@
                         <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-3 p-2 rounded-3">
                             <li><a class="dropdown-item rounded-2 text-success" href="{{ route('siterbat') }}"><i class="bi bi-bicycle me-2"></i>SITERBAT</a></li>
                             <li><a class="dropdown-item rounded-2 text-danger" href="{{ route('ambulance') }}"> <i class="bi bi-truck me-2"></i>AMBULAN</a></li>
-                            <li><a class="dropdown-item rounded-2 text-info" href="{{ route('dashboard-indikator') }}"><i class="bi bi-graph-up-arrow me-2 text-info"></i>DASHBOARD INDIKATOR</a></li>
+                            <li><a class="dropdown-item rounded-2 text-primary" href="{{ route('santardekate') }}"> <i class="bi bi-house-heart me-2"></i>SANTARDEKATE</a></li>
+                            <li><a class="dropdown-item rounded-2 text-warning" href="{{ route('dashboard-indikator') }}"><i class="bi bi-graph-up-arrow me-2 text-info"></i>DASHBOARD INDIKATOR</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -116,6 +117,10 @@
         <a href="{{ route('ambulance') }}" class="sigap-pop-item stagger-3">
             <div class="icon-wrap bg-danger"><i class="bi bi-truck"></i></div>
             <span>Ambulan</span>
+        </a>
+        <a href="{{ route('santardekate') }}" class="sigap-pop-item stagger-3">
+            <div class="icon-wrap bg-warning"><i class="bi bi-house-heart"></i></div>
+            <span>Santardekate</span>
         </a>
         <a href="{{ route('dashboard-indikator') }}" class="sigap-pop-item stagger-4">
             <div class="icon-wrap bg-info"><i class="bi bi-graph-up-arrow"></i></div>
