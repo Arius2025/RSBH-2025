@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class GoogleSheetService
@@ -13,6 +12,7 @@ class GoogleSheetService
     public function __construct($spreadsheetId = null)
     {
         $this->spreadsheetId = $spreadsheetId ?? '1zZHjcIYoal75rbikPZ6oElTMyGpKjzS2OdzzCKm__4c';
+        // Pastikan path credential benar (di root laravel)
         $this->jsonPath = base_path('sigap-credentials.json');
     }
 
@@ -27,22 +27,36 @@ class GoogleSheetService
         try {
             $token = $this->getAccessToken();
             if (!$token) {
-                throw new \Exception("Failed to get Google Access Token");
+                throw new \Exception("Failed to get Google Access Token, cek sigap-credentials.json");
             }
 
+            // Encode spasi pada nama sheet seperti "SANTARDEKATE " atau quote "'SANTARDEKATE '!A2:F"
             $encodedRange = rawurlencode($range);
             $url = "https://sheets.googleapis.com/v4/spreadsheets/{$this->spreadsheetId}/values/{$encodedRange}:append?valueInputOption=RAW";
 
-            $response = Http::withOptions(['verify' => false])
-                ->withToken($token)
-                ->post($url, [
-                    'values' => [
-                        array_merge([date('d/m/Y'), date('H:i:s')], array_values($values))
-                    ]
-                ]);
+            $postData = json_encode([
+                'values' => [
+                    array_merge([date('d/m/Y'), date('H:i:s')], array_values($values))
+                ]
+            ]);
 
-            if (!$response->successful()) {
-                Log::error("Google Sheets API Error [Sheet ID: {$this->spreadsheetId}]: " . $response->body());
+            // Menggunakan cURL native untuk menghindari masalah dengan Guzzle/Http client di hosting
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                "Authorization: Bearer $token",
+                "Content-Type: application/json"
+            ]);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Bypass SSL error
+            
+            $response = curl_exec($ch);
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+
+            if ($httpCode != 200) {
+                Log::error("Google Sheets API Error [Sheet ID: {$this->spreadsheetId}]: HTTP $httpCode - $response");
                 return false;
             }
 
@@ -56,7 +70,15 @@ class GoogleSheetService
     private function getAccessToken()
     {
         try {
+            if (!file_exists($this->jsonPath)) {
+                throw new \Exception("sigap-credentials.json file NOT FOUND at " . $this->jsonPath);
+            }
+
             $config = json_decode(file_get_contents($this->jsonPath), true);
+            if (!$config || !isset($config['private_key'])) {
+                throw new \Exception("Invalid sigap-credentials.json content.");
+            }
+
             $privateKey = $config['private_key'];
             $clientEmail = $config['client_email'];
 
@@ -81,16 +103,26 @@ class GoogleSheetService
 
             $jwt = $base64UrlHeader . "." . $base64UrlPayload . "." . $base64UrlSignature;
 
-            $response = Http::withOptions(['verify' => false])->asForm()->post('https://oauth2.googleapis.com/token', [
+            // Menggunakan cURL native untuk Request Token
+            $ch = curl_init('https://oauth2.googleapis.com/token');
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query([
                 'grant_type' => 'urn:ietf:params:oauth:grant-type:jwt-bearer',
                 'assertion' => $jwt
-            ]);
+            ]));
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Bypass SSL error
+            
+            $response = curl_exec($ch);
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
 
-            if ($response->successful()) {
-                return $response->json('access_token');
+            if ($httpCode == 200) {
+                $data = json_decode($response, true);
+                return $data['access_token'] ?? null;
             }
 
-            Log::error("Google Token Error: " . $response->body());
+            Log::error("Google Token Error: HTTP $httpCode - $response");
             return null;
         } catch (\Exception $e) {
             Log::error("Get Access Token Exception: " . $e->getMessage());
