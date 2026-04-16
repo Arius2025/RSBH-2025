@@ -34,7 +34,7 @@ class AmbulanceController extends Controller
         ];
 
         // Using AMBULAN as per check_amb_spread.php results
-        $success = $this->sheetService->appendRow($data, 'AMBULAN!A2:G');
+        $success = $this->sheetService->appendRow($data, "'AMBULAN'!A2:G");
 
         if ($success) {
             return response()->json(['success' => true]);

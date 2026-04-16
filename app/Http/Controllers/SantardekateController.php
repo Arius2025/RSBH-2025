@@ -41,7 +41,7 @@ class SantardekateController extends Controller
         // Format: TANGGAL | JAM | NAMA | PHONE | RUANGAN | BELANJA
         // appendRow adds Date and Time automatically
         // Range A2:F for 6 columns
-        $success = $this->sheetService->appendRow($data, 'SANTARDEKATE !A2:F');
+        $success = $this->sheetService->appendRow($data, "'SANTARDEKATE '!A2:F");
 
         if ($success) {
             return response()->json(['success' => true]);

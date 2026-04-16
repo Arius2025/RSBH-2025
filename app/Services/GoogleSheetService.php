@@ -30,7 +30,7 @@ class GoogleSheetService
                 throw new \Exception("Failed to get Google Access Token");
             }
 
-            $encodedRange = urlencode($range);
+            $encodedRange = rawurlencode($range);
             $url = "https://sheets.googleapis.com/v4/spreadsheets/{$this->spreadsheetId}/values/{$encodedRange}:append?valueInputOption=RAW";
 
             $response = Http::withOptions(['verify' => false])

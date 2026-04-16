@@ -32,7 +32,7 @@ class SiterbatController extends Controller
             'phone' => $request->phone,
         ];
 
-        $success = $this->sheetService->appendRow($data, 'SITERBAT!A2:G');
+        $success = $this->sheetService->appendRow($data, "'SITERBAT'!A2:G");
 
         if ($success) {
             return response()->json(['success' => true]);
