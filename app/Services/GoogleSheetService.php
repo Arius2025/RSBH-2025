@@ -70,17 +70,34 @@ class GoogleSheetService
     private function getAccessToken()
     {
         try {
-            if (!file_exists($this->jsonPath)) {
-                throw new \Exception("sigap-credentials.json file NOT FOUND at " . $this->jsonPath);
+            // Coba beberapa kemungkinan lokasi file JSON di hosting
+            $possiblePaths = [
+                $this->jsonPath, // base_path()
+                __DIR__ . '/../../sigap-credentials.json', // Relative to app/Services
+                $_SERVER['DOCUMENT_ROOT'] . '/sigap-credentials.json', // Di dalam public_html
+                $_SERVER['DOCUMENT_ROOT'] . '/../sigap-credentials.json', // Di luar public_html
+            ];
+
+            $actualPath = null;
+            foreach ($possiblePaths as $p) {
+                if (file_exists($p)) {
+                    $actualPath = $p;
+                    break;
+                }
             }
 
-            $config = json_decode(file_get_contents($this->jsonPath), true);
+            if (!$actualPath) {
+                throw new \Exception("sigap-credentials.json file NOT FOUND in any of the expected locations.");
+            }
+
+            $config = json_decode(file_get_contents($actualPath), true);
             if (!$config || !isset($config['private_key'])) {
                 throw new \Exception("Invalid sigap-credentials.json content.");
             }
 
             $privateKey = $config['private_key'];
             $clientEmail = $config['client_email'];
+
 
             $header = ['alg' => 'RS256', 'typ' => 'JWT'];
             $now = time();
