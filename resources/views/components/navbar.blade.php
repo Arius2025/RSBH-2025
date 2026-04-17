@@ -63,7 +63,7 @@
                                     </div>
                                     <div>
                                         <div class="fw-bold mb-0 text-success" style="font-size: 0.9rem;">SITERBAT</div>
-                                        <div class="text-muted" style="font-size: 0.70rem;">Siap Terjun Obat</div>
+                                        <div class="text-muted" style="font-size: 0.70rem;">Siap Antar Obat</div>
                                     </div>
                                 </a>
                             </li>
@@ -74,18 +74,20 @@
                                     </div>
                                     <div>
                                         <div class="fw-bold mb-0 text-danger" style="font-size: 0.9rem;">AMBULAN</div>
-                                        <div class="text-muted" style="font-size: 0.70rem;">Layanan 24 Jam</div>
+                                        <div class="text-muted" style="font-size: 0.70rem;">Penjemputan gratis
+
+                                        </div>
                                     </div>
                                 </a>
                             </li>
                             <li>
                                 <a class="dropdown-item rounded-3 py-2 d-flex align-items-center mb-1 hover-bg-light" href="{{ route('santardekate') }}">
-                                    <div class="bg-primary-subtle text-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 38px; height: 38px;">
+                                    <div class="bg-warning-subtle text-warning rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 38px; height: 38px;">
                                         <i class="bi bi-house-heart fs-5"></i>
                                     </div>
                                     <div>
-                                        <div class="fw-bold mb-0 text-primary" style="font-size: 0.9rem;">SANTAR DEKATE</div>
-                                        <div class="text-muted" style="font-size: 0.70rem;">Pengantaran Pasien</div>
+                                        <div class="fw-bold mb-0 text-warning" style="font-size: 0.9rem;">SANTAR DEKATE</div>
+                                        <div class="text-muted" style="font-size: 0.70rem;">Antar Pesanan Pasien</div>
                                     </div>
                                 </a>
                             </li>
@@ -163,7 +165,7 @@
             <span class="text-dark fw-bold">Ambulan</span>
         </a>
         <a href="{{ route('santardekate') }}" class="sigap-pop-item text-dark stagger-3">
-            <div class="icon-wrap custom-glow-primary bg-white text-primary"><i class="bi bi-house-heart"></i></div>
+            <div class="icon-wrap custom-glow-warning bg-white text-warning"><i class="bi bi-house-heart"></i></div>
             <span class="text-dark fw-bold">SantarDkt</span>
         </a>
         <a href="{{ route('dashboard-indikator') }}" class="sigap-pop-item text-dark stagger-4">
@@ -279,6 +281,7 @@
     
     .custom-glow-success { box-shadow: 0 8px 15px rgba(25, 135, 84, 0.25) !important; border: 1px solid #19875420 !important; }
     .custom-glow-danger { box-shadow: 0 8px 15px rgba(220, 53, 69, 0.25) !important; border: 1px solid #dc354520 !important; }
+    .custom-glow-warning { box-shadow: 0 8px 15px rgba(255, 193, 7, 0.25) !important; border: 1px solid #ffc10720 !important; }
     .custom-glow-primary { box-shadow: 0 8px 15px rgba(13, 110, 253, 0.25) !important; border: 1px solid #0d6efd20 !important; }
     .custom-glow-info { box-shadow: 0 8px 15px rgba(13, 202, 240, 0.25) !important; border: 1px solid #0dcaf020 !important; }
     

@@ -67,6 +67,77 @@ class GoogleSheetService
         }
     }
 
+    public function getSpreadsheetMetadata($spreadsheetId)
+    {
+        try {
+            $token = $this->getAccessToken();
+            if (!$token) return [];
+            $url = "https://sheets.googleapis.com/v4/spreadsheets/{$spreadsheetId}";
+
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, ["Authorization: Bearer $token"]);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            
+            $response = curl_exec($ch);
+            curl_close($ch);
+            
+            return json_decode($response, true);
+        } catch (\Exception $e) {
+            return [];
+        }
+    }
+
+    public function getRangeData($spreadsheetId, $range)
+    {
+        try {
+            $token = $this->getAccessToken();
+            if (!$token) return ['error' => ['message' => 'Token failed']];
+            
+            $encodedRange = rawurlencode($range);
+            $url = "https://sheets.googleapis.com/v4/spreadsheets/{$spreadsheetId}/values/{$encodedRange}";
+
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, ["Authorization: Bearer $token"]);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            
+            $response = curl_exec($ch);
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+
+            if ($httpCode != 200) {
+                return ['error' => ['message' => 'API Error HTTP ' . $httpCode]];
+            }
+            return json_decode($response, true);
+        } catch (\Exception $e) {
+            return ['error' => ['message' => $e->getMessage()]];
+        }
+    }
+
+    public function getBatchData($spreadsheetId, $ranges)
+    {
+        try {
+            $token = $this->getAccessToken();
+            if (!$token) return [];
+            
+            $rangesQuery = implode('&ranges=', array_map('rawurlencode', $ranges));
+            $url = "https://sheets.googleapis.com/v4/spreadsheets/{$spreadsheetId}/values:batchGet?ranges={$rangesQuery}";
+
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, ["Authorization: Bearer $token"]);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            
+            $response = curl_exec($ch);
+            curl_close($ch);
+            
+            return json_decode($response, true);
+        } catch (\Exception $e) {
+            return [];
+        }
+    }
+
     private function getAccessToken()
     {
         try {

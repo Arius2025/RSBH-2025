@@ -128,14 +128,14 @@
     async function fetchMonthlyData(spreadsheetId, sheetName) {
         try {
             const range = `${sheetName}!A2:A`;
-            const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${API_KEY}`;
-            console.log("Fetching:", url);
+            const url = `/api/dashboard/sheet-data?id=${spreadsheetId}&range=${encodeURIComponent(range)}`;
+            console.log("Fetching via proxy:", url);
             const response = await fetch(url);
             const data = await response.json();
             
             if (data.error) {
-                console.error("Sheets API Error:", data.error);
-                alert("Kesalahan Dashboard: " + data.error.message + ". Pastikan Spreadsheet sudah di-SHARE ke 'Anyone with link' (Viewer).");
+                console.error("Sheets Proxy Error:", data.error);
+                alert("Kesalahan Dashboard: " + data.error.message + ". Pastikan aplikasi memiliki akses ke Sheet.");
                 return [];
             }
 
@@ -187,22 +187,15 @@
 
     async function fetchLegacySheetData(spreadsheetId, excludeSheets = []) {
         try {
-            const metadataUrl = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}?key=${API_KEY}`;
-            const metadataResponse = await fetch(metadataUrl);
-            const metadata = await metadataResponse.json();
-            if (!metadata.sheets) return [];
-            const sheets = metadata.sheets.map(s => s.properties.title).filter(name => !excludeSheets.includes(name));
-            if(sheets.length === 0) return [];
-            const ranges = sheets.map(name => encodeURIComponent(name) + '!A2:A');
-            const valuesUrl = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values:batchGet?ranges=${ranges.join('&ranges=')}&key=${API_KEY}`;
-            const valuesResponse = await fetch(valuesUrl);
-            const data = await valuesResponse.json();
-            if (!data.valueRanges) return [];
-            return data.valueRanges.map((vr, index) => {
-                let count = vr.values ? vr.values.filter(row => row[0] !== '').length : 0;
-                let cleanLabel = sheets[index].replace(/\s*\(\d+\)\s*/g, '');
-                return { label: cleanLabel, count: count };
-            });
+            const url = `/api/dashboard/legacy-data?id=${spreadsheetId}`;
+            const response = await fetch(url);
+            const data = await response.json();
+            if (data && data.error) {
+                console.error("Legacy Proxy Error:", data.error);
+                return [];
+            }
+            if (!Array.isArray(data)) return [];
+            return data;
         } catch (error) { console.error(`Error fetching legacy data:`, error); return []; }
     }
 
@@ -248,8 +241,8 @@
         const ambulanceData = await fetchMonthlyData(sheets.ambulance, 'AMBULAN');
         renderChart('chartAmbulance', 'totalAmbulance', 'bar', '#dc3545', 'Ambulance', ambulanceData);
         
-        // Santardekate remains using the legacy sheet-per-category structure if it hasn't changed
-        const santardekateData = await fetchLegacySheetData(sheets.santardekate, []);
+        // Santardekate now uses the same monthly data structure as Siterbat & Ambulance
+        const santardekateData = await fetchMonthlyData(sheets.santardekate, 'SANTARDEKATE ');
         renderChart('chartSantardekate', 'totalSantardekate', 'bar', '#ffc107', 'Santardekate', santardekateData);
         
         document.querySelectorAll('.selectedYearText').forEach(el => el.innerText = currentYear);

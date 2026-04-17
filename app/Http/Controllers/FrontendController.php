@@ -226,4 +226,41 @@ class FrontendController extends Controller
         return response()->json(['status' => 'Error Exception', 'message' => $e->getMessage()], 500);
     }
 }
+
+    public function getDashboardSheetData(Request $request)
+    {
+        $sheetService = app(\App\Services\GoogleSheetService::class);
+        $spreadsheetId = $request->query('id');
+        $range = $request->query('range');
+        if (!$spreadsheetId || !$range) return response()->json(['error' => ['message' => 'Missing id or range']]);
+        
+        $data = $sheetService->getRangeData($spreadsheetId, $range);
+        return response()->json($data);
+    }
+
+    public function getDashboardLegacyData(Request $request)
+    {
+        $sheetService = app(\App\Services\GoogleSheetService::class);
+        $spreadsheetId = $request->query('id');
+        if (!$spreadsheetId) return response()->json(['error' => ['message' => 'Missing id']]);
+        
+        $metadata = $sheetService->getSpreadsheetMetadata($spreadsheetId);
+        if (empty($metadata['sheets'])) return response()->json([]);
+        
+        $sheets = array_map(function($s) { return $s['properties']['title']; }, $metadata['sheets']);
+        $ranges = array_map(function($name) { return $name . '!A2:A'; }, $sheets);
+        
+        if (empty($ranges)) return response()->json([]);
+        
+        $data = $sheetService->getBatchData($spreadsheetId, $ranges);
+        if (empty($data['valueRanges'])) return response()->json([]);
+        
+        $result = [];
+        foreach ($data['valueRanges'] as $index => $vr) {
+            $count = empty($vr['values']) ? 0 : count(array_filter($vr['values'], function($row) { return !empty($row[0]); }));
+            $cleanLabel = preg_replace('/\s*\(\d+\)\s*/', '', $sheets[$index]);
+            $result[] = ['label' => $cleanLabel, 'count' => $count];
+        }
+        return response()->json($result);
+    }
 }

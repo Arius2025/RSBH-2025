@@ -46,6 +46,9 @@ Route::get('/tidur',[FrontendController::class,'tidur'])->name('tidur');
 Route::get('/api/bed-status', [FrontendController::class, 'getBedData'])->name('api.bed.status');
 Route::get('/jadwalOperasi',[FrontendController::class,'jadwalOperasi'])->name('jadwaloperasi');
 Route::get('/test-api-operasi', [FrontendController::class, 'testKoneksi']);
+Route::get('/api/dashboard/sheet-data', [FrontendController::class, 'getDashboardSheetData']);
+Route::get('/api/dashboard/legacy-data', [FrontendController::class, 'getDashboardLegacyData']);
+
 // =========================================================================
 // 2. ROUTE AUTHENTICATION (BREEZE) 
 // =========================================================================
