@@ -30,6 +30,31 @@
         <hr class="w-100 mb-5 border-success" style="border-width: 2px; opacity: 0.1;">
 
         <div class="row g-5">
+{{-- 0. Grafik FUP Kopi --}}
+            <div class="col-12">
+                <div class="glass-card border-0 luxury-shadow luxury-hover p-4 p-md-5 bg-white" style="border-left: 8px solid #4e21f1ff !important;">
+                    <div class="row align-items-center flex-md-row-reverse">
+                        <div class="col-md-4 mb-4 mb-md-0 text-center text-md-start ps-md-4">
+                            <div class="d-inline-block bg-primary bg-opacity-10 p-3 rounded-circle mb-3">
+                                <i class="bi bi-phone-fill text-primary fs-1"></i>
+                            </div>
+                            <h3 class="fw-bold text-primary">Indikator FUP Kopi</h3>
+                            <p class="text-muted">Follow Up Pasien Kemoterapi</p>
+                            <div class="mt-4">
+                                <h2 class="display-5 fw-bold text-dark" id="totalAmbulance">0</h2>
+                                <p class="small text-muted text-uppercase fw-bold">Total Jemputan Tahun <span class="selectedYearText">2025</span></p>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div style="height: 350px;">
+                                <canvas id="chartAmbulance"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        
             {{-- 1. Grafik Siterbat --}}
             <div class="col-12">
                 <div class="glass-card border-0 luxury-shadow luxury-hover p-4 p-md-5 bg-white" style="border-left: 8px solid #198754 !important;">

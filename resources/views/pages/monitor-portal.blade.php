@@ -66,15 +66,7 @@
         </div>
 
         <div class="row g-4 justify-content-center">
-            <div class="col-md-4">
-                <a href="{{ route('monitor.siterbat') }}" class="role-btn btn-siterbat shadow-sm">
-                    <div class="role-icon glow-success">
-                        <i class="bi bi-phone-fill"></i>
-                    </div>
-                    <h5 class="fw-bold mb-1">FUP KOPI</h5>
-                    <span class="small opacity-75">Follow Up Pasien Kemotertapi</span>
-                </a>
-            </div>
+           
             <div class="col-md-4">
                 <a href="{{ route('monitor.siterbat') }}" class="role-btn btn-siterbat shadow-sm">
                     <div class="role-icon glow-success">

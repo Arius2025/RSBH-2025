@@ -42,6 +42,8 @@ Route::post('/ambulance/submit', [\App\Http\Controllers\AmbulanceController::cla
 Route::get('/santardekate', [\App\Http\Controllers\SantardekateController::class, 'index'])->name('santardekate');
 Route::post('/santardekate/submit', [\App\Http\Controllers\SantardekateController::class, 'submit'])->name('santardekate.submit');
 
+Route::get('/fup', [\App\Http\Controllers\FupController::class, 'index'])->name('fup');
+
 Route::get('/ambulance',[FrontendController::class,'ambulance'])->name('ambulance');
 Route::get('/dashboard-indikator',[FrontendController::class,'dashboardIndikator'])->name('dashboard-indikator');
 Route::get('/tidur',[FrontendController::class,'tidur'])->name('tidur');
