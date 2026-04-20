@@ -1,0 +1,22 @@
+{
+    "name": "Monitor AMBULAN",
+    "short_name": "Ambulan",
+    "description": "Ambulan Jemput Gratis Monitoring Dashboard",
+    "start_url": "monitor-ambulance",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#dc3545",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "images/dkt.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "images/dkt.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

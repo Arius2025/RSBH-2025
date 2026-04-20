@@ -1,0 +1,22 @@
+{
+    "name": "Monitor SITERBAT",
+    "short_name": "Siterbat",
+    "description": "Siap Antar Obat Monitoring Dashboard",
+    "start_url": "monitor-siterbat",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#198754",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "images/dkt.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "images/dkt.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

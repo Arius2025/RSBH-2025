@@ -15,10 +15,20 @@
             </li>
             
             {{-- Kelola Berita --}}
+            {{-- 
             <li class="nav-item mb-1">
                 <a class="nav-link py-2 rounded {{ request()->routeIs('admin.berita.*') ? 'active-admin' : '' }}" 
                    href="{{ route('admin.berita.index') }}">
                     <i class="bi bi-newspaper me-2"></i> Kelola Berita
+                </a>
+            </li>
+            --}}
+
+            {{-- Tarif RSDKT --}}
+            <li class="nav-item mb-1">
+                <a class="nav-link py-2 rounded {{ request()->routeIs('admin.tarif.*') ? 'active-admin' : '' }}" 
+                   href="{{ route('admin.tarif.index') }}">
+                    <i class="bi bi-tags-fill me-2"></i> Tarif RSDKT
                 </a>
             </li>
 

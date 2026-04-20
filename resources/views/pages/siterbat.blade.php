@@ -234,8 +234,18 @@
             const result = await response.json();
 
             if (result.success) {
+                // WA Notification
+                const waNumber = "6285217077347";
+                const waMessage = `*Pesan Siterbat (Antar Obat)*\n\n- RM: ${rm}\n- Nama: ${name}\n- Alamat: ${address}\n- Detail: ${detail}\n- WA Pasien: ${phone}`;
+                const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`;
+                
                 const myModal = new bootstrap.Modal(document.getElementById('successModal'));
                 myModal.show();
+                
+                // Open WA after a small delay
+                setTimeout(() => {
+                    window.open(waUrl, '_blank');
+                }, 1000);
                 
                 document.getElementById('siterbatForm').reset();
                 validateForm();

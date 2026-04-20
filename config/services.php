@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'rsdkt' => [
+        'key' => env('RSDKT_API_KEY'),
+    ],
+
 ];

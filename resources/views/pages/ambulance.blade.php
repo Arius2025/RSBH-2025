@@ -232,8 +232,19 @@
             const result = await response.json();
 
             if (result.success) {
+                // WA Notification
+                const waNumber = "628113650118";
+                const waMessage = `*Pesan Ambulan RS Baladhika*\n\n- Nama Pasien: ${name}\n- Gejala: ${gejala}\n- Alamat Jemput: ${address}\n- Detail Rumah: ${detail}\n- WA: ${phone}`;
+                const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`;
+                
                 const myModal = new bootstrap.Modal(document.getElementById('successModal'));
                 myModal.show();
+                
+                // Open WA after a small delay
+                setTimeout(() => {
+                    window.open(waUrl, '_blank');
+                }, 1000);
+
                 document.getElementById('ambulanForm').reset();
                 validateForm();
             } else {

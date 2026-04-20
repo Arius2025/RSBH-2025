@@ -86,6 +86,25 @@
                 </div>
             </div>
         </div>
+
+        {{-- Card 6: Tarif RSDKT --}}
+        <div class="col-xl-3 col-md-6 mt-xl-0 mt-4">
+            <div class="card bg-white border-0 shadow-lg h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-tags-fill me-3 fs-1 text-success"></i>
+                        <div>
+                            <h5 class="card-title fw-bold text-success mb-1">Tarif RSDKT</h5>
+                            <p class="card-text text-muted small">Lihat produk dan tarif layanan RSDKT.</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <a href="{{ route('admin.tarif.index') }}" class="btn btn-outline-success w-100 mt-2">
+                        <i class="bi bi-arrow-right-circle me-1"></i> Buka Tarif
+                    </a>
+                </div>
+            </div>
+        </div>
             
     </div>
 </div>

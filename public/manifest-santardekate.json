@@ -1,0 +1,22 @@
+{
+    "name": "Monitor SANTARDEKATE",
+    "short_name": "SantarDkt",
+    "description": "Santar Dekate Monitoring Dashboard",
+    "start_url": "monitor-santardekate",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#ffc107",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "images/dkt.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "images/dkt.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

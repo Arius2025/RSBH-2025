@@ -181,8 +181,19 @@
             const result = await response.json();
 
             if (result.success) {
+                // WA Notification
+                const waNumber = "628132683521";
+                const waMessage = `*Pesanan Santardekate (Koperasi)*\n\n- Nama: ${formData.name}\n- Ruangan: ${formData.ruangan}\n- Pesanan: ${formData.belanja}\n- WA: ${formData.phone}`;
+                const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`;
+                
                 const modal = new bootstrap.Modal(document.getElementById('successModal'));
                 modal.show();
+                
+                // Open WA after a small delay
+                setTimeout(() => {
+                    window.open(waUrl, '_blank');
+                }, 1000);
+                
                 document.getElementById('santarkateForm').reset();
                 validateForm();
             } else {

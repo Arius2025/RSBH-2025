@@ -49,6 +49,12 @@ Route::get('/test-api-operasi', [FrontendController::class, 'testKoneksi']);
 Route::get('/api/dashboard/sheet-data', [FrontendController::class, 'getDashboardSheetData']);
 Route::get('/api/dashboard/legacy-data', [FrontendController::class, 'getDashboardLegacyData']);
 
+// MONITOR ROUTES
+Route::get('/monitor-siterbat', [\App\Http\Controllers\FrontendController::class, 'monitorSiterbat'])->name('monitor.siterbat');
+Route::get('/monitor-ambulance', [\App\Http\Controllers\FrontendController::class, 'monitorAmbulance'])->name('monitor.ambulance');
+Route::get('/monitor-santardekate', [\App\Http\Controllers\FrontendController::class, 'monitorSantardekate'])->name('monitor.santardekate');
+Route::get('/monitor/portal', [\App\Http\Controllers\FrontendController::class, 'monitorPortal'])->name('monitor.portal');
+
 // =========================================================================
 // 2. ROUTE AUTHENTICATION (BREEZE) 
 // =========================================================================
@@ -78,6 +84,10 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     // 2. Kelola Jadwal Dokter: Menggunakan JadwalCrudController
     Route::get('/jadwal', [JadwalCrudController::class, 'index'])->name('jadwal.index');
     Route::post('/jadwal/update', [JadwalCrudController::class, 'update'])->name('jadwal.update');
+
+    // Tarif RSDKT
+    Route::get('/tarif', [\App\Http\Controllers\Admin\TarifController::class, 'index'])->name('tarif.index');
+    Route::get('/tarif/cetak', [\App\Http\Controllers\Admin\TarifController::class, 'print'])->name('tarif.print');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

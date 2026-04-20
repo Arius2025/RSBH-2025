@@ -224,11 +224,11 @@
                 <span>Dash</span>
             </a>
             
-            {{-- Kelola Berita --}}
-            <a class="bottom-nav-link {{ request()->routeIs('admin.berita.*') ? 'active-mobile' : '' }}" 
-               href="{{ route('admin.berita.index') }}">
-                <i class="bi bi-newspaper"></i>
-                <span>Berita</span>
+            {{-- Tarif RSDKT --}}
+            <a class="bottom-nav-link {{ request()->routeIs('admin.tarif.*') ? 'active-mobile' : '' }}" 
+               href="{{ route('admin.tarif.index') }}">
+                <i class="bi bi-tags-fill"></i>
+                <span>Tarif</span>
             </a>
             
             {{-- Kelola Jadwal --}}

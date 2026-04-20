@@ -33,6 +33,20 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    {{-- PWA Support (Restricted to Monitor Routes) --}}
+    @php
+        $manifest = null;
+        if (request()->is('monitor-siterbat*')) $manifest = 'manifest-siterbat.json';
+        elseif (request()->is('monitor-ambulance*')) $manifest = 'manifest-ambulance.json';
+        elseif (request()->is('monitor-santardekate*')) $manifest = 'manifest-santardekate.json';
+        elseif (request()->is('monitor/portal*')) $manifest = 'manifest-siterbat.json'; // Generic for portal
+    @endphp
+    @if($manifest)
+        <link rel="manifest" href="{{ asset($manifest) }}">
+        <meta name="theme-color" content="#198754">
+        <link rel="apple-touch-icon" href="{{ asset('images/dkt.png') }}">
+    @endif
     
     <style>
       /* ========================================= */
@@ -268,6 +282,19 @@
         scrollBtn.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
+
+        // Register Service Worker for PWA (Restricted to Monitor Routes)
+        @if($manifest)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then(reg => {
+                    console.log('SW Registered', reg);
+                }).catch(err => {
+                    console.log('SW Registration Failed', err);
+                });
+            });
+        }
+        @endif
     </script>
     @stack('scripts')
 </body>

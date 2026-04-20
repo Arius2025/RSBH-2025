@@ -118,6 +118,45 @@ class FrontendController extends Controller
     public function informasi() { return view('pages.informasi'); }
     public function dokter() { return view('pages.jadwal_dokter'); }
     public function tidur() { return view('pages.tidur'); }
+
+    // MONITORING DASHBOARDS
+    public function monitorSiterbat() { 
+        return view('pages.monitor-service', [
+            'title' => 'SITERBAT',
+            'sheetId' => '1zZHjcIYoal75rbikPZ6oElTMyGpKjzS2OdzzCKm__4c',
+            'sheetName' => 'SITERBAT',
+            'color' => '#198754',
+            'icon' => 'bi-bicycle',
+            'apiType' => 'sheet'
+        ]); 
+    }
+
+    public function monitorAmbulance() { 
+        return view('pages.monitor-service', [
+            'title' => 'AMBULAN',
+            'sheetId' => '1ZiowxZoBCRvqcRlkrkIPueJ2Tzr9uApluGGY5koy9SY',
+            'sheetName' => 'AMBULAN',
+            'color' => '#dc3545',
+            'icon' => 'bi-truck',
+            'apiType' => 'sheet'
+        ]); 
+    }
+
+    public function monitorSantardekate() { 
+        return view('pages.monitor-service', [
+            'title' => 'SANTAR DEKATE',
+            'sheetId' => '1-tb2VzBFPE12QOecySExK4s3r_lwrc8mVkyu8kLL3ys',
+            'sheetName' => 'SANTARDEKATE ',
+            'color' => '#ffc107',
+            'icon' => 'bi-house-heart',
+            'apiType' => 'sheet'
+        ]); 
+    }
+
+    public function monitorPortal() {
+        return view('pages.monitor-portal');
+    }
+
     public function jadwal() { 
         $jadwal = \App\Models\JadwalDokter::first();
         return view('pages.jadwal', compact('jadwal')); 
