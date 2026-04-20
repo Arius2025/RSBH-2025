@@ -170,8 +170,9 @@
         <div class="container-fluid">
             
             {{-- Nama Brand --}}
-            <a class="navbar-brand fw-bold" href="{{ route('admin.dashboard') }}">
-                <i class="bi bi-hospital-fill me-2 fs-4"></i> Admin Panel
+            <a class="navbar-brand d-flex align-items-center" href="{{ route('admin.dashboard') }}">
+                <img src="{{ asset('images/logo.png') }}?v={{ time() }}" alt="Logo" style="height: 35px; width: auto; object-fit: contain;" class="me-2">
+                <span class="fw-bold">Admin Panel</span>
             </a>
 
             {{-- Desktop User Dropdown Menu (Muncul di layar besar) --}}
