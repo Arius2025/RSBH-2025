@@ -24,9 +24,10 @@
         <h5 class="fw-bold text-dark mb-4 border-bottom border-success pb-2 d-inline-block">Tautan</h5>
         <ul class="list-unstyled">
           <li class="mb-2"><a href="{{ route('home') }}" class="text-muted text-decoration-none hover-green">Beranda</a></li>
-          <li class="mb-2"><a href="{{ route('informasi') }}"" class="text-muted text-decoration-none hover-green">Informasi</a></li>
-          <li class="mb-2"><a href="{{ route('jadwal') }}"" class="text-muted text-decoration-none hover-green">Jadwal Dokter</a></li>
-          <li class="mb-2"><a href="{{ route('kontak') }}"" class="text-muted text-decoration-none hover-green">Kontak Kami</a></li>
+          <li class="mb-2"><a href="{{ route('informasi') }}" class="text-muted text-decoration-none hover-green">Informasi</a></li>
+          <li class="mb-2"><a href="{{ route('berita') }}" class="text-muted text-decoration-none hover-green">Berita</a></li>
+          <li class="mb-2"><a href="{{ route('jadwal') }}" class="text-muted text-decoration-none hover-green">Jadwal Dokter</a></li>
+          <li class="mb-2"><a href="{{ route('kontak') }}" class="text-muted text-decoration-none hover-green">Kontak Kami</a></li>
         </ul>
       </div>
 

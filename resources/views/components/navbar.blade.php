@@ -35,6 +35,9 @@
                             <li><a class="dropdown-item rounded-2" href="{{ route('jadwaloperasi') }}">Jadwal Operasi</a></li>
                         </ul>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-2 {{ request()->routeIs('berita') ? 'text-success active' : '' }}" href="{{ route('berita') }}">Berita</a>
+                    </li>
 
                     
                     {{-- MENU LAYANAN --}}
@@ -215,6 +218,12 @@
             <a href="{{ route('zona') }}" class="sigap-pop-item stagger-4">
                 <div class="icon-wrap bg-white text-success"><i class="bi bi-award"></i></div>
                 <span>Zona</span>
+            </a>
+        </div>
+        <div class="col-4">
+            <a href="{{ route('berita') }}" class="sigap-pop-item stagger-4">
+                <div class="icon-wrap bg-white text-success"><i class="bi bi-newspaper"></i></div>
+                <span>Berita</span>
             </a>
         </div>
         <div class="col-12 mt-4">

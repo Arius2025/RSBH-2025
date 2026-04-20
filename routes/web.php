@@ -22,6 +22,8 @@ use App\Http\Controllers\JadwalHarianController;
 Route::get('/', [FrontendController::class, 'home'])->name('home');
 Route::get('/informasi', [FrontendController::class, 'informasi'])->name('informasi');
 Route::get('/dokter', [FrontendController::class, 'dokter'])->name('dokter');
+Route::get('/berita', [FrontendController::class, 'berita'])->name('berita');
+Route::get('/berita/{slug}', [FrontendController::class, 'detailBerita'])->name('berita.detail');
 
 // Jadwal Harian
 Route::get('/jadwal', [JadwalHarianController::class, 'index'])->name('jadwal');
