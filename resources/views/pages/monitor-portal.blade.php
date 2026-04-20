@@ -67,7 +67,7 @@
 
         <div class="row g-4 justify-content-center">
             <div class="col-md-4">
-                <a href="{{ route('#') }}" class="role-btn btn-siterbat shadow-sm">
+                <a href="{{ route('monitor.siterbat') }}" class="role-btn btn-siterbat shadow-sm">
                     <div class="role-icon glow-success">
                         <i class="bi bi-phone-fill"></i>
                     </div>

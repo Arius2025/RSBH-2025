@@ -59,13 +59,13 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-3 p-3 rounded-4" style="min-width: 250px;">
                             <li><h6 class="dropdown-header fw-bold text-success" style="font-size:0.75rem; letter-spacing:0.5px;">LAYANAN TERPADU</h6></li>
-                            li>
-                                <a class="dropdown-item rounded-3 py-2 d-flex align-items-center mb-1 hover-bg-light" href="{{ route('#') }}">
-                                    <div class="bg-success-subtle text-success rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 38px; height: 38px;">
+                            <li>
+                                <a class="dropdown-item rounded-3 py-2 d-flex align-items-center mb-1 hover-bg-light" href="{{ route('siterbat') }}">
+                                    <div class="bg-success-subtle text-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 38px; height: 38px;">
                                         <i class="bi bi-phone-fill fs-5"></i>
                                     </div>
                                     <div>
-                                        <div class="fw-bold mb-0 text-success" style="font-size: 0.9rem;">FUP KOPI</div>
+                                        <div class="fw-bold mb-0 text-primary" style="font-size: 0.9rem;">FUP KOPI</div>
                                         <div class="text-muted" style="font-size: 0.70rem;">Follow Up Pasien Kemotertapi</div>
                                     </div>
                                 </a>
