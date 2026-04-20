@@ -3,16 +3,33 @@
 
 @section('content')
 <div class="container">
-<div class="row g-5">
-        {{-- Struktur Organisasi --}}
-        <div class="col-15" data-aos="zoom-in">
-            <div class="card border-0 shadow-lg overflow-hidden">
-                <div class="card-body p-0">
-                    <img src="{{ asset('images/PPID/STRUKTUR ORGANISASI.png') }}" class="img-fluid w-100" alt="Struktur Organisasi PPID" style="cursor: zoom-in;" onclick="window.open(this.src)">
-                </div>
-            </div>
-        </div>
-        </div>
+
+  {{-- Carousel Jumbotron --}}
+  <div id="ppidCarousel" class="carousel slide mb-5 shadow-lg rounded-4 overflow-hidden" data-bs-ride="carousel" data-aos="fade-down">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#ppidCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#ppidCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="{{ asset('images/PPID/PPID1.jpeg') }}" class="d-block w-100" alt="PPID Slide 1" style="object-fit: cover; height: 450px;">
+        
+      </div>
+      <div class="carousel-item">
+        <img src="{{ asset('images/PPID/PPID2.jpeg') }}" class="d-block w-100" alt="PPID Slide 2" style="object-fit: cover; height: 450px;">
+        
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#ppidCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#ppidCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
   {{-- Header --}}
   <div class="text-center mb-5" data-aos="fade-down">
     <h1 class="fw-bold display-5 text-success">PPID – Pejabat Pengelola Informasi</h1>
