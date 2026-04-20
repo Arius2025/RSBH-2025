@@ -10,7 +10,7 @@
                     </div>
                 </a>
                 <div class="ps-2">
-                    <img src="{{ asset('images/logo.png') }}" alt="Logo" style="height: 40px; width: auto; object-fit: contain;">
+                    <img src="{{ asset('images/logo.png') }}?v={{ time() }}" alt="Logo" style="height: 40px; width: auto; object-fit: contain;">
                 </div>
             </div>
 
