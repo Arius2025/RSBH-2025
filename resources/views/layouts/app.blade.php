@@ -21,8 +21,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'RS Tk. III Baladhika Husada') }}</title>
-    <link rel="icon" href="{{ asset('images/dkt.png') }}" type="image/png">
-    <link rel="shortcut icon" href="{{ asset('images/dkt.png') }}" type="image/png">
+    <link rel="icon" href="{{ asset('images/dkt.png') }}?v={{ time() }}" type="image/png">
+    <link rel="shortcut icon" href="{{ asset('images/dkt.png') }}?v={{ time() }}" type="image/png">
 
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
@@ -45,7 +45,7 @@
     @if($manifest)
         <link rel="manifest" href="{{ asset($manifest) }}">
         <meta name="theme-color" content="#198754">
-        <link rel="apple-touch-icon" href="{{ asset('images/dkt.png') }}">
+        <link rel="apple-touch-icon" href="{{ asset('images/dkt.png') }}?v={{ time() }}">
     @endif
     
     <style>

@@ -9,6 +9,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     
+    {{-- Favicon --}}
+    <link rel="icon" href="{{ asset('images/dkt.png') }}?v={{ time() }}" type="image/png">
+    <link rel="shortcut icon" href="{{ asset('images/dkt.png') }}?v={{ time() }}" type="image/png">
+    
     <style>
         body {
             background: linear-gradient(135deg, #E6F4EA 0%, #ffffff 100%);
@@ -51,7 +55,7 @@
     <div class="auth-card">
         <div class="text-center mb-4">
             <a href="{{ url('/') }}" class="text-decoration-none d-block mb-2">
-                <img src="{{ asset('images/logo.png') }}" alt="Logo RS" style="width: 200px; height: auto;">
+                <img src="{{ asset('images/logo.png') }}?v={{ time() }}" alt="Logo RS" style="width: 200px; height: auto;">
             </a>
             <hr class="w-50 mx-auto">
         </div>
