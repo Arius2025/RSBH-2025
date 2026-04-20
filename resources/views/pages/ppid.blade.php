@@ -3,7 +3,16 @@
 
 @section('content')
 <div class="container">
-
+<div class="row g-5">
+        {{-- Struktur Organisasi --}}
+        <div class="col-15" data-aos="zoom-in">
+            <div class="card border-0 shadow-lg overflow-hidden">
+                <div class="card-body p-0">
+                    <img src="{{ asset('images/PPID/STRUKTUR ORGANISASI.png') }}" class="img-fluid w-100" alt="Struktur Organisasi PPID" style="cursor: zoom-in;" onclick="window.open(this.src)">
+                </div>
+            </div>
+        </div>
+        </div>
   {{-- Header --}}
   <div class="text-center mb-5" data-aos="fade-down">
     <h1 class="fw-bold display-5 text-success">PPID – Pejabat Pengelola Informasi</h1>
@@ -21,11 +30,12 @@
 
     @php
       $menus = [
-        ['icon' => 'file-earmark-text', 'title' => 'Sprin', 'desc' => 'Surat Perintah Informasi', 'link' => 'https://drive.google.com/file/d/1ywXMNVDJD7hVEJt_ZAnGyiYbjOqyolF3/view', 'type' => 'normal'],
-        ['icon' => 'envelope-paper', 'title' => 'Surat Struktur', 'desc' => 'Struktur Informasi Rumah Sakit', 'link' => 'https://drive.google.com/file/d/1MPjo6wxXfJwObpRitpQPoMFP-qmhgJbL/view?usp=sharing', 'type' => 'normal'],
-        ['icon' => 'info-circle', 'title' => 'Informasi RS', 'desc' => 'Fasilitas & Profil RS', 'link' => route('informasi'), 'type' => 'normal'],
+        ['icon' => 'file-earmark-text', 'title' => 'Sprin', 'desc' => 'Surat Perintah Informasi', 'link' => 'https://drive.google.com/file/d/1u5iKkRB7_qYWH1l8r_pZ6KldYCdai03V/view?usp=sharing', 'type' => 'normal'],
+        ['icon' => 'envelope-paper', 'title' => 'Struktur PPID', 'desc' => 'Struktur Petugas PPID', 'link' => route('petugas-ppid'), 'type' => 'normal'],
+        ['icon' => 'info-circle', 'title' => 'Informasi Publik', 'desc' => 'Informasi PPID', 'link' => route('informasi-publik'), 'type' => 'normal'],
         ['icon' => 'exclamation-triangle', 'title' => 'Komplain', 'desc' => 'Layanan Pengaduan Publik', 'link' => route('komplain'), 'type' => 'normal'],
-        
+        ['icon' => 'chat-left-text', 'title' => 'Tanya Jawab', 'desc' => 'Tanya Jawab Seputar Rumah Sakit', 'link' => 'https://wa.me/6285330115991', 'type' => 'normal'],
+         ['icon' => 'clipboard-check', 'title' => 'Survey', 'desc' => 'Survey Kepuasan Pasien', 'link' => 'https://docs.google.com/forms/d/e/1FAIpQLSc-IoLjAkdyI6Vg1LR0ljJGnb6GqDa8F0BhWntwX9BvTwIPhg/viewform', 'type' => 'normal'],
         // Pendaftaran BPJS dengan Logic Deep Link
         ['icon' => 'phone', 'title' => 'Pendaftaran Online (BPJS)', 'desc' => 'Melalui Mobile JKN', 'link' => 'https://play.google.com/store/apps/details?id=app.bpjs.mobile', 'type' => 'jkn'],
         

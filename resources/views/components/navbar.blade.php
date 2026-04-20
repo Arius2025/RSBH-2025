@@ -24,6 +24,8 @@
                         <a class="nav-link dropdown-toggle px-2" href="#" data-bs-toggle="dropdown">Informasi</a>
                         <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-3 p-2 rounded-3">
                             <li><a class="dropdown-item rounded-2" href="{{ route('informasi') }}">Profil Singkat</a></li>
+                            <li><a class="dropdown-item rounded-2" href="{{ route('informasi-publik') }}">Informasi Publik</a></li>
+                            <li><a class="dropdown-item rounded-2" href="{{ route('petugas-ppid') }}">Petugas PPID</a></li>
                             <li><a class="dropdown-item rounded-2" href="{{ route('dokter') }}">Dokter RS</a></li>
                             <li><a class="dropdown-item rounded-2" href="{{ route('tidur') }}">Ketersediaan Tempat Tidur</a></li>
                         </ul>

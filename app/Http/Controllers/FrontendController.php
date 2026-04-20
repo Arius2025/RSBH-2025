@@ -109,6 +109,8 @@ class FrontendController extends Controller
         return view('pages.berita_detail', compact('berita'));
     }
     public function ppid() { return view('pages.ppid'); }
+    public function informasiPublik() { return view('pages.informasi_publik'); }
+    public function petugasPPID() { return view('pages.petugas_ppid'); }
     public function zonaIntegritas() { return view('pages.zona'); }
     public function komplain() { return view('pages.komplain'); }
     public function kontak() { return view('pages.kontak'); }

@@ -32,6 +32,8 @@ Route::post('/update-jadwal-rahasia-x912', [JadwalHarianController::class, 'uplo
 Route::delete('/update-jadwal-rahasia-x912/{id}', [JadwalHarianController::class, 'destroy'])->name('jadwal-harian.destroy');
 
 Route::get('/ppid', [FrontendController::class, 'ppid'])->name('ppid');
+Route::get('/informasi-publik', [FrontendController::class, 'informasiPublik'])->name('informasi-publik');
+Route::get('/petugas-ppid', [FrontendController::class, 'petugasPPID'])->name('petugas-ppid');
 Route::get('/zona', [FrontendController::class, 'zonaIntegritas'])->name('zona');
 Route::get('/komplain', [FrontendController::class, 'komplain'])->name('komplain');
 Route::get('/kontak',[FrontendController::class,'kontak'])->name('kontak');
