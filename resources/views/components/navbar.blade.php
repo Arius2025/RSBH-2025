@@ -25,7 +25,8 @@
                         <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-3 p-2 rounded-3">
                             <li><a class="dropdown-item rounded-2" href="{{ route('informasi') }}">Profil Singkat</a></li>
                             <li><a class="dropdown-item rounded-2" href="{{ route('informasi-publik') }}">Informasi Publik</a></li>
-                            <li><a class="dropdown-item rounded-2" href="{{ route('petugas-ppid') }}">Petugas PPID</a></li>
+                            <li><a class="dropdown-item rounded-2" href="{{ route('profil-ppid') }}">Profil PPID</a></li>
+                            <li><a class="dropdown-item rounded-2" href="{{ route('dokumen-ppid') }}">Dokumen</a></li>
                             <li><a class="dropdown-item rounded-2" href="{{ route('dokter') }}">Dokter RS</a></li>
                             <li><a class="dropdown-item rounded-2" href="{{ route('tidur') }}">Ketersediaan Tempat Tidur</a></li>
                         </ul>
@@ -231,6 +232,12 @@
             <a href="{{ route('zona') }}" class="sigap-pop-item stagger-4">
                 <div class="icon-wrap bg-white text-success"><i class="bi bi-award"></i></div>
                 <span>Zona</span>
+            </a>
+        </div>
+        <div class="col-4">
+            <a href="{{ route('dokumen-ppid') }}" class="sigap-pop-item stagger-4">
+                <div class="icon-wrap bg-white text-success"><i class="bi bi-file-earmark-text"></i></div>
+                <span>Dokumen</span>
             </a>
         </div>
         <div class="col-4">

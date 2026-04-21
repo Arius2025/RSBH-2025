@@ -111,6 +111,13 @@ class FrontendController extends Controller
     public function ppid() { return view('pages.ppid'); }
     public function informasiPublik() { return view('pages.informasi_publik'); }
     public function petugasPPID() { return view('pages.petugas_ppid'); }
+    public function profilPPID() { return view('pages.profil_ppid'); }
+    public function survei() { return view('pages.survei'); }
+    public function dokumenPpid() 
+    {
+        $documents = \App\Models\Document::latest()->get()->groupBy('category');
+        return view('pages.dokumen_ppid', compact('documents'));
+    }
     public function zonaIntegritas() { return view('pages.zona'); }
     public function komplain() { return view('pages.komplain'); }
     public function kontak() { return view('pages.kontak'); }

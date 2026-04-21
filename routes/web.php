@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\BeritaCrudController;
 use App\Http\Controllers\Admin\JadwalCrudController;
+use App\Http\Controllers\Admin\DocumentCrudController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\JadwalHarianController;
 
@@ -34,6 +35,9 @@ Route::delete('/update-jadwal-rahasia-x912/{id}', [JadwalHarianController::class
 Route::get('/ppid', [FrontendController::class, 'ppid'])->name('ppid');
 Route::get('/informasi-publik', [FrontendController::class, 'informasiPublik'])->name('informasi-publik');
 Route::get('/petugas-ppid', [FrontendController::class, 'petugasPPID'])->name('petugas-ppid');
+Route::get('/profil-ppid', [FrontendController::class, 'profilPPID'])->name('profil-ppid');
+Route::get('/dokumen-ppid', [FrontendController::class, 'dokumenPpid'])->name('dokumen-ppid');
+Route::get('/survei', [FrontendController::class, 'survei'])->name('survei');
 Route::get('/zona', [FrontendController::class, 'zonaIntegritas'])->name('zona');
 Route::get('/komplain', [FrontendController::class, 'komplain'])->name('komplain');
 Route::get('/kontak',[FrontendController::class,'kontak'])->name('kontak');
@@ -94,6 +98,9 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     // Tarif RSDKT
     Route::get('/tarif', [\App\Http\Controllers\Admin\TarifController::class, 'index'])->name('tarif.index');
     Route::get('/tarif/cetak', [\App\Http\Controllers\Admin\TarifController::class, 'print'])->name('tarif.print');
+
+    // Kelola Dokumen PPID
+    Route::resource('documents', DocumentCrudController::class);
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

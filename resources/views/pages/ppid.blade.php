@@ -47,12 +47,12 @@
 
     @php
       $menus = [
-        ['icon' => 'file-earmark-text', 'title' => 'Sprin', 'desc' => 'Surat Perintah Informasi', 'link' => 'https://drive.google.com/file/d/1u5iKkRB7_qYWH1l8r_pZ6KldYCdai03V/view?usp=sharing', 'type' => 'normal'],
-        ['icon' => 'envelope-paper', 'title' => 'Struktur PPID', 'desc' => 'Struktur Petugas PPID', 'link' => route('petugas-ppid'), 'type' => 'normal'],
+        ['icon' => 'file-earmark-text', 'title' => 'Dokumen', 'desc' => 'Dokumen PPID', 'link' => route('dokumen-ppid'), 'type' => 'normal'],
+        ['icon' => 'envelope-paper', 'title' => 'Profil PPID', 'desc' => 'Struktur, Visi, Misi & Maklumat', 'link' => route('profil-ppid'), 'type' => 'normal'],
         ['icon' => 'info-circle', 'title' => 'Informasi Publik', 'desc' => 'Informasi PPID', 'link' => route('informasi-publik'), 'type' => 'normal'],
         ['icon' => 'exclamation-triangle', 'title' => 'Komplain', 'desc' => 'Layanan Pengaduan Publik', 'link' => route('komplain'), 'type' => 'normal'],
         ['icon' => 'chat-left-text', 'title' => 'Tanya Jawab', 'desc' => 'Tanya Jawab Seputar Rumah Sakit', 'link' => 'https://wa.me/6285330115991', 'type' => 'normal'],
-         ['icon' => 'clipboard-check', 'title' => 'Survey', 'desc' => 'Survey Kepuasan Pasien', 'link' => 'https://docs.google.com/forms/d/e/1FAIpQLSc-IoLjAkdyI6Vg1LR0ljJGnb6GqDa8F0BhWntwX9BvTwIPhg/viewform', 'type' => 'normal'],
+         ['icon' => 'clipboard-check', 'title' => 'Survey', 'desc' => 'Layanan Survei & Online', 'link' => route('survei'), 'type' => 'normal'],
         // Pendaftaran BPJS dengan Logic Deep Link
         ['icon' => 'phone', 'title' => 'Pendaftaran Online (BPJS)', 'desc' => 'Melalui Mobile JKN', 'link' => 'https://play.google.com/store/apps/details?id=app.bpjs.mobile', 'type' => 'jkn'],
         

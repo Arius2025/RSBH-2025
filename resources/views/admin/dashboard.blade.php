@@ -105,6 +105,25 @@
                 </div>
             </div>
         </div>
+
+        {{-- Card 7: Kelola Dokumen PPID --}}
+        <div class="col-xl-3 col-md-6 mt-xl-0 mt-4">
+            <div class="card bg-white border-0 shadow-lg h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-file-earmark-text-fill me-3 fs-1 text-primary"></i>
+                        <div>
+                            <h5 class="card-title fw-bold text-primary mb-1">Dokumen PPID</h5>
+                            <p class="card-text text-muted small">Kelola regulasi, SOP, dan SK PPID.</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <a href="{{ route('admin.documents.index') }}" class="btn btn-outline-primary w-100 mt-2">
+                        <i class="bi bi-arrow-right-circle me-1"></i> Mulai Kelola
+                    </a>
+                </div>
+            </div>
+        </div>
             
     </div>
 </div>

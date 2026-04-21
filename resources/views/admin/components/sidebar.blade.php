@@ -31,6 +31,14 @@
                     <i class="bi bi-tags-fill me-2"></i> Tarif RSDKT
                 </a>
             </li>
+            
+            {{-- Dokumen PPID --}}
+            <li class="nav-item mb-1">
+                <a class="nav-link py-2 rounded {{ request()->routeIs('admin.dokumen.*') ? 'active-admin' : '' }}" 
+                   href="{{ route('admin.documents.index') }}">
+                    <i class="bi bi-file-earmark-text me-2"></i> Dokumen PPID
+                </a>
+            </li>
 
             {{-- Kelola Jadwal --}}
             <li class="nav-item mb-1">
