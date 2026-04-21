@@ -30,10 +30,10 @@
                 <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
                     <div class="card-body p-4 p-md-5 text-center">
                         <h4 class="fw-bold text-success mb-4">Struktur Organisasi PPID RS Tk. III Baladhika Husada</h4>
-                        <div class="bg-light rounded-4 p-3 mb-4">
+                        <div class="bg-light rounded-4 p-2 p-md-3 mb-4">
                             <!-- Placeholder for Organization Chart -->
-                            <img src="{{ asset('images/PPID/STRUKTUR ORGANISASI.png') }}" class="img-fluid rounded-3 shadow-sm mb-4" alt="Struktur Organisasi PPID" onerror="this.src='https://placehold.co/1200x600/f8f9fa/198754?text=Struktur+Organisasi+PPID'">
-                            <img src="{{ asset('images/PPID/ANGGOTA.png') }}" class="img-fluid rounded-3 shadow-sm" alt="Anggota PPID" onerror="this.src='https://placehold.co/1200x800/f8f9fa/198754?text=Anggota+PPID'">
+                            <img src="{{ asset('images/PPID/STRUKTUR ORGANISASI.png') }}" class="img-fluid rounded-3 shadow-sm mb-4 ppid-info-img" alt="Struktur Organisasi PPID" onerror="this.src='https://placehold.co/1200x600/f8f9fa/198754?text=Struktur+Organisasi+PPID'">
+                            <img src="{{ asset('images/PPID/ANGGOTA.png') }}" class="img-fluid rounded-3 shadow-sm ppid-info-img" alt="Anggota PPID" onerror="this.src='https://placehold.co/1200x800/f8f9fa/198754?text=Anggota+PPID'">
                         </div>
                     </div>
                 </div>
@@ -44,9 +44,9 @@
                 <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
                     <div class="card-body p-4 p-md-5 text-center">
                         <h4 class="fw-bold text-success mb-4">Visi Misi PPID RS Tk. III Baladhika Husada</h4>
-                        <div class="bg-light rounded-4 p-3 mb-4">
-                            <!-- Placeholder for Organization Chart -->
-                            <img src="{{ asset('images/PPID/visi_misi.jpeg') }}" class="img-fluid rounded-3 shadow-sm mb-4" alt="Struktur Organisasi PPID" onerror="this.src='https://placehold.co/1200x600/f8f9fa/198754?text=Struktur+Organisasi+PPID'">
+                        <div class="bg-light rounded-4 p-2 p-md-3 mb-4">
+                            <!-- Placeholder for Visi Misi -->
+                            <img src="{{ asset('images/PPID/visi_misi.jpeg') }}" class="img-fluid rounded-3 shadow-sm ppid-info-img" alt="Visi Misi PPID" onerror="this.src='https://placehold.co/1200x600/f8f9fa/198754?text=Visi+Misi+PPID'">
                         </div>
                     </div>
                 </div>
@@ -118,9 +118,9 @@
                     <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
                     <div class="card-body p-4 p-md-5 text-center">
                         <h4 class="fw-bold text-success mb-4">Maklumat PPID RS Tk. III Baladhika Husada</h4>
-                        <div class="bg-light rounded-4 p-3 mb-4">
-                            <!-- Placeholder for Organization Chart -->
-                            <img src="{{ asset('images/PPID/maklumat.jpeg') }}" class="img-fluid rounded-3 shadow-sm mb-4" alt="Struktur Organisasi PPID" onerror="this.src='https://placehold.co/1200x600/f8f9fa/198754?text=Struktur+Organisasi+PPID'">
+                        <div class="bg-light rounded-4 p-2 p-md-3 mb-4">
+                            <!-- Placeholder for Maklumat -->
+                            <img src="{{ asset('images/PPID/maklumat.jpeg') }}" class="img-fluid rounded-3 shadow-sm ppid-info-img" alt="Maklumat PPID" onerror="this.src='https://placehold.co/1200x600/f8f9fa/198754?text=Maklumat+PPID'">
                         </div>
                     </div>
                 </div>
@@ -137,6 +137,20 @@
 </section>
 
 <style>
+.ppid-info-img {
+    width: 100%;
+    height: auto;
+    max-height: 70vh;
+    object-fit: contain;
+    background-color: #f8f9fa;
+}
+
+@media (max-width: 768px) {
+    .ppid-info-img {
+        max-height: 50vh;
+    }
+}
+
 .ppid-profil-tabs .nav-link {
     color: #6c757d;
     background: none;

@@ -12,12 +12,10 @@
     </div>
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img src="{{ asset('images/PPID/PPID1.jpeg') }}" class="d-block w-100" alt="PPID Slide 1" style="object-fit: cover; height: 450px;">
-        
+        <img src="{{ asset('images/PPID/PPID1.jpeg') }}" class="d-block w-100 ppid-carousel-img" alt="PPID Slide 1">
       </div>
       <div class="carousel-item">
-        <img src="{{ asset('images/PPID/PPID2.jpeg') }}" class="d-block w-100" alt="PPID Slide 2" style="object-fit: cover; height: 450px;">
-        
+        <img src="{{ asset('images/PPID/PPID2.jpeg') }}" class="d-block w-100 ppid-carousel-img" alt="PPID Slide 2">
       </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#ppidCarousel" data-bs-slide="prev">
@@ -197,6 +195,27 @@ function smartOpenJKN() {
 <style>
   .transition { transition: all 0.3s ease; }
   .hover-shadow:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important; }
+
+  /* Responsive Carousel */
+  .ppid-carousel-img {
+      object-fit: cover;
+      height: 450px;
+  }
+
+  @media (max-width: 768px) {
+      .ppid-carousel-img {
+          height: 250px;
+      }
+      .display-5 {
+          font-size: 2rem;
+      }
+  }
+
+  @media (max-width: 480px) {
+      .ppid-carousel-img {
+          height: 180px;
+      }
+  }
 </style>
 </div>
 @endsection
