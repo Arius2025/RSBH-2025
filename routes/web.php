@@ -38,6 +38,8 @@ Route::get('/petugas-ppid', [FrontendController::class, 'petugasPPID'])->name('p
 Route::get('/profil-ppid', [FrontendController::class, 'profilPPID'])->name('profil-ppid');
 Route::get('/dokumen-ppid', [FrontendController::class, 'dokumenPpid'])->name('dokumen-ppid');
 Route::get('/survei', [FrontendController::class, 'survei'])->name('survei');
+Route::get('/fup-kopi', [FrontendController::class, 'fupKopi'])->name('fup_kopi');
+Route::post('/fup-kopi/submit', [FrontendController::class, 'fupKopiSubmit'])->name('fup_kopi.submit');
 Route::get('/zona', [FrontendController::class, 'zonaIntegritas'])->name('zona');
 Route::get('/komplain', [FrontendController::class, 'komplain'])->name('komplain');
 Route::get('/kontak',[FrontendController::class,'kontak'])->name('kontak');

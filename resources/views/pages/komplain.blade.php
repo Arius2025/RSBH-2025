@@ -31,13 +31,18 @@
                     <p class="small text-success fw-bold mb-0">Google Forms</p>
                 </a>
               </div>
-              <div class="col-12">
-                <div class="p-3 bg-danger rounded-3 shadow-sm mt-2">
-                    <p class="text-white small fw-bold mb-2"><i class="bi bi-megaphone-fill me-1"></i> Layanan Aspirasi & Pengaduan Nasional</p>
-                    <a href="https://lapor.go.id/" target="_blank" class="btn btn-white w-100 fw-bold py-2 rounded-pill shadow-sm transition hover-shadow" style="background: white; color: #dc3545;">
-                        <img src="{{ asset('images/komplain/lapor.png') }}" alt="Logo LAPOR" style="height: 25px;" onerror="this.style.display='none'">
-                      Lapor
-                      </a>
+              <div class="col-12 mt-3">
+                <div class="p-4 rounded-3 border bg-white shadow-sm text-center">
+                    <img src="{{ asset('images/komplain/lapor.png') }}" alt="Logo LAPOR" class="img-fluid mb-3" style="max-height: 45px;">
+                    
+                    <h6 class="fw-bold text-dark mb-2">Portal SP4N-LAPOR!</h6>
+                    <p class="text-muted small mb-4 px-3">
+                        Layanan Aspirasi dan Pengaduan Online Rakyat. Portal resmi pemerintah untuk pengaduan terintegrasi nasional.
+                    </p>
+                    
+                    <a href="https://lapor.go.id/" target="_blank" class="btn btn-danger px-5 py-2 fw-bold shadow-sm rounded-pill">
+                        Sampaikan Laporan <i class="bi bi-box-arrow-up-right ms-1 small"></i>
+                    </a>
                 </div>
               </div>
             </div>

@@ -22,7 +22,7 @@
             <div class="d-flex align-items-center bg-white luxury-shadow px-4 py-2 rounded-pill border">
                 <label class="small fw-bold text-uppercase text-muted me-3 mb-0">Filter Tahun:</label>
                 <select class="form-select form-select-sm border-0 fw-bold text-success shadow-none" onchange="changeYear(this.value)" style="width: auto; cursor: pointer;">
-                    <option value="2025" selected >2025</option>
+                    <option value="2025" selected>2025</option>
                     <option value="2026">2026</option>
                 </select>
             </div>
@@ -30,7 +30,8 @@
         <hr class="w-100 mb-5 border-success" style="border-width: 2px; opacity: 0.1;">
 
         <div class="row g-5">
-{{-- 0. Grafik FUP Kopi --}}
+{{-- 0. Grafik FUP Kopi - HIDDEN FOR NOW
+ 
             <div class="col-12">
                 <div class="glass-card border-0 luxury-shadow luxury-hover p-4 p-md-5 bg-white" style="border-left: 8px solid #4e21f1ff !important;">
                     <div class="row align-items-center flex-md-row-reverse">
@@ -41,18 +42,19 @@
                             <h3 class="fw-bold text-primary">Indikator FUP Kopi</h3>
                             <p class="text-muted">Follow Up Pasien Kemoterapi</p>
                             <div class="mt-4">
-                                <h2 class="display-5 fw-bold text-dark" id="totalAmbulance">0</h2>
-                                <p class="small text-muted text-uppercase fw-bold">Total Jemputan Tahun <span class="selectedYearText">2025</span></p>
+                                <h2 class="display-5 fw-bold text-dark" id="totalFupKopi">0</h2>
+                                <p class="small text-muted text-uppercase fw-bold">Total Pasien Tahun <span class="selectedYearText">2025</span></p>
                             </div>
                         </div>
                         <div class="col-md-8">
                             <div style="height: 350px;">
-                                <canvas id="chartAmbulance"></canvas>
+                                <canvas id="chartFupKopi"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+--}}
 
         
             {{-- 1. Grafik Siterbat --}}
@@ -135,16 +137,18 @@
         2025: {
             siterbat: '1zZHjcIYoal75rbikPZ6oElTMyGpKjzS2OdzzCKm__4c',
             ambulance: '1ZiowxZoBCRvqcRlkrkIPueJ2Tzr9uApluGGY5koy9SY',
-            santardekate: '1-tb2VzBFPE12QOecySExK4s3r_lwrc8mVkyu8kLL3ys'
+            santardekate: '1-tb2VzBFPE12QOecySExK4s3r_lwrc8mVkyu8kLL3ys',
+            // fupKopi: '1mD69mPrV0Ym7_H9XvTq-2Lksb1mY8Y4O_uFmUj7T8-I' 
         },
         2026: {
             siterbat: '1zZHjcIYoal75rbikPZ6oElTMyGpKjzS2OdzzCKm__4c',
             ambulance: '1ZiowxZoBCRvqcRlkrkIPueJ2Tzr9uApluGGY5koy9SY',
-            santardekate: '1-tb2VzBFPE12QOecySExK4s3r_lwrc8mVkyu8kLL3ys'
+            santardekate: '1-tb2VzBFPE12QOecySExK4s3r_lwrc8mVkyu8kLL3ys',
+            // fupKopi: '1mD69mPrV0Ym7_H9XvTq-2Lksb1mY8Y4O_uFmUj7T8-I'
         }
     };
 
-    let currentYear = "2026";
+    let currentYear = "2025";
     const _0xkey = "QUl6YVN5Q2NvMVVwWGJvejEteklad25HcFNGTmpWblpvYjVDXzQ0cw==";
     const API_KEY = atob(_0xkey);
 
@@ -160,7 +164,7 @@
             
             if (data.error) {
                 console.error("Sheets Proxy Error:", data.error);
-                alert("Kesalahan Dashboard: " + data.error.message + ". Pastikan aplikasi memiliki akses ke Sheet.");
+                // alert("Kesalahan Dashboard: " + data.error.message + ". Pastikan aplikasi memiliki akses ke Sheet.");
                 return [];
             }
 
@@ -265,6 +269,10 @@
         
         const ambulanceData = await fetchMonthlyData(sheets.ambulance, 'AMBULAN');
         renderChart('chartAmbulance', 'totalAmbulance', 'bar', '#dc3545', 'Ambulance', ambulanceData);
+        
+        // HIDE FUP KOPI FETCHING
+        // const fupKopiData = await fetchMonthlyData(sheets.fupKopi, 'FUP_KOPI');
+        // renderChart('chartFupKopi', 'totalFupKopi', 'line', '#4e21f1', 'FUP Kopi', fupKopiData);
         
         // Santardekate now uses the same monthly data structure as Siterbat & Ambulance
         const santardekateData = await fetchMonthlyData(sheets.santardekate, 'SANTARDEKATE ');

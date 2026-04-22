@@ -126,7 +126,40 @@ class FrontendController extends Controller
     public function dashboardIndikator() { return view('pages.dashboard'); }
     public function informasi() { return view('pages.informasi'); }
     public function dokter() { return view('pages.jadwal_dokter'); }
-    public function tidur() { return view('pages.tidur'); }
+    public function tidy() { return view('pages.tidur'); }
+    public function fupKopi() { return view('pages.fup_kopi'); }
+
+    public function fupKopiSubmit(Request $request)
+    {
+        $data = $request->validate([
+            'rm' => 'required',
+            'name' => 'required',
+            'date' => 'required',
+            'complaint' => 'required',
+            'phone' => 'required'
+        ]);
+
+        try {
+            $sheetService = app(\App\Services\GoogleSheetService::class);
+            // Spreadsheet ID for FUP KOPI (using placeholder or same as others if requested)
+            $spreadsheetId = '1mD69mPrV0Ym7_H9XvTq-2Lksb1mY8Y4O_uFmUj7T8-I'; 
+            
+            $success = $sheetService->setSpreadsheetId($spreadsheetId)->appendRow([
+                $data['rm'],
+                $data['name'],
+                $data['date'],
+                $data['complaint'],
+                $data['phone']
+            ], 'FUP_KOPI!A2:G');
+
+            if ($success) {
+                return response()->json(['success' => true]);
+            }
+            return response()->json(['success' => false, 'message' => 'Gagal menyimpan ke spreadsheet']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
 
     // MONITORING DASHBOARDS
     public function monitorSiterbat() { 

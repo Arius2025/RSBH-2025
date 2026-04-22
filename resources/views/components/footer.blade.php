@@ -11,11 +11,17 @@
         <p class="text-dark small lh-lg">
             Rumah Sakit Tk. III Baladhika Husada Jember berkomitmen memberikan pelayanan kesehatan prima bagi prajurit TNI, PNS, keluarga, serta masyarakat umum dengan profesionalisme tinggi.
         </p>
-        <div class="d-flex gap-3 mt-4">
+        <div class="d-flex gap-3 mt-4 mb-3">
           <a href="#" class="social-icon-light"><i class="bi bi-facebook"></i></a>
           <a href="#" class="social-icon-light"><i class="bi bi-instagram"></i></a>
           <a href="#" class="social-icon-light"><i class="bi bi-youtube"></i></a>
           <a href="#" class="social-icon-light"><i class="bi bi-whatsapp"></i></a>
+        </div>
+        {{-- Link LAPOR Instansi --}}
+        <div class="mt-4">
+          <a href="https://www.lapor.go.id/instansi/rumkit-tkiii-baladhika-husada-jember" target="_blank" class="d-inline-block transition hover-scale">
+            <img src="{{ asset('images/komplain/linkLapor.png') }}" alt="Link LAPOR Instansi" class="img-fluid rounded shadow-sm border p-1" style="max-height: 50px;">
+          </a>
         </div>
       </div>
 

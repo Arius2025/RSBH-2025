@@ -24,9 +24,6 @@
                         <a class="nav-link dropdown-toggle px-2" href="#" data-bs-toggle="dropdown">Informasi</a>
                         <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-3 p-2 rounded-3">
                             <li><a class="dropdown-item rounded-2" href="{{ route('informasi') }}">Profil Singkat</a></li>
-                            <li><a class="dropdown-item rounded-2" href="{{ route('informasi-publik') }}">Informasi Publik</a></li>
-                            <li><a class="dropdown-item rounded-2" href="{{ route('profil-ppid') }}">Profil PPID</a></li>
-                            <li><a class="dropdown-item rounded-2" href="{{ route('dokumen-ppid') }}">Dokumen</a></li>
                             <li><a class="dropdown-item rounded-2" href="{{ route('dokter') }}">Dokter RS</a></li>
                             <li><a class="dropdown-item rounded-2" href="{{ route('tidur') }}">Ketersediaan Tempat Tidur</a></li>
                         </ul>
@@ -62,8 +59,9 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-3 p-3 rounded-4" style="min-width: 250px;">
                             <li><h6 class="dropdown-header fw-bold text-success" style="font-size:0.75rem; letter-spacing:0.5px;">LAYANAN TERPADU</h6></li>
-                            <li>
-                                <a class="dropdown-item rounded-3 py-2 d-flex align-items-center mb-1 hover-bg-light" href="{{ route('fup') }}">
+                            {{-- HIDE FUP KOPI UNTUK SEMENTARA --}}
+                            {{-- <li>
+                                <a class="dropdown-item rounded-3 py-2 d-flex align-items-center mb-1 hover-bg-light" href="{{ route('fup_kopi') }}">
                                     <div class="bg-success-subtle text-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 38px; height: 38px;">
                                         <i class="bi bi-phone-fill fs-5"></i>
                                     </div>
@@ -72,7 +70,7 @@
                                         <div class="text-muted" style="font-size: 0.70rem;">Follow Up Pasien Kemoterapi</div>
                                     </div>
                                 </a>
-                            </li>
+                            </li> --}}
                             <li>
                                 <a class="dropdown-item rounded-3 py-2 d-flex align-items-center mb-1 hover-bg-light" href="{{ route('siterbat') }}">
                                     <div class="bg-success-subtle text-success rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 38px; height: 38px;">
@@ -173,6 +171,11 @@
         <h6 class="fw-black text-dark mb-0" style="font-weight: 800;"><i class="bi bi-lightning-fill me-1 text-warning fs-5"></i> LAYANAN SIGAP</h6>
     </div>
     <div class="d-flex justify-content-around align-items-center">
+        {{-- HIDE FUP KOPI MOBILE --}}
+        {{-- <a href="{{ route('fup_kopi') }}" class="sigap-pop-item text-dark stagger-2">
+            <div class="icon-wrap custom-glow-primary bg-white text-primary"><i class="bi bi-phone-fill"></i></div>
+            <span class="text-dark fw-bold">FUP Kopi</span>
+        </a> --}}
         <a href="{{ route('siterbat') }}" class="sigap-pop-item text-dark stagger-2">
             <div class="icon-wrap custom-glow-success bg-white text-success"><i class="bi bi-bicycle"></i></div>
             <span class="text-dark fw-bold">Siterbat</span>
