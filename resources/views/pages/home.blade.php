@@ -174,7 +174,7 @@
 
 {{-- 6. MODAL PENGUMUMAN --}}
 <div class="modal fade" id="infoModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-dialog-centered modal-lg mx-auto" style="max-width: 800px;">
         <div class="modal-content modal-compact shadow-lg border-0 rounded-4">
             <div class="modal-body p-0">
                 <div class="row g-0">
@@ -209,7 +209,7 @@
                         <div class="news-body p-4 p-lg-5 h-100 d-flex flex-column justify-content-center">
                             
                             {{-- Header Modal --}}
-                            <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
                                 <span class="news-tag text-success fw-bold small text-uppercase">
                                     <i class="bi bi-info-circle-fill me-1"></i> Informasi
                                 </span>
@@ -226,8 +226,8 @@
                                 </p>
                             @else
                                 {{-- Jika Data Kosong --}}
-                                <h3 class="fw-bold text-dark mb-3">RS Tk. III Baladhika Husada</h3>
-                                <p class="text-muted small mb-4">
+                                <h4 class="fw-bold text-dark mb-2">RS Tk. III Baladhika Husada</h4>
+                                <p class="text-muted small mb-3">
                                     Rumah Sakit Umum Kelas C yang melayani masyarakat umum, BPJS, serta TNI/POLRI. Kami siap melayani Anda dengan fasilitas modern dan pelayanan profesional 24 Jam.
                                 </p>
                             @endif
@@ -264,6 +264,38 @@
         </div>
     </div>
 </div>
+
+<style>
+    /* MODAL COMPACT STYLING */
+    .modal-compact .modal-body {
+        max-height: 85vh;
+        overflow-y: auto;
+    }
+    
+    @media (min-width: 768px) {
+        .modal-compact .row.g-0 {
+            min-height: 350px;
+            max-height: 450px;
+        }
+        .news-side-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+    
+    @media (max-width: 767px) {
+        .news-body {
+            padding: 1.5rem !important;
+        }
+        .modal-compact {
+            margin: 1rem;
+        }
+    }
+</style>
 
 <style>
     /* Animasi & Utility */
