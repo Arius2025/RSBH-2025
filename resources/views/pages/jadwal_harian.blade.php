@@ -16,12 +16,18 @@
         overflow: hidden;
         background: #000;
         box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .media-container img, .media-container video {
-        width: 100%;
+        max-width: 100%;
+        max-height: 80vh;
+        width: auto;
         height: auto;
         display: block;
+        margin: 0 auto;
     }
     
 
@@ -95,11 +101,14 @@
                                         </a>
                                     @endif
                                 </div>
+                                {{-- Keterangan (tulisan Jadwal spesialis pagi, dll) disembunyikan berdasarkan request --}}
+                                {{--
                                 @if($item->keterangan)
                                     <div class="mt-3 px-4 text-center">
                                         <p class="fs-5 fw-medium text-dark mx-auto" style="max-width: 800px;"><i class="bi bi-info-circle text-success me-2"></i>{{ $item->keterangan }}</p>
                                     </div>
                                 @endif
+                                --}}
                             </div>
                             @endforeach
                         </div>

@@ -126,7 +126,7 @@ class FrontendController extends Controller
     public function dashboardIndikator() { return view('pages.dashboard'); }
     public function informasi() { return view('pages.informasi'); }
     public function dokter() { return view('pages.jadwal_dokter'); }
-    public function tidy() { return view('pages.tidur'); }
+    public function tidur() { return view('pages.tidur'); }
     public function fupKopi() { return view('pages.fup_kopi'); }
 
     public function fupKopiSubmit(Request $request)
@@ -244,6 +244,32 @@ class FrontendController extends Controller
                     }
                     return $matchTanggal;
                 })->values(); // Reset index setelah filter
+
+                // Sensor nama pasien dan no rekam medis
+                $jadwal->transform(function ($item) {
+                    // Censor RM
+                    if ($item->rm !== '-' && strlen($item->rm) > 2) {
+                        $len = strlen($item->rm);
+                        if ($len > 4) {
+                            $item->rm = substr($item->rm, 0, 2) . str_repeat('*', $len - 4) . substr($item->rm, -2);
+                        } else {
+                            $item->rm = substr($item->rm, 0, 1) . str_repeat('*', $len - 2) . substr($item->rm, -1);
+                        }
+                    }
+                    
+                    // Censor Name
+                    if ($item->pasien !== 'Anonim' && $item->pasien !== '-') {
+                        $words = explode(' ', $item->pasien);
+                        foreach ($words as &$word) {
+                            if (strlen($word) > 1) {
+                                $word = substr($word, 0, 1) . str_repeat('*', strlen($word) - 1);
+                            }
+                        }
+                        $item->pasien = implode(' ', $words);
+                    }
+                    
+                    return $item;
+                });
 
                 return view('pages.jadwal_operasi', compact('jadwal', 'tglAwal', 'tglAkhir', 'search'));
             }
