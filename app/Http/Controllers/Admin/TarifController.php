@@ -16,11 +16,15 @@ class TarifController extends Controller
     public function index(Request $request)
     {
         $group = $request->input('group');
+        $room = $request->input('room');
         $apiKey = config('services.rsdkt.key');
 
         $query = [];
         if ($group) {
             $query['group'] = $group;
+        }
+        if ($room) {
+            $query['room'] = $room;
         }
 
         try {
@@ -51,7 +55,7 @@ class TarifController extends Controller
             'TEMPLATE'
         ];
 
-        return view('admin.tarif.index', compact('data', 'group', 'groups'));
+        return view('admin.tarif.index', compact('data', 'group', 'groups', 'room'));
     }
 
     /**
@@ -62,11 +66,15 @@ class TarifController extends Controller
     public function print(Request $request)
     {
         $group = $request->input('group');
+        $room = $request->input('room');
         $apiKey = config('services.rsdkt.key');
 
         $query = [];
         if ($group) {
             $query['group'] = $group;
+        }
+        if ($room) {
+            $query['room'] = $room;
         }
 
         try {
@@ -86,7 +94,7 @@ class TarifController extends Controller
             $data = [];
         }
 
-        return view('admin.tarif.print', compact('data', 'group'));
+        return view('admin.tarif.print', compact('data', 'group', 'room'));
     }
 
     /**
