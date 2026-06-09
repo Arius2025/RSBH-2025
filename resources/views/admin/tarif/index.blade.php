@@ -12,16 +12,23 @@
             <p class="text-muted mb-0">Kelola dan integrasi data tarif dari API RSDKT.</p>
         </div>
         <div class="col-md-6 text-md-end mt-3 mt-md-0">
-            <form method="GET" action="{{ route('admin.tarif.index') }}" class="d-flex justify-content-md-end">
-                <div class="input-group" style="max-width: 350px;">
-                    <select name="group" class="form-select" onchange="this.form.submit()">
+            <form method="GET" action="{{ route('admin.tarif.index') }}" class="d-flex justify-content-md-end gx-2">
+                <div class="input-group" style="max-width: 520px;">
+                    <select id="groupFilter" name="group" class="form-select" onchange="this.form.submit()">
                         <option value="">-- Semua Bagian (Group) --</option>
                         @foreach($groups as $grp)
-                            <option value="{{ $grp }}" {{ $group == $grp ? 'selected' : '' }}>{{ $grp }}</option>
+                            <option value="{{ $grp }}" {{ (isset($group) && $group == $grp) ? 'selected' : '' }}>{{ $grp }}</option>
                         @endforeach
                     </select>
+
+                    <select id="roomFilter" name="room" class="form-select" aria-label="Pilih Ruangan">
+                        <option value="">-- Semua Ruangan --</option>
+                        {{-- options loaded by AJAX --}}
+                    </select>
+
                     <button class="btn btn-outline-success" type="submit">Filter</button>
-                    <a href="{{ route('admin.tarif.print', ['group' => $group]) }}" target="_blank" class="btn btn-danger">
+
+                    <a id="printLink" href="{{ route('admin.tarif.print', ['group' => $group, 'room' => $room ?? '']) }}" target="_blank" class="btn btn-danger">
                         <i class="bi bi-file-earmark-pdf"></i> Cetak
                     </a>
                 </div>
@@ -69,6 +76,11 @@
                             </td>
                         </tr>
                         @empty
+                        <tr>
+                            <td colspan="6" class="text-center py-4 text-muted">
+                                Tidak ada data tarif yang ditemukan. Silakan ubah filter atau periksa koneksi API.
+                            </td>
+                        </tr>
                         @endforelse
                     </tbody>
                 </table>
@@ -116,6 +128,39 @@
                 url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/id.json",
                 emptyTable: "Tidak ada data tarif yang ditemukan. Silakan pilih filter atau cek koneksi API."
             }
+        });
+
+        // load rooms into select via AJAX
+        function loadRooms(selected) {
+            $.ajax({
+                url: '/api/ruangan',
+                method: 'GET',
+                success: function(res) {
+                    var list = res.data || [];
+                    var $sel = $('#roomFilter');
+                    $sel.empty().append('<option value="">-- Semua Ruangan --</option>');
+                    list.forEach(function(r){
+                        var opt = $('<option>').val(r.id).text(r.name);
+                        if (String(r.id) === String(selected)) opt.attr('selected', 'selected');
+                        $sel.append(opt);
+                    });
+                },
+                error: function() {
+                    // ignore
+                }
+            });
+        }
+
+        loadRooms({!! json_encode($room ?? '') !!});
+
+        // update print link when room or group changes (if user changes without submit)
+        $('#roomFilter, #groupFilter').on('change', function(){
+            var group = $('#groupFilter').val() || '';
+            var room = $('#roomFilter').val() || '';
+            var url = '{{ url('/admin/tarif/cetak') }}' + '?group=' + encodeURIComponent(group) + '&room=' + encodeURIComponent(room);
+            $('#printLink').attr('href', url);
+            // optionally submit form automatically
+            // $(this).closest('form').submit();
         });
 
         // Event delegation untuk tombol detail karena DataTables membuat element baru dari DOM pada page lain
