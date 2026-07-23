@@ -53,6 +53,20 @@
       /* 1. GLOBAL LAYOUT FIX                      */
       /* ========================================= */
       
+      /* Custom Selection & Focus Ring */
+      ::selection {
+          background: rgba(25, 135, 84, 0.25);
+          color: #115c39;
+      }
+      ::-moz-selection {
+          background: rgba(25, 135, 84, 0.25);
+          color: #115c39;
+      }
+      *:focus-visible {
+          outline: 2px solid #198754 !important;
+          outline-offset: 3px !important;
+      }
+
       /* Custom Scrollbar */
       ::-webkit-scrollbar { width: 12px; }
       ::-webkit-scrollbar-track { background: rgba(25, 135, 84, 0.05); }
@@ -242,6 +256,12 @@
 </head>
 
 <body class="font-sans antialiased">
+    <!-- Top Scroll Progress Bar -->
+    <div id="scrollProgressBar" style="position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, #198754, #2ecc71, #f39c12); width: 0%; z-index: 999999; transition: width 0.1s ease-out;"></div>
+
+    <!-- Custom Desktop Cursor Follow Ring -->
+    <div id="customCursorRing" class="d-none d-lg-block" style="position: fixed; top: 0; left: 0; width: 32px; height: 32px; border: 2px solid rgba(25, 135, 84, 0.45); border-radius: 50%; pointer-events: none; z-index: 999999; transition: transform 0.12s ease-out, width 0.2s, height 0.2s, border-color 0.2s, background-color 0.2s; transform: translate(-50%, -50%);"></div>
+
     @if(app()->environment('production'))
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TRKQN4BR"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -299,7 +319,7 @@
             galeriCarousel.addEventListener('mouseleave', () => scrollInterval = setInterval(autoScroll, scrollSpeed));
         }
 
-        /* SCROLL TO TOP */
+        /* SCROLL PROGRESS BAR & TO TOP */
         const scrollBtn = document.createElement('button');
         scrollBtn.innerHTML = '<i class="bi bi-arrow-up"></i>';
         scrollBtn.setAttribute('id', 'scrollToTopBtn');
@@ -307,7 +327,16 @@
         scrollBtn.style.cssText = 'bottom: 85px; right: 20px; display: none; z-index: 9999; width: 45px; height: 45px; line-height: 45px; padding: 0;';
         document.body.appendChild(scrollBtn);
 
+        const progressBar = document.getElementById('scrollProgressBar');
+
         window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            if (progressBar && height > 0) {
+                const scrolled = (winScroll / height) * 100;
+                progressBar.style.width = scrolled + '%';
+            }
+
             if (window.scrollY > 400) { scrollBtn.style.display = 'block'; } 
             else { scrollBtn.style.display = 'none'; }
         });
@@ -315,6 +344,31 @@
         scrollBtn.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
+
+        /* INTERACTIVE DESKTOP CURSOR RING */
+        if (window.innerWidth >= 992) {
+            const ring = document.getElementById('customCursorRing');
+            if (ring) {
+                document.addEventListener('mousemove', (e) => {
+                    ring.style.left = e.clientX + 'px';
+                    ring.style.top = e.clientY + 'px';
+                });
+
+                document.addEventListener('mouseover', (e) => {
+                    if (e.target.closest('a, button, input, select, textarea, .apple-menu-card, .btn, .card')) {
+                        ring.style.width = '48px';
+                        ring.style.height = '48px';
+                        ring.style.borderColor = 'rgba(25, 135, 84, 0.75)';
+                        ring.style.backgroundColor = 'rgba(25, 135, 84, 0.08)';
+                    } else {
+                        ring.style.width = '32px';
+                        ring.style.height = '32px';
+                        ring.style.borderColor = 'rgba(25, 135, 84, 0.45)';
+                        ring.style.backgroundColor = 'transparent';
+                    }
+                });
+            }
+        }
 
         // Register Service Worker for PWA (Restricted to Monitor Routes)
         @if($manifest)
