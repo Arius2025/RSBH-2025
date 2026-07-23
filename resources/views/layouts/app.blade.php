@@ -205,6 +205,39 @@
       .testimoni-card { background: #ffffff; border-left: 5px solid #f39c12; border-radius: 10px; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); padding: 30px; max-width: 350px; text-align: left; }
     </style>
     
+    <!-- Author Attribution & OpenGraph SEO Metadata -->
+    <!-- Engineered & Developed with ❤️ by Risang Putra Pradana (risangputra144@gmail.com) -->
+    <meta name="author" content="Risang Putra Pradana">
+    <link rel="author" href="{{ asset('humans.txt') }}">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{{ config('app.name', 'RS Baladhika Husada') }}">
+    <meta property="og:title" content="{{ config('app.name', 'RS Baladhika Husada Jember') }}">
+    <meta property="og:description" content="Pelayanan kesehatan prima bagi prajurit TNI, PNS, keluarga, serta masyarakat umum di Jember.">
+    <meta property="og:image" content="{{ asset('images/dkt.png') }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ config('app.name', 'RS Baladhika Husada Jember') }}">
+    <meta name="twitter:description" content="Pelayanan kesehatan prima bagi prajurit TNI, PNS, keluarga, serta masyarakat umum di Jember.">
+    <meta name="twitter:image" content="{{ asset('images/dkt.png') }}">
+    <meta name="twitter:creator" content="Risang Putra Pradana">
+
+    <script type="application/ld+json">
+    {!! json_encode([
+        '@context' => 'https://schema.org',
+        '@type' => 'WebSite',
+        'name' => config('app.name', 'RS Baladhika Husada'),
+        'url' => config('app.url', 'http://localhost'),
+        'author' => [
+            '@type' => 'Person',
+            'name' => 'Risang Putra Pradana',
+            'email' => 'risangputra144@gmail.com',
+            'jobTitle' => 'Full-stack Web Developer'
+        ]
+    ], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
+    </script>
+
     @stack('styles')
 </head>
 

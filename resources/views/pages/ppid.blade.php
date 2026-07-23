@@ -36,48 +36,47 @@
     <p class="text-muted fst-italic">Dengan keberadaan PPID, masyarakat dapat menyampaikan permohonan informasi lebih mudah dan tidak berbelit, karena dilayani lewat satu pintu.</p>
   </div>
 
-  {{-- Menu Layanan --}}
-<section class="bg-white rounded shadow-lg p-4 mb-5" data-aos="fade-up"> 
+  {{-- Menu Layanan (Apple Aesthetic) --}}
+<section class="apple-glass-card rounded-5 p-4 p-md-5 mb-5 position-relative overflow-hidden" data-aos="fade-up"> 
   <div class="text-center mb-5">
-    <h4 class="fw-bold text-success border-bottom border-success pb-2 mb-3"><i class="bi bi-list-check me-2"></i>Pilih Menu Informasi Publik</h4>
+    <span class="apple-badge mb-2 d-inline-block">Portal Layanan Publik</span>
+    <h3 class="fw-bold text-dark display-6 mb-2" style="letter-spacing: -1px;">Menu Informasi Publik</h3>
+    <p class="text-muted small">Akses informasi resmi dan dokumentasi publik RS Baladhika Husada secara transparan</p>
   </div>
-  <div class="row g-4 justify-content-center">
 
+  <div class="row g-4 justify-content-center">
     @php
       $menus = [
-        ['icon' => 'file-earmark-text', 'title' => 'Dokumen', 'desc' => 'Dokumen PPID', 'link' => route('dokumen-ppid'), 'type' => 'normal'],
-        ['icon' => 'envelope-paper', 'title' => 'Profil PPID', 'desc' => 'Struktur, Visi, Misi & Maklumat', 'link' => route('profil-ppid'), 'type' => 'normal'],
-        ['icon' => 'info-circle', 'title' => 'Informasi Publik', 'desc' => 'Informasi PPID', 'link' => route('informasi-publik'), 'type' => 'normal'],
-        ['icon' => 'exclamation-triangle', 'title' => 'Komplain', 'desc' => 'Layanan Pengaduan Publik', 'link' => route('komplain'), 'type' => 'normal'],
-        ['icon' => 'chat-left-text', 'title' => 'Tanya Jawab', 'desc' => 'Tanya Jawab Seputar Rumah Sakit', 'link' => 'https://wa.me/6285330115991', 'type' => 'normal'],
-         ['icon' => 'clipboard-check', 'title' => 'Survey', 'desc' => 'Layanan Survei & Online', 'link' => route('survei'), 'type' => 'normal'],
-        // Pendaftaran BPJS dengan Logic Deep Link
-        ['icon' => 'phone', 'title' => 'Pendaftaran Online (BPJS)', 'desc' => 'Melalui Mobile JKN', 'link' => 'https://play.google.com/store/apps/details?id=app.bpjs.mobile', 'type' => 'jkn'],
-        
-        ['icon' => 'phone', 'title' => 'Pendaftaran Online', 'desc' => 'Melalui Aplikasi DKT', 'link' => 'https://dkt-jember.promedika.id/pelayanan/pasien', 'type' => 'normal'],
+        ['icon' => 'file-earmark-text-fill', 'title' => 'Dokumen PPID', 'desc' => 'Regulasi, SOP & SK PPID', 'link' => route('dokumen-ppid'), 'type' => 'normal'],
+        ['icon' => 'person-badge-fill', 'title' => 'Profil PPID', 'desc' => 'Struktur, Visi, Misi & Maklumat', 'link' => route('profil-ppid'), 'type' => 'normal'],
+        ['icon' => 'info-circle-fill', 'title' => 'Informasi Publik', 'desc' => 'Ringkasan Program & Kebijakan', 'link' => route('informasi-publik'), 'type' => 'normal'],
+        ['icon' => 'exclamation-triangle-fill', 'title' => 'Komplain & Pengaduan', 'desc' => 'Layanan Pengaduan Publik', 'link' => route('komplain'), 'type' => 'normal'],
+        ['icon' => 'whatsapp', 'title' => 'Tanya Jawab', 'desc' => 'Konsultasi Informasi via WhatsApp', 'link' => 'https://wa.me/6285330115991', 'type' => 'normal'],
+        ['icon' => 'clipboard-check-fill', 'title' => 'Survei Kepuasan', 'desc' => 'Survei Layanan Online', 'link' => route('survei'), 'type' => 'normal'],
+        ['icon' => 'phone-fill', 'title' => 'Pendaftaran BPJS', 'desc' => 'Via Mobile JKN App', 'link' => 'https://play.google.com/store/apps/details?id=app.bpjs.mobile', 'type' => 'jkn'],
+        ['icon' => 'hospital-fill', 'title' => 'Pendaftaran Online', 'desc' => 'Via Aplikasi DKT Jember', 'link' => 'https://dkt-jember.promedika.id/pelayanan/pasien', 'type' => 'normal'],
       ];
     @endphp
 
     @foreach($menus as $menu)
-    <div class="col-6 col-md-4 col-lg-3" data-aos="zoom-in" data-aos-delay="{{ $loop->index * 100 }}">
-      <div class="card h-100 text-center border-0 shadow-sm hover-shadow transition">
-        <div class="card-body">
-          <i class="bi bi-{{ $menu['icon'] }} fs-1 text-success mb-2"></i>
-          <h6 class="fw-bold text-success">{{ $menu['title'] }}</h6>
-          <p class="text-muted small">{{ $menu['desc'] }}</p>
-
-          @if($menu['type'] == 'jkn')
-            {{-- Tombol Khusus JKN --}}
-            <button onclick="smartOpenJKN()" class="btn btn-outline-success btn-sm mt-2">Buka</button>
-          @else
-            {{-- Tombol Normal --}}
-            <a href="{{ $menu['link'] }}" class="btn btn-outline-success btn-sm mt-2">Buka</a>
-          @endif
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3" data-aos="zoom-in" data-aos-delay="{{ $loop->index * 75 }}">
+      <div class="apple-menu-card h-100 p-4 text-center d-flex flex-column align-items-center justify-content-between">
+        <div class="w-100 d-flex flex-column align-items-center">
+          <div class="apple-icon-wrapper mb-3">
+            <i class="bi bi-{{ $menu['icon'] }} fs-3 text-white"></i>
+          </div>
+          <h6 class="fw-bold text-dark mb-1 fs-6" style="letter-spacing: -0.3px;">{{ $menu['title'] }}</h6>
+          <p class="text-secondary small mb-3 lh-sm opacity-75" style="font-size: 0.82rem;">{{ $menu['desc'] }}</p>
         </div>
+
+        @if($menu['type'] == 'jkn')
+          <button onclick="smartOpenJKN()" class="btn apple-pill-btn w-100 py-2 small fw-bold">Akses Menu <i class="bi bi-chevron-right ms-1 small"></i></button>
+        @else
+          <a href="{{ $menu['link'] }}" class="btn apple-pill-btn w-100 py-2 small fw-bold">Akses Menu <i class="bi bi-chevron-right ms-1 small"></i></a>
+        @endif
       </div>
     </div>
     @endforeach
-
   </div>
 </section>
 
@@ -195,6 +194,72 @@ function smartOpenJKN() {
 <style>
   .transition { transition: all 0.3s ease; }
   .hover-shadow:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important; }
+
+  /* Apple-inspired Aesthetic */
+  .apple-glass-card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+      border-radius: 28px;
+  }
+
+  .apple-badge {
+      background: rgba(25, 135, 84, 0.1);
+      color: #198754;
+      font-weight: 700;
+      font-size: 0.75rem;
+      padding: 6px 16px;
+      border-radius: 9999px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+  }
+
+  .apple-menu-card {
+      background: rgba(248, 249, 250, 0.95);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      border-radius: 22px;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .apple-menu-card:hover {
+      transform: scale(1.03) translateY(-6px);
+      background: #ffffff;
+      border-color: rgba(25, 135, 84, 0.3);
+      box-shadow: 0 20px 35px -10px rgba(25, 135, 84, 0.18) !important;
+  }
+
+  .apple-icon-wrapper {
+      width: 58px;
+      height: 58px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #198754 0%, #115c39 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 20px rgba(25, 135, 84, 0.3);
+      transition: transform 0.3s ease;
+  }
+
+  .apple-menu-card:hover .apple-icon-wrapper {
+      transform: scale(1.1) rotate(3deg);
+  }
+
+  .apple-pill-btn {
+      background: rgba(25, 135, 84, 0.08);
+      color: #198754;
+      border: 1px solid rgba(25, 135, 84, 0.2);
+      border-radius: 9999px;
+      transition: all 0.25s ease;
+      font-size: 0.8rem;
+  }
+
+  .apple-pill-btn:hover {
+      background: #198754;
+      color: #ffffff;
+      box-shadow: 0 6px 15px rgba(25, 135, 84, 0.3);
+  }
 
   /* Responsive Carousel */
   .ppid-carousel-img {

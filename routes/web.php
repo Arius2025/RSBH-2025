@@ -121,6 +121,53 @@ Route::middleware('auth')->group(function () {
     require __DIR__.'/profile.php'; 
 });
 
+// Dynamic XML Sitemap
+Route::get('/sitemap.xml', function () {
+    $baseUrl = url('/');
+    $urls = [
+        ['loc' => $baseUrl, 'priority' => '1.0', 'changefreq' => 'daily'],
+        ['loc' => route('informasi'), 'priority' => '0.8', 'changefreq' => 'weekly'],
+        ['loc' => route('dokter'), 'priority' => '0.8', 'changefreq' => 'weekly'],
+        ['loc' => route('berita'), 'priority' => '0.9', 'changefreq' => 'daily'],
+        ['loc' => route('jadwal'), 'priority' => '0.8', 'changefreq' => 'daily'],
+        ['loc' => route('ppid'), 'priority' => '0.7', 'changefreq' => 'monthly'],
+        ['loc' => route('informasi-publik'), 'priority' => '0.7', 'changefreq' => 'monthly'],
+        ['loc' => route('kontak'), 'priority' => '0.6', 'changefreq' => 'monthly'],
+        ['loc' => route('zona'), 'priority' => '0.6', 'changefreq' => 'monthly'],
+        ['loc' => route('survei'), 'priority' => '0.6', 'changefreq' => 'monthly'],
+    ];
+
+    try {
+        $beritas = \App\Models\Berita::latest()->take(50)->get();
+        foreach ($beritas as $item) {
+            if ($item->slug) {
+                $urls[] = [
+                    'loc' => route('berita.detail', $item->slug),
+                    'priority' => '0.8',
+                    'changefreq' => 'weekly',
+                    'lastmod' => $item->updated_at ? $item->updated_at->toAtomString() : now()->toAtomString(),
+                ];
+            }
+        }
+    } catch (\Throwable $e) {}
+
+    $xml = '<?xml version="1.0" encoding="UTF-8"?>';
+    $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+    foreach ($urls as $url) {
+        $xml .= '<url>';
+        $xml .= '<loc>' . htmlspecialchars($url['loc']) . '</loc>';
+        if (isset($url['lastmod'])) {
+            $xml .= '<lastmod>' . $url['lastmod'] . '</lastmod>';
+        }
+        $xml .= '<changefreq>' . $url['changefreq'] . '</changefreq>';
+        $xml .= '<priority>' . $url['priority'] . '</priority>';
+        $xml .= '</url>';
+    }
+    $xml .= '</urlset>';
+
+    return response($xml, 200)->header('Content-Type', 'text/xml');
+});
+
 // =========================================================================
 // END OF ROUTES
 // =========================================================================

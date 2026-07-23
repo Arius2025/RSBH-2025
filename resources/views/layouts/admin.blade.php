@@ -161,7 +161,22 @@
             margin-bottom: 2px;
         }
         
-    </style>
+    <!-- Author Attribution & SEO Metadata -->
+    <meta name="author" content="Risang Putra Pradana">
+    <script type="application/ld+json">
+    {!! json_encode([
+        '@context' => 'https://schema.org',
+        '@type' => 'WebSite',
+        'name' => config('app.name', 'RS Baladhika Husada'),
+        'url' => config('app.url', 'http://localhost'),
+        'author' => [
+            '@type' => 'Person',
+            'name' => 'Risang Putra Pradana',
+            'email' => 'risangputra144@gmail.com',
+            'jobTitle' => 'Full-stack Web Developer'
+        ]
+    ], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
+    </script>
 </head>
 <body>
     

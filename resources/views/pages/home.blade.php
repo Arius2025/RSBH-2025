@@ -10,15 +10,20 @@
         <div class="hero-overlay" style="background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(25, 135, 84, 0.8) 100%); position: absolute; top:0; left:0; width:100%; height:100%; z-index: 1;"></div>
         
         <div class="container position-relative text-white text-center py-5 py-md-0" style="z-index: 2;">
-            <span class="badge bg-warning text-dark mb-2 px-3 py-2 rounded-pill fw-bold shadow-sm" data-aos="fade-down">
-                <i class="bi bi-star-fill me-1"></i> Terakreditasi Paripurna
-            </span>
+            <div class="d-flex flex-wrap justify-content-center align-items-center gap-2 mb-2">
+                <span class="badge bg-warning text-dark px-3 py-2 rounded-pill fw-bold shadow-sm" data-aos="fade-down">
+                    <i class="bi bi-star-fill me-1"></i> Terakreditasi Paripurna
+                </span>
+                <span class="badge bg-white bg-opacity-25 text-white px-3 py-2 rounded-pill fw-bold shadow-sm backdrop-blur d-inline-flex align-items-center gap-2" data-aos="fade-down" data-aos-delay="50">
+                    <span class="pulse-dot"></span> IGD & Layanan 24 Jam Siap Siaga
+                </span>
+            </div>
             <p id="greeting" class="text-white-50 small fw-bold mb-0 text-uppercase ls-1" style="letter-spacing: 2px;" data-aos="fade-down" data-aos-delay="50">Selamat Datang</p>
             <h1 class="text-shadow mb-3 hero-title" data-aos="fade-up">
                 RS Tk. III Baladhika Husada
             </h1>
-            <p class="lead mb-4 text-shadow-sm opacity-90 mx-auto fs-6" style="max-width: 600px;" data-aos="fade-up" data-aos-delay="100">
-                Rumah Sakit Umum Kelas C yang melayani masyarakat umum, BPJS, serta TNI/POLRI dengan sepenuh hati.
+            <p class="lead mb-4 text-shadow-sm opacity-90 mx-auto fs-6" style="max-width: 650px;" data-aos="fade-up" data-aos-delay="100">
+                Salam Sehat! Rumkit Tk. III Baladhika Husada melayani pasien umum, peserta BPJS Kesehatan, serta prajurit TNI/POLRI dengan profesionalisme tinggi dan kehangatan sepenuh hati.
             </p>
             <div class="row g-2 g-md-3 justify-content-center mt-3">
                 <div class="col-6 col-md-auto" data-aos="zoom-in" data-aos-delay="200">
@@ -298,6 +303,28 @@
 </style>
 
 <style>
+    /* Live Pulse Dot Indicator */
+    .pulse-dot {
+        width: 10px;
+        height: 10px;
+        background-color: #2ecc71;
+        border-radius: 50%;
+        display: inline-block;
+        box-shadow: 0 0 0 rgba(46, 204, 113, 0.8);
+        animation: pulse-green 1.8s infinite;
+    }
+
+    @keyframes pulse-green {
+        0% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.8); }
+        70% { box-shadow: 0 0 0 8px rgba(46, 204, 113, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
+    }
+
+    .backdrop-blur {
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+    }
+
     /* Animasi & Utility */
     .hero-title {
         font-weight: 950 !important;
@@ -316,8 +343,8 @@
     }
 
     .text-shadow { text-shadow: 2px 2px 8px rgba(0,0,0,0.6); }
-    .hover-lift { transition: transform 0.3s ease; }
-    .hover-lift:hover { transform: translateY(-5px); }
+    .hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .hover-lift:hover { transform: translateY(-5px); box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12) !important; }
     .hover-scale:hover { transform: scale(1.05); }
 
     .hero-min-height { min-height: 85vh; }

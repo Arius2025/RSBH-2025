@@ -1,2 +1,7 @@
 User-agent: *
-Disallow:
+Allow: /
+
+Sitemap: /sitemap.xml
+Humans: /humans.txt
+
+# Designed & Engineered by Risang Putra Pradana (risangputra144@gmail.com)

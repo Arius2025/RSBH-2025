@@ -71,7 +71,7 @@
         <p class="text-muted small mb-0">© 2026 RS Baladhika Husada. Hak Cipta Dilindungi.</p>
       </div>
       <div class="col-md-6 text-center text-md-end mt-2 mt-md-0">
-        <p class="text-muted small mb-0">Developed by <span class="text-success fw-bold">Tim IT RSBH</span> | v1.2</p>
+        <p class="text-muted small mb-0">Developed by <a href="mailto:risangputra144@gmail.com" class="text-success fw-bold text-decoration-none transition-colors hover:text-success" title="Risang Putra Pradana - risangputra144@gmail.com">Tim IT</a> | v1.2</p>
       </div>
     </div>
   </div>
