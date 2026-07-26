@@ -2,108 +2,120 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container py-4">
-  <div class="mx-auto" style="max-width: 960px;">
-
-    {{-- Header --}}
-    <div class="text-center mb-5" data-aos="fade-down">
-      <h1 class="text-success fw-bold display-5">Layanan Komplain & Keluhan</h1>
-      <p class="lead text-muted">Respon cepat & solusi tepat – Kami siap mendengar dan menyelesaikan masalah Anda.</p>
-      <hr class="w-25 mx-auto border-success border-3">
+<!-- Hero Section -->
+<section class="py-5 bg-gradient-success text-white text-center position-relative overflow-hidden">
+    <div class="container py-4 position-relative z-1">
+        <span class="badge bg-white bg-opacity-25 text-white px-3 py-2 rounded-pill fw-bold mb-2 shadow-sm"><i class="bi bi-headset me-1"></i> Layanan Pengaduan 24/7</span>
+        <h1 class="display-5 fw-bold mb-2" style="letter-spacing: -1px;">Layanan Komplain & Keluhan</h1>
+        <p class="lead opacity-90 mb-0 mx-auto" style="max-width: 600px;">Respon cepat dan solusi tepat – Karena setiap suara Anda sangat berharga bagi peningkatan kualitas layanan kami.</p>
     </div>
+    
+    <!-- Decorative background elements -->
+    <div class="position-absolute top-0 start-0 w-100 h-100" style="background: radial-gradient(circle at top right, rgba(255,215,0,0.15), transparent 40%); pointer-events: none;"></div>
+</section>
 
-    {{-- Komplain Online & Narahubung --}}
-    <section class="mb-5">
-      <div class="row g-4">
-        <div class="col-md-6" data-aos="fade-right">
-          <div class="bg-white rounded p-4 shadow-lg h-100 border-start border-success border-5"> 
-            <h5 class="text-success fw-bold mb-4"><i class="bi bi-qr-code-scan me-2"></i> Komplain Online</h5>
-            <div class="row text-center g-3">
-              <div class="col-6">
-                <a href="https://wa.me/6285330115991" target="_blank" class="text-decoration-none transition hover-shadow d-block p-2 rounded bg-light border h-100 d-flex flex-column justify-content-center">
-                    <img src="{{ asset('images/komplain/qrkomplainwa.avif') }}" alt="QR WhatsApp" class="img-fluid rounded shadow-sm mb-2 mx-auto" style="max-width: 120px;">
-                    <p class="small text-success fw-bold mb-0">WhatsApp</p>
-                </a>
-              </div>
-              <div class="col-6">
-                <a href="https://forms.gle/nSrUJS9wSP5ieoNNA" target="_blank" class="text-decoration-none transition hover-shadow d-block p-2 rounded bg-light border h-100 d-flex flex-column justify-content-center">
-                    <img src="{{ asset('images/komplain/qrkomplainform.avif') }}" alt="QR Google Form" class="img-fluid rounded shadow-sm mb-2 mx-auto" style="max-width: 120px;">
-                    <p class="small text-success fw-bold mb-0">Google Forms</p>
-                </a>
-              </div>
-              <div class="col-12 mt-3">
-                <div class="p-4 rounded-3 border bg-white shadow-sm text-center">
-                    <img src="{{ asset('images/komplain/lapor.png') }}" alt="Logo LAPOR" class="img-fluid mb-3" style="max-height: 45px;">
+<!-- Content Section -->
+<section class="py-5 bg-light position-relative" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'#198754\' fill-opacity=\'0.03\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');">
+    <div class="container">
+        <div class="row g-4 justify-content-center mb-5">
+            <!-- Komplain Online -->
+            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="apple-glass-card h-100 p-4 p-md-5 position-relative overflow-hidden">
+                    <div class="position-absolute top-0 end-0 p-3 opacity-10">
+                        <i class="bi bi-qr-code-scan" style="font-size: 8rem;"></i>
+                    </div>
+                    <h4 class="text-success fw-bold mb-4 position-relative z-1"><i class="bi bi-phone-vibrate me-2"></i> Jalur Cepat (Online)</h4>
                     
-                    <h6 class="fw-bold text-dark mb-2">Portal SP4N-LAPOR!</h6>
-                    <p class="text-muted small mb-4 px-3">
-                        Layanan Aspirasi dan Pengaduan Online Rakyat. Portal resmi pemerintah untuk pengaduan terintegrasi nasional.
-                    </p>
+                    <div class="row g-3 position-relative z-1">
+                        <div class="col-6">
+                            <a href="https://wa.me/6285330115991" target="_blank" class="interactive-card d-block p-3 rounded-4 text-center text-decoration-none h-100">
+                                <img src="{{ asset('images/komplain/qrkomplainwa.avif') }}" alt="QR WhatsApp" class="img-fluid rounded-3 shadow-sm mb-3 mx-auto" style="max-width: 130px; border: 2px solid #25D366;">
+                                <h6 class="text-dark fw-bold mb-1">WhatsApp</h6>
+                                <span class="badge bg-success-subtle text-success rounded-pill">Fast Respon</span>
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a href="https://forms.gle/nSrUJS9wSP5ieoNNA" target="_blank" class="interactive-card d-block p-3 rounded-4 text-center text-decoration-none h-100">
+                                <img src="{{ asset('images/komplain/qrkomplainform.avif') }}" alt="QR Google Form" class="img-fluid rounded-3 shadow-sm mb-3 mx-auto" style="max-width: 130px; border: 2px solid #4285F4;">
+                                <h6 class="text-dark fw-bold mb-1">Google Forms</h6>
+                                <span class="badge bg-primary-subtle text-primary rounded-pill">Tercatat Sistem</span>
+                            </a>
+                        </div>
+                    </div>
                     
-                    <a href="https://lapor.go.id/" target="_blank" class="btn btn-danger px-5 py-2 fw-bold shadow-sm rounded-pill">
-                        Sampaikan Laporan <i class="bi bi-box-arrow-up-right ms-1 small"></i>
-                    </a>
+                    <div class="mt-4 pt-4 border-top border-success border-opacity-25 position-relative z-1">
+                        <div class="interactive-card p-4 rounded-4 text-center bg-white shadow-sm">
+                            <img src="{{ asset('images/komplain/lapor.png') }}" alt="Logo LAPOR" class="img-fluid mb-3" style="max-height: 50px;">
+                            <h6 class="fw-bold text-dark mb-2">Portal Resmi SP4N-LAPOR!</h6>
+                            <p class="text-muted small mb-4">Layanan Aspirasi dan Pengaduan Online Rakyat. Terintegrasi secara Nasional.</p>
+                            <a href="https://lapor.go.id/" target="_blank" class="btn btn-danger px-4 py-2 fw-bold shadow-sm rounded-pill hover-lift w-100">
+                                Sampaikan Laporan <i class="bi bi-box-arrow-up-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-            <p class="text-center small text-muted mt-3 fst-italic">Pilih platform pengaduan yang paling nyaman bagi Anda.</p>
-          </div>
+
+            <!-- Narahubung -->
+            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="bg-white rounded p-4 p-md-5 shadow-lg h-100 border-start border-success border-5"> 
+                    <h4 class="text-success fw-bold mb-4"><i class="bi bi-person-lines-fill me-2"></i> Narahubung Tim Komplain</h4>
+                    <p class="text-muted small mb-4">Tim kami yang berdedikasi siap membantu menyelesaikan kendala pelayanan Anda.</p>
+                    
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item bg-light border-0 mb-2 rounded shadow-sm">
+                        <strong>KAPTEN CKM TANTOWI JAUHARI, S.Kep. Ners</strong><br>
+                        <span class="text-success fw-semibold">Ketua Tim Komplain</span><br>
+                        <i class="bi bi-telephone-fill me-1 text-success"></i> <a href="tel:085330115991" class="text-decoration-none">0853-3011-5991</a>
+                      </li>
+                      <li class="list-group-item bg-light border-0 mb-2 rounded shadow-sm">
+                        <strong>PELTU SYAMSUL ARIFIN, S.Kep. Ners</strong><br>
+                        <span class="text-success fw-semibold">Komplain Pelayanan Medis</span><br>
+                        <i class="bi bi-telephone-fill me-1 text-success"></i> <a href="tel:081235677415" class="text-decoration-none">0812-3567-7415</a>
+                      </li>
+                      <li class="list-group-item bg-light border-0 mb-2 rounded shadow-sm">
+                        <strong>PNS A’JALIL ACHJAB, S.Kep.Ners, MM, M.Kes</strong><br>
+                        <span class="text-success fw-semibold">Komplain BPJS</span><br>
+                        <i class="bi bi-telephone-fill me-1 text-success"></i> <a href="tel:08123481945" class="text-decoration-none">0812-3481-945</a>
+                      </li>
+                      <li class="list-group-item bg-light border-0 mb-2 rounded shadow-sm">
+                        <strong>PELTU YOYOK TRI SUYANTO</strong><br>
+                        <span class="text-success fw-semibold">Komplain Pelayanan & Fasilitas Umum</span><br>
+                        <i class="bi bi-telephone-fill me-1 text-success"></i> <a href="tel:085234629570" class="text-decoration-none">0852-3462-9570</a>
+                      </li>
+                    </ul>
+                </div>
+            </div>
         </div>
 
-        <div class="col-md-6" data-aos="fade-left">
-          <div class="bg-white rounded p-4 shadow-lg h-100 border-start border-success border-5"> 
-            <h5 class="text-success fw-bold mb-4"><i class="bi bi-person-lines-fill me-2"></i> Narahubung Tim Komplain</h5>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item bg-light border-0 mb-2 rounded shadow-sm">
-                <strong>KAPTEN CKM TANTOWI JAUHARI, S.Kep. Ners</strong><br>
-                <span class="text-success fw-semibold">Ketua Tim Komplain</span><br>
-                <i class="bi bi-telephone-fill me-1 text-success"></i> <a href="tel:085330115991" class="text-decoration-none">0853-3011-5991</a>
-              </li>
-              <li class="list-group-item bg-light border-0 mb-2 rounded shadow-sm">
-                <strong>PELTU SYAMSUL ARIFIN, S.Kep. Ners</strong><br>
-                <span class="text-success fw-semibold">Komplain Pelayanan Medis</span><br>
-                <i class="bi bi-telephone-fill me-1 text-success"></i> <a href="tel:081235677415" class="text-decoration-none">0812-3567-7415</a>
-              </li>
-              <li class="list-group-item bg-light border-0 mb-2 rounded shadow-sm">
-                <strong>PNS A’JALIL ACHJAB, S.Kep.Ners, MM, M.Kes</strong><br>
-                <span class="text-success fw-semibold">Komplain BPJS</span><br>
-                <i class="bi bi-telephone-fill me-1 text-success"></i> <a href="tel:08123481945" class="text-decoration-none">0812-3481-945</a>
-              </li>
-              <li class="list-group-item bg-light border-0 mb-2 rounded shadow-sm">
-                <strong>PELTU YOYOK TRI SUYANTO</strong><br>
-                <span class="text-success fw-semibold">Komplain Pelayanan & Fasilitas Umum</span><br>
-                <i class="bi bi-telephone-fill me-1 text-success"></i> <a href="tel:085234629570" class="text-decoration-none">0852-3462-9570</a>
-              </li>
-            </ul>
-          </div>
+        {{-- Alur Pengaduan --}}
+        <div class="row justify-content-center mt-5" data-aos="fade-up">
+            <div class="col-lg-10 text-center mb-4">
+                <span class="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill fw-bold mb-2">Transparan & Terstruktur</span>
+                <h3 class="text-dark fw-bold">Alur Layanan Pengaduan</h3>
+            </div>
+            
+            <div class="col-lg-12">
+                <div class="apple-glass-card p-4 p-md-5">
+                    <div class="row g-4">
+                        <div class="col-md-6" data-aos="fade-right" data-aos-delay="100">
+                            <div class="text-center mb-3">
+                                <h5 class="fw-bold text-success"><i class="bi bi-person-walking me-2"></i> Pengaduan Langsung</h5>
+                            </div>
+                            <img src="{{ asset('images/komplain/komplain1.avif') }}" alt="Alur Pengaduan 1" class="img-fluid rounded-4 shadow hover-lift" style="border: 4px solid rgba(255,255,255,0.8);">
+                        </div>
+                        <div class="col-md-6" data-aos="fade-left" data-aos-delay="200">
+                            <div class="text-center mb-3">
+                                <h5 class="fw-bold text-success"><i class="bi bi-laptop me-2"></i> Pengaduan Tidak Langsung</h5>
+                            </div>
+                            <img src="{{ asset('images/komplain/kompain2.avif') }}" alt="Alur Pengaduan 2" class="img-fluid rounded-4 shadow hover-lift" style="border: 4px solid rgba(255,255,255,0.8);">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </section>
-
-
-
-    {{-- Alur Pengaduan --}}
-    <section class="mb-5">
-      <h4 class="text-success fw-bold mb-4 text-center border-bottom border-success pb-2" data-aos="fade-up"><i class="bi bi-diagram-3 me-2"></i> Alur Layanan Pengaduan</h4>
-      <div class="row g-4 justify-content-center">
-        <div class="col-md-6 text-center" data-aos="zoom-in" data-aos-delay="100">
-          <div class="p-3 bg-white rounded shadow-sm h-100">
-            <h6 class="text-success fw-bold mb-3">Pengaduan Langsung</h6>
-            <img src="{{ asset('images/komplain/komplain1.avif') }}" alt="Alur Pengaduan 1" class="img-fluid rounded shadow-sm border p-1">
-          </div>
-        </div>
-        <div class="col-md-6 text-center" data-aos="zoom-in" data-aos-delay="200">
-          <div class="p-3 bg-white rounded shadow-sm h-100">
-            <h6 class="text-success fw-bold mb-3">Pengaduan Tidak Langsung</h6>
-            <img src="{{ asset('images/komplain/kompain2.avif') }}" alt="Alur Pengaduan 2" class="img-fluid rounded shadow-sm border p-1">
-          </div>
-        </div>
-      </div>
-      <p class="text-center small text-muted mt-3 fst-italic">Alur pengaduan langsung & tidak langsung – transparan dan terstruktur.</p>
-    </section>
-
-  </div>
-</div>
+    </div>
+</section>
 
 <!-- FLOATING WIDGET (Komplain Form) -->
 <div class="floating-widget-container" id="floatingWidgetContainer">
@@ -204,6 +216,37 @@
 @endpush
 
 <style>
+/* Executive Premium Styles */
+.bg-gradient-success {
+    background: linear-gradient(135deg, #115c39 0%, #198754 100%);
+}
+.apple-glass-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+    border-radius: 1.5rem;
+}
+.interactive-card {
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255,255,255,0.8);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.interactive-card:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(25, 135, 84, 0.1);
+}
+.contact-card {
+    transition: all 0.3s ease;
+}
+.contact-card:hover {
+    transform: translateX(5px);
+    background: rgba(255, 255, 255, 1) !important;
+    border-color: #198754 !important;
+    box-shadow: 0 5px 15px rgba(25, 135, 84, 0.1) !important;
+}
+
 .apple-input {
     background: rgba(255, 255, 255, 0.8);
     border: 1px solid rgba(0,0,0,0.1);
