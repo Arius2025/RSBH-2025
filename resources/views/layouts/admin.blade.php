@@ -250,6 +250,13 @@
                 <i class="bi bi-tags-fill"></i>
                 <span>Tarif</span>
             </a>
+
+            {{-- Permohonan --}}
+            <a class="bottom-nav-link {{ request()->routeIs('admin.permohonan.*') ? 'active-mobile' : '' }}" 
+               href="{{ route('admin.permohonan.index') }}">
+                <i class="bi bi-envelope-paper"></i>
+                <span>Permohonan</span>
+            </a>
             
             {{-- Kelola Jadwal --}}
             <a class="bottom-nav-link {{ request()->routeIs('admin.jadwal.*') ? 'active-mobile' : '' }}" 

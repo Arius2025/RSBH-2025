@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\JadwalCrudController;
 use App\Http\Controllers\Admin\DocumentCrudController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\JadwalHarianController;
+use App\Http\Controllers\PermohonanInformasiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,7 @@ Route::get('/informasi-publik', [FrontendController::class, 'informasiPublik'])-
 Route::get('/petugas-ppid', [FrontendController::class, 'petugasPPID'])->name('petugas-ppid');
 Route::get('/profil-ppid', [FrontendController::class, 'profilPPID'])->name('profil-ppid');
 Route::get('/dokumen-ppid', [FrontendController::class, 'dokumenPpid'])->name('dokumen-ppid');
+Route::post('/permohonan-informasi/submit', [PermohonanInformasiController::class, 'store'])->name('permohonan.submit');
 Route::get('/survei', [FrontendController::class, 'survei'])->name('survei');
 Route::get('/fup-kopi', [FrontendController::class, 'fupKopi'])->name('fup_kopi');
 Route::post('/fup-kopi/submit', [FrontendController::class, 'fupKopiSubmit'])->name('fup_kopi.submit');
@@ -103,6 +105,10 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 
     // Kelola Dokumen PPID
     Route::resource('documents', DocumentCrudController::class);
+
+    // Permohonan Informasi
+    Route::get('/permohonan-informasi', [PermohonanInformasiController::class, 'adminIndex'])->name('permohonan.index');
+    Route::put('/permohonan-informasi/{id}/status', [PermohonanInformasiController::class, 'adminUpdateStatus'])->name('permohonan.status');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

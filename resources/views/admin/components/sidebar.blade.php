@@ -40,6 +40,14 @@
                 </a>
             </li>
 
+            {{-- Permohonan Informasi --}}
+            <li class="nav-item mb-1">
+                <a class="nav-link py-2 rounded {{ request()->routeIs('admin.permohonan.*') ? 'active-admin' : '' }}" 
+                   href="{{ route('admin.permohonan.index') }}">
+                    <i class="bi bi-envelope-paper me-2"></i> Permohonan Info
+                </a>
+            </li>
+
             {{-- Kelola Jadwal --}}
             <li class="nav-item mb-1">
                 <a class="nav-link py-2 rounded {{ request()->routeIs('admin.jadwal.*') ? 'active-admin' : '' }}" 
