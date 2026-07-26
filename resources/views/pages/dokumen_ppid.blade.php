@@ -304,15 +304,24 @@
     box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
 }
 
-@media (max-width: 576px) {
+@media (max-width: 768px) {
     .floating-widget-container {
-        bottom: 20px;
-        right: 20px;
-        left: 20px;
-        align-items: flex-end;
+        position: static;
+        padding: 2rem 1rem;
+        align-items: center;
+    }
+    .floating-btn {
+        display: none !important;
     }
     .floating-form-box {
         width: 100%;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    }
+    #closeWidgetBtn {
+        display: none !important;
     }
 }
 </style>
