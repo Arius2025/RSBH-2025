@@ -195,6 +195,30 @@
 </div>
 </section>
 
+<!-- Statistik Animasi -->
+<section class="py-8 bg-surface-container-lowest border-b border-outline-variant/30 relative z-20">
+    <div class="max-w-container-max mx-auto px-gutter">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center divide-y md:divide-y-0 md:divide-x divide-outline-variant/30">
+            <div class="p-2 pt-4 md:pt-2">
+                <h3 class="text-4xl md:text-5xl font-headline-xl text-primary mb-1"><span class="stat-counter" data-target="15000">0</span>+</h3>
+                <p class="text-on-surface-variant font-label-caps text-xs m-0 tracking-widest">PASIEN TERLAYANI</p>
+            </div>
+            <div class="p-2 pt-4 md:pt-2">
+                <h3 class="text-4xl md:text-5xl font-headline-xl text-primary mb-1"><span class="stat-counter" data-target="35">0</span>+</h3>
+                <p class="text-on-surface-variant font-label-caps text-xs m-0 tracking-widest">DOKTER SPESIALIS & UMUM</p>
+            </div>
+            <div class="p-2 pt-4 md:pt-2">
+                <h3 class="text-4xl md:text-5xl font-headline-xl text-primary mb-1"><span class="stat-counter" data-target="24">0</span>/7</h3>
+                <p class="text-on-surface-variant font-label-caps text-xs m-0 tracking-widest">SIAGA GAWAT DARURAT</p>
+            </div>
+            <div class="p-2 pt-4 md:pt-2">
+                <h3 class="text-4xl md:text-5xl font-headline-xl text-primary mb-1"><span class="stat-counter" data-target="100">0</span>%</h3>
+                <p class="text-on-surface-variant font-label-caps text-xs m-0 tracking-widest">KOMITMEN PELAYANAN</p>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- SITERBAT Service Section -->
 <section class="py-section-gap bg-hospital-white overflow-hidden">
 <div class="max-w-container-max mx-auto px-gutter">
@@ -490,6 +514,14 @@
     </div>
 </section>
 
+<!-- Floating WhatsApp Button -->
+<a href="https://wa.me/6281234567890" target="_blank" class="fixed bottom-6 right-6 bg-[#25D366] text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300 z-[9999] group no-underline" style="box-shadow: 0 10px 25px -5px rgba(37, 211, 102, 0.5);">
+    <i class="bi bi-whatsapp" style="font-size: 1.8rem;"></i>
+    <span class="absolute right-16 bg-white text-dark text-sm px-3 py-2 rounded shadow-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none font-bold border border-gray-100">
+        Butuh Bantuan?
+    </span>
+</a>
+
 </div> <!-- End wrapper Tailwind -->
 
 {{-- MODAL PENGUMUMAN (Centered) --}}
@@ -690,6 +722,34 @@ const videoObserver = new IntersectionObserver((entries) => {
 document.querySelectorAll('video.berita-video').forEach(video => {
     videoObserver.observe(video);
 });
+
+// Counter Animation for Statistics
+const counters = document.querySelectorAll('.stat-counter');
+const counterObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const target = entry.target;
+            const targetNumber = +target.getAttribute('data-target');
+            const duration = 2000; // 2 seconds animation
+            const increment = targetNumber / (duration / 16); 
+            
+            let current = 0;
+            const updateCounter = () => {
+                current += increment;
+                if (current < targetNumber) {
+                    target.innerText = Math.ceil(current);
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    target.innerText = targetNumber;
+                }
+            };
+            updateCounter();
+            observer.unobserve(target); // Only animate once when seen
+        }
+    });
+}, { threshold: 0.5 });
+
+counters.forEach(counter => counterObserver.observe(counter));
 </script>
 @endpush
 @endsection
