@@ -326,9 +326,10 @@
 <a href="https://wa.me/6281234567890" target="_blank" class="w-full sm:w-auto px-6 py-4 bg-secondary text-white rounded-full font-bold hover:bg-yellow-600 transition-colors shadow-lg flex items-center justify-center gap-2 no-underline">
 <span class="material-symbols-outlined">send</span> Gunakan SITERBAT
                 </a>
-<a href="{{ route('layanan') }}" class="w-full sm:w-auto px-6 py-4 bg-surface-container border border-outline text-primary rounded-full font-bold hover:bg-surface-container-high transition-colors flex items-center justify-center gap-2 no-underline text-center">
+<a href="{{ route('informasi') }}" class="w-full sm:w-auto px-6 py-4 bg-surface-container border border-outline text-primary rounded-full font-bold hover:bg-surface-container-high transition-colors flex items-center justify-center gap-2 no-underline text-center">
                     Pelajari Layanan Lainnya
                 </a>
+</div>
 </div>
 </div>
 <!-- Image/Graphic -->
@@ -546,6 +547,31 @@
 <!-- Mitra Asuransi -->
 <section class="py-8 md:py-10 bg-white border-y border-outline-variant/30">
     <div class="max-w-container-max mx-auto px-gutter text-center">
+        <p class="font-label-caps text-on-surface-variant mb-6 md:mb-8 tracking-widest text-xs md:text-sm">MELAYANI PASIEN DARI BERBAGAI MITRA KESEHATAN</p>
+        <div class="flex flex-wrap justify-center items-center gap-x-6 gap-y-4 md:gap-x-12 md:gap-y-6 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-700">
+            <h3 class="font-bold text-lg md:text-2xl text-secondary m-0 flex items-center gap-1 md:gap-2">
+                <span class="material-symbols-outlined text-xl md:text-3xl">health_and_safety</span> BPJS Kesehatan
+            </h3>
+            <h3 class="font-bold text-lg md:text-2xl text-secondary m-0 flex items-center gap-1 md:gap-2">
+                <span class="material-symbols-outlined text-xl md:text-3xl">security</span> BPJS Ketenagakerjaan
+            </h3>
+            <h3 class="font-bold text-lg md:text-2xl text-secondary m-0 flex items-center gap-1 md:gap-2">
+                <span class="material-symbols-outlined text-xl md:text-3xl">shield</span> Jasa Raharja
+            </h3>
+            <h3 class="font-bold text-lg md:text-2xl text-secondary m-0 flex items-center gap-1 md:gap-2">
+                <span class="material-symbols-outlined text-xl md:text-3xl">local_hospital</span> Kemenkes RI
+            </h3>
+            <h3 class="font-bold text-lg md:text-2xl text-secondary m-0 flex items-center gap-1 md:gap-2">
+                <span class="material-symbols-outlined text-xl md:text-3xl">military_tech</span> TNI AD
+            </h3>
+        </div>
+    </div>
+</section>
+
+<!-- Floating WhatsApp Button -->
+<a href="https://wa.me/6281234567890" target="_blank" class="fixed bottom-6 right-6 bg-[#25D366] text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300 z-[9999] group no-underline" style="box-shadow: 0 10px 25px -5px rgba(37, 211, 102, 0.5);">
+    <i class="bi bi-whatsapp" style="font-size: 1.8rem;"></i>
+    <span class="absolute right-16 bg-white text-dark text-sm px-3 py-2 rounded shadow-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none font-bold border border-gray-100">
         Butuh Bantuan?
     </span>
 </a>
