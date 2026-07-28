@@ -127,6 +127,21 @@
 
     
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <div class="col" data-aos="zoom-in">
+            <div class="card border-0 shadow-sm h-100 video-card"> 
+                <div class="ratio ratio-16x9">
+                    <video controls controlsList="nodownload" preload="metadata" style="width: 100%; height: 100%; object-fit: cover;">
+                        <source src="{{ asset('videos/Cara Pendaftaran Mobile JKN.mp4') }}" type="video/mp4">
+                        Browser Anda tidak mendukung pemutar video.
+                    </video>
+                </div>
+                <div class="card-body p-3">
+                    <p class="fw-bold text-dark text-center mb-0" style="font-size: 0.95rem; line-height: 1.4;">
+                        Cara Pendaftaran Mobile JKN
+                    </p>
+                </div>
+            </div>
+        </div>
         @foreach([
             ['https://www.youtube.com/embed/0JI0aZKU9LA', 'Jam Kunjung Pasien – RS Tk III Baladhika Husada'],
             ['https://www.youtube.com/embed/3pvq9bJuRfE', '144 Penyakit yang TIDAK DAPAT DIRUJUK'],
