@@ -296,7 +296,7 @@
 <div class="flex overflow-x-hidden snap-x snap-mandatory hide-scrollbar gap-0 scroll-smooth rounded-2xl" id="facility-slider-container">
 <!-- Slide 1 -->
 <div class="min-w-full snap-center relative aspect-[21/9] min-h-[400px] group overflow-hidden" id="slide-0">
-<img alt="Ambulan" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" src="{{ asset('images/fasilitas/ambulan.jpeg') }}"/>
+<img alt="Ambulan" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" src="{{ asset('images/fasilitas/ambulan.jpeg') }}"/>
 <div class="absolute inset-0 bg-gradient-to-t from-military-green-dark via-military-green-dark/20 to-transparent flex flex-col justify-end p-8 md:p-16">
 <h3 class="font-headline-xl text-white text-4xl md:text-6xl mb-4 max-w-2xl leading-tight">Ambulan Siaga 24 Jam</h3>
 <p class="text-surface-variant max-w-xl font-body-md opacity-80">Siap merespon keadaan darurat dengan peralatan medis lengkap dan tim medis yang terlatih secara sigap dan profesional.</p>
@@ -304,7 +304,7 @@
 </div>
 <!-- Slide 2 -->
 <div class="min-w-full snap-center relative aspect-[21/9] min-h-[400px] group overflow-hidden" id="slide-1">
-<img alt="Kamar VIP" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" src="{{ asset('images/fasilitas/kamar.jpeg') }}"/>
+<img alt="Kamar VIP" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" src="{{ asset('images/fasilitas/kamar.jpeg') }}"/>
 <div class="absolute inset-0 bg-gradient-to-t from-military-green-dark via-military-green-dark/20 to-transparent flex flex-col justify-end p-8 md:p-16">
 <h3 class="font-headline-xl text-white text-4xl md:text-6xl mb-4 max-w-2xl leading-tight">Ruang Perawatan Nyaman</h3>
 <p class="text-surface-variant max-w-xl font-body-md opacity-80">Fasilitas kamar yang mengutamakan privasi, kenyamanan, dan pemulihan optimal bagi pasien.</p>
@@ -312,7 +312,7 @@
 </div>
 <!-- Slide 3 -->
 <div class="min-w-full snap-center relative aspect-[21/9] min-h-[400px] group overflow-hidden" id="slide-2">
-<img alt="Laboratorium" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" src="{{ asset('images/fasilitas/lab.jpeg') }}"/>
+<img alt="Laboratorium" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" src="{{ asset('images/fasilitas/lab.jpeg') }}"/>
 <div class="absolute inset-0 bg-gradient-to-t from-military-green-dark via-military-green-dark/20 to-transparent flex flex-col justify-end p-8 md:p-16">
 <h3 class="font-headline-xl text-white text-4xl md:text-6xl mb-4 max-w-2xl leading-tight">Laboratorium Modern</h3>
 <p class="text-surface-variant max-w-xl font-body-md opacity-80">Didukung oleh peralatan diagnosa canggih dan tenaga analis yang kompeten untuk hasil yang akurat.</p>
@@ -320,7 +320,7 @@
 </div>
 <!-- Slide 4 -->
 <div class="min-w-full snap-center relative aspect-[21/9] min-h-[400px] group overflow-hidden" id="slide-3">
-<img alt="Poliklinik" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" src="{{ asset('images/fasilitas/poli1.jpeg') }}"/>
+<img alt="Poliklinik" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" src="{{ asset('images/fasilitas/poli1.jpeg') }}"/>
 <div class="absolute inset-0 bg-gradient-to-t from-military-green-dark via-military-green-dark/20 to-transparent flex flex-col justify-end p-8 md:p-16">
 <div class="flex flex-col sm:flex-row gap-4 w-full">
 <a href="https://wa.me/6281234567890" target="_blank" class="w-full sm:w-auto px-6 py-4 bg-secondary text-white rounded-full font-bold hover:bg-yellow-600 transition-colors shadow-lg flex items-center justify-center gap-2 no-underline">
@@ -361,8 +361,8 @@
     <div class="flex overflow-x-auto gap-6 snap-x snap-mandatory hide-scrollbar pb-8" id="facility-slider">
         <!-- Fasilitas 1 -->
         <div class="min-w-[85vw] md:min-w-[45vw] lg:min-w-[30vw] snap-center group cursor-pointer">
-            <div class="relative h-64 md:h-80 rounded-2xl overflow-hidden mb-4">
-                <img src="{{ asset('images/fasilitas/ambulan1.jpg') }}" alt="Ambulan Siaga 24 Jam" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+            <div class="relative h-64 md:h-80 rounded-2xl overflow-hidden mb-4 shadow-sm hover:shadow-xl transition-shadow duration-300">
+                <img src="{{ asset('images/fasilitas/ambulan.jpeg') }}" alt="Ambulan Siaga 24 Jam" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                 <div class="absolute bottom-6 left-6 right-6">
                     <h3 class="text-white font-headline-lg text-2xl mb-1">Ambulan Siaga</h3>
@@ -372,8 +372,8 @@
         </div>
         <!-- Fasilitas 2 -->
         <div class="min-w-[85vw] md:min-w-[45vw] lg:min-w-[30vw] snap-center group cursor-pointer">
-            <div class="relative h-64 md:h-80 rounded-2xl overflow-hidden mb-4">
-                <img src="{{ asset('images/fasilitas/laboratorium.jpg') }}" alt="Laboratorium Modern" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+            <div class="relative h-64 md:h-80 rounded-2xl overflow-hidden mb-4 shadow-sm hover:shadow-xl transition-shadow duration-300">
+                <img src="{{ asset('images/fasilitas/lab.jpeg') }}" alt="Laboratorium Modern" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                 <div class="absolute bottom-6 left-6 right-6">
                     <h3 class="text-white font-headline-lg text-2xl mb-1">Laboratorium</h3>
@@ -383,8 +383,8 @@
         </div>
         <!-- Fasilitas 3 -->
         <div class="min-w-[85vw] md:min-w-[45vw] lg:min-w-[30vw] snap-center group cursor-pointer">
-            <div class="relative h-64 md:h-80 rounded-2xl overflow-hidden mb-4">
-                <img src="{{ asset('images/fasilitas/poliklinik.jpg') }}" alt="Poliklinik Spesialis" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+            <div class="relative h-64 md:h-80 rounded-2xl overflow-hidden mb-4 shadow-sm hover:shadow-xl transition-shadow duration-300">
+                <img src="{{ asset('images/fasilitas/poli1.jpeg') }}" alt="Poliklinik Spesialis" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                 <div class="absolute bottom-6 left-6 right-6">
                     <h3 class="text-white font-headline-lg text-2xl mb-1">Poliklinik Spesialis</h3>
@@ -394,8 +394,8 @@
         </div>
         <!-- Fasilitas 4 -->
         <div class="min-w-[85vw] md:min-w-[45vw] lg:min-w-[30vw] snap-center group cursor-pointer">
-            <div class="relative h-64 md:h-80 rounded-2xl overflow-hidden mb-4">
-                <img src="{{ asset('images/fasilitas/kamarvip.jpg') }}" alt="Ruang Rawat Inap VIP" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+            <div class="relative h-64 md:h-80 rounded-2xl overflow-hidden mb-4 shadow-sm hover:shadow-xl transition-shadow duration-300">
+                <img src="{{ asset('images/fasilitas/kamar.jpeg') }}" alt="Ruang Rawat Inap VIP" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                 <div class="absolute bottom-6 left-6 right-6">
                     <h3 class="text-white font-headline-lg text-2xl mb-1">Kamar VIP</h3>
@@ -459,11 +459,11 @@
             <div class="bg-white rounded-xl overflow-hidden border border-outline-variant shadow-sm hover:shadow-xl transition-all group flex flex-col h-full bento-card text-left">
                 <div class="relative h-48 overflow-hidden bg-surface-container">
                     @if(isset($berita->type) && $berita->type == 'VIDEO')
-                        <video class="berita-video w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" muted loop playsinline preload="metadata">
+                        <video class="berita-video w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" muted loop playsinline preload="metadata">
                             <source src="{{ $berita->img }}" type="video/mp4">
                         </video>
                     @else
-                        <img src="{{ $berita->img ?? asset('images/hero-rs.jpg') }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="News Image">
+                        <img src="{{ $berita->img ?? asset('images/hero-rs.jpg') }}" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" alt="News Image">
                     @endif
                     <div class="absolute top-4 left-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded">INFO</div>
                 </div>
@@ -548,7 +548,7 @@
 <section class="py-8 md:py-10 bg-white border-y border-outline-variant/30">
     <div class="max-w-container-max mx-auto px-gutter text-center">
         <p class="font-label-caps text-on-surface-variant mb-6 md:mb-8 tracking-widest text-xs md:text-sm">MELAYANI PASIEN DARI BERBAGAI MITRA KESEHATAN</p>
-        <div class="flex flex-wrap justify-center items-center gap-x-6 gap-y-4 md:gap-x-12 md:gap-y-6 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-700">
+        <div class="flex flex-wrap justify-center items-center gap-x-6 gap-y-4 md:gap-x-12 md:gap-y-6 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300">
             <h3 class="font-bold text-lg md:text-2xl text-secondary m-0 flex items-center gap-1 md:gap-2">
                 <span class="material-symbols-outlined text-xl md:text-3xl">health_and_safety</span> BPJS Kesehatan
             </h3>
@@ -568,13 +568,6 @@
     </div>
 </section>
 
-<!-- Floating WhatsApp Button -->
-<a href="https://wa.me/6281234567890" target="_blank" class="fixed right-4 md:right-8 bg-[#25D366] text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300 z-40 group no-underline" style="bottom: 145px; box-shadow: 0 10px 25px -5px rgba(37, 211, 102, 0.5);">
-    <i class="bi bi-whatsapp" style="font-size: 1.8rem;"></i>
-    <span class="absolute right-16 bg-white text-dark text-sm px-3 py-2 rounded shadow-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none font-bold border border-gray-100">
-        Butuh Bantuan?
-    </span>
-</a>
 
 </div> <!-- End wrapper Tailwind -->
 
