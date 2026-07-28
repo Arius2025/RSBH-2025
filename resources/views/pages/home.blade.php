@@ -149,12 +149,12 @@
 <div class="tw-section bg-background text-on-surface font-body-md overflow-x-hidden">
 
 <!-- Hero Section -->
-<section class="relative h-[85vh] min-h-[600px] flex items-center overflow-hidden">
+<section class="relative min-h-[100svh] md:min-h-[600px] md:h-[85vh] flex items-center overflow-hidden pt-20 md:pt-0">
 <div class="absolute inset-0 z-0">
 <img alt="" class="w-full h-full object-cover brightness-50" src="https://lh3.googleusercontent.com/aida/AP1WRLuFO46QgXxyCWB0W45OS3xEHJuTT7bg9KfwSJ79IXYjzyyqwA_Fx6t3JDfA-bkJJAMtYDktuG-Fl4zqnYM69BjjST1fQDMCW3BU5fhGLgaOyOIn5VaaNqME6GvgnqlNgTQNHqVHYCP_-k24wzOsg-iUBStkf5zQW07MIdc7JY_m76R63a1Bymk7NJNSTGXbCg7mxn1HXaAgB_BQw-LvXxGjjUcz65a92iNKsollTwZ8C0WKU89v4Reo-Nc"/>
 <div class="absolute inset-0 bg-gradient-to-r from-military-green-dark/80 to-transparent"></div>
 </div>
-<div class="relative z-10 max-w-container-max mx-auto px-gutter w-full">
+<div class="relative z-10 max-w-container-max mx-auto px-gutter w-full pb-36 md:pb-0">
 <div class="max-w-2xl text-white">
 <div class="flex items-center gap-2 mb-6">
 <span class="w-12 h-[2px] bg-gold-light"></span>
@@ -164,14 +164,14 @@
 <p class="font-body-md text-body-md mb-10 text-surface-variant opacity-90 leading-relaxed">
                     Melayani Prajurit TNI/POLRI, ASN, dan masyarakat umum dengan fasilitas modern dan kehangatan sepenuh hati. Terakreditasi Paripurna untuk kenyamanan dan keselamatan Anda.
                 </p>
-<div class="flex flex-col sm:flex-row gap-4">
-<a href="{{ route('jadwal') }}" class="px-8 py-4 bg-primary-fixed text-primary font-bold rounded flex items-center justify-center gap-2 hover:bg-gold-light transition-all no-underline">
+<div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start w-full px-4 sm:px-0 mt-8">
+<a href="{{ route('jadwal') }}" class="w-full sm:w-auto px-8 py-4 bg-primary-fixed text-primary font-bold rounded flex items-center justify-center gap-2 hover:bg-gold-light transition-all no-underline text-center">
 <span class="material-symbols-outlined">calendar_month</span>
                         JADWAL DOKTER
 </a>
-<a href="{{ route('ambulance') }}" class="px-8 py-4 border border-white text-white font-bold rounded flex items-center justify-center gap-2 hover:bg-white/10 transition-all no-underline">
+<a href="{{ route('ambulance') }}" class="w-full sm:w-auto px-8 py-4 border border-white text-white font-bold rounded flex items-center justify-center gap-2 hover:bg-white/10 transition-all no-underline text-center">
 <span class="material-symbols-outlined">phone_in_talk</span>
-                        KONTAK IGD
+                        AMBULAN JEMPUT GRATIS
 </a>
 </div>
 </div>
@@ -569,7 +569,7 @@
 </section>
 
 <!-- Floating WhatsApp Button -->
-<a href="https://wa.me/6281234567890" target="_blank" class="fixed bottom-6 right-6 bg-[#25D366] text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300 z-[9999] group no-underline" style="box-shadow: 0 10px 25px -5px rgba(37, 211, 102, 0.5);">
+<a href="https://wa.me/6281234567890" target="_blank" class="fixed right-4 md:right-8 bg-[#25D366] text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300 z-40 group no-underline" style="bottom: 145px; box-shadow: 0 10px 25px -5px rgba(37, 211, 102, 0.5);">
     <i class="bi bi-whatsapp" style="font-size: 1.8rem;"></i>
     <span class="absolute right-16 bg-white text-dark text-sm px-3 py-2 rounded shadow-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none font-bold border border-gray-100">
         Butuh Bantuan?
