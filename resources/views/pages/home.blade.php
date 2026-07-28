@@ -322,46 +322,117 @@
 <div class="min-w-full snap-center relative aspect-[21/9] min-h-[400px] group overflow-hidden" id="slide-3">
 <img alt="Poliklinik" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" src="{{ asset('images/fasilitas/poli1.jpeg') }}"/>
 <div class="absolute inset-0 bg-gradient-to-t from-military-green-dark via-military-green-dark/20 to-transparent flex flex-col justify-end p-8 md:p-16">
-<h3 class="font-headline-xl text-white text-4xl md:text-6xl mb-4 max-w-2xl leading-tight">Layanan Poliklinik Terpadu</h3>
-<p class="text-surface-variant max-w-xl font-body-md opacity-80">Menyediakan berbagai poliklinik spesialis dengan pelayanan yang ramah, informatif, dan tanpa antrean panjang.</p>
+<div class="flex flex-col sm:flex-row gap-4 w-full">
+<a href="https://wa.me/6281234567890" target="_blank" class="w-full sm:w-auto px-6 py-4 bg-secondary text-white rounded-full font-bold hover:bg-yellow-600 transition-colors shadow-lg flex items-center justify-center gap-2 no-underline">
+<span class="material-symbols-outlined">send</span> Gunakan SITERBAT
+                </a>
+<a href="{{ route('layanan') }}" class="w-full sm:w-auto px-6 py-4 bg-surface-container border border-outline text-primary rounded-full font-bold hover:bg-surface-container-high transition-colors flex items-center justify-center gap-2 no-underline text-center">
+                    Pelajari Layanan Lainnya
+                </a>
+</div>
+</div>
+<!-- Image/Graphic -->
+<div class="bg-surface-container-low p-8 flex items-center justify-center relative overflow-hidden order-1 lg:order-2 min-h-[300px]">
+<div class="absolute w-[200%] h-[200%] bg-primary/5 rounded-full -top-1/2 -right-1/2 animate-[spin_60s_linear_infinite]"></div>
+<img alt="SITERBAT Layanan Antar Obat" class="relative z-10 w-full max-w-md drop-shadow-2xl rounded-2xl" src="{{ asset('images/banner/siterbat.png') }}"/>
 </div>
 </div>
 </div>
-<button onclick="scrollSlider('left')" class="absolute left-12 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full border border-white/20 bg-military-green-dark/30 backdrop-blur-sm text-white flex items-center justify-center hover:bg-gold-light hover:text-military-green-dark transition-all hidden md:flex cursor-pointer">
-<span class="material-symbols-outlined text-3xl">chevron_left</span>
-</button>
-<button onclick="scrollSlider('right')" class="absolute right-12 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full border border-white/20 bg-military-green-dark/30 backdrop-blur-sm text-white flex items-center justify-center hover:bg-gold-light hover:text-military-green-dark transition-all hidden md:flex cursor-pointer">
-<span class="material-symbols-outlined text-3xl">chevron_right</span>
-</button>
+</section>
+
+<!-- Fasilitas & Layanan Unggulan -->
+<section class="py-section-gap bg-surface">
+<div class="max-w-container-max mx-auto px-gutter">
+<div class="text-center mb-12">
+<span class="text-secondary font-label-caps tracking-widest block mb-2">FASILITAS KAMI</span>
+<h2 class="font-headline-xl text-3xl md:text-headline-lg text-primary m-0">Layanan Unggulan</h2>
+</div>
+
+<!-- Category Tabs -->
+<div class="flex flex-wrap justify-center gap-3 mb-10">
+    <button class="px-6 py-2 bg-primary text-white rounded-full font-bold text-sm" onclick="scrollSlider(0)">Ambulan</button>
+    <button class="px-6 py-2 bg-white text-on-surface-variant border border-outline-variant rounded-full font-bold text-sm hover:bg-surface-container transition-colors" onclick="scrollSlider(1)">Laboratorium</button>
+    <button class="px-6 py-2 bg-white text-on-surface-variant border border-outline-variant rounded-full font-bold text-sm hover:bg-surface-container transition-colors" onclick="scrollSlider(2)">Poliklinik</button>
+    <button class="px-6 py-2 bg-white text-on-surface-variant border border-outline-variant rounded-full font-bold text-sm hover:bg-surface-container transition-colors" onclick="scrollSlider(3)">VIP Room</button>
+</div>
+
+<div class="relative">
+    <div class="flex overflow-x-auto gap-6 snap-x snap-mandatory hide-scrollbar pb-8" id="facility-slider">
+        <!-- Fasilitas 1 -->
+        <div class="min-w-[85vw] md:min-w-[45vw] lg:min-w-[30vw] snap-center group cursor-pointer">
+            <div class="relative h-64 md:h-80 rounded-2xl overflow-hidden mb-4">
+                <img src="{{ asset('images/fasilitas/ambulan1.jpg') }}" alt="Ambulan Siaga 24 Jam" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                <div class="absolute bottom-6 left-6 right-6">
+                    <h3 class="text-white font-headline-lg text-2xl mb-1">Ambulan Siaga</h3>
+                    <p class="text-white/80 font-body-md text-sm m-0">Layanan evakuasi medis darurat 24 jam</p>
+                </div>
+            </div>
+        </div>
+        <!-- Fasilitas 2 -->
+        <div class="min-w-[85vw] md:min-w-[45vw] lg:min-w-[30vw] snap-center group cursor-pointer">
+            <div class="relative h-64 md:h-80 rounded-2xl overflow-hidden mb-4">
+                <img src="{{ asset('images/fasilitas/laboratorium.jpg') }}" alt="Laboratorium Modern" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                <div class="absolute bottom-6 left-6 right-6">
+                    <h3 class="text-white font-headline-lg text-2xl mb-1">Laboratorium</h3>
+                    <p class="text-white/80 font-body-md text-sm m-0">Peralatan diagnostik canggih dan akurat</p>
+                </div>
+            </div>
+        </div>
+        <!-- Fasilitas 3 -->
+        <div class="min-w-[85vw] md:min-w-[45vw] lg:min-w-[30vw] snap-center group cursor-pointer">
+            <div class="relative h-64 md:h-80 rounded-2xl overflow-hidden mb-4">
+                <img src="{{ asset('images/fasilitas/poliklinik.jpg') }}" alt="Poliklinik Spesialis" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                <div class="absolute bottom-6 left-6 right-6">
+                    <h3 class="text-white font-headline-lg text-2xl mb-1">Poliklinik Spesialis</h3>
+                    <p class="text-white/80 font-body-md text-sm m-0">Dokter spesialis berpengalaman</p>
+                </div>
+            </div>
+        </div>
+        <!-- Fasilitas 4 -->
+        <div class="min-w-[85vw] md:min-w-[45vw] lg:min-w-[30vw] snap-center group cursor-pointer">
+            <div class="relative h-64 md:h-80 rounded-2xl overflow-hidden mb-4">
+                <img src="{{ asset('images/fasilitas/kamarvip.jpg') }}" alt="Ruang Rawat Inap VIP" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                <div class="absolute bottom-6 left-6 right-6">
+                    <h3 class="text-white font-headline-lg text-2xl mb-1">Kamar VIP</h3>
+                    <p class="text-white/80 font-body-md text-sm m-0">Kenyamanan maksimal untuk pemulihan</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 </section>
 
 <!-- Profil Pimpinan -->
 <section class="py-section-gap bg-military-green-dark text-white overflow-hidden relative">
 <div class="max-w-container-max mx-auto px-gutter relative z-10">
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-<div class="lg:col-span-5 order-2 lg:order-1 text-center">
-<div class="relative inline-block mb-8">
-<div class="absolute -top-4 -left-4 w-24 h-24 border-t-4 border-l-4 border-gold-light"></div>
-<img alt="Letkol CKM dr. Zaltonys Tolombot, Sp.M" class="relative z-10 w-full max-w-sm mx-auto rounded-lg shadow-2xl filter brightness-110" src="{{ asset('images/Karumkit (2).png') }}"/>
-<div class="absolute -bottom-4 -right-4 w-24 h-24 border-b-4 border-r-4 border-gold-light"></div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center text-center lg:text-left">
+<div class="lg:col-span-5 order-1 text-center">
+<div class="relative inline-block mb-6 md:mb-8">
+<div class="absolute -top-4 -left-4 w-16 md:w-24 h-16 md:h-24 border-t-4 border-l-4 border-gold-light"></div>
+<img alt="Letkol CKM dr. Zaltonys Tolombot, Sp.M" class="relative z-10 w-full max-w-[250px] md:max-w-sm mx-auto rounded-lg shadow-2xl filter brightness-110" src="{{ asset('images/Karumkit (2).png') }}"/>
+<div class="absolute -bottom-4 -right-4 w-16 md:w-24 h-16 md:h-24 border-b-4 border-r-4 border-gold-light"></div>
 </div>
-<div class="mt-4">
-<span class="text-gold-light font-label-caps tracking-widest block mb-2">KEPALA RUMAH SAKIT</span>
-<h2 class="font-headline-xl text-3xl md:text-4xl leading-tight m-0">Letkol CKM dr. Zaltonys Tolombot, Sp.M</h2>
+<div class="mt-2 md:mt-4">
+<span class="text-gold-light font-label-caps tracking-widest block mb-2 text-sm">KEPALA RUMAH SAKIT</span>
+<h2 class="font-headline-xl text-2xl md:text-3xl lg:text-4xl leading-tight m-0">Letkol CKM dr. Zaltonys Tolombot, Sp.M</h2>
 </div>
 </div>
-<div class="lg:col-span-7 order-1 lg:order-2 space-y-8 flex flex-col justify-center">
-<blockquote class="font-body-md italic text-xl md:text-2xl text-surface-variant opacity-90 border-l-4 border-gold-light pl-6 py-2 leading-relaxed m-0">
+<div class="lg:col-span-7 order-2 space-y-6 md:space-y-8 flex flex-col justify-center mt-6 lg:mt-0">
+<blockquote class="font-body-md italic text-lg md:text-xl lg:text-2xl text-surface-variant opacity-90 border-l-4 border-gold-light pl-6 py-2 leading-relaxed m-0 text-left">
                         "Rumah Sakit Tk. III Baladhika Husada Jember berkomitmen memberikan pelayanan kesehatan prima bagi prajurit TNI, PNS, keluarga, serta masyarakat umum dengan profesionalisme tinggi dan empati mendalam."
                     </blockquote>
-<div class="grid grid-cols-2 gap-8 pt-8 border-t border-white/10">
+<div class="grid grid-cols-2 gap-4 md:gap-8 pt-6 md:pt-8 border-t border-white/10 text-left">
 <div>
-<p class="text-gold-light font-headline-lg text-2xl m-0">SIGAP</p>
+<p class="text-gold-light font-headline-lg text-xl md:text-2xl m-0">SIGAP</p>
 <p class="text-xs text-surface-variant/70 font-label-caps m-0">Fast Response &amp; Alert</p>
 </div>
 <div>
-<p class="text-gold-light font-headline-lg text-2xl m-0">PROFESIONAL</p>
+<p class="text-gold-light font-headline-lg text-xl md:text-2xl m-0">PROFESIONAL</p>
 <p class="text-xs text-surface-variant/70 font-label-caps m-0">Excellence in Service</p>
 </div>
 </div>
@@ -373,18 +444,18 @@
 <!-- Berita Terbaru -->
 <section class="py-section-gap bg-hospital-white">
 <div class="max-w-container-max mx-auto px-gutter">
-    <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-        <div>
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 md:mb-12 gap-6 text-center md:text-left">
+        <div class="w-full md:w-auto">
             <span class="text-secondary font-label-caps tracking-widest block mb-2">UPDATE INFORMASI</span>
-            <h2 class="font-headline-xl text-headline-lg text-primary m-0">Berita & Artikel</h2>
+            <h2 class="font-headline-xl text-3xl md:text-headline-lg text-primary m-0">Berita & Artikel</h2>
         </div>
-        <a href="{{ route('berita') }}" class="px-6 py-3 border border-primary text-primary font-bold rounded hover:bg-primary hover:text-white transition-all no-underline text-center">LIHAT SEMUA BERITA</a>
+        <a href="{{ route('berita') }}" class="w-full md:w-auto px-6 py-3 border border-primary text-primary font-bold rounded hover:bg-primary hover:text-white transition-all no-underline text-center">LIHAT SEMUA BERITA</a>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
         @if(isset($beritas) && count($beritas) > 0)
             @foreach(collect($beritas)->take(3) as $berita)
-            <div class="bg-white rounded-xl overflow-hidden border border-outline-variant shadow-sm hover:shadow-xl transition-all group flex flex-col h-full bento-card">
+            <div class="bg-white rounded-xl overflow-hidden border border-outline-variant shadow-sm hover:shadow-xl transition-all group flex flex-col h-full bento-card text-left">
                 <div class="relative h-48 overflow-hidden bg-surface-container">
                     @if(isset($berita->type) && $berita->type == 'VIDEO')
                         <video class="berita-video w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" muted loop playsinline preload="metadata">
@@ -408,7 +479,7 @@
             </div>
             @endforeach
         @else
-            <div class="col-span-3 text-center py-12 bg-white rounded-xl border border-outline-variant">
+            <div class="col-span-1 md:col-span-3 text-center py-12 bg-white rounded-xl border border-outline-variant">
                 <span class="material-symbols-outlined text-4xl text-surface-variant mb-2">newspaper</span>
                 <p class="text-on-surface-variant m-0">Belum ada berita terbaru saat ini.</p>
             </div>
@@ -420,46 +491,35 @@
 <!-- Testimoni Pasien -->
 <section class="py-section-gap bg-surface">
 <div class="max-w-container-max mx-auto px-gutter">
-<div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-<div>
-<h2 class="font-headline-xl text-headline-lg text-primary m-0">Apa Kata Pasien Kami?</h2>
-<p class="text-on-surface-variant mt-2 m-0">Dukungan Anda adalah motivasi terbesar bagi kami untuk terus melayani.</p>
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 md:mb-12 gap-6 text-center md:text-left">
+<div class="w-full md:w-auto">
+<h2 class="font-headline-xl text-3xl md:text-headline-lg text-primary m-0">Apa Kata Pasien Kami?</h2>
+<p class="text-on-surface-variant mt-2 m-0 text-sm md:text-base">Dukungan Anda adalah motivasi terbesar bagi kami untuk terus melayani.</p>
 </div>
-<div class="bg-white p-4 rounded-xl shadow-sm border border-outline-variant flex items-center gap-4">
+<div class="bg-white p-3 md:p-4 rounded-xl shadow-sm border border-outline-variant flex items-center justify-center gap-4 w-full md:w-auto">
 <div class="text-secondary flex items-center gap-1">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
 <span class="font-bold text-xl text-secondary">4.8</span>
 </div>
 <div class="h-8 w-[1px] bg-outline-variant"></div>
-<div class="text-xs font-label-caps text-on-surface-variant">
-                        GOOGLE MAPS REVIEWS
+<div class="text-xs font-label-caps text-on-surface-variant text-left">
+                        GOOGLE MAPS<br/>REVIEWS
                     </div>
 </div>
 </div>
-<div class="flex overflow-x-auto gap-6 pb-8 snap-x snap-mandatory hide-scrollbar" id="testimonial-slider-container">
-    
+<div class="flex overflow-x-auto gap-4 md:gap-6 pb-8 snap-x snap-mandatory hide-scrollbar" id="testimonial-slider-container">
     @php
         $reviews = [
             ["Budi Santoso", "Peserta BPJS", "Pelayanan sangat memuaskan, perawatnya ramah dan cekatan. Saya pakai BPJS tidak dipersulit sama sekali.", "BS"],
             ["Siti Aminah", "Pasien Umum", "IGD siaga 24 jam. Langsung ditangani saat itu juga dengan fasilitas lengkap. Mantap RS DKT Jember.", "SA"],
             ["Rahmat Hidayat", "Keluarga Pasien", "Ruang perawatannya sangat bersih dan nyaman, VIP-nya seperti di hotel. Makanan dari gizi juga enak.", "RH"],
             ["Linda Sari", "Pasien Umum", "Dokter spesialisnya sangat komunikatif dan sabar menjelaskan kondisi orang tua saya. Terima kasih dokter.", "LS"],
-            ["Supriyadi", "Purnawirawan", "Fasilitas SITERBAT sangat membantu! Obat diantar sampai rumah, jadi tidak perlu capek antri.", "SP"],
-            ["Dwi Cahyono", "Pasien Umum", "Proses pendaftaran sekarang lebih mudah dan modern. Ruang tunggu poli luas dan ber-AC dingin.", "DC"],
-            ["Ayu Lestari", "Pasien BPJS", "Saya melahirkan di sini, bidan dan dokternya luar biasa sabar. Pelayanan jempolan untuk warga Jember.", "AL"],
-            ["Hendra Wijaya", "Pasien Umum", "Apotek pelayanannya cepat, petugasnya ramah memberikan edukasi cara minum obat yang benar.", "HW"],
-            ["Maya Indah", "Pasien Umum", "Layanan fisioterapi di RS Baladhika Husada sangat bagus. Alat-alatnya modern, terapisnya telaten.", "MI"],
-            ["Joko Susilo", "Keluarga Pasien", "Satpamnya ramah-ramah, dari awal masuk langsung dibantu arahkan ke poli tujuan. Sangat informatif.", "JS"],
-            ["Dimas Pratama", "Pasien Umum", "Parkirannya luas dan aman. Kantin rumah sakit juga bersih. Fasilitas pendukungnya memadai.", "DP"],
-            ["Ratna Dilla", "Pasien Rujukan", "Pelayanan luar biasa baik. Perawat sangat memberi semangat kepada pasien.", "RD"],
-            ["Andre Firmansyah", "Pasien Umum", "Laboratoriumnya cepat dan hasilnya bisa ditunggu dengan nyaman. Harga umum juga sangat terjangkau.", "AF"],
-            ["Kusuma Wardhani", "Keluarga Pasien", "Ambulans siaga cepat tanggap saat kami butuh evakuasi keluarga ke IGD. Terima kasih banyak RS DKT!", "KW"],
-            ["Eka Putra", "Pasien BPJS", "Satu-satunya rumah sakit langganan keluarga. Baik pakai jalur umum maupun BPJS pelayanannya setara, tidak dibedakan.", "EP"],
+            ["Supriyadi", "Purnawirawan", "Fasilitas SITERBAT sangat membantu! Obat diantar sampai rumah, jadi tidak perlu capek antri.", "SP"]
         ];
     @endphp
 
-    @foreach($reviews as $index => $review)
-    <div class="min-w-[320px] max-w-[350px] snap-center bg-white p-8 rounded-xl border border-outline-variant hover:border-secondary hover:shadow-lg transition-all group flex flex-col justify-between">
+    @foreach($reviews as $review)
+    <div class="min-w-[85vw] md:min-w-[320px] max-w-[350px] snap-center bg-white p-6 md:p-8 rounded-xl border border-outline-variant hover:border-secondary hover:shadow-lg transition-all group flex flex-col justify-between text-left">
         <div>
             <div class="text-secondary mb-4 flex gap-1">
                 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1, 'opsz' 20;">star</span>
@@ -468,56 +528,24 @@
                 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1, 'opsz' 20;">star</span>
                 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1, 'opsz' 20;">star</span>
             </div>
-            <p class="font-body-md text-on-surface mb-8 italic m-0">"{{ $review[2] }}"</p>
+            <p class="font-body-md text-on-surface mb-6 md:mb-8 italic m-0 text-sm md:text-base">"{{ $review[2] }}"</p>
         </div>
-        <div class="flex items-center gap-4 mt-8 pt-4 border-t border-outline-variant/30">
-            <div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center text-primary font-bold">{{ $review[3] }}</div>
+        <div class="flex items-center gap-4 mt-6 md:mt-8 pt-4 border-t border-outline-variant/30">
+            <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-surface-container flex items-center justify-center text-primary font-bold text-sm md:text-base">{{ $review[3] }}</div>
             <div>
-                <h4 class="font-bold text-primary m-0">{{ $review[0] }}</h4>
+                <h4 class="font-bold text-primary m-0 text-sm md:text-base">{{ $review[0] }}</h4>
                 <p class="text-xs text-on-surface-variant font-label-caps m-0 mt-1">{{ $review[1] }}</p>
             </div>
         </div>
     </div>
     @endforeach
-
-</div>
-<!-- Indikator Geser (Mobile Only) -->
-<div class="text-center mt-2 md:hidden">
-    <span class="text-xs text-on-surface-variant font-label-caps flex items-center justify-center gap-2">
-        <span class="material-symbols-outlined text-sm">swipe</span> Geser untuk melihat lebih banyak
-    </span>
 </div>
 </div>
 </section>
 
 <!-- Mitra Asuransi -->
-<section class="py-10 bg-white border-y border-outline-variant/30">
+<section class="py-8 md:py-10 bg-white border-y border-outline-variant/30">
     <div class="max-w-container-max mx-auto px-gutter text-center">
-        <p class="font-label-caps text-on-surface-variant mb-8 tracking-widest">MELAYANI PASIEN DARI BERBAGAI MITRA KESEHATAN</p>
-        <div class="flex flex-wrap justify-center items-center gap-x-12 gap-y-6 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-700">
-            <h3 class="font-bold text-2xl text-secondary m-0 flex items-center gap-2">
-                <span class="material-symbols-outlined text-3xl">health_and_safety</span> BPJS Kesehatan
-            </h3>
-            <h3 class="font-bold text-2xl text-secondary m-0 flex items-center gap-2">
-                <span class="material-symbols-outlined text-3xl">security</span> BPJS Ketenagakerjaan
-            </h3>
-            <h3 class="font-bold text-2xl text-secondary m-0 flex items-center gap-2">
-                <span class="material-symbols-outlined text-3xl">shield</span> Jasa Raharja
-            </h3>
-            <h3 class="font-bold text-2xl text-secondary m-0 flex items-center gap-2">
-                <span class="material-symbols-outlined text-3xl">local_hospital</span> Kemenkes RI
-            </h3>
-            <h3 class="font-bold text-2xl text-secondary m-0 flex items-center gap-2">
-                <span class="material-symbols-outlined text-3xl">military_tech</span> TNI AD
-            </h3>
-        </div>
-    </div>
-</section>
-
-<!-- Floating WhatsApp Button -->
-<a href="https://wa.me/6281234567890" target="_blank" class="fixed bottom-6 right-6 bg-[#25D366] text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300 z-[9999] group no-underline" style="box-shadow: 0 10px 25px -5px rgba(37, 211, 102, 0.5);">
-    <i class="bi bi-whatsapp" style="font-size: 1.8rem;"></i>
-    <span class="absolute right-16 bg-white text-dark text-sm px-3 py-2 rounded shadow-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none font-bold border border-gray-100">
         Butuh Bantuan?
     </span>
 </a>
