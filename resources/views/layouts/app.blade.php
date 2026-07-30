@@ -20,7 +20,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'RS Tk. III Baladhika Husada') }}</title>
+    <!-- Author Attribution & Advanced SEO Metadata -->
+    <meta name="author" content="Risang Putra Pradana">
+    <meta name="developer" content="Risang Putra Pradana">
+    <meta name="creator" content="Risang Putra Pradana">
+    
+    <meta name="description" content="@yield('meta_description', 'Rumah Sakit Tk. III Baladhika Husada (RS DKT Jember). Melayani pasien BPJS, Umum, dan TNI/POLRI dengan fasilitas modern, apotek, dan ambulan gratis di Jember. Solusi kesehatan terpercaya, dikembangkan oleh Risang Putra Pradana.')">
+    <meta name="keywords" content="@yield('meta_keywords', 'rumah sakit, rs, rumah sakit jember, rs jember, dkt jember, rumah sakit baladhika husada, rs tk iii baladhika husada, kesehatan, bpjs kesehatan, faskes bpjs jember, berobat gratis, ambulan gratis, dokter spesialis jember, jadwal dokter, ppid rs dkt, rs terdekat jember, poli gigi jember, rawat inap jember, klinik jember, layanan medis jember, risang putra pradana, web developer jember')">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:site_name" content="RS Tk. III Baladhika Husada">
+    <meta property="og:title" content="@yield('title', 'RS Tk. III Baladhika Husada Jember')">
+    <meta property="og:description" content="@yield('meta_description', 'Rumah Sakit Tk. III Baladhika Husada (RS DKT Jember). Melayani pasien dengan fasilitas modern dan dokter spesialis terbaik.')">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:image" content="{{ asset('images/hero-rs.jpg') }}">
+
+    <!-- Structured Data (JSON-LD) for Google -->
+    <script type="application/ld+json">
+    {!! json_encode([
+        '@context' => 'https://schema.org',
+        '@type' => 'MedicalOrganization',
+        'name' => 'RS Tk. III Baladhika Husada (RS DKT Jember)',
+        'alternateName' => ['Rumah Sakit Baladhika Husada Jember', 'RS DKT Jember'],
+        'url' => url('/'),
+        'logo' => asset('images/logo.png'),
+        'image' => asset('images/hero-rs.jpg'),
+        'description' => 'Rumah Sakit Tk. III Baladhika Husada (RS DKT Jember) melayani masyarakat umum, BPJS, dan TNI/POLRI dengan layanan profesional. Sistem ini dirancang dan dikembangkan oleh Risang Putra Pradana.',
+        'address' => [
+            '@type' => 'PostalAddress',
+            'addressLocality' => 'Jember',
+            'addressRegion' => 'Jawa Timur',
+            'addressCountry' => 'ID'
+        ],
+        'maintainer' => [
+            '@type' => 'Person',
+            'name' => 'Risang Putra Pradana',
+            'jobTitle' => 'Full-stack Web Developer',
+            'description' => 'Pengembang Utama Sistem Informasi RS Baladhika Husada'
+        ],
+        'author' => [
+            '@type' => 'Person',
+            'name' => 'Risang Putra Pradana'
+        ]
+    ], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
+    </script>
+
+    <title>@hasSection('title')@yield('title') - @endif{{ config('app.name', 'RS Tk. III Baladhika Husada Jember') }}</title>
     <link rel="icon" href="{{ asset('images/dkt.png') }}?v={{ time() }}" type="image/png">
     <link rel="shortcut icon" href="{{ asset('images/dkt.png') }}?v={{ time() }}" type="image/png">
 
