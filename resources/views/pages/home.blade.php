@@ -151,7 +151,7 @@
 <!-- Hero Section -->
 <section class="relative min-h-[100svh] md:min-h-[600px] md:h-[85vh] flex items-center overflow-hidden pt-20 md:pt-0">
 <div class="absolute inset-0 z-0">
-<img alt="" class="w-full h-full object-cover brightness-50" src="https://lh3.googleusercontent.com/aida/AP1WRLuFO46QgXxyCWB0W45OS3xEHJuTT7bg9KfwSJ79IXYjzyyqwA_Fx6t3JDfA-bkJJAMtYDktuG-Fl4zqnYM69BjjST1fQDMCW3BU5fhGLgaOyOIn5VaaNqME6GvgnqlNgTQNHqVHYCP_-k24wzOsg-iUBStkf5zQW07MIdc7JY_m76R63a1Bymk7NJNSTGXbCg7mxn1HXaAgB_BQw-LvXxGjjUcz65a92iNKsollTwZ8C0WKU89v4Reo-Nc"/>
+<img alt="" class="w-full h-full object-cover brightness-50" src="{{ asset('images/hero-rs.jpg') }}"/>
 <div class="absolute inset-0 bg-gradient-to-r from-military-green-dark/80 to-transparent"></div>
 </div>
 <div class="relative z-10 max-w-container-max mx-auto px-gutter w-full pb-36 md:pb-0">
@@ -225,7 +225,7 @@
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 <div class="relative">
 <div class="aspect-square rounded-xl overflow-hidden shadow-2xl">
-<img alt="" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLvWnuAJ6ZyKLTTh4YxgF5K81h84b8i11zsEV1Znuo9Xu5ZFa3YpOhwRSvi5sqBjL5hVHL9lESFgfVgBfkJ6SjBfq3iLboxTu2Ooqo-K3M6uO6nVvdqfWHKqnQXBKWsDiVSVGjq2lCtNlB7ym1ry_5X08cuN2gZ1VmZbdJi7CrCymDQLyGZc23UUjlJMBkpBCv9NY3kwCq174V23QJzTHG6KXqf_6LqR_id4Fp25QXmJjvn7SqV5SPeMpaM"/>
+<img alt="Fasilitas Apotek" class="w-full h-full object-cover" src="{{ asset('images/fasilitas/apotek.jpeg') }}"/>
 </div>
 <div class="absolute -bottom-8 -right-8 bg-military-green-dark p-8 rounded-xl shadow-xl max-w-xs text-white">
 <h4 class="font-headline-lg text-headline-lg-mobile text-gold-light mb-2">SITERBAT</h4>
@@ -335,7 +335,7 @@
 <!-- Image/Graphic -->
 <div class="bg-surface-container-low p-8 flex items-center justify-center relative overflow-hidden order-1 lg:order-2 min-h-[300px]">
 <div class="absolute w-[200%] h-[200%] bg-primary/5 rounded-full -top-1/2 -right-1/2 animate-[spin_60s_linear_infinite]"></div>
-<img alt="SITERBAT Layanan Antar Obat" class="relative z-10 w-full max-w-md drop-shadow-2xl rounded-2xl" src="{{ asset('images/banner/siterbat.png') }}"/>
+<img alt="SITERBAT Layanan Antar Obat" class="relative z-10 w-full max-w-md drop-shadow-2xl rounded-2xl" src="{{ asset('images/siterbat.png') }}"/>
 </div>
 </div>
 </div>
