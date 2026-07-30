@@ -82,26 +82,28 @@
 
 
 
-  {{-- Galeri Foto IKP --}}
+  {{-- Galeri Foto IKM --}}
   <section class="mb-5">
     <div class="text-center mb-5" data-aos="fade-up">
-      <h4 class="text-success fw-bold border-bottom border-success pb-2 mb-3"><i class="bi bi-graph-up me-2"></i> Indeks Kepuasan Pasien (IKP)</h4>
-      <p class="lead text-muted">Transparansi hasil survey kepuasan pasien per Triwulan.</p>
+      <h4 class="text-success fw-bold border-bottom border-success pb-2 mb-3"><i class="bi bi-graph-up me-2"></i> Indeks Kepuasan Masyarakat (IKM)</h4>
+      <p class="lead text-muted">Transparansi hasil survey kepuasan masyarakat per Triwulan.</p>
     </div>
 
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 justify-content-center">
       @php
-        // PATH MENGGUNAKAN public/images/smile/ DAN EKSTENSI .jpg SESUAI FILE YANG DIUPLOAD
-        $ikp_photos = [
-          ['src' => asset('images/smile/IKP TRIWULAN I 2025.jpg'), 'alt' => 'IKP TRIWULAN I 2025'],
-          ['src' => asset('images/smile/IKP TRIWULAN II 2025.jpg'), 'alt' => 'IKP TRIWULAN II 2025'],
-          ['src' => asset('images/smile/IKP TRIWULAN III 2025.jpg'), 'alt' => 'IKP TRIWULAN III 2025'],
-          ['src' => asset('images/smile/IKP TRIWULAN IV 2025.jpg'), 'alt' => 'IKP TRIWULAN IV 2025'],
-          ['src' => asset('images/smile/IKP TRIWULAN I 2026.jpeg'), 'alt' => 'IKP TRIWULAN I 2026'],
+        $ikm_photos = [
+          ['src' => asset('images/ikm/TW I 2024.jpeg'), 'alt' => 'IKM TRIWULAN I 2024'],
+          ['src' => asset('images/ikm/TW II 2024.jpeg'), 'alt' => 'IKM TRIWULAN II 2024'],
+          ['src' => asset('images/ikm/TW III 2024.jpeg'), 'alt' => 'IKM TRIWULAN III 2024'],
+          ['src' => asset('images/ikm/TW IV 2024.jpeg'), 'alt' => 'IKM TRIWULAN IV 2024'],
+          ['src' => asset('images/ikm/TW I 2025.jpeg'), 'alt' => 'IKM TRIWULAN I 2025'],
+          ['src' => asset('images/ikm/TW II 2025.jpeg'), 'alt' => 'IKM TRIWULAN II 2025'],
+          ['src' => asset('images/ikm/TW III 2025.jpeg'), 'alt' => 'IKM TRIWULAN III 2025'],
+          ['src' => asset('images/ikm/TW IV 2025.jpeg'), 'alt' => 'IKM TRIWULAN IV 2025'],
         ];
       @endphp
 
-      @foreach($ikp_photos as $photo)
+      @foreach($ikm_photos as $photo)
       <div class="col" data-aos="fade-up" data-aos-delay="{{ $loop->index * 150 }}">
         <div class="card border-0 shadow-lg hover-shadow transition h-100"> 
           <img src="{{ $photo['src'] }}" class="card-img-top" alt="{{ $photo['alt'] }}" style="object-fit: cover; height: 350px;">
@@ -117,7 +119,7 @@
       @endforeach
     </div>
   </section>
-  {{-- Akhir Galeri Foto IKP --}}
+  {{-- Akhir Galeri Foto IKM --}}
   
   {{-- Galeri Video Edukasi --}}
   <section class="mb-5">

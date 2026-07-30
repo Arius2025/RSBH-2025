@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\DocumentCrudController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\JadwalHarianController;
 use App\Http\Controllers\PermohonanInformasiController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------

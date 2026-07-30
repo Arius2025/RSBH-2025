@@ -48,6 +48,7 @@
             width: 1rem;
             text-align: center;
         }
+    </style>
         
     <!-- Author Attribution & SEO Metadata -->
     <meta name="author" content="Risang Putra Pradana">

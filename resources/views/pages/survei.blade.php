@@ -17,11 +17,11 @@
                     <!-- Pengaduan Layanan Publik -->
                     <div class="col-md-4">
                         <div class="h-100 text-center service-card transition p-4 rounded-4 bg-light shadow-sm">
-                            <a href="https://forms.gle/jkMU1VD2uoB2tn7R7" target="_blank" class="text-decoration-none d-block">
+                            <a href="https://forms.gle/dTFi9ncPktxqT42b7" target="_blank" class="text-decoration-none d-block">
                                 <div class="icon-wrapper mb-4 mx-auto d-flex align-items-center justify-content-center bg-white rounded-circle shadow-sm" style="width: 120px; height: 120px;">
                                     <img src="{{ asset('images/PPID/survey.png') }}" class="img-fluid p-3" alt="Pengaduan Layanan Publik">
                                 </div>
-                                <h5 class="fw-bold text-success mb-3">Survey Kepuasan Pasien</h5>
+                                <h5 class="fw-bold text-success mb-3">Survey Kepuasan Masyarakat</h5>
                                 <p class="small text-muted mb-0">Isi survey kepuasan pasien untuk meningkatkan kualitas layanan kami.</p>
                             </a>
                         </div>
