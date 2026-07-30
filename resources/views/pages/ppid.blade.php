@@ -89,34 +89,152 @@
       <p class="lead text-muted">Transparansi hasil survey kepuasan masyarakat per Triwulan.</p>
     </div>
 
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 justify-content-center">
-      @php
-        $ikm_photos = [
-          ['src' => asset('images/ikm/TW I 2024.jpeg'), 'alt' => 'IKM TRIWULAN I 2024'],
-          ['src' => asset('images/ikm/TW II 2024.jpeg'), 'alt' => 'IKM TRIWULAN II 2024'],
-          ['src' => asset('images/ikm/TW III 2024.jpeg'), 'alt' => 'IKM TRIWULAN III 2024'],
-          ['src' => asset('images/ikm/TW IV 2024.jpeg'), 'alt' => 'IKM TRIWULAN IV 2024'],
-          ['src' => asset('images/ikm/TW I 2025.jpeg'), 'alt' => 'IKM TRIWULAN I 2025'],
-          ['src' => asset('images/ikm/TW II 2025.jpeg'), 'alt' => 'IKM TRIWULAN II 2025'],
-          ['src' => asset('images/ikm/TW III 2025.jpeg'), 'alt' => 'IKM TRIWULAN III 2025'],
-          ['src' => asset('images/ikm/TW IV 2025.jpeg'), 'alt' => 'IKM TRIWULAN IV 2025'],
-        ];
-      @endphp
+    <style>
+      .ikm-card {
+          border-radius: 16px;
+          overflow: hidden;
+          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          position: relative;
+          background: #000;
+      }
+      .ikm-card:hover {
+          box-shadow: 0 15px 35px rgba(25, 135, 84, 0.3) !important;
+          transform: translateY(-8px);
+          z-index: 10;
+      }
+      .ikm-card img {
+          transition: transform 0.6s ease;
+          opacity: 0.9;
+      }
+      .ikm-card:hover img {
+          transform: scale(1.1);
+          opacity: 0.5;
+      }
+      .ikm-overlay {
+          background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 60%, transparent 100%);
+          position: absolute;
+          inset: 0;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+          padding: 1.5rem;
+          pointer-events: none;
+      }
+      .ikm-content {
+          transform: translateY(40px);
+          transition: transform 0.4s ease;
+      }
+      .ikm-card:hover .ikm-content {
+          transform: translateY(0);
+      }
+      .ikm-btn {
+          opacity: 0;
+          transition: all 0.4s ease;
+          pointer-events: auto;
+      }
+      .ikm-card:hover .ikm-btn {
+          opacity: 1;
+      }
+      .nav-pills .nav-link.active {
+          background-color: #198754 !important;
+          color: white !important;
+          box-shadow: 0 4px 10px rgba(25, 135, 84, 0.4);
+      }
+      .nav-pills .nav-link {
+          color: #198754;
+          border: 1px solid #198754;
+      }
+      .nav-pills .nav-link:hover:not(.active) {
+          background-color: rgba(25, 135, 84, 0.1);
+      }
+      @media (max-width: 991px) {
+          .ikm-content { transform: translateY(0); }
+          .ikm-btn { opacity: 1; pointer-events: auto; }
+          .ikm-card img { opacity: 0.7; }
+      }
+    </style>
 
-      @foreach($ikm_photos as $photo)
-      <div class="col" data-aos="fade-up" data-aos-delay="{{ $loop->index * 150 }}">
-        <div class="card border-0 shadow-lg hover-shadow transition h-100"> 
-          <img src="{{ $photo['src'] }}" class="card-img-top" alt="{{ $photo['alt'] }}" style="object-fit: cover; height: 350px;">
-          <div class="card-body text-center">
-            <p class="fw-semibold text-success mb-0">{{ $photo['alt'] }}</p>
-            {{-- Tombol untuk melihat gambar dalam ukuran penuh --}}
-            <a href="{{ $photo['src'] }}" target="_blank" class="btn btn-outline-success btn-sm mt-2" title="Lihat ukuran penuh">
-                <i class="bi bi-zoom-in"></i> Lihat
-            </a>
+    <!-- Nav Tabs -->
+    <ul class="nav nav-pills justify-content-center mb-5" id="ikmTab" role="tablist" data-aos="fade-up">
+      <li class="nav-item me-3" role="presentation">
+        <button class="nav-link active px-4 py-2 rounded-pill fw-bold" id="tahun2025-tab" data-bs-toggle="pill" data-bs-target="#tahun2025" type="button" role="tab" aria-selected="true">
+          <i class="bi bi-calendar-check me-2"></i>Tahun 2025
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link px-4 py-2 rounded-pill fw-bold" id="tahun2024-tab" data-bs-toggle="pill" data-bs-target="#tahun2024" type="button" role="tab" aria-selected="false">
+          <i class="bi bi-calendar me-2"></i>Tahun 2024
+        </button>
+      </li>
+    </ul>
+
+    <!-- Tab Content -->
+    <div class="tab-content" id="ikmTabContent">
+      
+      <!-- Tab 2025 -->
+      <div class="tab-pane fade show active" id="tahun2025" role="tabpanel">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 justify-content-center">
+          @php
+            $ikm_2025 = [
+              ['src' => asset('images/ikm/TW I 2025.jpeg'), 'title' => 'Triwulan I', 'desc' => 'Januari - Maret 2025'],
+              ['src' => asset('images/ikm/TW II 2025.jpeg'), 'title' => 'Triwulan II', 'desc' => 'April - Juni 2025'],
+              ['src' => asset('images/ikm/TW III 2025.jpeg'), 'title' => 'Triwulan III', 'desc' => 'Juli - September 2025'],
+              ['src' => asset('images/ikm/TW IV 2025.jpeg'), 'title' => 'Triwulan IV', 'desc' => 'Oktober - Desember 2025'],
+            ];
+          @endphp
+          @foreach($ikm_2025 as $photo)
+          <div class="col" data-aos="zoom-in" data-aos-delay="{{ $loop->index * 100 }}">
+            <div class="ikm-card shadow-sm h-100 w-100"> 
+              <img src="{{ $photo['src'] }}" class="w-100" alt="{{ $photo['title'] }}" style="object-fit: cover; height: 380px;">
+              <div class="ikm-overlay">
+                <div class="ikm-content text-center w-100">
+                  <h4 class="fw-bold text-warning mb-1" style="text-shadow: 0 2px 4px rgba(0,0,0,0.8);">{{ $photo['title'] }}</h4>
+                  <p class="text-white opacity-75 small mb-3">{{ $photo['desc'] }}</p>
+                  <div class="ikm-btn">
+                    <a href="{{ $photo['src'] }}" target="_blank" class="btn btn-success rounded-pill px-4 btn-sm shadow fw-semibold">
+                      <i class="bi bi-arrows-angle-expand me-1"></i> Perbesar
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+          @endforeach
         </div>
       </div>
-      @endforeach
+
+      <!-- Tab 2024 -->
+      <div class="tab-pane fade" id="tahun2024" role="tabpanel">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 justify-content-center">
+          @php
+            $ikm_2024 = [
+              ['src' => asset('images/ikm/TW I 2024.jpeg'), 'title' => 'Triwulan I', 'desc' => 'Januari - Maret 2024'],
+              ['src' => asset('images/ikm/TW II 2024.jpeg'), 'title' => 'Triwulan II', 'desc' => 'April - Juni 2024'],
+              ['src' => asset('images/ikm/TW III 2024.jpeg'), 'title' => 'Triwulan III', 'desc' => 'Juli - September 2024'],
+              ['src' => asset('images/ikm/TW IV 2024.jpeg'), 'title' => 'Triwulan IV', 'desc' => 'Oktober - Desember 2024'],
+            ];
+          @endphp
+          @foreach($ikm_2024 as $photo)
+          <div class="col">
+            <div class="ikm-card shadow-sm h-100 w-100"> 
+              <img src="{{ $photo['src'] }}" class="w-100" alt="{{ $photo['title'] }}" style="object-fit: cover; height: 380px;">
+              <div class="ikm-overlay">
+                <div class="ikm-content text-center w-100">
+                  <h4 class="fw-bold text-warning mb-1" style="text-shadow: 0 2px 4px rgba(0,0,0,0.8);">{{ $photo['title'] }}</h4>
+                  <p class="text-white opacity-75 small mb-3">{{ $photo['desc'] }}</p>
+                  <div class="ikm-btn">
+                    <a href="{{ $photo['src'] }}" target="_blank" class="btn btn-success rounded-pill px-4 btn-sm shadow fw-semibold">
+                      <i class="bi bi-arrows-angle-expand me-1"></i> Perbesar
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          @endforeach
+        </div>
+      </div>
+
     </div>
   </section>
   {{-- Akhir Galeri Foto IKM --}}
