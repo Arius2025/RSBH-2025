@@ -1,84 +1,85 @@
 {{-- resources/views/admin/components/sidebar.blade.php --}}
 
-<nav class="sidebar bg-white shadow-lg border-end">
-    <div class="p-3">
-        <h6 class="text-uppercase text-success fw-bold border-bottom pb-2 mb-3">ADMIN MENU</h6>
+<nav class="sidebar">
+    <div class="px-2 py-3">
+        <div class="px-3 mb-3">
+            <span class="text-uppercase text-muted fw-bold" style="font-size: 0.68rem; letter-spacing: 0.8px;">MENU UTAMA</span>
+        </div>
         
-        <ul class="nav flex-column">
-            
+        <ul class="nav flex-column mb-4">
             {{-- Dashboard --}}
-            <li class="nav-item mb-1">
-                <a class="nav-link py-2 rounded {{ request()->routeIs('admin.dashboard') ? 'active-admin' : '' }}" 
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active-admin' : '' }}" 
                    href="{{ route('admin.dashboard') }}">
-                    <i class="bi bi-speedometer2 me-2"></i> Dashboard
+                    <i class="bi bi-grid-fill"></i>
+                    <span>Dashboard</span>
                 </a>
             </li>
             
-            {{-- Kelola Berita --}}
-            {{-- 
-            <li class="nav-item mb-1">
-                <a class="nav-link py-2 rounded {{ request()->routeIs('admin.berita.*') ? 'active-admin' : '' }}" 
-                   href="{{ route('admin.berita.index') }}">
-                    <i class="bi bi-newspaper me-2"></i> Kelola Berita
+            {{-- Kelola Jadwal --}}
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('admin.jadwal.*') ? 'active-admin' : '' }}" 
+                   href="{{ route('admin.jadwal.index') }}">
+                    <i class="bi bi-calendar-event-fill"></i>
+                    <span>Jadwal Dokter</span>
                 </a>
             </li>
-            --}}
 
-            {{-- Tarif RSDKT --}}
-            <li class="nav-item mb-1">
-                <a class="nav-link py-2 rounded {{ request()->routeIs('admin.tarif.*') ? 'active-admin' : '' }}" 
-                   href="{{ route('admin.tarif.index') }}">
-                    <i class="bi bi-tags-fill me-2"></i> Tarif RSDKT
-                </a>
-            </li>
-            
             {{-- Dokumen PPID --}}
-            <li class="nav-item mb-1">
-                <a class="nav-link py-2 rounded {{ request()->routeIs('admin.dokumen.*') ? 'active-admin' : '' }}" 
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('admin.dokumen.*') || request()->routeIs('admin.documents.*') ? 'active-admin' : '' }}" 
                    href="{{ route('admin.documents.index') }}">
-                    <i class="bi bi-file-earmark-text me-2"></i> Dokumen PPID
+                    <i class="bi bi-file-earmark-text-fill"></i>
+                    <span>Dokumen PPID</span>
                 </a>
             </li>
 
             {{-- Permohonan Informasi --}}
-            <li class="nav-item mb-1">
-                <a class="nav-link py-2 rounded {{ request()->routeIs('admin.permohonan.*') ? 'active-admin' : '' }}" 
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('admin.permohonan.*') ? 'active-admin' : '' }}" 
                    href="{{ route('admin.permohonan.index') }}">
-                    <i class="bi bi-envelope-paper me-2"></i> Permohonan Info
+                    <i class="bi bi-inbox-fill"></i>
+                    <span>Permohonan Info</span>
                 </a>
             </li>
 
-            {{-- Kelola Jadwal --}}
-            <li class="nav-item mb-1">
-                <a class="nav-link py-2 rounded {{ request()->routeIs('admin.jadwal.*') ? 'active-admin' : '' }}" 
-                   href="{{ route('admin.jadwal.index') }}">
-                    <i class="bi bi-calendar-check me-2"></i> Kelola Jadwal
+            {{-- Tarif RSDKT --}}
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('admin.tarif.*') ? 'active-admin' : '' }}" 
+                   href="{{ route('admin.tarif.index') }}">
+                    <i class="bi bi-tag-fill"></i>
+                    <span>Tarif Layanan</span>
                 </a>
             </li>
-            
-            {{-- Akun & Logout --}}
-            <h6 class="text-uppercase text-success fw-bold border-bottom pb-2 mt-4 mb-3">AKUN</h6>
-            
-             <li class="nav-item mb-1">
-                <a class="nav-link py-2 rounded {{ request()->routeIs('profile.edit') ? 'active-admin' : '' }}" 
+        </ul>
+
+        <div class="px-3 mb-3">
+            <span class="text-uppercase text-muted fw-bold" style="font-size: 0.68rem; letter-spacing: 0.8px;">SISTEM & AKUN</span>
+        </div>
+
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('profile.edit') ? 'active-admin' : '' }}" 
                    href="{{ route('profile.edit') }}">
-                    <i class="bi bi-person-fill me-2"></i> Pengaturan Profil
+                    <i class="bi bi-shield-lock-fill"></i>
+                    <span>Pengaturan Profil</span>
                 </a>
             </li>
              
-             <li class="nav-item mb-1">
-                <a class="nav-link py-2 rounded" 
-                   href="{{ route('home') }}" target="_blank">
-                    <i class="bi bi-eye me-2"></i> Lihat Situs Publik
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('home') }}" target="_blank">
+                    <i class="bi bi-globe-americas"></i>
+                    <span>Lihat Situs Publik</span>
                 </a>
             </li>
              
-             {{-- Logout Form --}}
-             <li class="nav-item mb-1 mt-2">
-                 <form method="POST" action="{{ route('logout') }}" class="d-inline">
+            {{-- Logout Form --}}
+            <li class="nav-item mt-3 pt-2 border-top mx-2">
+                <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button class="nav-link py-2 rounded w-100 text-start text-danger" type="submit">
-                        <i class="bi bi-box-arrow-right me-2"></i> Logout
+                    <button class="nav-link text-danger w-100 border-0 bg-transparent" type="submit">
+                        <i class="bi bi-box-arrow-right text-danger"></i>
+                        <span>Keluar Akun</span>
                     </button>
                 </form>
             </li>

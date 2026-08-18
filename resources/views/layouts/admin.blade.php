@@ -10,33 +10,52 @@
 
     {{-- Bootstrap CSS & Icons --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     
     {{-- Favicon --}}
     <link rel="icon" href="{{ asset('images/dkt.png') }}?v={{ time() }}" type="image/png">
     <link rel="shortcut icon" href="{{ asset('images/dkt.png') }}?v={{ time() }}" type="image/png">
     
-    {{-- Fonts (Figtree/Inter) --}}
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    {{-- Fonts --}}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
     {{-- Custom Stylesheet untuk Admin --}}
     <style>
         :root {
-            --sidebar-width: 250px;
-            --primary-color: #198754; /* success color */
-            --light-bg: #E6F4EA; 
-            --transition: all 0.3s ease-in-out;
-            --bottom-nav-height: 65px; /* Tinggi Bottom Nav yang lebih besar */
+            --sidebar-width: 260px;
+            --primary-color: #198754;
+            --primary-dark: #115c39;
+            --primary-light: #e8f5e9;
+            --light-bg: #f4f7f5; 
+            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --bottom-nav-height: 70px;
+        }
+
+        * {
+            box-sizing: border-box;
         }
 
         body {
             background-color: var(--light-bg); 
             min-height: 100vh;
-            font-family: 'Figtree', sans-serif;
-            padding-top: 56px; /* Ruang untuk fixed top navbar */
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            padding-top: 64px;
+            margin: 0;
+            color: #1e293b;
         }
         
+        /* Top Navbar */
+        .admin-navbar {
+            height: 64px;
+            background: #ffffff !important;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            backdrop-filter: blur(10px);
+            z-index: 1040;
+        }
+
         /* Sidebar Styles (Desktop Only) */
         .sidebar {
             width: var(--sidebar-width);
@@ -45,121 +64,170 @@
             top: 0;
             left: 0;
             z-index: 1000;
-            padding-top: 56px; 
+            padding-top: 74px; 
+            background: #ffffff;
+            border-right: 1px solid rgba(0, 0, 0, 0.06);
             transition: var(--transition);
         }
 
         /* Sidebar Nav Link Styles */
         .sidebar .nav-link {
-            color: #495057;
-            font-weight: 500;
+            color: #64748b;
+            font-weight: 600;
+            font-size: 0.875rem;
+            padding: 10px 16px;
+            margin: 3px 12px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
             transition: var(--transition);
         }
 
+        .sidebar .nav-link i {
+            font-size: 1.15rem;
+            width: 24px;
+            text-align: center;
+            margin-right: 10px;
+        }
+
         .sidebar .nav-link:hover {
-            background-color: #f0fff0;
+            background-color: var(--primary-light);
             color: var(--primary-color);
+            transform: translateX(3px);
         }
 
         /* Active Sidebar Link Style */
         .sidebar .nav-link.active-admin {
             background-color: var(--primary-color);
-            color: white !important;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            font-weight: 600;
+            color: #ffffff !important;
+            box-shadow: 0 4px 12px rgba(25, 135, 84, 0.25);
+        }
+
+        .sidebar .nav-link.active-admin i {
+            color: #ffffff;
         }
 
         /* Main Content Area */
         .main-content {
-            margin-left: var(--sidebar-width); /* Ruang untuk sidebar desktop */
-            padding: 20px;
+            margin-left: var(--sidebar-width);
+            padding: 28px 32px;
             transition: var(--transition);
+            min-height: calc(100vh - 64px);
         }
 
         /* ========================================= */
-        /* MOBILE STYLES (Bottom Nav) */
+        /* MOBILE STYLES & CLEAN FLOATING DOCK       */
         /* ========================================= */
         
-        /* Hilangkan sidebar di mobile */
         @media (max-width: 991.98px) {
             .sidebar {
                 display: none !important;
             }
             .main-content {
-                margin-left: 0; /* Full width di mobile */
-                /* Padding bawah disesuaikan dengan tinggi Bottom Nav yang baru */
-                padding-bottom: calc(var(--bottom-nav-height) + 10px); 
+                margin-left: 0;
+                padding: 20px 16px;
+                padding-bottom: calc(var(--bottom-nav-height) + 30px); 
             }
         }
         
-        /* Bottom Nav Styling */
-        .bottom-nav {
-            height: var(--bottom-nav-height); /* Tinggi disesuaikan */
+        /* Modern Mobile Bottom Dock */
+        .mobile-dock-container {
+            position: fixed;
+            bottom: 12px;
+            left: 12px;
+            right: 12px;
+            z-index: 1050;
+            pointer-events: none;
+        }
+
+        .mobile-dock {
+            pointer-events: auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(25, 135, 84, 0.12);
+            border-radius: 24px;
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(25, 135, 84, 0.08);
             display: flex;
+            align-items: center;
             justify-content: space-around;
-            align-items: center;
-            padding: 0 5px; 
+            padding: 6px 8px;
+            margin: 0 auto;
+            max-width: 500px;
         }
         
-        /* Style untuk A-tag (link biasa) dan FORM (link logout) */
-        .bottom-nav-link,
-        .bottom-nav-item {
-            text-align: center;
-            color: #6c757d; 
-            font-size: 0.75rem; /* Ukuran teks sedikit diperbesar */
-            font-weight: 500;
-            text-decoration: none;
-            flex-grow: 1; 
-            padding: 8px 0; /* Kunci: Menambahkan padding vertikal yang lebih besar */
-            transition: var(--transition);
-            margin: 0; 
-            display: flex; 
-            flex-direction: column; /* Mengatur ikon dan teks ke bawah */
-            align-items: center;
-            justify-content: center;
-            height: 100%; /* Memastikan klik area penuh */
-        }
-        
-        /* Styling untuk icon dan teks di A-tag */
-        .bottom-nav-link i {
-            font-size: 1.3rem; /* Ukuran ikon diperbesar */
-            display: block;
-            margin-bottom: 2px;
-        }
-        
-        /* Active link style */
-        .bottom-nav-link.active-mobile {
-            color: var(--primary-color); 
-            font-weight: 600;
-            /* Tambahkan efek kecil saat aktif */
-            transform: scale(1.05); 
-        }
-        
-        /* Styling khusus untuk BUTTON di dalam FORM (Logout) agar terlihat seperti link */
-        .bottom-nav-item button {
-            color: #dc3545; /* text-danger (warna merah) */
-            background: none;
-            border: none;
-            padding: 8px 0; /* Padding konsisten dengan link lain */
-            width: 100%;
-            height: 100%;
-            font-size: 0.75rem;
-            font-weight: 500;
-            line-height: 1.2; 
-            transition: var(--transition);
+        .dock-item {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            text-align: center;
+            text-decoration: none;
+            color: #64748b;
+            padding: 6px 10px;
+            border-radius: 16px;
+            transition: var(--transition);
+            flex: 1;
+            min-width: 0;
+            position: relative;
         }
-        
-        /* Styling untuk icon di dalam button Logout */
-        .bottom-nav-item button i {
-             font-size: 1.3rem; /* Ukuran ikon diperbesar */
-            display: block;
-            margin-bottom: 2px;
+
+        .dock-item i {
+            font-size: 1.25rem;
+            line-height: 1;
+            margin-bottom: 3px;
+            transition: var(--transition);
         }
+
+        .dock-item span {
+            font-size: 0.68rem;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
+
+        .dock-item:hover, .dock-item:focus {
+            color: var(--primary-color);
+        }
+
+        .dock-item.active {
+            color: var(--primary-color);
+            background: rgba(25, 135, 84, 0.08);
+        }
+
+        .dock-item.active i {
+            transform: translateY(-2px);
+        }
+
+        .dock-item-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        /* User Profile Pill in Top Bar */
+        .user-pill {
+            background: rgba(25, 135, 84, 0.06);
+            border: 1px solid rgba(25, 135, 84, 0.12);
+            padding: 6px 14px;
+            border-radius: 30px;
+            color: var(--primary-dark);
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .user-pill:hover {
+            background: rgba(25, 135, 84, 0.12);
+            color: var(--primary-dark);
+        }
+    </style>
         
     <!-- Author Attribution & SEO Metadata -->
     <meta name="author" content="Risang Putra Pradana">
@@ -181,43 +249,56 @@
 <body>
     
     {{-- Top Navbar (Fixed Top) --}}
-    <nav class="navbar navbar-expand-lg navbar-dark bg-success fixed-top shadow">
-        <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg admin-navbar fixed-top">
+        <div class="container-fluid px-3 px-lg-4">
             
-            {{-- Nama Brand --}}
+            {{-- Brand Logo --}}
             <a class="navbar-brand d-flex align-items-center" href="{{ route('admin.dashboard') }}">
-                <img src="{{ asset('images/logo.png') }}?v={{ time() }}" alt="Logo" style="height: 35px; width: auto; object-fit: contain;" class="me-2">
-                <span class="fw-bold">Admin Panel</span>
+                <img src="{{ asset('images/logo.png') }}?v={{ time() }}" alt="Logo" style="height: 38px; width: auto; object-fit: contain;" class="me-2">
+                <div class="d-flex flex-column">
+                    <span class="fw-bold text-success fs-6 lh-1">RS Baladhika Husada</span>
+                    <span class="text-muted small lh-1 mt-1" style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.5px;">ADMIN CONSOLE</span>
+                </div>
             </a>
 
-            {{-- Desktop User Dropdown Menu (Muncul di layar besar) --}}
-            <div class="d-none d-lg-block ms-auto">
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownDesktop" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-person-circle me-1"></i> {{ Auth::user()->name ?? 'User' }}
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownDesktop">
-                            <li><a class="dropdown-item" href="{{ route('profile.edit') }}"><i class="bi bi-person me-1"></i> Pengaturan Profil</a></li>
-                            <li><a class="dropdown-item" href="{{ route('home') }}" target="_blank"><i class="bi bi-eye me-1"></i> Lihat Situs Publik</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button class="dropdown-item text-danger" type="submit">
-                                        <i class="bi bi-box-arrow-right me-1"></i> Logout
-                                    </button>
-                                </form>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-             {{-- Mobile User/Logout Button (Muncul di layar kecil, disamping brand) --}}
-            <div class="d-lg-none">
-                 <a class="nav-link text-white" href="{{ route('profile.edit') }}">
-                    <i class="bi bi-person-circle fs-5"></i>
+            {{-- Right Menu Actions --}}
+            <div class="d-flex align-items-center gap-2 ms-auto">
+                <a href="{{ route('home') }}" target="_blank" class="btn btn-sm btn-outline-success rounded-pill px-3 d-none d-sm-inline-flex align-items-center gap-1 font-monospace" style="font-size: 0.78rem;">
+                    <i class="bi bi-box-arrow-up-right"></i> Lihat Situs
                 </a>
+
+                {{-- User Dropdown --}}
+                <div class="dropdown">
+                    <a href="#" class="user-pill dropdown-toggle text-decoration-none" id="userMenuDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-circle fs-6 text-success"></i>
+                        <span class="d-none d-md-inline">{{ Auth::user()->name ?? 'Admin' }}</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 rounded-4 p-2 mt-2" aria-labelledby="userMenuDropdown" style="min-width: 210px;">
+                        <li class="px-3 py-2 border-bottom mb-1">
+                            <p class="mb-0 fw-bold small text-dark">{{ Auth::user()->name ?? 'Admin' }}</p>
+                            <p class="mb-0 text-muted" style="font-size: 0.72rem;">{{ Auth::user()->email ?? 'admin@rsbh.com' }}</p>
+                        </li>
+                        <li>
+                            <a class="dropdown-item rounded-3 py-2 small fw-medium" href="{{ route('profile.edit') }}">
+                                <i class="bi bi-gear me-2 text-success"></i> Pengaturan Profil
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item rounded-3 py-2 small fw-medium" href="{{ route('home') }}" target="_blank">
+                                <i class="bi bi-globe me-2 text-success"></i> Kunjungi Web Publik
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider my-1"></li>
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button class="dropdown-item rounded-3 py-2 small fw-semibold text-danger" type="submit">
+                                    <i class="bi bi-box-arrow-right me-2"></i> Keluar (Logout)
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </nav>
@@ -232,58 +313,92 @@
         @yield('content')
     </div>
 
-    
-    {{-- 3. BOTTOM NAVIGATION BAR (Mobile Only) --}}
-    <nav class="fixed-bottom d-lg-none bg-white border-top shadow-lg" style="z-index: 1030;">
-        <div class="bottom-nav">
+    {{-- FLOATING BOTTOM DOCK (Mobile Only) --}}
+    <div class="mobile-dock-container d-lg-none">
+        <div class="mobile-dock">
             
             {{-- Dashboard --}}
-            <a class="bottom-nav-link {{ request()->routeIs('admin.dashboard') ? 'active-mobile' : '' }}" 
+            <a class="dock-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" 
                href="{{ route('admin.dashboard') }}">
-                <i class="bi bi-speedometer2"></i>
-                <span>Dash</span>
-            </a>
-            
-            {{-- Tarif RSDKT --}}
-            <a class="bottom-nav-link {{ request()->routeIs('admin.tarif.*') ? 'active-mobile' : '' }}" 
-               href="{{ route('admin.tarif.index') }}">
-                <i class="bi bi-tags-fill"></i>
-                <span>Tarif</span>
-            </a>
-
-            {{-- Permohonan --}}
-            <a class="bottom-nav-link {{ request()->routeIs('admin.permohonan.*') ? 'active-mobile' : '' }}" 
-               href="{{ route('admin.permohonan.index') }}">
-                <i class="bi bi-envelope-paper"></i>
-                <span>Permohonan</span>
+                <i class="bi bi-grid-fill"></i>
+                <span>Beranda</span>
             </a>
             
             {{-- Kelola Jadwal --}}
-            <a class="bottom-nav-link {{ request()->routeIs('admin.jadwal.*') ? 'active-mobile' : '' }}" 
+            <a class="dock-item {{ request()->routeIs('admin.jadwal.*') ? 'active' : '' }}" 
                href="{{ route('admin.jadwal.index') }}">
-                <i class="bi bi-calendar-check"></i>
+                <i class="bi bi-calendar-event-fill"></i>
                 <span>Jadwal</span>
             </a>
+
+            {{-- Dokumen PPID --}}
+            <a class="dock-item {{ request()->routeIs('admin.dokumen.*') || request()->routeIs('admin.documents.*') ? 'active' : '' }}" 
+               href="{{ route('admin.documents.index') }}">
+                <i class="bi bi-file-earmark-text-fill"></i>
+                <span>Dokumen</span>
+            </a>
             
-            {{-- Profil --}}
-            <a class="bottom-nav-link {{ request()->routeIs('profile.edit') ? 'active-mobile' : '' }}" 
-               href="{{ route('profile.edit') }}">
-                <i class="bi bi-person-fill"></i>
-                <span>Profil</span>
+            {{-- Permohonan --}}
+            <a class="dock-item {{ request()->routeIs('admin.permohonan.*') ? 'active' : '' }}" 
+               href="{{ route('admin.permohonan.index') }}">
+                <i class="bi bi-inbox-fill"></i>
+                <span>Permohonan</span>
             </a>
 
-            {{-- Logout (Menggunakan form agar aman, menggunakan bottom-nav-item untuk konsistensi lebar) --}}
-            <form method="POST" action="{{ route('logout') }}" class="bottom-nav-item">
-                @csrf
-                <button type="submit">
-                    <i class="bi bi-box-arrow-right"></i>
-                    <span>Keluar</span>
-                </button>
-            </form>
+            {{-- Menu Lainnya (Offcanvas/Modal Trigger) --}}
+            <button type="button" class="dock-item dock-item-btn" data-bs-toggle="offcanvas" data-bs-target="#mobileMenuOffcanvas" aria-controls="mobileMenuOffcanvas">
+                <i class="bi bi-three-dots"></i>
+                <span>Lainnya</span>
+            </button>
             
         </div>
-    </nav>
+    </div>
 
+    {{-- Offcanvas Menu Tambahan untuk Mobile --}}
+    <div class="offcanvas offcanvas-bottom rounded-top-4 d-lg-none" tabindex="-1" id="mobileMenuOffcanvas" aria-labelledby="mobileMenuOffcanvasLabel" style="height: auto; max-height: 70vh;">
+        <div class="offcanvas-header border-bottom py-3">
+            <h6 class="offcanvas-title fw-bold text-success d-flex align-items-center gap-2" id="mobileMenuOffcanvasLabel">
+                <i class="bi bi-grid-3x3-gap-fill"></i> Menu Administrasi Lengkap
+            </h6>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body p-3">
+            <div class="list-group list-group-flush gap-1">
+                <a href="{{ route('admin.tarif.index') }}" class="list-group-item list-group-item-action rounded-3 border-0 py-2.5 d-flex align-items-center gap-3 {{ request()->routeIs('admin.tarif.*') ? 'bg-success-subtle text-success fw-bold' : '' }}">
+                    <i class="bi bi-tag-fill fs-5 text-success"></i>
+                    <div>
+                        <div class="fw-semibold">Tarif RSDKT</div>
+                        <small class="text-muted">Kelola daftar harga dan tarif</small>
+                    </div>
+                </a>
+
+                <a href="{{ route('profile.edit') }}" class="list-group-item list-group-item-action rounded-3 border-0 py-2.5 d-flex align-items-center gap-3 {{ request()->routeIs('profile.edit') ? 'bg-success-subtle text-success fw-bold' : '' }}">
+                    <i class="bi bi-person-gear fs-5 text-primary"></i>
+                    <div>
+                        <div class="fw-semibold">Pengaturan Profil</div>
+                        <small class="text-muted">Ubah kata sandi & akun admin</small>
+                    </div>
+                </a>
+
+                <a href="{{ route('home') }}" target="_blank" class="list-group-item list-group-item-action rounded-3 border-0 py-2.5 d-flex align-items-center gap-3">
+                    <i class="bi bi-eye-fill fs-5 text-secondary"></i>
+                    <div>
+                        <div class="fw-semibold">Lihat Situs Publik</div>
+                        <small class="text-muted">Kunjungi website utama RSBH</small>
+                    </div>
+                </a>
+
+                <div class="border-top my-2 pt-2">
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="btn btn-outline-danger w-100 rounded-3 py-2 fw-semibold d-flex align-items-center justify-content-center gap-2">
+                            <i class="bi bi-box-arrow-right"></i> Keluar dari Admin Panel
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     {{-- Bootstrap JS --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
