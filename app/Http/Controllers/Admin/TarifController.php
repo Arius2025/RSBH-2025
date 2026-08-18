@@ -15,8 +15,11 @@ class TarifController extends Controller
      */
     public function index(Request $request)
     {
-        $group = $request->input('group');
+        $group = $request->input('group', 'OBAT DAN ALKES'); // Default to OBAT DAN ALKES if not provided
         $room = $request->input('room');
+        $search = $request->input('search');
+        $minPrice = $request->input('min_price');
+        $maxPrice = $request->input('max_price');
         $apiKey = config('services.rsdkt.key');
 
         $query = [];
@@ -38,6 +41,30 @@ class TarifController extends Controller
                 
                 $data = $this->normalizeData($rawData, $group);
 
+                // Filter berdasarkan keyword pencarian nama / kode jika ada
+                if (!empty($search)) {
+                    $searchLower = strtolower($search);
+                    $data = array_values(array_filter($data, function($item) use ($searchLower) {
+                        return str_contains(strtolower($item['name'] ?? ''), $searchLower) ||
+                               str_contains(strtolower($item['code'] ?? ''), $searchLower) ||
+                               str_contains(strtolower($item['code_tariff'] ?? ''), $searchLower);
+                    }));
+                }
+
+                // Filter berdasarkan harga minimum
+                if (!empty($minPrice) && is_numeric($minPrice)) {
+                    $data = array_values(array_filter($data, function($item) use ($minPrice) {
+                        return ($item['price'] ?? 0) >= (float)$minPrice;
+                    }));
+                }
+
+                // Filter berdasarkan harga maksimum
+                if (!empty($maxPrice) && is_numeric($maxPrice)) {
+                    $data = array_values(array_filter($data, function($item) use ($maxPrice) {
+                        return ($item['price'] ?? 0) <= (float)$maxPrice;
+                    }));
+                }
+
             } else {
                 $data = [];
                 session()->flash('error', 'Gagal mengambil data dari API Tarif. Status: ' . $response->status());
@@ -55,7 +82,7 @@ class TarifController extends Controller
             'TEMPLATE'
         ];
 
-        return view('admin.tarif.index', compact('data', 'group', 'groups', 'room'));
+        return view('admin.tarif.index', compact('data', 'group', 'groups', 'room', 'search', 'minPrice', 'maxPrice'));
     }
 
     /**

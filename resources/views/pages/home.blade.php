@@ -344,17 +344,9 @@
 <!-- Fasilitas & Layanan Unggulan -->
 <section class="py-section-gap bg-surface">
 <div class="max-w-container-max mx-auto px-gutter">
-<div class="text-center mb-12">
+<div class="text-center mb-10">
 <span class="text-secondary font-label-caps tracking-widest block mb-2">FASILITAS KAMI</span>
 <h2 class="font-headline-xl text-3xl md:text-headline-lg text-primary m-0">Layanan Unggulan</h2>
-</div>
-
-<!-- Category Tabs -->
-<div class="flex flex-wrap justify-center gap-3 mb-10">
-    <button class="px-6 py-2 bg-primary text-white rounded-full font-bold text-sm" onclick="scrollSlider(0)">Ambulan</button>
-    <button class="px-6 py-2 bg-white text-on-surface-variant border border-outline-variant rounded-full font-bold text-sm hover:bg-surface-container transition-colors" onclick="scrollSlider(1)">Laboratorium</button>
-    <button class="px-6 py-2 bg-white text-on-surface-variant border border-outline-variant rounded-full font-bold text-sm hover:bg-surface-container transition-colors" onclick="scrollSlider(2)">Poliklinik</button>
-    <button class="px-6 py-2 bg-white text-on-surface-variant border border-outline-variant rounded-full font-bold text-sm hover:bg-surface-container transition-colors" onclick="scrollSlider(3)">VIP Room</button>
 </div>
 
 <div class="relative">
