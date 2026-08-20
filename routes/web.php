@@ -90,8 +90,8 @@ use App\Http\Controllers\Admin\AdminController;
 
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     
-    // Route Dashboard Admin (contoh)
-    Route::view('/', 'admin.dashboard')->name('dashboard');
+    // Route Dashboard Admin & Analitik Pengunjung
+    Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
 
     // Reset Cache Instagram
     Route::post('/refresh-instagram', [AdminController::class, 'refreshInstagram'])->name('refresh_instagram');
