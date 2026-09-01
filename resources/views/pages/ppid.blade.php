@@ -59,22 +59,33 @@
     @endphp
 
     @foreach($menus as $menu)
+    @php
+      $isExternal = str_starts_with($menu['link'], 'http');
+    @endphp
     <div class="col-12 col-sm-6 col-md-4 col-lg-3" data-aos="zoom-in" data-aos-delay="{{ $loop->index * 75 }}">
-      <div class="apple-menu-card h-100 p-4 text-center d-flex flex-column align-items-center justify-content-between">
-        <div class="w-100 d-flex flex-column align-items-center">
-          <div class="apple-icon-wrapper mb-3">
-            <i class="bi bi-{{ $menu['icon'] }} fs-3 text-white"></i>
+      @if($menu['type'] == 'jkn')
+        <div onclick="smartOpenJKN()" class="apple-menu-card h-100 p-4 text-center d-flex flex-column align-items-center justify-content-between cursor-pointer" role="button" style="cursor: pointer;">
+          <div class="w-100 d-flex flex-column align-items-center">
+            <div class="apple-icon-wrapper mb-3">
+              <i class="bi bi-{{ $menu['icon'] }} fs-3 text-white"></i>
+            </div>
+            <h6 class="fw-bold text-dark mb-1 fs-6" style="letter-spacing: -0.3px;">{{ $menu['title'] }}</h6>
+            <p class="text-secondary small mb-3 lh-sm opacity-75" style="font-size: 0.82rem;">{{ $menu['desc'] }}</p>
           </div>
-          <h6 class="fw-bold text-dark mb-1 fs-6" style="letter-spacing: -0.3px;">{{ $menu['title'] }}</h6>
-          <p class="text-secondary small mb-3 lh-sm opacity-75" style="font-size: 0.82rem;">{{ $menu['desc'] }}</p>
+          <button type="button" class="btn apple-pill-btn w-100 py-2 small fw-bold">Akses Menu <i class="bi bi-chevron-right ms-1 small"></i></button>
         </div>
-
-        @if($menu['type'] == 'jkn')
-          <button onclick="smartOpenJKN()" class="btn apple-pill-btn w-100 py-2 small fw-bold">Akses Menu <i class="bi bi-chevron-right ms-1 small"></i></button>
-        @else
-          <a href="{{ $menu['link'] }}" class="btn apple-pill-btn w-100 py-2 small fw-bold">Akses Menu <i class="bi bi-chevron-right ms-1 small"></i></a>
-        @endif
-      </div>
+      @else
+        <a href="{{ $menu['link'] }}" {{ $isExternal ? 'target="_blank" rel="noopener noreferrer"' : '' }} class="apple-menu-card h-100 p-4 text-center d-flex flex-column align-items-center justify-content-between text-decoration-none" style="cursor: pointer;">
+          <div class="w-100 d-flex flex-column align-items-center">
+            <div class="apple-icon-wrapper mb-3">
+              <i class="bi bi-{{ $menu['icon'] }} fs-3 text-white"></i>
+            </div>
+            <h6 class="fw-bold text-dark mb-1 fs-6" style="letter-spacing: -0.3px;">{{ $menu['title'] }}</h6>
+            <p class="text-secondary small mb-3 lh-sm opacity-75" style="font-size: 0.82rem;">{{ $menu['desc'] }}</p>
+          </div>
+          <span class="btn apple-pill-btn w-100 py-2 small fw-bold">Akses Menu <i class="bi bi-chevron-right ms-1 small"></i></span>
+        </a>
+      @endif
     </div>
     @endforeach
   </div>
@@ -476,9 +487,11 @@ function smartOpenJKN() {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    pointer-events: none;
 }
 
 .floating-btn {
+    pointer-events: auto;
     padding: 12px 24px;
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
 }
@@ -492,6 +505,7 @@ function smartOpenJKN() {
     max-width: calc(100vw - 40px);
     opacity: 0;
     visibility: hidden;
+    pointer-events: none;
     transform: translateY(20px) scale(0.95);
     transform-origin: bottom right;
     transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
@@ -501,6 +515,7 @@ function smartOpenJKN() {
 .widget-open .floating-form-box {
     opacity: 1;
     visibility: visible;
+    pointer-events: auto;
     transform: translateY(0) scale(1);
 }
 
