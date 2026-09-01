@@ -124,6 +124,7 @@ class FrontendController extends Controller
     public function siterbat() { return view('pages.siterbat'); }
     public function ambulance() { return view('pages.ambulance'); }
     public function dashboardIndikator() { return view('pages.dashboard'); }
+    public function indikatorMutu() { return view('pages.indikator_mutu'); }
     public function informasi() { return view('pages.informasi'); }
     public function dokter() { return view('pages.jadwal_dokter'); }
     public function tidur() { return view('pages.tidur'); }

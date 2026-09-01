@@ -57,6 +57,7 @@ Route::get('/fup', [\App\Http\Controllers\FupController::class, 'index'])->name(
 
 Route::get('/ambulance',[FrontendController::class,'ambulance'])->name('ambulance');
 Route::get('/dashboard-indikator',[FrontendController::class,'dashboardIndikator'])->name('dashboard-indikator');
+Route::get('/indikator-mutu', [FrontendController::class, 'indikatorMutu'])->name('indikator-mutu');
 Route::get('/tidur',[FrontendController::class,'tidur'])->name('tidur');
 Route::get('/api/bed-status', [FrontendController::class, 'getBedData'])->name('api.bed.status');
 Route::get('/jadwalOperasi',[FrontendController::class,'jadwalOperasi'])->name('jadwaloperasi');
