@@ -62,10 +62,12 @@
         </div>
     </form>
     
+    @if (Route::has('register'))
     <div class="mt-8 pt-6 border-t border-gray-100 text-center">
         <p class="text-sm text-gray-500 mb-3">Belum memiliki akses admin?</p>
         <a href="{{ route('register') }}" class="inline-flex justify-center w-full px-4 py-2.5 text-sm font-semibold text-military-green bg-white border-2 border-military-green/20 hover:border-military-green hover:bg-military-green/5 rounded-xl transition-colors duration-300">
             Daftar Akun Baru
         </a>
     </div>
+    @endif
 </x-guest-layout>
