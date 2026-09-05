@@ -1,21 +1,24 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\BeritaCrudController;
 use App\Http\Controllers\Admin\JadwalCrudController;
 use App\Http\Controllers\Admin\DocumentCrudController;
+use App\Http\Controllers\Admin\TarifController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\JadwalHarianController;
 use App\Http\Controllers\PermohonanInformasiController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SiterbatController;
+use App\Http\Controllers\AmbulanceController;
+use App\Http\Controllers\SantardekateController;
+use App\Http\Controllers\FupController;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Route dimuat oleh RouteServiceProvider dan diberikan grup middleware "web".
-|
 */
 
 // =========================================================================
@@ -28,48 +31,50 @@ Route::get('/dokter', [FrontendController::class, 'dokter'])->name('dokter');
 Route::get('/berita', [FrontendController::class, 'berita'])->name('berita');
 Route::get('/berita/{slug}', [FrontendController::class, 'detailBerita'])->name('berita.detail');
 
-// Jadwal Harian
+// Jadwal Dokter Harian
 Route::get('/jadwal', [JadwalHarianController::class, 'index'])->name('jadwal');
-Route::get('/update-jadwal-rahasia-x912', [JadwalHarianController::class, 'uploadForm']);
+Route::get('/update-jadwal-rahasia-x912', [JadwalHarianController::class, 'uploadForm'])->name('jadwal-harian.form');
 Route::post('/update-jadwal-rahasia-x912', [JadwalHarianController::class, 'upload'])->name('jadwal-harian.upload');
 Route::delete('/update-jadwal-rahasia-x912/{id}', [JadwalHarianController::class, 'destroy'])->name('jadwal-harian.destroy');
 
+// Layanan PPID & Publik
 Route::get('/ppid', [FrontendController::class, 'ppid'])->name('ppid');
 Route::get('/informasi-publik', [FrontendController::class, 'informasiPublik'])->name('informasi-publik');
 Route::get('/petugas-ppid', [FrontendController::class, 'petugasPPID'])->name('petugas-ppid');
 Route::get('/profil-ppid', [FrontendController::class, 'profilPPID'])->name('profil-ppid');
 Route::get('/dokumen-ppid', [FrontendController::class, 'dokumenPpid'])->name('dokumen-ppid');
 Route::post('/permohonan-informasi/submit', [PermohonanInformasiController::class, 'store'])->name('permohonan.submit');
+
 Route::get('/survei', [FrontendController::class, 'survei'])->name('survei');
-Route::get('/fup-kopi', [FrontendController::class, 'fupKopi'])->name('fup_kopi');
-Route::post('/fup-kopi/submit', [FrontendController::class, 'fupKopiSubmit'])->name('fup_kopi.submit');
 Route::get('/zona', [FrontendController::class, 'zonaIntegritas'])->name('zona');
 Route::get('/komplain', [FrontendController::class, 'komplain'])->name('komplain');
-Route::get('/kontak',[FrontendController::class,'kontak'])->name('kontak');
-Route::get('/siterbat',[FrontendController::class,'siterbat'])->name('siterbat');
-Route::post('/siterbat/submit', [\App\Http\Controllers\SiterbatController::class, 'submit'])->name('siterbat.submit');
-Route::post('/ambulance/submit', [\App\Http\Controllers\AmbulanceController::class, 'submit'])->name('ambulance.submit');
+Route::get('/kontak', [FrontendController::class, 'kontak'])->name('kontak');
 
-Route::get('/santardekate', [\App\Http\Controllers\SantardekateController::class, 'index'])->name('santardekate');
-Route::post('/santardekate/submit', [\App\Http\Controllers\SantardekateController::class, 'submit'])->name('santardekate.submit');
+// Layanan Antar & Ambulan Publik
+Route::get('/siterbat', [FrontendController::class, 'siterbat'])->name('siterbat');
+Route::post('/siterbat/submit', [SiterbatController::class, 'submit'])->name('siterbat.submit');
 
-Route::get('/fup', [\App\Http\Controllers\FupController::class, 'index'])->name('fup');
+Route::get('/ambulance', [FrontendController::class, 'ambulance'])->name('ambulance');
+Route::post('/ambulance/submit', [AmbulanceController::class, 'submit'])->name('ambulance.submit');
 
-Route::get('/ambulance',[FrontendController::class,'ambulance'])->name('ambulance');
-Route::get('/dashboard-indikator',[FrontendController::class,'dashboardIndikator'])->name('dashboard-indikator');
+Route::get('/santardekate', [SantardekateController::class, 'index'])->name('santardekate');
+Route::post('/santardekate/submit', [SantardekateController::class, 'submit'])->name('santardekate.submit');
+
+Route::get('/fup', [FupController::class, 'index'])->name('fup');
+Route::get('/fup-kopi', [FrontendController::class, 'fupKopi'])->name('fup_kopi');
+Route::post('/fup-kopi/submit', [FrontendController::class, 'fupKopiSubmit'])->name('fup_kopi.submit');
+
+// Indikator Layanan & Mutu
+Route::get('/dashboard-indikator', [FrontendController::class, 'dashboardIndikator'])->name('dashboard-indikator');
 Route::get('/indikator-mutu', [FrontendController::class, 'indikatorMutu'])->name('indikator-mutu');
-Route::get('/tidur',[FrontendController::class,'tidur'])->name('tidur');
+
+// Tempat Tidur & Operasi
+Route::get('/tidur', [FrontendController::class, 'tidur'])->name('tidur');
 Route::get('/api/bed-status', [FrontendController::class, 'getBedData'])->name('api.bed.status');
-Route::get('/jadwalOperasi',[FrontendController::class,'jadwalOperasi'])->name('jadwaloperasi');
-Route::get('/test-api-operasi', [FrontendController::class, 'testKoneksi']);
+Route::get('/jadwalOperasi', [FrontendController::class, 'jadwalOperasi'])->name('jadwaloperasi');
 Route::get('/api/dashboard/sheet-data', [FrontendController::class, 'getDashboardSheetData']);
 Route::get('/api/dashboard/legacy-data', [FrontendController::class, 'getDashboardLegacyData']);
 
-// MONITOR ROUTES
-Route::get('/monitor-siterbat', [\App\Http\Controllers\FrontendController::class, 'monitorSiterbat'])->name('monitor.siterbat');
-Route::get('/monitor-ambulance', [\App\Http\Controllers\FrontendController::class, 'monitorAmbulance'])->name('monitor.ambulance');
-Route::get('/monitor-santardekate', [\App\Http\Controllers\FrontendController::class, 'monitorSantardekate'])->name('monitor.santardekate');
-Route::get('/monitor/portal', [\App\Http\Controllers\FrontendController::class, 'monitorPortal'])->name('monitor.portal');
 
 // =========================================================================
 // 2. ROUTE AUTHENTICATION (BREEZE) 
@@ -79,31 +84,29 @@ require __DIR__.'/auth.php';
 
 
 // =========================================================================
-// 3. ROUTE ADMIN (PROTECTED)
+// 3. ROUTE ADMIN (TERLINDUNGI DENGAN AUTH)
 // =========================================================================
-
-/*
-|--------------------------------------------------------------------------
-| Admin Routes (Backend)
-|--------------------------------------------------------------------------
-*/
-use App\Http\Controllers\Admin\AdminController;
 
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     
-    // Route Dashboard Admin & Analitik Pengunjung
+    // Dashboard & Analitik Pengunjung
     Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
 
     // Reset Cache Instagram
     Route::post('/refresh-instagram', [AdminController::class, 'refreshInstagram'])->name('refresh_instagram');
 
-    // 2. Kelola Jadwal Dokter: Menggunakan JadwalCrudController
+    // Kelola Jadwal Dokter
     Route::get('/jadwal', [JadwalCrudController::class, 'index'])->name('jadwal.index');
     Route::post('/jadwal/update', [JadwalCrudController::class, 'update'])->name('jadwal.update');
 
+    // Upload Jadwal Harian (Khusus Admin)
+    Route::get('/jadwal-harian/upload', [JadwalHarianController::class, 'uploadForm'])->name('jadwal-harian.form');
+    Route::post('/jadwal-harian/upload', [JadwalHarianController::class, 'upload'])->name('jadwal-harian.upload');
+    Route::delete('/jadwal-harian/{id}', [JadwalHarianController::class, 'destroy'])->name('jadwal-harian.destroy');
+
     // Tarif RSDKT
-    Route::get('/tarif', [\App\Http\Controllers\Admin\TarifController::class, 'index'])->name('tarif.index');
-    Route::get('/tarif/cetak', [\App\Http\Controllers\Admin\TarifController::class, 'print'])->name('tarif.print');
+    Route::get('/tarif', [TarifController::class, 'index'])->name('tarif.index');
+    Route::get('/tarif/cetak', [TarifController::class, 'print'])->name('tarif.print');
 
     // Kelola Dokumen PPID
     Route::resource('documents', DocumentCrudController::class);
@@ -112,18 +115,18 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('/permohonan-informasi', [PermohonanInformasiController::class, 'adminIndex'])->name('permohonan.index');
     Route::put('/permohonan-informasi/{id}/status', [PermohonanInformasiController::class, 'adminUpdateStatus'])->name('permohonan.status');
 
+    // Monitor Layanan Internal
+    Route::get('/monitor-siterbat', [FrontendController::class, 'monitorSiterbat'])->name('monitor.siterbat');
+    Route::get('/monitor-ambulance', [FrontendController::class, 'monitorAmbulance'])->name('monitor.ambulance');
+    Route::get('/monitor-santardekate', [FrontendController::class, 'monitorSantardekate'])->name('monitor.santardekate');
+    Route::get('/monitor/portal', [FrontendController::class, 'monitorPortal'])->name('monitor.portal');
+
+    // Profile & Password Admin
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('/password', [ProfileController::class, 'passwordUpdate'])->name('password.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
 });
-
-
-// =========================================================================
-// 4. ROUTE PROFILE (DIPERLUKAN OLEH navigation.blade.php)
-//    Pastikan file routes/profile.php ada setelah instalasi Breeze.
-// =========================================================================
 
 Route::middleware('auth')->group(function () {
     require __DIR__.'/profile.php'; 
@@ -143,6 +146,7 @@ Route::get('/sitemap.xml', function () {
         ['loc' => route('kontak'), 'priority' => '0.6', 'changefreq' => 'monthly'],
         ['loc' => route('zona'), 'priority' => '0.6', 'changefreq' => 'monthly'],
         ['loc' => route('survei'), 'priority' => '0.6', 'changefreq' => 'monthly'],
+        ['loc' => route('indikator-mutu'), 'priority' => '0.8', 'changefreq' => 'monthly'],
     ];
 
     try {
@@ -175,7 +179,3 @@ Route::get('/sitemap.xml', function () {
 
     return response($xml, 200)->header('Content-Type', 'text/xml');
 });
-
-// =========================================================================
-// END OF ROUTES
-// =========================================================================
