@@ -31,6 +31,7 @@
         <ul class="list-unstyled">
           <li class="mb-2"><a href="{{ route('home') }}" class="text-white-50 text-decoration-none hover-green">Beranda</a></li>
           <li class="mb-2"><a href="{{ route('informasi') }}" class="text-white-50 text-decoration-none hover-green">Informasi</a></li>
+          <li class="mb-2"><a href="{{ route('indikator-mutu') }}" class="text-white-50 text-decoration-none hover-green">Indikator Mutu</a></li>
           <li class="mb-2"><a href="{{ route('berita') }}" class="text-white-50 text-decoration-none hover-green">Berita</a></li>
           <li class="mb-2"><a href="{{ route('jadwal') }}" class="text-white-50 text-decoration-none hover-green">Jadwal Dokter</a></li>
           <li class="mb-2"><a href="{{ route('kontak') }}" class="text-white-50 text-decoration-none hover-green">Kontak Kami</a></li>
@@ -71,7 +72,7 @@
         <p class="text-white-50 small mb-0">© 2026 RS Baladhika Husada. Hak Cipta Dilindungi.</p>
       </div>
       <div class="col-md-6 text-center text-md-end mt-2 mt-md-0">
-        <p class="text-white-50 small mb-0">Developed by <a href="mailto:risangputra144@gmail.com" class="text-success fw-bold text-decoration-none transition-colors hover:text-success" title="Risang Putra Pradana - risangputra144@gmail.com">Tim IT</a> | v1.2</p>
+        <p class="text-white-50 small mb-0">Developed by <a href="mailto:risangputra144@gmail.com" class="text-success fw-bold text-decoration-none transition-colors hover:text-success" title="Risang Putra Pradana">Risang Putra Pradana</a> | <span class="badge bg-success bg-opacity-25 text-success rounded-pill px-2 py-1">v2.0-Live</span></p>
       </div>
     </div>
   </div>
