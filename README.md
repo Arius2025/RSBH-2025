@@ -158,4 +158,5 @@ Akses aplikasi melalui peramban: `http://127.0.0.1:8000`
 ## 📄 Lisensi
 
 Proyek ini dilisensikan di bawah lisensi [MIT License](LICENSE).
-Hak Cipta &copy; 2026 RS Tk. III Baladhika Husada. Seluruh Hak Cipta Dilindungi.
+Hak Cipta &copy; 2026 RS Tk. III Baladhika Husada Jember. Seluruh Hak Cipta Dilindungi.
+*Status Sistem: Produksi & Pembaruan Aktif 2026.*
