@@ -69,7 +69,7 @@
             @else
                 <div class="glass-card p-0 overflow-hidden" data-aos="fade-up">
                     <div class="p-3 p-md-4 border-bottom glass-card-header bg-white">
-                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                        <div class="d-flex justify-content-between align-items-center">
                             <div>
                                 <h4 class="fw-bold text-success mb-1">Jadwal Harian Dokter</h4>
                                 <p class="text-muted small mb-2 d-none d-md-block">Informasi praktik dokter RS Tk. III Baladhika Husada.</p>
@@ -79,11 +79,6 @@
                                     </span>
                                     <span class="fw-bold text-dark small">{{ \Carbon\Carbon::parse($items->first()->tanggal)->translatedFormat('l, d F Y') }}</span>
                                 </div>
-                            </div>
-                            <div class="d-none d-sm-flex align-items-center gap-2">
-                                <span class="badge bg-light text-dark border rounded-pill px-2.5 py-1.5 small font-monospace">35 Spesialis</span>
-                                <span class="badge bg-light text-dark border rounded-pill px-2.5 py-1.5 small font-monospace">8 Dokter Umum</span>
-                                <span class="badge bg-light text-dark border rounded-pill px-2.5 py-1.5 small font-monospace">1 Gigi</span>
                             </div>
                         </div>
                     </div>

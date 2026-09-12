@@ -35,18 +35,7 @@
     <div class="hero-gradient shadow-sm" data-aos="fade-up">
         <span class="badge bg-success px-3 py-2 rounded-pill mb-3 shadow-sm">Pelayanan Maksimal</span>
         <h1 class="fw-bold text-success display-5 mb-2">Dokter di Rumah Sakit</h1>
-        <p class="text-muted fs-5 mb-3" style="max-width: 600px; margin: 0 auto;">Berikut adalah informasi jadwal pelayanan dokter di RS Tk. III Baladhika Husada, diperbarui secara berkala.</p>
-        <div class="d-flex flex-wrap justify-content-center gap-2 mt-2">
-            <span class="badge bg-white text-success border border-success border-opacity-25 px-3 py-2 rounded-pill shadow-xs fs-6 fw-semibold">
-                <i class="bi bi-person-badge-fill text-success me-1"></i> 35 Dokter Spesialis
-            </span>
-            <span class="badge bg-white text-success border border-success border-opacity-25 px-3 py-2 rounded-pill shadow-xs fs-6 fw-semibold">
-                <i class="bi bi-hospital text-success me-1"></i> 8 Dokter Umum
-            </span>
-            <span class="badge bg-white text-success border border-success border-opacity-25 px-3 py-2 rounded-pill shadow-xs fs-6 fw-semibold">
-                <i class="bi bi-heart-pulse-fill text-success me-1"></i> 1 Dokter Gigi
-            </span>
-        </div>
+        <p class="text-muted fs-5 mb-0" style="max-width: 600px; margin: 0 auto;">Berikut adalah informasi jadwal pelayanan dokter umum dan spesialis di RS Tk. III Baladhika Husada, diperbarui secara berkala.</p>
     </div>
 
     @php
