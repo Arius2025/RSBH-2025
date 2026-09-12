@@ -204,8 +204,15 @@
                 <p class="text-on-surface-variant font-label-caps text-xs m-0 tracking-widest">PASIEN TERLAYANI</p>
             </div>
             <div class="p-2 pt-4 md:pt-2">
-                <h3 class="text-4xl md:text-5xl font-headline-xl text-primary mb-1"><span class="stat-counter" data-target="35">0</span>+</h3>
-                <p class="text-on-surface-variant font-label-caps text-xs m-0 tracking-widest">DOKTER SPESIALIS & UMUM</p>
+                <h3 class="text-4xl md:text-5xl font-headline-xl text-primary mb-1"><span class="stat-counter" data-target="44">0</span></h3>
+                <p class="text-on-surface-variant font-label-caps text-xs m-0 tracking-widest">DOKTER BERPENGALAMAN</p>
+                <div class="flex items-center justify-center gap-1.5 mt-2 flex-wrap text-[11px] text-primary font-medium">
+                    <span class="bg-primary/10 px-2 py-0.5 rounded-full font-semibold">35 Spesialis</span>
+                    <span>•</span>
+                    <span class="bg-primary/10 px-2 py-0.5 rounded-full font-semibold">8 Dokter Umum</span>
+                    <span>•</span>
+                    <span class="bg-primary/10 px-2 py-0.5 rounded-full font-semibold">1 Dokter Gigi</span>
+                </div>
             </div>
             <div class="p-2 pt-4 md:pt-2">
                 <h3 class="text-4xl md:text-5xl font-headline-xl text-primary mb-1"><span class="stat-counter" data-target="24">0</span>/7</h3>
