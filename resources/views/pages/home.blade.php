@@ -106,8 +106,23 @@
     .hide-scrollbar::-webkit-scrollbar { display: none; }
     
     /* MODAL STYLING */
-    #infoModal {
-        z-index: 999999 !important;
+    .modal {
+        z-index: 1000000 !important;
+    }
+    #infoModal, #modalPasienTerlayani {
+        z-index: 1000000 !important;
+    }
+    .modal-backdrop {
+        z-index: 999998 !important;
+    }
+    .modal-dialog {
+        z-index: 1000001 !important;
+    }
+    #modalPasienTerlayani .modal-content {
+        border-radius: 1.25rem !important;
+        border: none !important;
+        background-color: #ffffff !important;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
     }
     #infoModal .modal-content {
         border-radius: 1.5rem !important;
@@ -120,9 +135,6 @@
         height: 100%;
         object-fit: cover;
         min-height: 500px;
-    }
-    .modal-backdrop {
-        z-index: 999998 !important;
     }
     
     /* Perbaikan Reset CSS sementara karena preflight dimatikan */
@@ -1126,75 +1138,89 @@ function renderPasienChart(filter = 'all') {
         if (subtitleEl) subtitleEl.innerText = 'Perbandingan tren kunjungan pasien per bulan: Tahun 2025 vs 2026';
     }
 
-    chartPasienInstance = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: datasets
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            interaction: {
-                mode: 'index',
-                intersect: false,
+    try {
+        chartPasienInstance = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: datasets
             },
-            plugins: {
-                legend: {
-                    display: (filter === 'compare'),
-                    position: 'top',
-                    labels: {
-                        usePointStyle: true,
-                        boxWidth: 8
-                    }
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
                 },
-                tooltip: {
-                    backgroundColor: 'rgba(18, 78, 44, 0.95)',
-                    titleFont: { size: 13, weight: 'bold' },
-                    bodyFont: { size: 13 },
-                    padding: 12,
-                    cornerRadius: 8,
-                    callbacks: {
-                        label: function(context) {
-                            let label = context.dataset.label || '';
-                            if (label) label += ': ';
-                            if (context.parsed.y !== null) {
-                                label += new Intl.NumberFormat('id-ID').format(context.parsed.y) + ' Pasien';
+                plugins: {
+                    legend: {
+                        display: (filter === 'compare'),
+                        position: 'top',
+                        labels: {
+                            usePointStyle: true,
+                            boxWidth: 8
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(18, 78, 44, 0.95)',
+                        titleFont: { size: 13, weight: 'bold' },
+                        bodyFont: { size: 13 },
+                        padding: 12,
+                        cornerRadius: 8,
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) label += ': ';
+                                if (context.parsed.y !== null) {
+                                    label += new Intl.NumberFormat('id-ID').format(context.parsed.y) + ' Pasien';
+                                }
+                                return label;
                             }
-                            return label;
                         }
                     }
-                }
-            },
-            scales: {
-                x: {
-                    grid: {
-                        display: false
-                    },
-                    ticks: {
-                        font: { size: 11 }
-                    }
                 },
-                y: {
-                    beginAtZero: false,
-                    grid: {
-                        color: 'rgba(0, 0, 0, 0.05)'
+                scales: {
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            font: { size: 11 }
+                        }
                     },
-                    ticks: {
-                        font: { size: 11 },
-                        callback: function(value) {
-                            return new Intl.NumberFormat('id-ID').format(value);
+                    y: {
+                        beginAtZero: false,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        },
+                        ticks: {
+                            font: { size: 11 },
+                            callback: function(value) {
+                                return new Intl.NumberFormat('id-ID').format(value);
+                            }
                         }
                     }
                 }
             }
-        }
-    });
+        });
+    } catch (err) {
+        console.error("Error creating chart:", err);
+    }
 }
 
 // Modal open event
 const modalPasienEl = document.getElementById('modalPasienTerlayani');
 if (modalPasienEl) {
+    modalPasienEl.addEventListener('show.bs.modal', function () {
+        const infoModalEl = document.getElementById('infoModal');
+        if (infoModalEl && infoModalEl.classList.contains('show')) {
+            const infoInstance = bootstrap.Modal.getInstance(infoModalEl);
+            if (infoInstance) {
+                infoInstance.hide();
+            }
+        }
+    });
+
     modalPasienEl.addEventListener('shown.bs.modal', function () {
         document.querySelectorAll('#filterPeriodePasien .filter-btn').forEach(b => {
             b.classList.remove('btn-success', 'active');
