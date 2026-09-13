@@ -807,12 +807,14 @@
                                     Rincian Data Kunjungan Bulanan
                                 </h6>
                             </div>
-                            <button class="btn btn-sm btn-outline-success rounded-pill px-3" type="button" data-bs-toggle="collapse" data-bs-target="#tableDetailCollapse" aria-expanded="false" aria-controls="tableDetailCollapse">
-                                <i class="bi bi-list-ul me-1"></i> Tampilkan / Sembunyikan Tabel
+                            <button id="btnToggleTablePasien" class="btn btn-sm btn-outline-success rounded-pill px-3.5 py-1.5 d-inline-flex align-items-center gap-1.5 fw-semibold shadow-sm transition-all" type="button">
+                                <i class="bi bi-table"></i>
+                                <span id="labelToggleTable">Tampilkan Tabel</span>
+                                <i class="bi bi-chevron-down ms-1" id="iconToggleTable"></i>
                             </button>
                         </div>
                     </div>
-                    <div class="collapse" id="tableDetailCollapse">
+                    <div id="tableDetailContainer" style="display: none; transition: all 0.3s ease;">
                         <div class="card-body p-0 border-top">
                             <div class="table-responsive" style="max-height: 280px; overflow-y: auto;">
                                 <table class="table table-hover align-middle mb-0 text-center text-nowrap">
@@ -835,7 +837,7 @@
                                                 $pct = ($totalPasien > 0) ? round(($row['jumlah_pasien'] / $totalPasien) * 100, 1) : 0;
                                                 $blnText = $namaBulan[$row['bulan']] ?? $row['periode'];
                                             @endphp
-                                            <tr>
+                                            <tr class="row-pasien-bulan" data-tahun="{{ $row['tahun'] }}">
                                                 <td class="text-muted small">{{ $no++ }}</td>
                                                 <td class="text-start fw-semibold">
                                                     <span class="badge bg-light text-dark border me-1">{{ $row['tahun'] }}</span>
@@ -1235,6 +1237,54 @@ if (modalPasienEl) {
     });
 }
 
+// Table detail toggle handler
+const btnToggleTable = document.getElementById('btnToggleTablePasien');
+const tableDetailContainer = document.getElementById('tableDetailContainer');
+const labelToggle = document.getElementById('labelToggleTable');
+const iconToggle = document.getElementById('iconToggleTable');
+
+if (btnToggleTable && tableDetailContainer) {
+    btnToggleTable.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const isHidden = tableDetailContainer.style.display === 'none' || !tableDetailContainer.style.display;
+        if (isHidden) {
+            tableDetailContainer.style.display = 'block';
+            if (labelToggle) labelToggle.textContent = 'Sembunyikan Tabel';
+            if (iconToggle) {
+                iconToggle.classList.remove('bi-chevron-down');
+                iconToggle.classList.add('bi-chevron-up');
+            }
+            btnToggleTable.classList.remove('btn-outline-success');
+            btnToggleTable.classList.add('btn-success', 'text-white');
+        } else {
+            tableDetailContainer.style.display = 'none';
+            if (labelToggle) labelToggle.textContent = 'Tampilkan Tabel';
+            if (iconToggle) {
+                iconToggle.classList.remove('bi-chevron-up');
+                iconToggle.classList.add('bi-chevron-down');
+            }
+            btnToggleTable.classList.remove('btn-success', 'text-white');
+            btnToggleTable.classList.add('btn-outline-success');
+        }
+    });
+}
+
+// Function to filter table rows by year
+function filterTableByYear(filter) {
+    const rows = document.querySelectorAll('.row-pasien-bulan');
+    rows.forEach(row => {
+        const tahun = row.getAttribute('data-tahun');
+        if (filter === 'all' || filter === 'compare') {
+            row.style.display = '';
+        } else if (filter === tahun) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+}
+
 // Filter button clicks
 document.querySelectorAll('#filterPeriodePasien .filter-btn').forEach(btn => {
     btn.addEventListener('click', function () {
@@ -1246,6 +1296,7 @@ document.querySelectorAll('#filterPeriodePasien .filter-btn').forEach(btn => {
         this.classList.add('btn-success', 'active');
         const filter = this.getAttribute('data-filter');
         renderPasienChart(filter);
+        filterTableByYear(filter);
     });
 });
 </script>
