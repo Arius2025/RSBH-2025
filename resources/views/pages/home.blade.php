@@ -199,9 +199,20 @@
 <section class="py-8 bg-surface-container-lowest border-b border-outline-variant/30 relative z-20">
     <div class="max-w-container-max mx-auto px-gutter">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center divide-y md:divide-y-0 md:divide-x divide-outline-variant/30">
-            <div class="p-2 pt-4 md:pt-2">
-                <h3 class="text-4xl md:text-5xl font-headline-xl text-primary mb-1"><span class="stat-counter" data-target="15000">0</span>+</h3>
-                <p class="text-on-surface-variant font-label-caps text-xs m-0 tracking-widest">PASIEN TERLAYANI</p>
+            <div class="p-2 pt-4 md:pt-2 group cursor-pointer hover:bg-emerald-50/70 rounded-xl transition-all" 
+                 data-bs-toggle="modal" 
+                 data-bs-target="#modalPasienTerlayani"
+                 role="button"
+                 title="Klik untuk melihat rincian grafik per bulan">
+                <h3 class="text-4xl md:text-5xl font-headline-xl text-primary mb-1 group-hover:text-emerald-700 transition-colors">
+                    <span class="stat-counter" data-target="{{ $totalPasien ?? 147224 }}">{{ number_format($totalPasien ?? 147224, 0, ',', '.') }}</span>+
+                </h3>
+                <p class="text-on-surface-variant font-label-caps text-xs m-0 tracking-widest font-semibold">PASIEN TERLAYANI</p>
+                <div class="inline-flex items-center gap-1 mt-2 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-100/90 text-emerald-800 border border-emerald-300/60 group-hover:bg-emerald-200 transition-colors">
+                    <span class="material-symbols-outlined text-[13px]">monitoring</span>
+                    <span>2 Tahun Terakhir</span>
+                    <span class="material-symbols-outlined text-[12px] opacity-70">open_in_new</span>
+                </div>
             </div>
             <div class="p-2 pt-4 md:pt-2">
                 <h3 class="text-4xl md:text-5xl font-headline-xl text-primary mb-1"><span class="stat-counter" data-target="44">0</span></h3>
@@ -655,6 +666,220 @@
     </div>
 </div>
 
+{{-- MODAL GRAFIK PASIEN TERLAYANI (2 TAHUN TERAKHIR) --}}
+<div class="modal fade" id="modalPasienTerlayani" tabindex="-1" aria-labelledby="modalPasienTerlayaniLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
+        <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+            <!-- Modal Header -->
+            <div class="modal-header text-white border-0 py-3 px-4" style="background: linear-gradient(135deg, #104026 0%, #198754 100%);">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="p-2 rounded-3 d-flex align-items-center justify-center text-white" style="background-color: rgba(255,255,255,0.15);">
+                        <span class="material-symbols-outlined fs-2">query_stats</span>
+                    </div>
+                    <div>
+                        <div class="d-flex align-items-center gap-2 mb-1 flex-wrap">
+                            <h5 class="modal-title fw-bold mb-0 text-white" id="modalPasienTerlayaniLabel">Grafik Kunjungan Pasien Terlayani</h5>
+                            <span class="badge bg-warning text-dark px-2.5 py-1 rounded-pill fw-semibold text-xs">
+                                <i class="bi bi-clock-history me-1"></i>2 Tahun Terakhir
+                            </span>
+                        </div>
+                        <p class="mb-0 text-white-50 small">
+                            Statistik tren kunjungan bulanan di RS Tk. III Baladhika Husada Jember (Tahun 2025 s.d. Sekarang)
+                        </p>
+                    </div>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body p-4 bg-light">
+                <!-- Summary KPI Cards -->
+                <div class="row g-3 mb-4">
+                    <div class="col-12 col-md-4">
+                        <div class="card border-0 shadow-sm rounded-3 h-100 bg-white">
+                            <div class="card-body p-3 d-flex align-items-center gap-3">
+                                <div class="rounded-circle p-3 d-flex align-items-center justify-center" style="background-color: #e8f5e9; color: #198754;">
+                                    <span class="material-symbols-outlined fs-2">group</span>
+                                </div>
+                                <div>
+                                    <div class="text-muted text-uppercase fw-semibold" style="font-size: 11px; letter-spacing: 0.5px;">Total Pasien (2 Tahun)</div>
+                                    <h4 class="fw-bold mb-0 text-success">{{ number_format($totalPasien ?? 147224, 0, ',', '.') }}</h4>
+                                    <small class="text-muted" style="font-size: 11px;">Kunjungan terlayani</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @php
+                        $jumlahBulan = count($pasienBulanan ?? []);
+                        $avgPerBulan = $jumlahBulan > 0 ? round(($totalPasien ?? 147224) / $jumlahBulan) : 0;
+                        $peakMonth = null;
+                        if (!empty($pasienBulanan)) {
+                            $peakMonth = collect($pasienBulanan)->sortByDesc('jumlah_pasien')->first();
+                        }
+                    @endphp
+                    <div class="col-12 col-md-4">
+                        <div class="card border-0 shadow-sm rounded-3 h-100 bg-white">
+                            <div class="card-body p-3 d-flex align-items-center gap-3">
+                                <div class="rounded-circle p-3 d-flex align-items-center justify-center" style="background-color: #e3f2fd; color: #0d6efd;">
+                                    <span class="material-symbols-outlined fs-2">trending_up</span>
+                                </div>
+                                <div>
+                                    <div class="text-muted text-uppercase fw-semibold" style="font-size: 11px; letter-spacing: 0.5px;">Rata-rata per Bulan</div>
+                                    <h4 class="fw-bold mb-0 text-primary">{{ number_format($avgPerBulan, 0, ',', '.') }}</h4>
+                                    <small class="text-muted" style="font-size: 11px;">Pasien/bulan ({{ $jumlahBulan }} bulan tercatat)</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="card border-0 shadow-sm rounded-3 h-100 bg-white">
+                            <div class="card-body p-3 d-flex align-items-center gap-3">
+                                <div class="rounded-circle p-3 d-flex align-items-center justify-center" style="background-color: #fff3e0; color: #fd7e14;">
+                                    <span class="material-symbols-outlined fs-2">verified</span>
+                                </div>
+                                <div>
+                                    <div class="text-muted text-uppercase fw-semibold" style="font-size: 11px; letter-spacing: 0.5px;">Kunjungan Tertinggi</div>
+                                    <h4 class="fw-bold mb-0 text-warning" style="color: #d97706 !important;">
+                                        {{ isset($peakMonth['jumlah_pasien']) ? number_format($peakMonth['jumlah_pasien'], 0, ',', '.') : '-' }}
+                                    </h4>
+                                    <small class="text-muted" style="font-size: 11px;">
+                                        @if(isset($peakMonth['periode']))
+                                            @php
+                                                $blnArr = ['', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                                                $pTahun = $peakMonth['tahun'] ?? '';
+                                                $pBulan = $blnArr[$peakMonth['bulan']] ?? '';
+                                            @endphp
+                                            Periode {{ $pBulan }} {{ $pTahun }}
+                                        @else
+                                            Puncak kunjungan bulanan
+                                        @endif
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chart Container Card -->
+                <div class="card border-0 shadow-sm rounded-3 mb-4 bg-white">
+                    <div class="card-header bg-white border-bottom py-3 px-4 d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
+                        <div>
+                            <h6 class="fw-bold mb-1 text-dark d-flex align-items-center gap-2">
+                                <span class="material-symbols-outlined text-success fs-5">show_chart</span>
+                                Tren Pasien Bulanan
+                            </h6>
+                            <p class="text-muted mb-0 small" id="chartFilterSubtitle">Menampilkan data kumulatif 2 tahun terakhir</p>
+                        </div>
+                        <!-- Filter Tabs / Buttons -->
+                        <div class="btn-group btn-group-sm p-1 bg-light rounded-pill border" role="group" id="filterPeriodePasien">
+                            <button type="button" class="btn btn-sm btn-success rounded-pill px-3 filter-btn active" data-filter="all">Semua (2 Tahun)</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 filter-btn" data-filter="2026">Tahun 2026</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 filter-btn" data-filter="2025">Tahun 2025</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 filter-btn" data-filter="compare">Bandingkan</button>
+                        </div>
+                    </div>
+                    <div class="card-body p-4">
+                        <div style="position: relative; height: 350px; width: 100%;">
+                            <canvas id="chartPasienBulanan"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Table Toggle -->
+                <div class="card border-0 shadow-sm rounded-3 bg-white">
+                    <div class="card-header bg-white border-0 py-3 px-4">
+                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                            <div>
+                                <h6 class="fw-bold mb-0 text-dark d-flex align-items-center gap-2">
+                                    <span class="material-symbols-outlined text-success fs-5">table_rows</span>
+                                    Rincian Data Kunjungan Bulanan
+                                </h6>
+                            </div>
+                            <button class="btn btn-sm btn-outline-success rounded-pill px-3" type="button" data-bs-toggle="collapse" data-bs-target="#tableDetailCollapse" aria-expanded="false" aria-controls="tableDetailCollapse">
+                                <i class="bi bi-list-ul me-1"></i> Tampilkan / Sembunyikan Tabel
+                            </button>
+                        </div>
+                    </div>
+                    <div class="collapse" id="tableDetailCollapse">
+                        <div class="card-body p-0 border-top">
+                            <div class="table-responsive" style="max-height: 280px; overflow-y: auto;">
+                                <table class="table table-hover align-middle mb-0 text-center text-nowrap">
+                                    <thead class="table-light sticky-top">
+                                        <tr>
+                                            <th class="py-2.5 text-muted small">NO</th>
+                                            <th class="py-2.5 text-muted small text-start">PERIODE (BULAN & TAHUN)</th>
+                                            <th class="py-2.5 text-muted small">JUMLAH PASIEN</th>
+                                            <th class="py-2.5 text-muted small">KONTRIBUSI</th>
+                                            <th class="py-2.5 text-muted small">STATUS</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tablePasienBulananBody">
+                                        @php
+                                            $no = 1;
+                                            $namaBulan = ['', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                                        @endphp
+                                        @forelse($pasienBulanan as $row)
+                                            @php
+                                                $pct = ($totalPasien > 0) ? round(($row['jumlah_pasien'] / $totalPasien) * 100, 1) : 0;
+                                                $blnText = $namaBulan[$row['bulan']] ?? $row['periode'];
+                                            @endphp
+                                            <tr>
+                                                <td class="text-muted small">{{ $no++ }}</td>
+                                                <td class="text-start fw-semibold">
+                                                    <span class="badge bg-light text-dark border me-1">{{ $row['tahun'] }}</span>
+                                                    {{ $blnText }}
+                                                </td>
+                                                <td>
+                                                    <span class="fw-bold text-success">{{ number_format($row['jumlah_pasien'], 0, ',', '.') }}</span>
+                                                    <span class="text-muted small">pasien</span>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex align-items-center justify-content-center gap-2">
+                                                        <div class="progress flex-grow-1" style="height: 6px; max-width: 80px;">
+                                                            <div class="progress-bar bg-success" role="progressbar" style="width: {{ min(100, $pct * 10) }}%;" aria-valuenow="{{ $pct }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                        <span class="small text-muted">{{ $pct }}%</span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    @if($row['jumlah_pasien'] >= $avgPerBulan)
+                                                        <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1 rounded-pill text-xs">
+                                                            <i class="bi bi-arrow-up-right me-1"></i>Di Atas Rata-rata
+                                                        </span>
+                                                    @else
+                                                        <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle px-2 py-1 rounded-pill text-xs">
+                                                            Normal
+                                                        </span>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="5" class="py-4 text-muted">Data kunjungan bulanan tidak tersedia.</td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer bg-white border-top py-3 px-4 d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center gap-2 text-muted small">
+                    <span class="material-symbols-outlined fs-6 text-success">verified_user</span>
+                    <span>Sumber: SIMRS Promedika RS Baladhika Husada (Diperbarui secara berkala)</span>
+                </div>
+                <button type="button" class="btn btn-outline-secondary rounded-pill px-4 fw-semibold" data-bs-dismiss="modal">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -783,10 +1008,10 @@ const counterObserver = new IntersectionObserver((entries, observer) => {
             const updateCounter = () => {
                 current += increment;
                 if (current < targetNumber) {
-                    target.innerText = Math.ceil(current);
+                    target.innerText = Math.ceil(current).toLocaleString('id-ID');
                     requestAnimationFrame(updateCounter);
                 } else {
-                    target.innerText = targetNumber;
+                    target.innerText = targetNumber.toLocaleString('id-ID');
                 }
             };
             updateCounter();
@@ -796,6 +1021,207 @@ const counterObserver = new IntersectionObserver((entries, observer) => {
 }, { threshold: 0.5 });
 
 counters.forEach(counter => counterObserver.observe(counter));
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+let chartPasienInstance = null;
+const rawPasienData = @json($pasienBulanan ?? []);
+const bulanNames = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+
+function renderPasienChart(filter = 'all') {
+    const canvas = document.getElementById('chartPasienBulanan');
+    if (!canvas || typeof Chart === 'undefined') return;
+
+    if (chartPasienInstance) {
+        chartPasienInstance.destroy();
+    }
+
+    const ctx = canvas.getContext('2d');
+    let gradientFill = ctx.createLinearGradient(0, 0, 0, 320);
+    gradientFill.addColorStop(0, 'rgba(25, 135, 84, 0.35)');
+    gradientFill.addColorStop(1, 'rgba(25, 135, 84, 0.01)');
+
+    let gradientFill2025 = ctx.createLinearGradient(0, 0, 0, 320);
+    gradientFill2025.addColorStop(0, 'rgba(13, 110, 253, 0.25)');
+    gradientFill2025.addColorStop(1, 'rgba(13, 110, 253, 0.01)');
+
+    let labels = [];
+    let datasets = [];
+    const subtitleEl = document.getElementById('chartFilterSubtitle');
+
+    if (filter === 'all') {
+        labels = rawPasienData.map(item => {
+            const bName = bulanNames[item.bulan] || item.bulan;
+            return `${bName} ${item.tahun}`;
+        });
+        const values = rawPasienData.map(item => item.jumlah_pasien);
+
+        datasets = [{
+            label: 'Jumlah Pasien Terlayani',
+            data: values,
+            borderColor: '#198754',
+            backgroundColor: gradientFill,
+            borderWidth: 2.5,
+            fill: true,
+            tension: 0.35,
+            pointBackgroundColor: '#198754',
+            pointBorderColor: '#ffffff',
+            pointBorderWidth: 2,
+            pointRadius: 4,
+            pointHoverRadius: 7
+        }];
+        if (subtitleEl) subtitleEl.innerText = 'Menampilkan seluruh data bulanan 2 tahun terakhir (2025 s.d. sekarang)';
+    } else if (filter === '2025' || filter === '2026') {
+        const targetYear = parseInt(filter);
+        const filtered = rawPasienData.filter(item => item.tahun === targetYear);
+        labels = filtered.map(item => bulanNames[item.bulan] || item.bulan);
+        const values = filtered.map(item => item.jumlah_pasien);
+
+        datasets = [{
+            label: `Pasien Terlayani Tahun ${targetYear}`,
+            data: values,
+            borderColor: targetYear === 2026 ? '#198754' : '#0d6efd',
+            backgroundColor: targetYear === 2026 ? gradientFill : gradientFill2025,
+            borderWidth: 2.5,
+            fill: true,
+            tension: 0.35,
+            pointBackgroundColor: targetYear === 2026 ? '#198754' : '#0d6efd',
+            pointBorderColor: '#ffffff',
+            pointBorderWidth: 2,
+            pointRadius: 4,
+            pointHoverRadius: 7
+        }];
+        if (subtitleEl) subtitleEl.innerText = `Menampilkan rincian kunjungan bulanan tahun ${targetYear}`;
+    } else if (filter === 'compare') {
+        labels = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+        const data2025 = new Array(12).fill(null);
+        const data2026 = new Array(12).fill(null);
+
+        rawPasienData.forEach(item => {
+            const mIdx = item.bulan - 1;
+            if (item.tahun === 2025) data2025[mIdx] = item.jumlah_pasien;
+            if (item.tahun === 2026) data2026[mIdx] = item.jumlah_pasien;
+        });
+
+        datasets = [
+            {
+                label: 'Tahun 2025',
+                data: data2025,
+                borderColor: '#0d6efd',
+                backgroundColor: 'rgba(13, 110, 253, 0.1)',
+                borderWidth: 2,
+                tension: 0.3,
+                pointRadius: 4,
+            },
+            {
+                label: 'Tahun 2026',
+                data: data2026,
+                borderColor: '#198754',
+                backgroundColor: 'rgba(25, 135, 84, 0.15)',
+                borderWidth: 2.5,
+                tension: 0.3,
+                pointRadius: 4,
+            }
+        ];
+        if (subtitleEl) subtitleEl.innerText = 'Perbandingan tren kunjungan pasien per bulan: Tahun 2025 vs 2026';
+    }
+
+    chartPasienInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: datasets
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: {
+                mode: 'index',
+                intersect: false,
+            },
+            plugins: {
+                legend: {
+                    display: (filter === 'compare'),
+                    position: 'top',
+                    labels: {
+                        usePointStyle: true,
+                        boxWidth: 8
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(18, 78, 44, 0.95)',
+                    titleFont: { size: 13, weight: 'bold' },
+                    bodyFont: { size: 13 },
+                    padding: 12,
+                    cornerRadius: 8,
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.dataset.label || '';
+                            if (label) label += ': ';
+                            if (context.parsed.y !== null) {
+                                label += new Intl.NumberFormat('id-ID').format(context.parsed.y) + ' Pasien';
+                            }
+                            return label;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        font: { size: 11 }
+                    }
+                },
+                y: {
+                    beginAtZero: false,
+                    grid: {
+                        color: 'rgba(0, 0, 0, 0.05)'
+                    },
+                    ticks: {
+                        font: { size: 11 },
+                        callback: function(value) {
+                            return new Intl.NumberFormat('id-ID').format(value);
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Modal open event
+const modalPasienEl = document.getElementById('modalPasienTerlayani');
+if (modalPasienEl) {
+    modalPasienEl.addEventListener('shown.bs.modal', function () {
+        document.querySelectorAll('#filterPeriodePasien .filter-btn').forEach(b => {
+            b.classList.remove('btn-success', 'active');
+            b.classList.add('btn-outline-secondary');
+        });
+        const defaultBtn = document.querySelector('#filterPeriodePasien .filter-btn[data-filter="all"]');
+        if (defaultBtn) {
+            defaultBtn.classList.remove('btn-outline-secondary');
+            defaultBtn.classList.add('btn-success', 'active');
+        }
+        renderPasienChart('all');
+    });
+}
+
+// Filter button clicks
+document.querySelectorAll('#filterPeriodePasien .filter-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+        document.querySelectorAll('#filterPeriodePasien .filter-btn').forEach(b => {
+            b.classList.remove('btn-success', 'active');
+            b.classList.add('btn-outline-secondary');
+        });
+        this.classList.remove('btn-outline-secondary');
+        this.classList.add('btn-success', 'active');
+        const filter = this.getAttribute('data-filter');
+        renderPasienChart(filter);
+    });
+});
 </script>
 @endpush
 @endsection

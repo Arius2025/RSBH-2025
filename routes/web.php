@@ -67,6 +67,7 @@ Route::post('/fup-kopi/submit', [FrontendController::class, 'fupKopiSubmit'])->n
 // Indikator Layanan & Mutu
 Route::get('/dashboard-indikator', [FrontendController::class, 'dashboardIndikator'])->name('dashboard-indikator');
 Route::get('/indikator-mutu', [FrontendController::class, 'indikatorMutu'])->name('indikator-mutu');
+Route::get('/api/pasien-terlayani', [FrontendController::class, 'getPasienTerlayaniData'])->name('api.pasien.terlayani');
 
 // Tempat Tidur & Operasi
 Route::get('/tidur', [FrontendController::class, 'tidur'])->name('tidur');
