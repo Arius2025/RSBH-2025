@@ -95,11 +95,11 @@
                             <li class="list-group-item bg-light border-0 mb-2 rounded shadow-sm">
                                 <strong>PNS A’JALIL ACHJAB, S.Kep.Ners, MM, M.Kes</strong><br>
                                 <span class="text-success fw-semibold">Komplain BPJS</span><br>
-                                <i class="bi bi-telephone-fill me-1 text-success"></i> <a href="tel:+62 821-4302-4047"
+                                <i class="bi bi-telephone-fill me-1 text-success"></i> <a href="tel:+6282143024047"
                                     class="text-decoration-none">0821-4302-4047</a>
                             </li>
                             <li class="list-group-item bg-light border-0 mb-2 rounded shadow-sm">
-                                <strong>PELTU EDI SUBAGIO</strong><br>
+                                <strong>PELTU EDI SUBAGIO, AMd.Kep</strong><br>
                                 <span class="text-success fw-semibold">Komplain Pelayanan & Fasilitas Umum</span><br>
                                 <i class="bi bi-telephone-fill me-1 text-success"></i> <a href="tel:085234629570"
                                     class="text-decoration-none">0852-3462-9570</a>
