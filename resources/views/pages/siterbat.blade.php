@@ -62,13 +62,28 @@
                         <input type="text" id="wa_name" class="form-control" placeholder="Nama pasien sesuai KTP" oninput="validateForm()">
                     </div>
                     <div class="mb-3 text-center">
-                        <button type="button" onclick="getLocation()" class="btn btn-outline-success btn-sm rounded-pill px-4">
+                        <button type="button" onclick="getLocation()" class="btn btn-outline-success btn-sm rounded-pill px-4 shadow-sm">
                             <i class="bi bi-crosshair me-2"></i> Gunakan Lokasi GPS Saya
                         </button>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label small fw-bold text-secondary text-uppercase">Alamat (Bisa Diisi Manual)</label>
-                        <textarea id="wa_address" class="form-control" rows="3" placeholder="Isi alamat manual atau pilih dari peta..." oninput="validateForm()"></textarea>
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <label class="form-label small fw-bold text-secondary text-uppercase mb-0">Alamat Lengkap</label>
+                            <span class="badge bg-light text-muted border text-[11px] font-normal">
+                                <i class="bi bi-geo-alt text-success me-1"></i>Hitung Jarak Otomatis
+                            </span>
+                        </div>
+                        <div class="position-relative">
+                            <textarea id="wa_address" class="form-control" rows="3" placeholder="Ketik nama jalan, desa, kelurahan, atau kecamatan (misal: Jl. Hayam Wuruk, Kaliwates)..."></textarea>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mt-1">
+                            <small class="text-muted" style="font-size: 11px;">
+                                <i class="bi bi-info-circle me-1"></i>Ketik alamat atau klik di peta untuk menghitung jarak.
+                            </small>
+                            <button type="button" onclick="forceCheckAddressDistance()" class="btn btn-link btn-sm p-0 text-success text-decoration-none fw-semibold" style="font-size: 11px;">
+                                <i class="bi bi-arrow-repeat me-1"></i>Cek Jarak Sekarang
+                            </button>
+                        </div>
                         <div id="dist-status" class="mt-2 text-center"></div>
                     </div>
                     <div class="mb-4">
@@ -118,8 +133,15 @@
         prefix: "wa_"
     };
 
-    let isWithinRadius = true; // Default true to allow manual address even if map not used
-    let userMarker, rsCircle, map;
+    let isWithinRadius = true;
+    let userMarker = null;
+    let rsCircle = null;
+    let routeLine = null;
+    let map = null;
+    let currentDistanceKm = null;
+    let geocodeTimeout = null;
+    let isProgrammaticAddressChange = false;
+    const geocodeCache = {};
 
     function initMap() {
         map = L.map('map', { zoomControl: false }).setView(RS_COORDS, 13);
@@ -136,56 +158,247 @@
             iconSize: [30, 30],
             iconAnchor: [15, 15]
         });
-        L.marker(RS_COORDS, {icon: rsIcon}).addTo(map).bindPopup("<b>RS Baladhika Husada</b>");
+        L.marker(RS_COORDS, {icon: rsIcon}).addTo(map).bindPopup("<b>RS Baladhika Husada</b><br><small class='text-muted'>Pusat Layanan Siterbat</small>");
         
         rsCircle = L.circle(RS_COORDS, { 
             color: '#198754', fillColor: '#198754', fillOpacity: 0.05, radius: CONFIG.radius, weight: 2, dashArray: '5, 10'
         }).addTo(map);
 
-        map.on('click', function(e) { updateLocation(e.latlng); });
+        map.on('click', function(e) {
+            applyLocationAndDistance(e.latlng, null, false);
+            // Reverse geocoding
+            fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${e.latlng.lat}&lon=${e.latlng.lng}`)
+                .then(r => r.json())
+                .then(data => {
+                    if (data && data.display_name) {
+                        applyLocationAndDistance(e.latlng, data.display_name, true);
+                    }
+                })
+                .catch(err => console.log("Reverse geocode error:", err));
+        });
+
+        setupAddressInputListener();
     }
 
-    function getLocation() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                const latlng = { lat: position.coords.latitude, lng: position.coords.longitude };
-                map.flyTo(latlng, 16);
-                updateLocation(latlng);
-            }, () => alert("Gagal mendapatkan lokasi."));
-        } else {
-            alert("Browser tidak mendukung GPS.");
-        }
-    }
-
-    function updateLocation(latlng) {
+    function applyLocationAndDistance(latlng, displayName = null, updateAddressField = true) {
         const distance = map.distance(latlng, RS_COORDS);
+        const distKm = (distance / 1000).toFixed(1);
+        currentDistanceKm = distKm;
+
         const statusEl = document.getElementById('dist-status');
         const addrField = document.getElementById('wa_address');
 
+        // Update / create marker
         if (userMarker) map.removeLayer(userMarker);
         userMarker = L.marker(latlng).addTo(map);
+        userMarker.bindPopup(`<b>Lokasi Pengantaran Obat</b><br>Jarak: <strong>${distKm} km</strong> dari RS`).openPopup();
+
+        // Update / create dashed connecting line
+        if (routeLine) map.removeLayer(routeLine);
+        routeLine = L.polyline([RS_COORDS, latlng], {
+            color: '#198754',
+            weight: 3,
+            dashArray: '6, 8',
+            opacity: 0.85
+        }).addTo(map);
+
+        map.flyTo(latlng, Math.max(map.getZoom(), 14));
+
+        if (updateAddressField && displayName) {
+            isProgrammaticAddressChange = true;
+            addrField.value = displayName;
+        }
 
         if (distance > CONFIG.radius) {
-            statusEl.innerHTML = `<span class="badge bg-danger text-white">Terlalu Jauh (${(distance/1000).toFixed(1)} km)</span>`;
+            statusEl.innerHTML = `
+                <div class="alert alert-danger py-2 px-3 mb-0 mt-2 text-start rounded-3 shadow-sm border-danger">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-exclamation-triangle-fill fs-5 text-danger flex-shrink-0"></i>
+                        <div>
+                            <span class="fw-bold text-danger">Jarak: ${distKm} km</span>
+                            <span class="badge bg-danger ms-1">Di Luar Jangkauan</span>
+                            <div class="small text-danger opacity-90">Maksimal jarak layanan antar obat adalah 10 km dari RS Baladhika Husada.</div>
+                        </div>
+                    </div>
+                </div>`;
             isWithinRadius = false;
         } else {
-            statusEl.innerHTML = `<span class="badge bg-success text-white">Lokasi Terjangkau (${(distance/1000).toFixed(1)} km)</span>`;
+            statusEl.innerHTML = `
+                <div class="alert alert-success py-2 px-3 mb-0 mt-2 text-start rounded-3 shadow-sm border-success">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-check-circle-fill fs-5 text-success flex-shrink-0"></i>
+                        <div>
+                            <span class="fw-bold text-success">Jarak: ${distKm} km</span>
+                            <span class="badge bg-success ms-1">Lokasi Terjangkau (Maks 10 KM)</span>
+                            <div class="small text-muted text-truncate" style="max-width: 270px;" title="${displayName || ''}">
+                                ${displayName ? displayName : 'Titik lokasi terpilih di peta'}
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
             isWithinRadius = true;
-            fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latlng.lat}&lon=${latlng.lng}`)
-                .then(r => r.json()).then(data => {
-                    addrField.value = data.display_name;
-                    validateForm();
-                });
         }
         validateForm();
     }
 
+    function setupAddressInputListener() {
+        const addrField = document.getElementById('wa_address');
+        if (!addrField) return;
+
+        addrField.addEventListener('input', function () {
+            if (isProgrammaticAddressChange) {
+                isProgrammaticAddressChange = false;
+                validateForm();
+                return;
+            }
+
+            const query = addrField.value.trim();
+            validateForm();
+
+            if (geocodeTimeout) clearTimeout(geocodeTimeout);
+
+            const statusEl = document.getElementById('dist-status');
+
+            if (query.length < 3) {
+                statusEl.innerHTML = '';
+                currentDistanceKm = null;
+                isWithinRadius = true;
+                if (userMarker) {
+                    map.removeLayer(userMarker);
+                    userMarker = null;
+                }
+                if (routeLine) {
+                    map.removeLayer(routeLine);
+                    routeLine = null;
+                }
+                validateForm();
+                return;
+            }
+
+            statusEl.innerHTML = `
+                <div class="d-flex align-items-center justify-content-center gap-2 text-muted small py-2">
+                    <span class="spinner-border spinner-border-sm text-success" role="status"></span>
+                    <span>Menghitung jarak otomatis dari alamat...</span>
+                </div>`;
+
+            geocodeTimeout = setTimeout(() => {
+                geocodeAddress(query);
+            }, 600);
+        });
+
+        addrField.addEventListener('change', function () {
+            const query = addrField.value.trim();
+            if (query.length >= 3 && (!currentDistanceKm || isWithinRadius === false)) {
+                geocodeAddress(query);
+            }
+        });
+    }
+
+    function forceCheckAddressDistance() {
+        const addrField = document.getElementById('wa_address');
+        const query = addrField.value.trim();
+        if (query.length >= 3) {
+            geocodeAddress(query);
+        } else {
+            alert("Silakan ketikkan alamat lengkap terlebih dahulu.");
+            addrField.focus();
+        }
+    }
+
+    async function geocodeAddress(query) {
+        const statusEl = document.getElementById('dist-status');
+        const cleanQuery = query.trim();
+
+        if (geocodeCache[cleanQuery]) {
+            const cached = geocodeCache[cleanQuery];
+            applyLocationAndDistance(cached.latlng, cached.display_name, false);
+            return;
+        }
+
+        let searchQuery = cleanQuery;
+        if (!cleanQuery.toLowerCase().includes('jember')) {
+            searchQuery = `${cleanQuery}, Jember`;
+        }
+
+        try {
+            const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchQuery)}&countrycodes=id&limit=3`;
+            const res = await fetch(url);
+            const results = await res.json();
+
+            let target = null;
+            if (results && results.length > 0) {
+                target = results[0];
+            } else if (searchQuery !== cleanQuery) {
+                const fallbackUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(cleanQuery)}&countrycodes=id&limit=1`;
+                const fallbackRes = await fetch(fallbackUrl);
+                const fallbackResults = await fallbackRes.json();
+                if (fallbackResults && fallbackResults.length > 0) {
+                    target = fallbackResults[0];
+                }
+            }
+
+            if (target) {
+                const latlng = { lat: parseFloat(target.lat), lng: parseFloat(target.lon) };
+                geocodeCache[cleanQuery] = { latlng, display_name: target.display_name };
+                applyLocationAndDistance(latlng, target.display_name, false);
+            } else {
+                statusEl.innerHTML = `
+                    <div class="alert alert-warning py-2 px-3 text-start small mb-0 mt-2 rounded-3">
+                        <div class="d-flex align-items-center gap-1.5 fw-semibold text-dark mb-1">
+                            <i class="bi bi-info-circle-fill text-warning"></i> Alamat belum terdeteksi otomatis
+                        </div>
+                        <div>Ketik nama kelurahan/jalan utama, atau <strong>klik titik rumah Anda langsung di peta sebelah kanan</strong> untuk menghitung jarak akurat.</div>
+                    </div>`;
+                isWithinRadius = true;
+                validateForm();
+            }
+        } catch (err) {
+            console.error("Geocoding error:", err);
+            statusEl.innerHTML = `
+                <div class="text-muted small mt-1">
+                    <i class="bi bi-info-circle me-1"></i> Klik titik lokasi rumah di peta untuk menghitung jarak.
+                </div>`;
+            validateForm();
+        }
+    }
+
+    function getLocation() {
+        const statusEl = document.getElementById('dist-status');
+        statusEl.innerHTML = `
+            <div class="d-flex align-items-center justify-content-center gap-2 text-muted small py-2">
+                <span class="spinner-border spinner-border-sm text-success" role="status"></span>
+                <span>Mengakses GPS perangkat Anda...</span>
+            </div>`;
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                const latlng = { lat: position.coords.latitude, lng: position.coords.longitude };
+                applyLocationAndDistance(latlng, "Lokasi GPS Anda", false);
+                map.flyTo(latlng, 16);
+                fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latlng.lat}&lon=${latlng.lng}`)
+                    .then(r => r.json())
+                    .then(data => {
+                        if (data && data.display_name) {
+                            applyLocationAndDistance(latlng, data.display_name, true);
+                        }
+                    })
+                    .catch(err => console.log(err));
+            }, () => {
+                alert("Gagal mendapatkan lokasi GPS. Pastikan izin lokasi aktif di browser.");
+                statusEl.innerHTML = '';
+            });
+        } else {
+            alert("Browser Anda tidak mendukung fitur GPS.");
+            statusEl.innerHTML = '';
+        }
+    }
+
     function validateForm() {
-        const rm = document.getElementById('wa_rm').value;
-        const name = document.getElementById('wa_name').value;
-        const address = document.getElementById('wa_address').value;
-        const detail = document.getElementById('wa_detail').value;
-        const phone = document.getElementById('wa_phone').value;
+        const rm = document.getElementById('wa_rm').value.trim();
+        const name = document.getElementById('wa_name').value.trim();
+        const address = document.getElementById('wa_address').value.trim();
+        const detail = document.getElementById('wa_detail').value.trim();
+        const phone = document.getElementById('wa_phone').value.trim();
         const btn = document.getElementById('btnSubmit');
         const errMsg = document.getElementById('error-msg');
 
@@ -200,7 +413,7 @@
             btn.disabled = true;
             errMsg.style.display = 'block';
             if (!isWithinRadius) {
-                errMsg.innerText = "Lokasi di luar jangkauan (Maks 10 KM)";
+                errMsg.innerText = "Lokasi di luar jangkauan layanan antar obat (Maks 10 KM)";
             } else if (phone && !isPhoneValid) {
                 errMsg.innerText = "Nomor WhatsApp harus angka (Min. 10 digit)";
             } else {
@@ -210,11 +423,11 @@
     }
 
     async function handleSubmit() {
-        const rm = document.getElementById('wa_rm').value;
-        const name = document.getElementById('wa_name').value;
-        const address = document.getElementById('wa_address').value;
-        const detail = document.getElementById('wa_detail').value;
-        const phone = document.getElementById('wa_phone').value;
+        const rm = document.getElementById('wa_rm').value.trim();
+        const name = document.getElementById('wa_name').value.trim();
+        const address = document.getElementById('wa_address').value.trim();
+        const detail = document.getElementById('wa_detail').value.trim();
+        const phone = document.getElementById('wa_phone').value.trim();
         const btn = document.getElementById('btnSubmit');
         const btnText = document.getElementById('btnText');
 
@@ -235,19 +448,23 @@
 
             if (result.success) {
                 // WA Notification
+                const jarakText = currentDistanceKm ? `${currentDistanceKm} km` : '-';
                 const waNumber = "6285217077347";
-                const waMessage = `*Pesan Siterbat (Antar Obat)*\n\n- RM: ${rm}\n- Nama: ${name}\n- Alamat: ${address}\n- Detail: ${detail}\n- WA Pasien: ${phone}`;
+                const waMessage = `*Pesan Siterbat (Antar Obat)*\n\n- RM: ${rm}\n- Nama: ${name}\n- Alamat: ${address}\n- Detail: ${detail}\n- Estimasi Jarak: ${jarakText}\n- WA Pasien: ${phone}`;
                 const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`;
                 
                 const myModal = new bootstrap.Modal(document.getElementById('successModal'));
                 myModal.show();
                 
-                // Open WA after a small delay
                 setTimeout(() => {
                     window.open(waUrl, '_blank');
                 }, 1000);
                 
                 document.getElementById('siterbatForm').reset();
+                if (userMarker) { map.removeLayer(userMarker); userMarker = null; }
+                if (routeLine) { map.removeLayer(routeLine); routeLine = null; }
+                document.getElementById('dist-status').innerHTML = '';
+                currentDistanceKm = null;
                 validateForm();
             } else {
                 alert("Gagal menyimpan pesanan: " + (result.message || "Unknown error"));
