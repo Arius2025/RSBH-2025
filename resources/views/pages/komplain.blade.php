@@ -134,9 +134,9 @@
                                 <div class="d-flex justify-content-between align-items-start mb-2">
                                     <div>
                                         <strong class="text-dark fs-6">PELTU EDI SUBAGIO, S.Kep. Ners</strong>
-                                        <div class="text-success fw-semibold small">Komplain Pelayanan & Fasilitas Umum</div>
+                                        <div class="text-success fw-semibold small">Komplain Pengamanan</div>
                                     </div>
-                                    <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill">Fasilitas</span>
+                                    <span class="badge bg-danger bg-opacity-10 text-danger rounded-pill">Pengamanan</span>
                                 </div>
                                 <div class="d-flex flex-wrap gap-2 align-items-center mt-2">
                                     <a href="tel:082143024047" class="btn btn-sm btn-outline-success rounded-pill px-3 py-1">
@@ -169,8 +169,8 @@
                                     <h5 class="fw-bold text-success"><i class="bi bi-diagram-3-fill me-2"></i> Bagan Alur Layanan Pengaduan</h5>
                                     <span class="badge bg-success-subtle text-success rounded-pill">Pengaduan Langsung & Tidak Langsung</span>
                                 </div>
-                                <a href="{{ asset('images/komplain/alur-pengaduan.jpg') }}" target="_blank" class="d-block position-relative group-hover">
-                                    <img src="{{ asset('images/komplain/alur-pengaduan.jpg') }}" alt="Alur Layanan Pengaduan RS Tk. III Baladhika Husada"
+                                <a href="{{ asset('images/komplain/alur-pengaduan.jpg') }}?v={{ file_exists(public_path('images/komplain/alur-pengaduan.jpg')) ? filemtime(public_path('images/komplain/alur-pengaduan.jpg')) : '2' }}" target="_blank" class="d-block position-relative group-hover">
+                                    <img src="{{ asset('images/komplain/alur-pengaduan.jpg') }}?v={{ file_exists(public_path('images/komplain/alur-pengaduan.jpg')) ? filemtime(public_path('images/komplain/alur-pengaduan.jpg')) : '2' }}" alt="Alur Layanan Pengaduan RS Tk. III Baladhika Husada"
                                         class="img-fluid rounded-4 shadow hover-lift w-100"
                                         style="border: 4px solid rgba(255,255,255,0.9); object-fit: contain; max-height: 520px; background-color: #fff;">
                                     <div class="text-center mt-2">
@@ -185,8 +185,8 @@
                                     <h5 class="fw-bold text-success"><i class="bi bi-card-image me-2"></i> Poster Layanan & Narahubung</h5>
                                     <span class="badge bg-primary-subtle text-primary rounded-pill">Tim Komplain & Kanal Resmi</span>
                                 </div>
-                                <a href="{{ asset('images/komplain/layanan-pengaduan.jpg') }}" target="_blank" class="d-block position-relative group-hover">
-                                    <img src="{{ asset('images/komplain/layanan-pengaduan.jpg') }}" alt="Poster Layanan Pengaduan RS Tk. III Baladhika Husada"
+                                <a href="{{ asset('images/komplain/layanan-pengaduan.jpg') }}?v={{ file_exists(public_path('images/komplain/layanan-pengaduan.jpg')) ? filemtime(public_path('images/komplain/layanan-pengaduan.jpg')) : '2' }}" target="_blank" class="d-block position-relative group-hover">
+                                    <img src="{{ asset('images/komplain/layanan-pengaduan.jpg') }}?v={{ file_exists(public_path('images/komplain/layanan-pengaduan.jpg')) ? filemtime(public_path('images/komplain/layanan-pengaduan.jpg')) : '2' }}" alt="Poster Layanan Pengaduan RS Tk. III Baladhika Husada"
                                         class="img-fluid rounded-4 shadow hover-lift w-100"
                                         style="border: 4px solid rgba(255,255,255,0.9); object-fit: contain; max-height: 520px; background-color: #fff;">
                                     <div class="text-center mt-2">
