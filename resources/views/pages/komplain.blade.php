@@ -158,99 +158,48 @@
                     <span class="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill fw-bold mb-2">Transparan
                         & Terstruktur</span>
                     <h3 class="text-dark fw-bold">Alur Layanan & Narahubung Pengaduan</h3>
-                    <p class="text-muted small">Klik gambar untuk melihat poster dalam resolusi penuh.</p>
+                    <p class="text-muted">Informasi lengkap alur penanganan pengaduan dan daftar resmi narahubung RS Tk. III Baladhika Husada.</p>
                 </div>
 
                 <div class="col-lg-12">
-                    <div class="apple-glass-card p-4 p-md-5">
-                        <div class="row g-4">
-                            <div class="col-md-6" data-aos="fade-right" data-aos-delay="100">
+                    <div class="apple-glass-card p-3 p-md-5">
+                        <div class="row g-4 justify-content-center">
+                            <div class="col-lg-6 col-md-10" data-aos="fade-right" data-aos-delay="100">
                                 <div class="text-center mb-3">
                                     <h5 class="fw-bold text-success"><i class="bi bi-diagram-3-fill me-2"></i> Bagan Alur Layanan Pengaduan</h5>
                                     <span class="badge bg-success-subtle text-success rounded-pill">Pengaduan Langsung & Tidak Langsung</span>
                                 </div>
-                                <a href="{{ asset('images/komplain/alur-pengaduan.jpg') }}?v={{ file_exists(public_path('images/komplain/alur-pengaduan.jpg')) ? filemtime(public_path('images/komplain/alur-pengaduan.jpg')) : '2' }}" target="_blank" class="d-block position-relative group-hover">
-                                    <img src="{{ asset('images/komplain/alur-pengaduan.jpg') }}?v={{ file_exists(public_path('images/komplain/alur-pengaduan.jpg')) ? filemtime(public_path('images/komplain/alur-pengaduan.jpg')) : '2' }}" alt="Alur Layanan Pengaduan RS Tk. III Baladhika Husada"
-                                        class="img-fluid rounded-4 shadow hover-lift w-100"
-                                        style="border: 4px solid rgba(255,255,255,0.9); object-fit: contain; max-height: 520px; background-color: #fff;">
-                                    <div class="text-center mt-2">
-                                        <span class="btn btn-sm btn-outline-secondary rounded-pill px-3">
-                                            <i class="bi bi-arrows-fullscreen me-1"></i> Buka Ukuran Penuh
-                                        </span>
+                                <div class="card border-0 shadow rounded-4 overflow-hidden bg-white p-2 p-md-3">
+                                    <a href="{{ asset('images/komplain/alur-pengaduan.jpg') }}?v={{ file_exists(public_path('images/komplain/alur-pengaduan.jpg')) ? filemtime(public_path('images/komplain/alur-pengaduan.jpg')) : '2' }}" target="_blank" class="d-block position-relative text-center">
+                                        <img src="{{ asset('images/komplain/alur-pengaduan.jpg') }}?v={{ file_exists(public_path('images/komplain/alur-pengaduan.jpg')) ? filemtime(public_path('images/komplain/alur-pengaduan.jpg')) : '2' }}" alt="Alur Layanan Pengaduan RS Tk. III Baladhika Husada"
+                                            class="img-fluid rounded-3 w-100 hover-lift shadow-sm"
+                                            style="width: 100%; display: block;">
+                                    </a>
+                                    <div class="text-center pt-3 pb-1">
+                                        <a href="{{ asset('images/komplain/alur-pengaduan.jpg') }}?v={{ file_exists(public_path('images/komplain/alur-pengaduan.jpg')) ? filemtime(public_path('images/komplain/alur-pengaduan.jpg')) : '2' }}" target="_blank" class="btn btn-sm btn-outline-success rounded-pill px-4 py-1.5 fw-semibold">
+                                            <i class="bi bi-arrows-fullscreen me-1"></i> Buka Ukuran Asli / Resolusi Penuh
+                                        </a>
                                     </div>
-                                </a>
+                                </div>
                             </div>
-                            <div class="col-md-6" data-aos="fade-left" data-aos-delay="200">
+                            <div class="col-lg-6 col-md-10" data-aos="fade-left" data-aos-delay="200">
                                 <div class="text-center mb-3">
                                     <h5 class="fw-bold text-success"><i class="bi bi-card-image me-2"></i> Poster Layanan & Narahubung</h5>
                                     <span class="badge bg-primary-subtle text-primary rounded-pill">Tim Komplain & Kanal Resmi</span>
                                 </div>
-                                <a href="{{ asset('images/komplain/layanan-pengaduan.jpg') }}?v={{ file_exists(public_path('images/komplain/layanan-pengaduan.jpg')) ? filemtime(public_path('images/komplain/layanan-pengaduan.jpg')) : '2' }}" target="_blank" class="d-block position-relative group-hover">
-                                    <img src="{{ asset('images/komplain/layanan-pengaduan.jpg') }}?v={{ file_exists(public_path('images/komplain/layanan-pengaduan.jpg')) ? filemtime(public_path('images/komplain/layanan-pengaduan.jpg')) : '2' }}" alt="Poster Layanan Pengaduan RS Tk. III Baladhika Husada"
-                                        class="img-fluid rounded-4 shadow hover-lift w-100"
-                                        style="border: 4px solid rgba(255,255,255,0.9); object-fit: contain; max-height: 520px; background-color: #fff;">
-                                    <div class="text-center mt-2">
-                                        <span class="btn btn-sm btn-outline-secondary rounded-pill px-3">
-                                            <i class="bi bi-arrows-fullscreen me-1"></i> Buka Ukuran Penuh
-                                        </span>
+                                <div class="card border-0 shadow rounded-4 overflow-hidden bg-white p-2 p-md-3">
+                                    <a href="{{ asset('images/komplain/layanan-pengaduan.jpg') }}?v={{ file_exists(public_path('images/komplain/layanan-pengaduan.jpg')) ? filemtime(public_path('images/komplain/layanan-pengaduan.jpg')) : '2' }}" target="_blank" class="d-block position-relative text-center">
+                                        <img src="{{ asset('images/komplain/layanan-pengaduan.jpg') }}?v={{ file_exists(public_path('images/komplain/layanan-pengaduan.jpg')) ? filemtime(public_path('images/komplain/layanan-pengaduan.jpg')) : '2' }}" alt="Poster Layanan Pengaduan RS Tk. III Baladhika Husada"
+                                            class="img-fluid rounded-3 w-100 hover-lift shadow-sm"
+                                            style="width: 100%; display: block;">
+                                    </a>
+                                    <div class="text-center pt-3 pb-1">
+                                        <a href="{{ asset('images/komplain/layanan-pengaduan.jpg') }}?v={{ file_exists(public_path('images/komplain/layanan-pengaduan.jpg')) ? filemtime(public_path('images/komplain/layanan-pengaduan.jpg')) : '2' }}" target="_blank" class="btn btn-sm btn-outline-success rounded-pill px-4 py-1.5 fw-semibold">
+                                            <i class="bi bi-arrows-fullscreen me-1"></i> Buka Ukuran Asli / Resolusi Penuh
+                                        </a>
                                     </div>
-                                </a>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Media Sosial & Saluran Pengaduan --}}
-            <div class="row justify-content-center mt-5" data-aos="fade-up">
-                <div class="col-lg-10 text-center mb-4">
-                    <span class="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill fw-bold mb-2">Saluran Resmi</span>
-                    <h3 class="text-dark fw-bold">Media Sosial & Kanal Pengaduan</h3>
-                    <p class="text-muted small">Kami siap mendengar dan melayani dengan sepenuh hati melalui kanal resmi berikut:</p>
-                </div>
-                <div class="col-lg-12">
-                    <div class="row g-3 justify-content-center">
-                        <div class="col-6 col-md-4 col-lg-2">
-                            <a href="https://wa.me/6281387841253" target="_blank" class="card h-100 p-3 text-center text-decoration-none border-0 shadow-sm interactive-card rounded-4">
-                                <div class="fs-2 text-success mb-2"><i class="bi bi-whatsapp"></i></div>
-                                <div class="fw-bold text-dark small">WhatsApp</div>
-                                <div class="text-muted" style="font-size: 0.75rem;">0813 8784 1253</div>
-                            </a>
-                        </div>
-                        <div class="col-6 col-md-4 col-lg-2">
-                            <a href="mailto:rsbaladhikahusadajember@gmail.com" class="card h-100 p-3 text-center text-decoration-none border-0 shadow-sm interactive-card rounded-4">
-                                <div class="fs-2 text-danger mb-2"><i class="bi bi-envelope-fill"></i></div>
-                                <div class="fw-bold text-dark small">Email</div>
-                                <div class="text-muted text-truncate" style="font-size: 0.72rem;">rsbaladhikahusadajember@gmail.com</div>
-                            </a>
-                        </div>
-                        <div class="col-6 col-md-4 col-lg-2">
-                            <a href="https://instagram.com/rsadbaladhikahusada" target="_blank" class="card h-100 p-3 text-center text-decoration-none border-0 shadow-sm interactive-card rounded-4">
-                                <div class="fs-2 text-danger mb-2"><i class="bi bi-instagram"></i></div>
-                                <div class="fw-bold text-dark small">Instagram</div>
-                                <div class="text-muted text-truncate" style="font-size: 0.75rem;">@rsadbaladhikahusada</div>
-                            </a>
-                        </div>
-                        <div class="col-6 col-md-4 col-lg-2">
-                            <a href="https://facebook.com/baladhikahusada" target="_blank" class="card h-100 p-3 text-center text-decoration-none border-0 shadow-sm interactive-card rounded-4">
-                                <div class="fs-2 text-primary mb-2"><i class="bi bi-facebook"></i></div>
-                                <div class="fw-bold text-dark small">Facebook</div>
-                                <div class="text-muted text-truncate" style="font-size: 0.75rem;">Baladhika Husada</div>
-                            </a>
-                        </div>
-                        <div class="col-6 col-md-4 col-lg-2">
-                            <a href="https://www.youtube.com/@rsadbaladhikahusada" target="_blank" class="card h-100 p-3 text-center text-decoration-none border-0 shadow-sm interactive-card rounded-4">
-                                <div class="fs-2 text-danger mb-2"><i class="bi bi-youtube"></i></div>
-                                <div class="fw-bold text-dark small">YouTube</div>
-                                <div class="text-muted text-truncate" style="font-size: 0.72rem;">RUMKIT TK. III BALADHIKA HUSADA</div>
-                            </a>
-                        </div>
-                        <div class="col-6 col-md-4 col-lg-2">
-                            <a href="https://rsbaladhikahusada.com" target="_blank" class="card h-100 p-3 text-center text-decoration-none border-0 shadow-sm interactive-card rounded-4">
-                                <div class="fs-2 text-info mb-2"><i class="bi bi-globe"></i></div>
-                                <div class="fw-bold text-dark small">Website</div>
-                                <div class="text-muted text-truncate" style="font-size: 0.75rem;">rsbaladhikahusada.com</div>
-                            </a>
                         </div>
                     </div>
                 </div>
