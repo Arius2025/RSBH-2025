@@ -25,47 +25,57 @@
             <div class="row g-4 justify-content-center mb-5">
                 <!-- Komplain Online -->
                 <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-                    <div class="apple-glass-card h-100 p-4 p-md-5 position-relative overflow-hidden">
-                        <div class="position-absolute top-0 end-0 p-3 opacity-10">
-                            <i class="bi bi-qr-code-scan" style="font-size: 8rem;"></i>
-                        </div>
-                        <h4 class="text-success fw-bold mb-4 position-relative z-1"><i class="bi bi-phone-vibrate me-2"></i>
-                            Jalur Cepat (Online)</h4>
+                    <div class="bg-white rounded-4 p-4 p-md-5 shadow-lg h-100 border-start border-success border-5 d-flex flex-column justify-content-between">
+                        <div>
+                            <h4 class="text-success fw-bold mb-3"><i class="bi bi-phone-vibrate me-2"></i> Jalur Cepat (Online)</h4>
+                            <p class="text-muted small mb-4">Penyampaian keluhan mandiri secara digital, praktis, dan langsung terhubung ke sistem.</p>
 
-                        <div class="row g-3 position-relative z-1">
-                            <div class="col-6">
-                                <a href="https://wa.me/6281387841253" target="_blank"
-                                    class="interactive-card d-block p-3 rounded-4 text-center text-decoration-none h-100">
-                                    <img src="{{ asset('images/komplain/qrkomplainwa.jpeg') }}" alt="QR WhatsApp"
-                                        class="img-fluid rounded-3 shadow-sm mb-3 mx-auto"
-                                        style="max-width: 130px; border: 2px solid #25D366;">
-                                    <h6 class="text-dark fw-bold mb-1">WhatsApp Pengaduan</h6>
-                                    <span class="badge bg-success-subtle text-success rounded-pill">0813 8784 1253</span>
-                                </a>
-                            </div>
-                            <div class="col-6">
-                                <a href="https://forms.gle/nSrUJS9wSP5ieoNNA" target="_blank"
-                                    class="interactive-card d-block p-3 rounded-4 text-center text-decoration-none h-100">
-                                    <img src="{{ asset('images/komplain/qrkomplainform.avif') }}" alt="QR Google Form"
-                                        class="img-fluid rounded-3 shadow-sm mb-3 mx-auto"
-                                        style="max-width: 130px; border: 2px solid #4285F4;">
-                                    <h6 class="text-dark fw-bold mb-1">Google Forms</h6>
-                                    <span class="badge bg-primary-subtle text-primary rounded-pill">Tercatat Sistem</span>
-                                </a>
+                            <div class="row g-3 mb-4">
+                                <div class="col-6">
+                                    <a href="https://wa.me/6281387841253" target="_blank"
+                                        class="d-block p-3 rounded-3 text-center text-decoration-none h-100 border border-success border-opacity-25 bg-light hover-lift">
+                                        <img src="{{ asset('images/komplain/qrkomplainwa.jpeg') }}" alt="QR WhatsApp"
+                                            class="img-fluid rounded-2 shadow-sm mb-2 mx-auto"
+                                            style="max-width: 120px; border: 1px solid #25D366;">
+                                        <h6 class="text-dark fw-bold mb-1 fs-7">WhatsApp Pengaduan</h6>
+                                        <span class="badge bg-success text-white rounded-pill" style="font-size: 0.72rem;">0813 8784 1253</span>
+                                    </a>
+                                </div>
+                                <div class="col-6">
+                                    <a href="https://forms.gle/nSrUJS9wSP5ieoNNA" target="_blank"
+                                        class="d-block p-3 rounded-3 text-center text-decoration-none h-100 border border-primary border-opacity-25 bg-light hover-lift">
+                                        <img src="{{ asset('images/komplain/qrkomplainform.avif') }}" alt="QR Google Form"
+                                            class="img-fluid rounded-2 shadow-sm mb-2 mx-auto"
+                                            style="max-width: 120px; border: 1px solid #4285F4;">
+                                        <h6 class="text-dark fw-bold mb-1 fs-7">Google Forms</h6>
+                                        <span class="badge bg-primary text-white rounded-pill" style="font-size: 0.72rem;">Formulir Digital RS</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="mt-4 pt-4 border-top border-success border-opacity-25 position-relative z-1">
-                            <div class="interactive-card p-4 rounded-4 text-center bg-white shadow-sm">
-                                <img src="{{ asset('images/komplain/lapor.png') }}" alt="Logo LAPOR" class="img-fluid mb-3"
-                                    style="max-height: 50px;">
-                                <h6 class="fw-bold text-dark mb-2">Portal Resmi SP4N-LAPOR!</h6>
-                                <p class="text-muted small mb-4">Layanan Aspirasi dan Pengaduan Online Rakyat. Terintegrasi
-                                    secara Nasional.</p>
-                                <a href="https://lapor.go.id/" target="_blank"
-                                    class="btn btn-danger px-4 py-2 fw-bold shadow-sm rounded-pill hover-lift w-100">
-                                    Sampaikan Laporan <i class="bi bi-box-arrow-up-right ms-1"></i>
-                                </a>
+                        <!-- SP4N-LAPOR! Institutional Banner -->
+                        <div class="pt-3 border-top border-secondary border-opacity-10">
+                            <div class="p-3 rounded-3 border border-danger-subtle bg-danger bg-opacity-10 d-flex flex-column flex-sm-row align-items-center gap-3">
+                                <div class="flex-shrink-0 text-center">
+                                    <img src="{{ asset('images/komplain/lapor.png') }}" alt="Logo SP4N-LAPOR!"
+                                        class="img-fluid rounded-2 shadow-sm" style="width: 50px; height: 50px; object-fit: contain;">
+                                </div>
+                                <div class="flex-grow-1 text-center text-sm-start min-w-0">
+                                    <div class="d-flex align-items-center justify-content-center justify-content-sm-start gap-2 mb-1">
+                                        <strong class="text-dark fs-7">Portal Resmi SP4N-LAPOR!</strong>
+                                        <span class="badge bg-danger text-white rounded-pill" style="font-size: 0.65rem;">Kanal Nasional</span>
+                                    </div>
+                                    <div class="text-secondary small" style="font-size: 0.76rem; line-height: 1.35;">
+                                        Layanan Aspirasi & Pengaduan Online Rakyat RI terintegrasi lintas kementerian dan instansi pemerintah.
+                                    </div>
+                                </div>
+                                <div class="flex-shrink-0 w-100 w-sm-auto text-center">
+                                    <a href="https://lapor.go.id/" target="_blank"
+                                        class="btn btn-sm btn-outline-danger fw-bold rounded-pill px-3 py-1.5 text-nowrap">
+                                        Kunjungi Portal <i class="bi bi-box-arrow-up-right ms-1"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
