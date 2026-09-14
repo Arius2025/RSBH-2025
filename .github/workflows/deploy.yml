@@ -27,7 +27,7 @@ jobs:
             php artisan down || true
 
             # 3. Update Source Code
-            git config --global --add safe.directory "*"
+            git config --global --add safe.directory /home/rsbaladhikahusada/htdocs/www.rsbaladhikahusada.com
             git fetch origin main
             git reset --hard origin/main
             
