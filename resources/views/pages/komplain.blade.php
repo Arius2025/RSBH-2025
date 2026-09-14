@@ -34,13 +34,13 @@
 
                         <div class="row g-3 position-relative z-1">
                             <div class="col-6">
-                                <a href="https://wa.me/6282340887717" target="_blank"
+                                <a href="https://wa.me/6281387841253" target="_blank"
                                     class="interactive-card d-block p-3 rounded-4 text-center text-decoration-none h-100">
                                     <img src="{{ asset('images/komplain/qrkomplainwa.jpeg') }}" alt="QR WhatsApp"
                                         class="img-fluid rounded-3 shadow-sm mb-3 mx-auto"
                                         style="max-width: 130px; border: 2px solid #25D366;">
-                                    <h6 class="text-dark fw-bold mb-1">WhatsApp</h6>
-                                    <span class="badge bg-success-subtle text-success rounded-pill">Fast Respon</span>
+                                    <h6 class="text-dark fw-bold mb-1">WhatsApp Pengaduan</h6>
+                                    <span class="badge bg-success-subtle text-success rounded-pill">0813 8784 1253</span>
                                 </a>
                             </div>
                             <div class="col-6">
@@ -74,35 +74,78 @@
                 <!-- Narahubung -->
                 <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
                     <div class="bg-white rounded p-4 p-md-5 shadow-lg h-100 border-start border-success border-5">
-                        <h4 class="text-success fw-bold mb-4"><i class="bi bi-person-lines-fill me-2"></i> Narahubung Tim
+                        <h4 class="text-success fw-bold mb-3"><i class="bi bi-person-lines-fill me-2"></i> Narahubung Tim
                             Komplain</h4>
-                        <p class="text-muted small mb-4">Tim kami yang berdedikasi siap membantu menyelesaikan kendala
-                            pelayanan Anda.</p>
+                        <p class="text-muted small mb-4">Tim kami yang berdedikasi siap membantu mendengar dan melayani dengan sepenuh hati.</p>
 
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item bg-light border-0 mb-2 rounded shadow-sm">
-                                <strong>KAPTEN CKM MUSTAR EFENDI</strong><br>
-                                <span class="text-success fw-semibold">Ketua Tim Komplain</span><br>
-                                <i class="bi bi-telephone-fill me-1 text-success"></i> <a href="tel:082340887717"
-                                    class="text-decoration-none">0823-4088-7717</a>
+                            <li class="list-group-item bg-light border-0 mb-3 rounded-3 p-3 shadow-sm contact-card">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <div>
+                                        <strong class="text-dark fs-6">KAPTEN CKM MUSTAR EFENDI</strong>
+                                        <div class="text-success fw-semibold small">Ketua Tim Komplain</div>
+                                    </div>
+                                    <span class="badge bg-success bg-opacity-10 text-success rounded-pill">Ketua</span>
+                                </div>
+                                <div class="d-flex flex-wrap gap-2 align-items-center mt-2">
+                                    <a href="tel:087870911995" class="btn btn-sm btn-outline-success rounded-pill px-3 py-1">
+                                        <i class="bi bi-telephone-fill me-1"></i> 0878-7091-1995
+                                    </a>
+                                    <a href="https://wa.me/6287870911995" target="_blank" class="btn btn-sm btn-success rounded-pill px-3 py-1">
+                                        <i class="bi bi-whatsapp me-1"></i> WhatsApp
+                                    </a>
+                                </div>
                             </li>
-                            <li class="list-group-item bg-light border-0 mb-2 rounded shadow-sm">
-                                <strong>PELTU SYAMSUL ARIFIN, S.Kep. Ners</strong><br>
-                                <span class="text-success fw-semibold">Komplain Pelayanan Medis</span><br>
-                                <i class="bi bi-telephone-fill me-1 text-success"></i> <a href="tel:081235677415"
-                                    class="text-decoration-none">0812-3567-7415</a>
+                            <li class="list-group-item bg-light border-0 mb-3 rounded-3 p-3 shadow-sm contact-card">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <div>
+                                        <strong class="text-dark fs-6">PELTU SYAMSUL ARIFIN, S.Kep. Ners</strong>
+                                        <div class="text-success fw-semibold small">Komplain Pelayanan Medis</div>
+                                    </div>
+                                    <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill">Medis</span>
+                                </div>
+                                <div class="d-flex flex-wrap gap-2 align-items-center mt-2">
+                                    <a href="tel:081235677415" class="btn btn-sm btn-outline-success rounded-pill px-3 py-1">
+                                        <i class="bi bi-telephone-fill me-1"></i> 0812-3567-7415
+                                    </a>
+                                    <a href="https://wa.me/6281235677415" target="_blank" class="btn btn-sm btn-success rounded-pill px-3 py-1">
+                                        <i class="bi bi-whatsapp me-1"></i> WhatsApp
+                                    </a>
+                                </div>
                             </li>
-                            <li class="list-group-item bg-light border-0 mb-2 rounded shadow-sm">
-                                <strong>PNS A’JALIL ACHJAB, S.Kep.Ners, MM, M.Kes</strong><br>
-                                <span class="text-success fw-semibold">Komplain BPJS</span><br>
-                                <i class="bi bi-telephone-fill me-1 text-success"></i> <a href="tel:+6282143024047"
-                                    class="text-decoration-none">0821-4302-4047</a>
+                            <li class="list-group-item bg-light border-0 mb-3 rounded-3 p-3 shadow-sm contact-card">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <div>
+                                        <strong class="text-dark fs-6">PNS A'JALIL ACHBAB, S.Kep., Ners., MM. M.Kes</strong>
+                                        <div class="text-success fw-semibold small">Komplain BPJS</div>
+                                    </div>
+                                    <span class="badge bg-warning bg-opacity-10 text-warning-emphasis rounded-pill">BPJS</span>
+                                </div>
+                                <div class="d-flex flex-wrap gap-2 align-items-center mt-2">
+                                    <a href="tel:08123481945" class="btn btn-sm btn-outline-success rounded-pill px-3 py-1">
+                                        <i class="bi bi-telephone-fill me-1"></i> 0812-3481-945
+                                    </a>
+                                    <a href="https://wa.me/628123481945" target="_blank" class="btn btn-sm btn-success rounded-pill px-3 py-1">
+                                        <i class="bi bi-whatsapp me-1"></i> WhatsApp
+                                    </a>
+                                </div>
                             </li>
-                            <li class="list-group-item bg-light border-0 mb-2 rounded shadow-sm">
-                                <strong>PELTU EDI SUBAGIO, AMd.Kep</strong><br>
-                                <span class="text-success fw-semibold">Komplain Pelayanan & Fasilitas Umum</span><br>
-                                <i class="bi bi-telephone-fill me-1 text-success"></i> <a href="tel:085234629570"
-                                    class="text-decoration-none">0852-3462-9570</a>
+                            <li class="list-group-item bg-light border-0 mb-2 rounded-3 p-3 shadow-sm contact-card">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <div>
+                                        <strong class="text-dark fs-6">PELTU EDI SUBAGIO, S.Kep. Ners</strong>
+                                        <div class="text-success fw-semibold small">Komplain Pelayanan & Fasilitas Umum</div>
+                                    </div>
+                                    <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill">Fasilitas</span>
+                                </div>
+                                <div class="d-flex flex-wrap gap-2 align-items-center mt-2">
+                                    <a href="tel:082143024047" class="btn btn-sm btn-outline-success rounded-pill px-3 py-1">
+                                        <i class="bi bi-telephone-fill me-1"></i> 0821-4302-4047
+                                    </a>
+                                    <a href="https://wa.me/6282143024047" target="_blank" class="btn btn-sm btn-success rounded-pill px-3 py-1">
+                                        <i class="bi bi-whatsapp me-1"></i> WhatsApp
+                                    </a>
+                                </div>
                             </li>
                         </ul>
                     </div>
@@ -114,7 +157,8 @@
                 <div class="col-lg-10 text-center mb-4">
                     <span class="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill fw-bold mb-2">Transparan
                         & Terstruktur</span>
-                    <h3 class="text-dark fw-bold">Alur Layanan Pengaduan</h3>
+                    <h3 class="text-dark fw-bold">Alur Layanan & Narahubung Pengaduan</h3>
+                    <p class="text-muted small">Klik gambar untuk melihat poster dalam resolusi penuh.</p>
                 </div>
 
                 <div class="col-lg-12">
@@ -122,22 +166,91 @@
                         <div class="row g-4">
                             <div class="col-md-6" data-aos="fade-right" data-aos-delay="100">
                                 <div class="text-center mb-3">
-                                    <h5 class="fw-bold text-success"><i class="bi bi-person-walking me-2"></i> Pengaduan
-                                        Langsung</h5>
+                                    <h5 class="fw-bold text-success"><i class="bi bi-diagram-3-fill me-2"></i> Bagan Alur Layanan Pengaduan</h5>
+                                    <span class="badge bg-success-subtle text-success rounded-pill">Pengaduan Langsung & Tidak Langsung</span>
                                 </div>
-                                <img src="{{ asset('images/komplain/komplain1.avif') }}" alt="Alur Pengaduan 1"
-                                    class="img-fluid rounded-4 shadow hover-lift"
-                                    style="border: 4px solid rgba(255,255,255,0.8);">
+                                <a href="{{ asset('images/komplain/alur-pengaduan.jpg') }}" target="_blank" class="d-block position-relative group-hover">
+                                    <img src="{{ asset('images/komplain/alur-pengaduan.jpg') }}" alt="Alur Layanan Pengaduan RS Tk. III Baladhika Husada"
+                                        class="img-fluid rounded-4 shadow hover-lift w-100"
+                                        style="border: 4px solid rgba(255,255,255,0.9); object-fit: contain; max-height: 520px; background-color: #fff;">
+                                    <div class="text-center mt-2">
+                                        <span class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+                                            <i class="bi bi-arrows-fullscreen me-1"></i> Buka Ukuran Penuh
+                                        </span>
+                                    </div>
+                                </a>
                             </div>
                             <div class="col-md-6" data-aos="fade-left" data-aos-delay="200">
                                 <div class="text-center mb-3">
-                                    <h5 class="fw-bold text-success"><i class="bi bi-laptop me-2"></i> Pengaduan Tidak
-                                        Langsung</h5>
+                                    <h5 class="fw-bold text-success"><i class="bi bi-card-image me-2"></i> Poster Layanan & Narahubung</h5>
+                                    <span class="badge bg-primary-subtle text-primary rounded-pill">Tim Komplain & Kanal Resmi</span>
                                 </div>
-                                <img src="{{ asset('images/komplain/kompain2.avif') }}" alt="Alur Pengaduan 2"
-                                    class="img-fluid rounded-4 shadow hover-lift"
-                                    style="border: 4px solid rgba(255,255,255,0.8);">
+                                <a href="{{ asset('images/komplain/layanan-pengaduan.jpg') }}" target="_blank" class="d-block position-relative group-hover">
+                                    <img src="{{ asset('images/komplain/layanan-pengaduan.jpg') }}" alt="Poster Layanan Pengaduan RS Tk. III Baladhika Husada"
+                                        class="img-fluid rounded-4 shadow hover-lift w-100"
+                                        style="border: 4px solid rgba(255,255,255,0.9); object-fit: contain; max-height: 520px; background-color: #fff;">
+                                    <div class="text-center mt-2">
+                                        <span class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+                                            <i class="bi bi-arrows-fullscreen me-1"></i> Buka Ukuran Penuh
+                                        </span>
+                                    </div>
+                                </a>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Media Sosial & Saluran Pengaduan --}}
+            <div class="row justify-content-center mt-5" data-aos="fade-up">
+                <div class="col-lg-10 text-center mb-4">
+                    <span class="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill fw-bold mb-2">Saluran Resmi</span>
+                    <h3 class="text-dark fw-bold">Media Sosial & Kanal Pengaduan</h3>
+                    <p class="text-muted small">Kami siap mendengar dan melayani dengan sepenuh hati melalui kanal resmi berikut:</p>
+                </div>
+                <div class="col-lg-12">
+                    <div class="row g-3 justify-content-center">
+                        <div class="col-6 col-md-4 col-lg-2">
+                            <a href="https://wa.me/6281387841253" target="_blank" class="card h-100 p-3 text-center text-decoration-none border-0 shadow-sm interactive-card rounded-4">
+                                <div class="fs-2 text-success mb-2"><i class="bi bi-whatsapp"></i></div>
+                                <div class="fw-bold text-dark small">WhatsApp</div>
+                                <div class="text-muted" style="font-size: 0.75rem;">0813 8784 1253</div>
+                            </a>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-2">
+                            <a href="mailto:rsbaladhikahusadajember@gmail.com" class="card h-100 p-3 text-center text-decoration-none border-0 shadow-sm interactive-card rounded-4">
+                                <div class="fs-2 text-danger mb-2"><i class="bi bi-envelope-fill"></i></div>
+                                <div class="fw-bold text-dark small">Email</div>
+                                <div class="text-muted text-truncate" style="font-size: 0.72rem;">rsbaladhikahusadajember@gmail.com</div>
+                            </a>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-2">
+                            <a href="https://instagram.com/rsadbaladhikahusada" target="_blank" class="card h-100 p-3 text-center text-decoration-none border-0 shadow-sm interactive-card rounded-4">
+                                <div class="fs-2 text-danger mb-2"><i class="bi bi-instagram"></i></div>
+                                <div class="fw-bold text-dark small">Instagram</div>
+                                <div class="text-muted text-truncate" style="font-size: 0.75rem;">@rsadbaladhikahusada</div>
+                            </a>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-2">
+                            <a href="https://facebook.com/baladhikahusada" target="_blank" class="card h-100 p-3 text-center text-decoration-none border-0 shadow-sm interactive-card rounded-4">
+                                <div class="fs-2 text-primary mb-2"><i class="bi bi-facebook"></i></div>
+                                <div class="fw-bold text-dark small">Facebook</div>
+                                <div class="text-muted text-truncate" style="font-size: 0.75rem;">Baladhika Husada</div>
+                            </a>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-2">
+                            <a href="https://www.youtube.com/@rsadbaladhikahusada" target="_blank" class="card h-100 p-3 text-center text-decoration-none border-0 shadow-sm interactive-card rounded-4">
+                                <div class="fs-2 text-danger mb-2"><i class="bi bi-youtube"></i></div>
+                                <div class="fw-bold text-dark small">YouTube</div>
+                                <div class="text-muted text-truncate" style="font-size: 0.72rem;">RUMKIT TK. III BALADHIKA HUSADA</div>
+                            </a>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-2">
+                            <a href="https://rsbaladhikahusada.com" target="_blank" class="card h-100 p-3 text-center text-decoration-none border-0 shadow-sm interactive-card rounded-4">
+                                <div class="fs-2 text-info mb-2"><i class="bi bi-globe"></i></div>
+                                <div class="fw-bold text-dark small">Website</div>
+                                <div class="text-muted text-truncate" style="font-size: 0.75rem;">rsbaladhikahusada.com</div>
+                            </a>
                         </div>
                     </div>
                 </div>
