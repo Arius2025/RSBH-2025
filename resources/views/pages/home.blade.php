@@ -210,7 +210,7 @@
 <!-- Statistik Animasi -->
 <section class="py-8 bg-surface-container-lowest border-b border-outline-variant/30 relative z-20">
     <div class="max-w-container-max mx-auto px-gutter">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center divide-y md:divide-y-0 md:divide-x divide-outline-variant/30">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center divide-y md:divide-y-0 md:divide-x divide-outline-variant/30">
             <div class="p-2 pt-4 md:pt-2 group cursor-pointer hover:bg-emerald-50/70 rounded-xl transition-all" 
                  data-bs-toggle="modal" 
                  data-bs-target="#modalPasienTerlayani"
@@ -240,10 +240,6 @@
             <div class="p-2 pt-4 md:pt-2">
                 <h3 class="text-4xl md:text-5xl font-headline-xl text-primary mb-1"><span class="stat-counter" data-target="24">0</span>/7</h3>
                 <p class="text-on-surface-variant font-label-caps text-xs m-0 tracking-widest">SIAGA GAWAT DARURAT</p>
-            </div>
-            <div class="p-2 pt-4 md:pt-2">
-                <h3 class="text-4xl md:text-5xl font-headline-xl text-primary mb-1"><span class="stat-counter" data-target="100">0</span>%</h3>
-                <p class="text-on-surface-variant font-label-caps text-xs m-0 tracking-widest">KOMITMEN PELAYANAN</p>
             </div>
         </div>
     </div>
