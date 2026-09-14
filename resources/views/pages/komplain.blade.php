@@ -26,52 +26,48 @@
                             <p class="text-muted small mb-4">Penyampaian keluhan atau saran melalui WhatsApp atau formulir pengaduan rumah sakit.</p>
 
                             <div class="row g-3 mb-4">
-                                <div class="col-12 col-sm-6">
+                                <div class="col-6">
                                     <a href="https://wa.me/6281387841253" target="_blank" rel="noopener noreferrer" aria-label="Buka WhatsApp Pengaduan Rumah Sakit"
                                         class="d-flex flex-column align-items-center justify-content-center p-3 rounded-3 text-center text-decoration-none h-100 border border-success border-opacity-25 bg-light hover-lift">
                                         <img src="{{ asset('images/komplain/qrkomplainwa.jpeg') }}" alt="QR Code WhatsApp Pengaduan"
                                             class="img-fluid rounded-2 shadow-sm mb-2"
-                                            style="width: 120px; height: 120px; object-fit: contain; border: 1px solid #25D366;">
+                                            style="max-width: 110px; width: 100%; aspect-ratio: 1/1; object-fit: contain; border: 1px solid #25D366;">
                                         <span class="text-dark fw-bold mb-1 fs-7">WhatsApp Pengaduan</span>
-                                        <span class="badge bg-success text-white px-2 py-1" style="font-size: 0.75rem;">0813 8784 1253</span>
+                                        <span class="badge bg-success text-white px-2 py-1" style="font-size: 0.72rem;">0813 8784 1253</span>
                                     </a>
                                 </div>
-                                <div class="col-12 col-sm-6">
+                                <div class="col-6">
                                     <a href="https://forms.gle/nSrUJS9wSP5ieoNNA" target="_blank" rel="noopener noreferrer" aria-label="Buka Google Form Pengaduan Rumah Sakit"
                                         class="d-flex flex-column align-items-center justify-content-center p-3 rounded-3 text-center text-decoration-none h-100 border border-primary border-opacity-25 bg-light hover-lift">
                                         <img src="{{ asset('images/komplain/qrkomplainform.avif') }}" alt="QR Code Formulir Pengaduan Digital"
                                             class="img-fluid rounded-2 shadow-sm mb-2"
-                                            style="width: 120px; height: 120px; object-fit: contain; border: 1px solid #4285F4;">
+                                            style="max-width: 110px; width: 100%; aspect-ratio: 1/1; object-fit: contain; border: 1px solid #4285F4;">
                                         <span class="text-dark fw-bold mb-1 fs-7">Google Forms</span>
-                                        <span class="badge bg-primary text-white px-2 py-1" style="font-size: 0.75rem;">Formulir Digital RS</span>
+                                        <span class="badge bg-primary text-white px-2 py-1" style="font-size: 0.72rem;">Formulir Digital RS</span>
                                     </a>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- SP4N-LAPOR! Institutional Banner -->
+                        <!-- SP4N-LAPOR! Institutional Card -->
                         <div class="pt-3 border-top border-secondary border-opacity-10">
-                            <div class="p-3 rounded-3 border border-danger-subtle bg-danger bg-opacity-10 d-flex flex-column flex-sm-row align-items-center gap-3">
-                                <div class="flex-shrink-0 text-center">
+                            <div class="card border rounded-3 p-3 p-md-4 text-center bg-white shadow-sm">
+                                <div class="mb-2">
                                     <img src="{{ asset('images/komplain/lapor.png') }}" alt="Logo SP4N-LAPOR!"
-                                        class="img-fluid rounded-2" style="width: 48px; height: 48px; object-fit: contain;">
+                                        class="img-fluid" style="height: 48px; object-fit: contain;">
                                 </div>
-                                <div class="flex-grow-1 text-center text-sm-start min-w-0">
-                                    <div class="d-flex align-items-center justify-content-center justify-content-sm-start gap-2 mb-1">
-                                        <strong class="text-dark fs-7">Portal Resmi SP4N-LAPOR!</strong>
-                                        <span class="badge bg-danger text-white rounded-1" style="font-size: 0.65rem;">Kanal Nasional</span>
-                                    </div>
-                                    <div class="text-secondary small" style="font-size: 0.8rem; line-height: 1.4;">
-                                        Layanan Aspirasi & Pengaduan Online Rakyat terintegrasi lintas kementerian dan instansi pemerintah RI.
-                                    </div>
+                                <h6 class="fw-bold text-dark mb-1">Portal Resmi SP4N-LAPOR!</h6>
+                                <div class="mb-2">
+                                    <span class="badge bg-danger-subtle text-danger rounded-1 px-2 py-1" style="font-size: 0.72rem;">Kanal Pengaduan Nasional RI</span>
                                 </div>
-                                <div class="flex-shrink-0 w-100 w-sm-auto text-center">
-                                    <a href="https://lapor.go.id/" target="_blank" rel="noopener noreferrer"
-                                        class="btn btn-sm btn-outline-danger fw-bold rounded-2 px-3 py-2 text-nowrap d-inline-flex align-items-center justify-content-center"
-                                        style="min-height: 44px;" aria-label="Kunjungi Portal Resmi SP4N-LAPOR!">
-                                        Kunjungi Portal <i class="bi bi-box-arrow-up-right ms-1"></i>
-                                    </a>
-                                </div>
+                                <p class="text-muted small mb-3" style="font-size: 0.82rem; line-height: 1.4;">
+                                    Layanan Aspirasi & Pengaduan Online Rakyat terintegrasi kementerian dan lembaga pemerintah.
+                                </p>
+                                <a href="https://www.lapor.go.id/instansi/rumkit-tkiii-baladhika-husada-jember" target="_blank" rel="noopener noreferrer"
+                                    class="btn btn-danger w-100 fw-bold py-2 shadow-sm rounded-2 d-inline-flex align-items-center justify-content-center hover-lift"
+                                    style="min-height: 44px;" aria-label="Sampaikan Laporan melalui Portal Resmi SP4N-LAPOR!">
+                                    Sampaikan Laporan di SP4N-LAPOR! <i class="bi bi-box-arrow-up-right ms-2"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
