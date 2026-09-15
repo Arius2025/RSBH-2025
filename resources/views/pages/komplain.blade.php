@@ -52,12 +52,12 @@
                         <!-- SP4N-LAPOR! Institutional Card -->
                         <div class="pt-3 border-top border-secondary border-opacity-10">
                             <div class="card border rounded-3 p-3 p-md-4 text-center bg-white shadow-sm">
-                                <div class="mb-2">
+                                <div class="mb-2 d-flex justify-content-center align-items-center text-center">
                                     <img src="{{ asset('images/komplain/lapor.png') }}" alt="Logo SP4N-LAPOR!"
-                                        class="img-fluid" style="height: 48px; object-fit: contain;">
+                                        class="img-fluid mx-auto d-block" style="height: 48px; width: 48px; object-fit: contain; margin-left: auto; margin-right: auto;">
                                 </div>
                                 <h6 class="fw-bold text-dark mb-1">Portal Resmi SP4N-LAPOR!</h6>
-                                <div class="mb-2">
+                                <div class="mb-2 d-flex justify-content-center">
                                     <span class="badge bg-danger-subtle text-danger rounded-1 px-2 py-1" style="font-size: 0.72rem;">Kanal Pengaduan Nasional RI</span>
                                 </div>
                                 <p class="text-muted small mb-3" style="font-size: 0.82rem; line-height: 1.4;">
