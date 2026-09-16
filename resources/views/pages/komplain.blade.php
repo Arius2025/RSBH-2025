@@ -37,9 +37,9 @@
                                     </a>
                                 </div>
                                 <div class="col-6">
-                                    <a href="https://forms.gle/nSrUJS9wSP5ieoNNA" target="_blank" rel="noopener noreferrer" aria-label="Buka Google Form Pengaduan Rumah Sakit"
+                                    <a href="https://link.rs-bh.site/KomplainDKT" target="_blank" rel="noopener noreferrer" aria-label="Buka Google Form Pengaduan Rumah Sakit"
                                         class="d-flex flex-column align-items-center justify-content-center p-3 rounded-3 text-center text-decoration-none h-100 border border-primary border-opacity-25 bg-light hover-lift">
-                                        <img src="{{ asset('images/komplain/qrkomplainform.avif') }}" alt="QR Code Formulir Pengaduan Digital"
+                                        <img src="{{ asset('images/komplain/qrkomplainform.png') }}" alt="QR Code Formulir Pengaduan Digital"
                                             class="img-fluid rounded-2 shadow-sm mb-2"
                                             style="max-width: 110px; width: 100%; aspect-ratio: 1/1; object-fit: contain; border: 1px solid #4285F4;">
                                         <span class="text-dark fw-bold mb-1 fs-7">Google Forms</span>
