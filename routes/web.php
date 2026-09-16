@@ -99,6 +99,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     // Kelola Jadwal Dokter
     Route::get('/jadwal', [JadwalCrudController::class, 'index'])->name('jadwal.index');
     Route::post('/jadwal/update', [JadwalCrudController::class, 'update'])->name('jadwal.update');
+    Route::delete('/jadwal/foto/{index}', [JadwalCrudController::class, 'deleteFoto'])->name('jadwal.delete_foto');
 
     // Upload Jadwal Harian (Khusus Admin)
     Route::get('/jadwal-harian/upload', [JadwalHarianController::class, 'uploadForm'])->name('jadwal-harian.form');
