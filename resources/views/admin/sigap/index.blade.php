@@ -91,6 +91,34 @@
         margin-bottom: 1rem;
         box-shadow: 0 2px 4px rgba(0,0,0,0.02);
     }
+    .pagination {
+        margin-bottom: 0;
+        gap: 4px;
+        flex-wrap: wrap;
+    }
+    .page-item .page-link {
+        border-radius: 8px !important;
+        border: 1px solid #e2e8f0;
+        color: #475569;
+        font-size: 0.85rem;
+        font-weight: 600;
+        padding: 6px 12px;
+        min-height: 38px;
+        min-width: 38px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .page-item.active .page-link {
+        background-color: #198754;
+        border-color: #198754;
+        color: #ffffff;
+    }
+    .page-item.disabled .page-link {
+        color: #94a3b8;
+        background-color: #f8fafc;
+        border-color: #edf2f7;
+    }
 </style>
 
 <div class="container-fluid px-3 px-lg-4 py-3">
@@ -131,18 +159,7 @@
         </div>
     @endif
 
-    {{-- Pilihan Menu Halaman Layanan SIGAP (Navigasi Antar Halaman Sendiri-Sendiri) --}}
-    <div class="d-flex flex-wrap gap-2 mb-4">
-        <a href="{{ route('admin.sigap.siterbat') }}" class="nav-link {{ $activeServiceKey === 'siterbat' ? 'btn btn-success text-white' : 'btn btn-outline-secondary bg-white' }} px-3 py-2 rounded-3 fw-semibold">
-            <i class="bi bi-bicycle me-1.5"></i> SITERBAT (Antar Obat)
-        </a>
-        <a href="{{ route('admin.sigap.ambulan') }}" class="nav-link {{ $activeServiceKey === 'ambulan' ? 'btn btn-success text-white' : 'btn btn-outline-secondary bg-white' }} px-3 py-2 rounded-3 fw-semibold">
-            <i class="bi bi-truck me-1.5"></i> AMBULAN (Jemput Pasien)
-        </a>
-        <a href="{{ route('admin.sigap.santardekate') }}" class="nav-link {{ $activeServiceKey === 'santardekate' ? 'btn btn-success text-white' : 'btn btn-outline-secondary bg-white' }} px-3 py-2 rounded-3 fw-semibold">
-            <i class="bi bi-basket3 me-1.5"></i> SANTAR DEKATE (Koperasi)
-        </a>
-    </div>
+
 
     {{-- Widget Ringkasan Angka di Bagian Atas Tabel (Bulan & Tahun) --}}
     <div class="row g-3 mb-4">
@@ -277,7 +294,7 @@
             </h2>
             <div class="text-muted small mt-0.5">
                 Periode: <strong>{{ $filterMonth === 'semua' ? 'Semua Bulan' : ($monthNames[$filterMonth] ?? '') }} {{ $filterYear }}</strong>
-                &bull; Total data tampil: <strong>{{ count($tableRows) }}</strong> baris
+                &bull; Total data tampil: <strong>{{ $tableRows->total() }}</strong> baris
                 @if(!empty($searchQuery))
                     &bull; Kata kunci: <em>"{{ $searchQuery }}"</em>
                 @endif
@@ -320,7 +337,7 @@
                 <tbody>
                     @forelse($tableRows as $idx => $row)
                         <tr>
-                            <td class="text-center text-muted fw-bold">{{ $idx + 1 }}</td>
+                            <td class="text-center text-muted fw-bold">{{ $tableRows->firstItem() ? ($tableRows->firstItem() + $idx) : ($idx + 1) }}</td>
                             
                             {{-- Tanggal & Jam --}}
                             <td>
@@ -469,6 +486,18 @@
                 </tbody>
             </table>
         </div>
+
+        {{-- Paginasi Desktop --}}
+        @if($tableRows->hasPages())
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 px-4 py-3 border-top bg-light">
+                <div class="text-muted small">
+                    Menampilkan <strong>{{ $tableRows->firstItem() }}</strong> - <strong>{{ $tableRows->lastItem() }}</strong> dari <strong>{{ $tableRows->total() }}</strong> permohonan
+                </div>
+                <div>
+                    {{ $tableRows->links('pagination::bootstrap-5') }}
+                </div>
+            </div>
+        @endif
     </div>
 
     {{-- Tampilan Mobile (Daftar Kartu yang Responsif dan Nyaman disentuh) --}}
@@ -477,7 +506,7 @@
             <div class="mobile-data-card">
                 <div class="d-flex justify-content-between align-items-start border-bottom pb-2 mb-2">
                     <div>
-                        <span class="badge bg-secondary-subtle text-secondary rounded-pill px-2 py-0.5 small me-1">#{{ $idx + 1 }}</span>
+                        <span class="badge bg-secondary-subtle text-secondary rounded-pill px-2 py-0.5 small me-1">#{{ $tableRows->firstItem() ? ($tableRows->firstItem() + $idx) : ($idx + 1) }}</span>
                         <strong class="text-dark">{{ $row['nama'] }}</strong>
                         @if($activeServiceKey === 'siterbat' && !empty($row['no_rm']))
                             <span class="badge bg-light text-dark border font-monospace ms-1">{{ $row['no_rm'] }}</span>
@@ -546,6 +575,18 @@
                 </a>
             </div>
         @endforelse
+
+        {{-- Paginasi Mobile --}}
+        @if($tableRows->hasPages())
+            <div class="mt-3 mb-4 d-flex flex-column align-items-center gap-2">
+                <div class="text-muted small">
+                    Halaman <strong>{{ $tableRows->currentPage() }}</strong> dari <strong>{{ $tableRows->lastPage() }}</strong> (Total: {{ $tableRows->total() }})
+                </div>
+                <div>
+                    {{ $tableRows->links('pagination::bootstrap-5') }}
+                </div>
+            </div>
+        @endif
     </div>
 
 </div>

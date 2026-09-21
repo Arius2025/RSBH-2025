@@ -331,11 +331,11 @@
                 <span>Jadwal</span>
             </a>
 
-            {{-- Dokumen PPID --}}
-            <a class="dock-item {{ request()->routeIs('admin.dokumen.*') || request()->routeIs('admin.documents.*') ? 'active' : '' }}" 
-               href="{{ route('admin.documents.index') }}">
-                <i class="bi bi-file-earmark-text-fill"></i>
-                <span>Dokumen</span>
+            {{-- Layanan SIGAP --}}
+            <a class="dock-item {{ request()->routeIs('admin.sigap.*') ? 'active' : '' }}" 
+               href="{{ route('admin.sigap.siterbat') }}">
+                <i class="bi bi-lightning-charge-fill"></i>
+                <span>SIGAP</span>
             </a>
             
             {{-- Permohonan --}}

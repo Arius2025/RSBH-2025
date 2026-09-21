@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Services\GoogleSheetService;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class SigapController extends Controller
 {
@@ -215,6 +216,21 @@ class SigapController extends Controller
         // Urutkan data terbaru di paling atas
         $filteredRows = array_reverse(array_values($filteredRows));
 
+        // Paginasi Data (15 data per halaman)
+        $perPage = 15;
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $currentItems = array_slice($filteredRows, ($currentPage - 1) * $perPage, $perPage);
+        $paginatedRows = new LengthAwarePaginator(
+            $currentItems,
+            count($filteredRows),
+            $perPage,
+            $currentPage,
+            [
+                'path' => LengthAwarePaginator::resolveCurrentPath(),
+                'query' => $request->query(),
+            ]
+        );
+
         $monthNames = [
             1 => 'Januari',
             2 => 'Februari',
@@ -236,7 +252,7 @@ class SigapController extends Controller
             'services' => $this->services,
             'activeServiceKey' => $serviceKey,
             'activeService' => $srvConfig,
-            'tableRows' => $filteredRows,
+            'tableRows' => $paginatedRows,
             'countTotal' => $countTotal,
             'countSelectedYear' => $countSelectedYear,
             'countSelectedMonth' => $countSelectedMonth,
