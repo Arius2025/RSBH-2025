@@ -35,7 +35,7 @@
     .nav-pills-sigap .nav-link {
         color: #475569;
         font-weight: 600;
-        font-size: 0.9rem;
+        font-size: 0.88rem;
         padding: 10px 18px;
         border-radius: 10px;
         border: 1px solid #e2e8f0;
@@ -44,6 +44,7 @@
         align-items: center;
         gap: 8px;
         transition: all 0.2s ease;
+        text-decoration: none;
     }
     .nav-pills-sigap .nav-link:hover {
         background: #f8fafc;
@@ -55,18 +56,6 @@
         border-color: #198754;
         color: #ffffff;
         box-shadow: 0 4px 12px rgba(25, 135, 84, 0.2);
-    }
-    .nav-pills-sigap .nav-link.active .badge-count {
-        background: rgba(255, 255, 255, 0.25);
-        color: #ffffff;
-    }
-    .badge-count {
-        background: #f1f5f9;
-        color: #475569;
-        font-size: 0.75rem;
-        font-weight: 700;
-        padding: 3px 8px;
-        border-radius: 20px;
     }
     .btn-touch {
         min-height: 44px;
@@ -94,17 +83,11 @@
     .table-sigap tbody tr:hover {
         background-color: #f8fafc;
     }
-    .filter-card {
-        background: #ffffff;
-        border: 1px solid rgba(0, 0, 0, 0.08);
-        border-radius: 12px;
-        padding: 1.25rem;
-    }
     .mobile-data-card {
         background: #ffffff;
         border: 1px solid #e2e8f0;
         border-radius: 12px;
-        padding: 1rem;
+        padding: 1.1rem;
         margin-bottom: 1rem;
         box-shadow: 0 2px 4px rgba(0,0,0,0.02);
     }
@@ -112,41 +95,68 @@
 
 <div class="container-fluid px-3 px-lg-4 py-3">
     
-    {{-- Header Halaman --}}
+    {{-- Header Halaman Mandiri --}}
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4">
         <div>
             <div class="d-flex align-items-center gap-2 mb-1">
                 <span class="badge bg-success-subtle text-success border border-success-subtle px-2.5 py-1 rounded-pill fw-semibold">
-                    <i class="bi bi-lightning-charge-fill me-1"></i> Layanan Terintegrasi
+                    <i class="bi {{ $activeService['icon'] }} me-1"></i> Layanan {{ $activeService['title'] }}
                 </span>
-                <span class="text-muted small">Pusat Rekap Data Google Sheets</span>
+                <span class="text-muted small">Panel Administrasi Mandiri</span>
             </div>
-            <h1 class="h3 fw-bold text-dark mb-0">Rekap Data Layanan SIGAP</h1>
-            <p class="text-muted small mb-0 mt-1">Pemantauan data permohonan SITERBAT, AMBULAN, dan SANTAR DEKATE Rumah Sakit Baladhika Husada.</p>
+            <h1 class="h3 fw-bold text-dark mb-0">Data Permohonan {{ $activeService['title'] }}</h1>
+            <p class="text-muted small mb-0 mt-1">{{ $activeService['subtitle'] }} - RS Baladhika Husada Jember.</p>
         </div>
         <div class="d-flex align-items-center gap-2 w-100 w-md-auto">
             <a href="{{ request()->fullUrlWithQuery(['refresh' => 1]) }}" class="btn btn-outline-secondary btn-touch px-3 rounded-3 w-100 w-md-auto" title="Segarkan data dari Google Sheets">
                 <i class="bi bi-arrow-clockwise me-1"></i> Segarkan Data
             </a>
             <a href="{{ route('monitor.portal') }}" target="_blank" class="btn btn-success btn-touch px-3 rounded-3 w-100 w-md-auto">
-                <i class="bi bi-display me-1"></i> Buka Layar Monitor
+                <i class="bi bi-display me-1"></i> Layar Monitor
             </a>
         </div>
     </div>
 
-    {{-- Widget Ringkasan Angka (Bulan & Tahun) --}}
+    {{-- Pesan Peringatan Jika Terjadi Kendala Koneksi --}}
+    @if(!empty($errorMessage))
+        <div class="alert alert-warning alert-dismissible fade show rounded-3 mb-4 shadow-sm" role="alert">
+            <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-exclamation-triangle-fill fs-5"></i>
+                <div>
+                    <strong>Pemberitahuan:</strong> {{ $errorMessage }}
+                    <div class="small mt-1">Silakan coba klik tombol <strong>"Segarkan Data"</strong> di atas.</div>
+                </div>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    {{-- Pilihan Menu Halaman Layanan SIGAP (Navigasi Antar Halaman Sendiri-Sendiri) --}}
+    <div class="d-flex flex-wrap gap-2 mb-4">
+        <a href="{{ route('admin.sigap.siterbat') }}" class="nav-link {{ $activeServiceKey === 'siterbat' ? 'btn btn-success text-white' : 'btn btn-outline-secondary bg-white' }} px-3 py-2 rounded-3 fw-semibold">
+            <i class="bi bi-bicycle me-1.5"></i> SITERBAT (Antar Obat)
+        </a>
+        <a href="{{ route('admin.sigap.ambulan') }}" class="nav-link {{ $activeServiceKey === 'ambulan' ? 'btn btn-success text-white' : 'btn btn-outline-secondary bg-white' }} px-3 py-2 rounded-3 fw-semibold">
+            <i class="bi bi-truck me-1.5"></i> AMBULAN (Jemput Pasien)
+        </a>
+        <a href="{{ route('admin.sigap.santardekate') }}" class="nav-link {{ $activeServiceKey === 'santardekate' ? 'btn btn-success text-white' : 'btn btn-outline-secondary bg-white' }} px-3 py-2 rounded-3 fw-semibold">
+            <i class="bi bi-basket3 me-1.5"></i> SANTAR DEKATE (Koperasi)
+        </a>
+    </div>
+
+    {{-- Widget Ringkasan Angka di Bagian Atas Tabel (Bulan & Tahun) --}}
     <div class="row g-3 mb-4">
         {{-- Total Bulan Terpilih --}}
-        <div class="col-12 col-sm-6 col-lg-3">
+        <div class="col-12 col-md-4">
             <div class="sigap-stat-card h-100">
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
-                        <div class="sigap-stat-label">Permohonan {{ $filterMonth === 'semua' ? 'Semua Bulan' : ($monthNames[$filterMonth] ?? 'Bulan') }}</div>
+                        <div class="sigap-stat-label">Bulan {{ $filterMonth === 'semua' ? 'Semua Bulan' : ($monthNames[$filterMonth] ?? '') }}</div>
                         <div class="sigap-stat-value text-success">
-                            {{ number_format($serviceCounts[$activeServiceKey]['month_count'] ?? 0, 0, ',', '.') }}
+                            {{ number_format($countSelectedMonth, 0, ',', '.') }}
                         </div>
                         <div class="sigap-stat-sub">
-                            Layanan {{ $activeService['title'] }} (Tahun {{ $filterYear }})
+                            Permohonan {{ $activeService['title'] }} (Tahun {{ $filterYear }})
                         </div>
                     </div>
                     <div class="p-2.5 bg-success-subtle text-success rounded-3 fs-5">
@@ -157,16 +167,16 @@
         </div>
 
         {{-- Total Tahun Terpilih --}}
-        <div class="col-12 col-sm-6 col-lg-3">
+        <div class="col-12 col-md-4">
             <div class="sigap-stat-card h-100">
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
                         <div class="sigap-stat-label">Total Tahun {{ $filterYear }}</div>
                         <div class="sigap-stat-value text-primary">
-                            {{ number_format($serviceCounts[$activeServiceKey]['year_count'] ?? 0, 0, ',', '.') }}
+                            {{ number_format($countSelectedYear, 0, ',', '.') }}
                         </div>
                         <div class="sigap-stat-sub">
-                            Akumulasi layanan {{ $activeService['title'] }}
+                            Akumulasi sepanjang tahun {{ $filterYear }}
                         </div>
                     </div>
                     <div class="p-2.5 bg-primary-subtle text-primary rounded-3 fs-5">
@@ -176,17 +186,17 @@
             </div>
         </div>
 
-        {{-- Total Seluruh Riwayat Layanan Aktif --}}
-        <div class="col-12 col-sm-6 col-lg-3">
+        {{-- Total Seluruh Riwayat Layanan Ini --}}
+        <div class="col-12 col-md-4">
             <div class="sigap-stat-card h-100">
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
-                        <div class="sigap-stat-label">Seluruh Riwayat</div>
+                        <div class="sigap-stat-label">Seluruh Data Masuk</div>
                         <div class="sigap-stat-value text-dark">
-                            {{ number_format($serviceCounts[$activeServiceKey]['total'] ?? 0, 0, ',', '.') }}
+                            {{ number_format($countTotal, 0, ',', '.') }}
                         </div>
                         <div class="sigap-stat-sub">
-                            Total baris sheet {{ $activeService['title'] }}
+                            Total baris rekap Google Sheets {{ $activeService['title'] }}
                         </div>
                     </div>
                     <div class="p-2.5 bg-secondary-subtle text-secondary rounded-3 fs-5">
@@ -195,66 +205,17 @@
                 </div>
             </div>
         </div>
-
-        {{-- Rekap Seluruh Layanan SIGAP Bulan Terpilih --}}
-        @php
-            $totalAllServicesMonth = array_sum(array_column($serviceCounts, 'month_count'));
-            $totalAllServicesYear = array_sum(array_column($serviceCounts, 'year_count'));
-        @endphp
-        <div class="col-12 col-sm-6 col-lg-3">
-            <div class="sigap-stat-card h-100">
-                <div class="d-flex justify-content-between align-items-start">
-                    <div>
-                        <div class="sigap-stat-label">Semua Layanan SIGAP</div>
-                        <div class="sigap-stat-value text-warning-emphasis">
-                            {{ number_format($totalAllServicesMonth, 0, ',', '.') }}
-                        </div>
-                        <div class="sigap-stat-sub">
-                            Gabungan 3 unit ({{ $filterMonth === 'semua' ? 'Semua Bulan' : ($monthNames[$filterMonth] ?? '') }} {{ $filterYear }})
-                        </div>
-                    </div>
-                    <div class="p-2.5 bg-warning-subtle text-warning-emphasis rounded-3 fs-5">
-                        <i class="bi bi-activity"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
-    {{-- Filter Bar & Tab Layanan --}}
+    {{-- Kotak Filter Bulan, Tahun, dan Pencarian --}}
     <div class="card border-0 shadow-sm rounded-4 mb-4">
         <div class="card-body p-3 p-lg-4">
-            
-            {{-- Tabs Layanan (SITERBAT, AMBULAN, SANTAR DEKATE) --}}
-            <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 pb-3 mb-3 border-bottom">
-                <ul class="nav nav-pills nav-pills-sigap gap-2">
-                    @foreach($services as $sKey => $sVal)
-                        <li class="nav-item">
-                            <a class="nav-link {{ $activeServiceKey === $sKey ? 'active' : '' }}" 
-                               href="{{ request()->fullUrlWithQuery(['service' => $sKey]) }}">
-                                <i class="bi {{ $sVal['icon'] }}"></i>
-                                <span>{{ $sVal['title'] }}</span>
-                                <span class="badge-count">
-                                    {{ $serviceCounts[$sKey]['month_count'] ?? 0 }}
-                                </span>
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
-
-                <div class="text-muted small d-none d-md-block">
-                    <i class="bi bi-info-circle me-1"></i> Menampilkan <strong>{{ count($tableRows) }}</strong> baris data
-                </div>
-            </div>
-
-            {{-- Form Filter Bulan, Tahun, dan Pencarian --}}
-            <form method="GET" action="{{ route('admin.sigap.index') }}" class="row g-2 align-items-end">
-                <input type="hidden" name="service" value="{{ $activeServiceKey }}">
-
+            <form method="GET" action="{{ route($activeService['route']) }}" class="row g-2 align-items-end">
+                
                 {{-- Filter Bulan --}}
                 <div class="col-12 col-sm-6 col-md-3">
                     <label class="form-label small fw-bold text-muted mb-1">
-                        <i class="bi bi-calendar-event me-1"></i> Bulan
+                        <i class="bi bi-calendar-event me-1"></i> Pilih Bulan
                     </label>
                     <select name="bulan" class="form-select btn-touch rounded-3">
                         <option value="semua" {{ $filterMonth === 'semua' ? 'selected' : '' }}>Semua Bulan</option>
@@ -269,7 +230,7 @@
                 {{-- Filter Tahun --}}
                 <div class="col-12 col-sm-6 col-md-2">
                     <label class="form-label small fw-bold text-muted mb-1">
-                        <i class="bi bi-calendar-range me-1"></i> Tahun
+                        <i class="bi bi-calendar-range me-1"></i> Pilih Tahun
                     </label>
                     <select name="tahun" class="form-select btn-touch rounded-3">
                         @foreach($availableYears as $yr)
@@ -281,23 +242,23 @@
                 {{-- Kotak Pencarian --}}
                 <div class="col-12 col-sm-8 col-md-5">
                     <label class="form-label small fw-bold text-muted mb-1">
-                        <i class="bi bi-search me-1"></i> Cari Data Pemohon
+                        <i class="bi bi-search me-1"></i> Pencarian
                     </label>
                     <div class="input-group">
                         <input type="text" 
                                name="q" 
                                value="{{ $searchQuery }}" 
                                class="form-control btn-touch rounded-start-3" 
-                               placeholder="Cari nama, no rm, alamat, no telp...">
+                               placeholder="Cari nama, no rm, alamat, no hp...">
                         @if(!empty($searchQuery))
-                            <a href="{{ request()->fullUrlWithQuery(['q' => null]) }}" class="btn btn-outline-secondary d-flex align-items-center" title="Hapus pencarian">
+                            <a href="{{ route($activeService['route'], ['bulan' => $filterMonth, 'tahun' => $filterYear]) }}" class="btn btn-outline-secondary d-flex align-items-center" title="Hapus pencarian">
                                 <i class="bi bi-x-lg"></i>
                             </a>
                         @endif
                     </div>
                 </div>
 
-                {{-- Tombol Terapkan Filter --}}
+                {{-- Tombol Terapkan --}}
                 <div class="col-12 col-sm-4 col-md-2 d-grid">
                     <button type="submit" class="btn btn-success btn-touch rounded-3 fw-semibold">
                         <i class="bi bi-funnel-fill me-1"></i> Terapkan
@@ -307,26 +268,27 @@
         </div>
     </div>
 
-    {{-- Ringkasan Aktif --}}
+    {{-- Keterangan Baris Aktif --}}
     <div class="d-flex justify-content-between align-items-center mb-3">
         <div>
             <h2 class="h5 fw-bold text-dark mb-0 d-flex align-items-center gap-2">
                 <i class="bi {{ $activeService['icon'] }} text-success"></i>
-                Data Permohonan {{ $activeService['title'] }}
+                Daftar Permohonan {{ $activeService['title'] }}
             </h2>
             <div class="text-muted small mt-0.5">
                 Periode: <strong>{{ $filterMonth === 'semua' ? 'Semua Bulan' : ($monthNames[$filterMonth] ?? '') }} {{ $filterYear }}</strong>
+                &bull; Total data tampil: <strong>{{ count($tableRows) }}</strong> baris
                 @if(!empty($searchQuery))
-                    &bull; Hasil pencarian: <em>"{{ $searchQuery }}"</em>
+                    &bull; Kata kunci: <em>"{{ $searchQuery }}"</em>
                 @endif
             </div>
         </div>
         <div class="text-muted small">
-            Urutan: <strong>Terbaru</strong>
+            Urutan: <strong>Terbaru di atas</strong>
         </div>
     </div>
 
-    {{-- Tampilan Desktop (Tabel) --}}
+    {{-- Tampilan Desktop (Tabel Lengkap) --}}
     <div class="card border-0 shadow-sm rounded-4 overflow-hidden d-none d-md-block">
         <div class="table-responsive">
             <table class="table table-sigap mb-0">
@@ -345,12 +307,12 @@
                             <th style="width: 150px;">Kontak WhatsApp</th>
                             <th>Lokasi Penjemputan</th>
                             <th>Detail Permohonan</th>
-                            <th>Gejala / Kondisi</th>
+                            <th>Gejala / Kondisi Pasien</th>
                         @elseif($activeServiceKey === 'santardekate')
                             <th>Nama Pemesan</th>
                             <th style="width: 150px;">Kontak WhatsApp</th>
-                            <th style="width: 180px;">Ruangan / Kamar</th>
-                            <th>Daftar Belanja / Pesanan</th>
+                            <th style="width: 180px;">Ruangan / Kamar Rawat</th>
+                            <th>Daftar Pesanan Belanja</th>
                         @endif
                         <th style="width: 90px;" class="text-center">Aksi</th>
                     </tr>
@@ -363,7 +325,9 @@
                             {{-- Tanggal & Jam --}}
                             <td>
                                 <div class="fw-semibold text-dark">{{ $row['date_meta']['formatted'] ?? $row['tanggal_raw'] }}</div>
-                                <div class="text-muted small"><i class="bi bi-clock me-1"></i>{{ $row['jam_raw'] }} WIB</div>
+                                @if(!empty($row['jam_raw']) && $row['jam_raw'] !== '-')
+                                    <div class="text-muted small"><i class="bi bi-clock me-1"></i>{{ $row['jam_raw'] }} WIB</div>
+                                @endif
                             </td>
 
                             @if($activeServiceKey === 'siterbat')
@@ -404,6 +368,7 @@
                                         {{ $row['detail'] ?? '-' }}
                                     </div>
                                 </td>
+
                             @elseif($activeServiceKey === 'ambulan')
                                 {{-- Nama Pemohon / Pasien --}}
                                 <td>
@@ -442,6 +407,7 @@
                                         {{ $row['gejala'] ?? '-' }}
                                     </span>
                                 </td>
+
                             @elseif($activeServiceKey === 'santardekate')
                                 {{-- Nama Pemesan --}}
                                 <td>
@@ -462,7 +428,7 @@
 
                                 {{-- Ruangan --}}
                                 <td>
-                                    <span class="badge bg-warning-subtle text-dark border border-warning-subtle px-2 py-1.5 rounded-2">
+                                    <span class="badge bg-warning-subtle text-dark border border-warning-subtle px-2.5 py-1.5 rounded-2">
                                         <i class="bi bi-door-open-fill text-warning me-1"></i>{{ $row['ruangan'] ?? '-' }}
                                     </span>
                                 </td>
@@ -478,7 +444,7 @@
                             {{-- Tombol Aksi WhatsApp --}}
                             <td class="text-center">
                                 @if(!empty($row['wa_number']))
-                                    <a href="https://wa.me/{{ $row['wa_number'] }}" target="_blank" class="btn btn-sm btn-success rounded-circle p-2" title="Chat via WhatsApp">
+                                    <a href="https://wa.me/{{ $row['wa_number'] }}" target="_blank" class="btn btn-sm btn-success rounded-circle p-2" title="Kirim Pesan WhatsApp">
                                         <i class="bi bi-chat-dots-fill"></i>
                                     </a>
                                 @else
@@ -492,9 +458,9 @@
                                 <div class="py-4">
                                     <i class="bi bi-inbox fs-1 text-secondary opacity-50"></i>
                                     <h6 class="mt-3 fw-bold text-dark">Tidak Ada Data Permohonan</h6>
-                                    <p class="small text-muted mb-3">Tidak ditemukan rekaman permohonan pada periode bulan & tahun yang dipilih.</p>
-                                    <a href="{{ route('admin.sigap.index', ['service' => $activeServiceKey, 'bulan' => 'semua', 'tahun' => $filterYear]) }}" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
-                                        Lihat Semua Bulan Tahun {{ $filterYear }}
+                                    <p class="small text-muted mb-3">Tidak ditemukan rekaman data pada periode bulan & tahun yang dipilih.</p>
+                                    <a href="{{ route($activeService['route'], ['bulan' => 'semua', 'tahun' => $filterYear]) }}" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+                                        Tampilkan Semua Bulan Tahun {{ $filterYear }}
                                     </a>
                                 </div>
                             </td>
@@ -519,7 +485,9 @@
                     </div>
                     <span class="text-muted small text-end" style="font-size: 0.72rem;">
                         {{ $row['date_meta']['formatted'] ?? $row['tanggal_raw'] }}<br>
-                        {{ $row['jam_raw'] }} WIB
+                        @if(!empty($row['jam_raw']) && $row['jam_raw'] !== '-')
+                            {{ $row['jam_raw'] }} WIB
+                        @endif
                     </span>
                 </div>
 
@@ -561,7 +529,7 @@
                             <i class="bi bi-whatsapp me-1"></i> Hubungi WhatsApp
                         </a>
                     @endif
-                    @if(!empty($row['telepon']))
+                    @if(!empty($row['telepon']) && $row['telepon'] !== '-')
                         <a href="tel:{{ $row['telepon'] }}" class="btn btn-outline-secondary btn-touch rounded-3 px-3">
                             <i class="bi bi-telephone-fill"></i>
                         </a>
@@ -572,9 +540,9 @@
             <div class="text-center py-5 bg-white rounded-4 border p-4">
                 <i class="bi bi-inbox fs-1 text-secondary opacity-50"></i>
                 <h6 class="mt-3 fw-bold text-dark">Tidak Ada Data Permohonan</h6>
-                <p class="small text-muted mb-3">Tidak ditemukan rekaman permohonan pada periode ini.</p>
-                <a href="{{ route('admin.sigap.index', ['service' => $activeServiceKey, 'bulan' => 'semua', 'tahun' => $filterYear]) }}" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
-                    Lihat Semua Bulan
+                <p class="small text-muted mb-3">Tidak ditemukan rekaman data pada periode ini.</p>
+                <a href="{{ route($activeService['route'], ['bulan' => 'semua', 'tahun' => $filterYear]) }}" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+                    Tampilkan Semua Bulan
                 </a>
             </div>
         @endforelse

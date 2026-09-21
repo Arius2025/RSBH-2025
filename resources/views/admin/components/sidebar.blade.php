@@ -6,7 +6,7 @@
             <span class="text-uppercase text-muted fw-bold" style="font-size: 0.68rem; letter-spacing: 0.8px;">MENU UTAMA</span>
         </div>
         
-        <ul class="nav flex-column mb-4">
+        <ul class="nav flex-column mb-3">
             {{-- Dashboard --}}
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active-admin' : '' }}" 
@@ -15,15 +15,44 @@
                     <span>Dashboard</span>
                 </a>
             </li>
-            
-            {{-- Layanan SIGAP --}}
+        </ul>
+
+        <div class="px-3 mb-2">
+            <span class="text-uppercase text-muted fw-bold" style="font-size: 0.68rem; letter-spacing: 0.8px;">LAYANAN SIGAP</span>
+        </div>
+        <ul class="nav flex-column mb-3">
+            {{-- SITERBAT --}}
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('admin.sigap.*') ? 'active-admin' : '' }}" 
-                   href="{{ route('admin.sigap.index') }}">
-                    <i class="bi bi-lightning-charge-fill"></i>
-                    <span>Layanan SIGAP</span>
+                <a class="nav-link {{ request()->routeIs('admin.sigap.siterbat') ? 'active-admin' : '' }}" 
+                   href="{{ route('admin.sigap.siterbat') }}">
+                    <i class="bi bi-bicycle"></i>
+                    <span>SITERBAT (Antar Obat)</span>
                 </a>
             </li>
+
+            {{-- AMBULAN --}}
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('admin.sigap.ambulan') ? 'active-admin' : '' }}" 
+                   href="{{ route('admin.sigap.ambulan') }}">
+                    <i class="bi bi-truck"></i>
+                    <span>AMBULAN (Jemput)</span>
+                </a>
+            </li>
+
+            {{-- SANTAR DEKATE --}}
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('admin.sigap.santardekate') ? 'active-admin' : '' }}" 
+                   href="{{ route('admin.sigap.santardekate') }}">
+                    <i class="bi bi-basket3"></i>
+                    <span>SANTAR DEKATE</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="px-3 mb-2">
+            <span class="text-uppercase text-muted fw-bold" style="font-size: 0.68rem; letter-spacing: 0.8px;">INFORMASI & LAYANAN</span>
+        </div>
+        <ul class="nav flex-column mb-4">
 
             {{-- Kelola Jadwal --}}
             <li class="nav-item">

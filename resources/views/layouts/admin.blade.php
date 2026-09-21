@@ -364,11 +364,27 @@
         </div>
         <div class="offcanvas-body p-3">
             <div class="list-group list-group-flush gap-1">
-                <a href="{{ route('admin.sigap.index') }}" class="list-group-item list-group-item-action rounded-3 border-0 py-2.5 d-flex align-items-center gap-3 {{ request()->routeIs('admin.sigap.*') ? 'bg-success-subtle text-success fw-bold' : '' }}">
-                    <i class="bi bi-lightning-charge-fill fs-5 text-warning"></i>
+                <a href="{{ route('admin.sigap.siterbat') }}" class="list-group-item list-group-item-action rounded-3 border-0 py-2.5 d-flex align-items-center gap-3 {{ request()->routeIs('admin.sigap.siterbat') ? 'bg-success-subtle text-success fw-bold' : '' }}">
+                    <i class="bi bi-bicycle fs-5 text-success"></i>
                     <div>
-                        <div class="fw-semibold">Layanan SIGAP</div>
-                        <small class="text-muted">Data Siterbat, Santar Dekate, Ambulan</small>
+                        <div class="fw-semibold">SITERBAT (Antar Obat)</div>
+                        <small class="text-muted">Data pengantaran obat pasien</small>
+                    </div>
+                </a>
+
+                <a href="{{ route('admin.sigap.ambulan') }}" class="list-group-item list-group-item-action rounded-3 border-0 py-2.5 d-flex align-items-center gap-3 {{ request()->routeIs('admin.sigap.ambulan') ? 'bg-danger-subtle text-danger fw-bold' : '' }}">
+                    <i class="bi bi-truck fs-5 text-danger"></i>
+                    <div>
+                        <div class="fw-semibold">AMBULAN (Jemput Pasien)</div>
+                        <small class="text-muted">Data permohonan jemput ambulan</small>
+                    </div>
+                </a>
+
+                <a href="{{ route('admin.sigap.santardekate') }}" class="list-group-item list-group-item-action rounded-3 border-0 py-2.5 d-flex align-items-center gap-3 {{ request()->routeIs('admin.sigap.santardekate') ? 'bg-warning-subtle text-warning-emphasis fw-bold' : '' }}">
+                    <i class="bi bi-basket3 fs-5 text-warning"></i>
+                    <div>
+                        <div class="fw-semibold">SANTAR DEKATE</div>
+                        <small class="text-muted">Data pesanan belanja ruangan</small>
                     </div>
                 </a>
 

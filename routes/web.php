@@ -120,6 +120,9 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 
     // Kelola & Rekap Layanan SIGAP (SITERBAT, SANTAR DEKATE, AMBULAN)
     Route::get('/sigap', [SigapController::class, 'index'])->name('sigap.index');
+    Route::get('/sigap/siterbat', [SigapController::class, 'siterbat'])->name('sigap.siterbat');
+    Route::get('/sigap/ambulan', [SigapController::class, 'ambulan'])->name('sigap.ambulan');
+    Route::get('/sigap/santardekate', [SigapController::class, 'santardekate'])->name('sigap.santardekate');
 
     // Monitor Layanan Internal
     Route::get('/monitor-siterbat', [FrontendController::class, 'monitorSiterbat'])->name('monitor.siterbat');
