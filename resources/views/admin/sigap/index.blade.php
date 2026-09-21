@@ -111,7 +111,7 @@
             <a href="{{ request()->fullUrlWithQuery(['refresh' => 1]) }}" class="btn btn-outline-secondary btn-touch px-3 rounded-3 w-100 w-md-auto" title="Segarkan data dari Google Sheets">
                 <i class="bi bi-arrow-clockwise me-1"></i> Segarkan Data
             </a>
-            <a href="{{ route('monitor.portal') }}" target="_blank" class="btn btn-success btn-touch px-3 rounded-3 w-100 w-md-auto">
+            <a href="{{ route('admin.monitor.portal') }}" target="_blank" class="btn btn-success btn-touch px-3 rounded-3 w-100 w-md-auto">
                 <i class="bi bi-display me-1"></i> Layar Monitor
             </a>
         </div>
