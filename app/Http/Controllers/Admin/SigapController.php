@@ -108,7 +108,7 @@ class SigapController extends Controller
                 Cache::forget($cacheKey);
             }
 
-            $rows = Cache::remember($cacheKey, 60, function () use ($sheetService, $srvConfig) {
+            $rows = Cache::remember($cacheKey, 300, function () use ($sheetService, $srvConfig) {
                 $response = $sheetService->getRangeData($srvConfig['sheetId'], $srvConfig['range']);
                 if (isset($response['error'])) {
                     Log::warning("Google Sheet fetch warning for {$srvConfig['key']}: " . json_encode($response['error']));

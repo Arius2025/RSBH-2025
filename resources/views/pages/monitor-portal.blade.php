@@ -68,7 +68,7 @@
         <div class="row g-4 justify-content-center">
            
             <div class="col-md-4">
-                <a href="{{ route('monitor.siterbat') }}" class="role-btn btn-siterbat shadow-sm">
+                <a href="{{ route('admin.monitor.siterbat') }}" class="role-btn btn-siterbat shadow-sm">
                     <div class="role-icon glow-success">
                         <i class="bi bi-bicycle"></i>
                     </div>
@@ -77,7 +77,7 @@
                 </a>
             </div>
             <div class="col-md-4">
-                <a href="{{ route('monitor.ambulance') }}" class="role-btn btn-ambulan shadow-sm">
+                <a href="{{ route('admin.monitor.ambulance') }}" class="role-btn btn-ambulan shadow-sm">
                     <div class="role-icon glow-danger">
                         <i class="bi bi-truck"></i>
                     </div>
@@ -86,7 +86,7 @@
                 </a>
             </div>
             <div class="col-md-4">
-                <a href="{{ route('monitor.santardekate') }}" class="role-btn btn-koperasi shadow-sm">
+                <a href="{{ route('admin.monitor.santardekate') }}" class="role-btn btn-koperasi shadow-sm">
                     <div class="role-icon glow-warning">
                         <i class="bi bi-house-heart"></i>
                     </div>

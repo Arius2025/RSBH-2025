@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Cache;
 
 class GoogleSheetService
 {
@@ -60,6 +61,9 @@ class GoogleSheetService
                 return false;
             }
 
+            // Bersihkan cache agar data baru langsung terlihat
+            $this->clearSpreadsheetCache($this->spreadsheetId, $range);
+
             return true;
         } catch (\Exception $e) {
             Log::error("Google Sheets Service Error: " . $e->getMessage());
@@ -67,7 +71,21 @@ class GoogleSheetService
         }
     }
 
-    public function getSpreadsheetMetadata($spreadsheetId)
+    public function getSpreadsheetMetadata($spreadsheetId, $ttlSeconds = 600)
+    {
+        $cacheKey = "gsheet_meta_" . md5($spreadsheetId);
+        $forceRefresh = request() ? request()->boolean('refresh') : false;
+
+        if ($forceRefresh) {
+            Cache::forget($cacheKey);
+        }
+
+        return Cache::remember($cacheKey, $ttlSeconds, function () use ($spreadsheetId) {
+            return $this->fetchSpreadsheetMetadataFromApi($spreadsheetId);
+        });
+    }
+
+    private function fetchSpreadsheetMetadataFromApi($spreadsheetId)
     {
         try {
             $token = $this->getAccessToken();
@@ -82,13 +100,34 @@ class GoogleSheetService
             $response = curl_exec($ch);
             curl_close($ch);
             
-            return json_decode($response, true);
+            return json_decode($response, true) ?: [];
         } catch (\Exception $e) {
             return [];
         }
     }
 
-    public function getRangeData($spreadsheetId, $range)
+    public function getRangeData($spreadsheetId, $range, $ttlSeconds = 300)
+    {
+        $cacheKey = "gsheet_range_" . md5($spreadsheetId . '_' . $range);
+        $forceRefresh = request() ? request()->boolean('refresh') : false;
+
+        if ($forceRefresh) {
+            Cache::forget($cacheKey);
+        }
+
+        $result = Cache::remember($cacheKey, $ttlSeconds, function () use ($spreadsheetId, $range) {
+            return $this->fetchRangeDataFromApi($spreadsheetId, $range);
+        });
+
+        // Jangan simpan respon error terlalu lama di cache agar bisa mencoba lagi
+        if (isset($result['error'])) {
+            Cache::forget($cacheKey);
+        }
+
+        return $result;
+    }
+
+    private function fetchRangeDataFromApi($spreadsheetId, $range)
     {
         try {
             $token = $this->getAccessToken();
@@ -101,6 +140,7 @@ class GoogleSheetService
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_HTTPHEADER, ["Authorization: Bearer $token"]);
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 15);
             
             $response = curl_exec($ch);
             $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -109,13 +149,27 @@ class GoogleSheetService
             if ($httpCode != 200) {
                 return ['error' => ['message' => 'API Error HTTP ' . $httpCode]];
             }
-            return json_decode($response, true);
+            return json_decode($response, true) ?: ['error' => ['message' => 'Invalid JSON response']];
         } catch (\Exception $e) {
             return ['error' => ['message' => $e->getMessage()]];
         }
     }
 
-    public function getBatchData($spreadsheetId, $ranges)
+    public function getBatchData($spreadsheetId, $ranges, $ttlSeconds = 300)
+    {
+        $cacheKey = "gsheet_batch_" . md5($spreadsheetId . '_' . implode(',', $ranges));
+        $forceRefresh = request() ? request()->boolean('refresh') : false;
+
+        if ($forceRefresh) {
+            Cache::forget($cacheKey);
+        }
+
+        return Cache::remember($cacheKey, $ttlSeconds, function () use ($spreadsheetId, $ranges) {
+            return $this->fetchBatchDataFromApi($spreadsheetId, $ranges);
+        });
+    }
+
+    private function fetchBatchDataFromApi($spreadsheetId, $ranges)
     {
         try {
             $token = $this->getAccessToken();
@@ -128,14 +182,29 @@ class GoogleSheetService
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_HTTPHEADER, ["Authorization: Bearer $token"]);
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 15);
             
             $response = curl_exec($ch);
             curl_close($ch);
             
-            return json_decode($response, true);
+            return json_decode($response, true) ?: [];
         } catch (\Exception $e) {
             return [];
         }
+    }
+
+    private function clearSpreadsheetCache($spreadsheetId, $range = null)
+    {
+        try {
+            Cache::forget("gsheet_meta_" . md5($spreadsheetId));
+            if ($range) {
+                Cache::forget("gsheet_range_" . md5($spreadsheetId . '_' . $range));
+            }
+            // Juga bersihkan cache controller SIGAP jika ada
+            Cache::forget("sigap_sheet_data_siterbat");
+            Cache::forget("sigap_sheet_data_ambulan");
+            Cache::forget("sigap_sheet_data_santardekate");
+        } catch (\Throwable $e) {}
     }
 
     private function getAccessToken()
@@ -145,13 +214,13 @@ class GoogleSheetService
             $possiblePaths = [
                 $this->jsonPath, // base_path()
                 __DIR__ . '/../../sigap-credentials.json', // Relative to app/Services
-                $_SERVER['DOCUMENT_ROOT'] . '/sigap-credentials.json', // Di dalam public_html
-                $_SERVER['DOCUMENT_ROOT'] . '/../sigap-credentials.json', // Di luar public_html
+                ($_SERVER['DOCUMENT_ROOT'] ?? '') . '/sigap-credentials.json', // Di dalam public_html
+                ($_SERVER['DOCUMENT_ROOT'] ?? '') . '/../sigap-credentials.json', // Di luar public_html
             ];
 
             $actualPath = null;
             foreach ($possiblePaths as $p) {
-                if (file_exists($p)) {
+                if (!empty($p) && file_exists($p)) {
                     $actualPath = $p;
                     break;
                 }
@@ -168,7 +237,6 @@ class GoogleSheetService
 
             $privateKey = $config['private_key'];
             $clientEmail = $config['client_email'];
-
 
             $header = ['alg' => 'RS256', 'typ' => 'JWT'];
             $now = time();
@@ -199,21 +267,23 @@ class GoogleSheetService
                 'grant_type' => 'urn:ietf:params:oauth:grant-type:jwt-bearer',
                 'assertion' => $jwt
             ]));
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Bypass SSL error
+            curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/x-www-form-urlencoded']);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 10);
             
             $response = curl_exec($ch);
             $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             curl_close($ch);
 
-            if ($httpCode == 200) {
-                $data = json_decode($response, true);
-                return $data['access_token'] ?? null;
+            if ($httpCode != 200) {
+                Log::error("Google OAuth Token Error: HTTP $httpCode - $response");
+                return null;
             }
 
-            Log::error("Google Token Error: HTTP $httpCode - $response");
-            return null;
+            $data = json_decode($response, true);
+            return $data['access_token'] ?? null;
         } catch (\Exception $e) {
-            Log::error("Get Access Token Exception: " . $e->getMessage());
+            Log::error("GetAccessToken Exception: " . $e->getMessage());
             return null;
         }
     }
