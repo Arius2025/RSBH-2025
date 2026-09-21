@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\BeritaCrudController;
 use App\Http\Controllers\Admin\JadwalCrudController;
 use App\Http\Controllers\Admin\DocumentCrudController;
 use App\Http\Controllers\Admin\TarifController;
+use App\Http\Controllers\Admin\SigapController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\JadwalHarianController;
 use App\Http\Controllers\PermohonanInformasiController;
@@ -116,6 +117,9 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     // Permohonan Informasi
     Route::get('/permohonan-informasi', [PermohonanInformasiController::class, 'adminIndex'])->name('permohonan.index');
     Route::put('/permohonan-informasi/{id}/status', [PermohonanInformasiController::class, 'adminUpdateStatus'])->name('permohonan.status');
+
+    // Kelola & Rekap Layanan SIGAP (SITERBAT, SANTAR DEKATE, AMBULAN)
+    Route::get('/sigap', [SigapController::class, 'index'])->name('sigap.index');
 
     // Monitor Layanan Internal
     Route::get('/monitor-siterbat', [FrontendController::class, 'monitorSiterbat'])->name('monitor.siterbat');

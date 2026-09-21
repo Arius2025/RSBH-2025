@@ -364,6 +364,14 @@
         </div>
         <div class="offcanvas-body p-3">
             <div class="list-group list-group-flush gap-1">
+                <a href="{{ route('admin.sigap.index') }}" class="list-group-item list-group-item-action rounded-3 border-0 py-2.5 d-flex align-items-center gap-3 {{ request()->routeIs('admin.sigap.*') ? 'bg-success-subtle text-success fw-bold' : '' }}">
+                    <i class="bi bi-lightning-charge-fill fs-5 text-warning"></i>
+                    <div>
+                        <div class="fw-semibold">Layanan SIGAP</div>
+                        <small class="text-muted">Data Siterbat, Santar Dekate, Ambulan</small>
+                    </div>
+                </a>
+
                 <a href="{{ route('admin.tarif.index') }}" class="list-group-item list-group-item-action rounded-3 border-0 py-2.5 d-flex align-items-center gap-3 {{ request()->routeIs('admin.tarif.*') ? 'bg-success-subtle text-success fw-bold' : '' }}">
                     <i class="bi bi-tag-fill fs-5 text-success"></i>
                     <div>

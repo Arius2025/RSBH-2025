@@ -16,6 +16,15 @@
                 </a>
             </li>
             
+            {{-- Layanan SIGAP --}}
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('admin.sigap.*') ? 'active-admin' : '' }}" 
+                   href="{{ route('admin.sigap.index') }}">
+                    <i class="bi bi-lightning-charge-fill"></i>
+                    <span>Layanan SIGAP</span>
+                </a>
+            </li>
+
             {{-- Kelola Jadwal --}}
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('admin.jadwal.*') ? 'active-admin' : '' }}" 
