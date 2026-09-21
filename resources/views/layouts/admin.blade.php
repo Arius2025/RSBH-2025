@@ -207,6 +207,29 @@
             width: 100%;
         }
 
+        /* Sembunyikan Mobile Dock saat Offcanvas / Modal terbuka agar tidak menutupi menu */
+        .mobile-dock-container {
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        body:has(.offcanvas.show) .mobile-dock-container,
+        body:has(.offcanvas.showing) .mobile-dock-container {
+            opacity: 0 !important;
+            pointer-events: none !important;
+            transform: translateY(40px) !important;
+        }
+
+        /* Pastikan Offcanvas dan Backdrop selalu di atas Mobile Dock */
+        .offcanvas.offcanvas-bottom {
+            z-index: 1065 !important;
+        }
+        .offcanvas-backdrop {
+            z-index: 1060 !important;
+        }
+        .offcanvas-bottom .offcanvas-body {
+            padding-bottom: calc(2rem + env(safe-area-inset-bottom, 20px)) !important;
+        }
+
         /* User Profile Pill in Top Bar */
         .user-pill {
             background: rgba(25, 135, 84, 0.06);
@@ -478,6 +501,25 @@
 
     {{-- Bootstrap JS --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const dockContainer = document.querySelector('.mobile-dock-container');
+            if (!dockContainer) return;
+
+            document.querySelectorAll('.offcanvas').forEach(function(offcanvasEl) {
+                offcanvasEl.addEventListener('show.bs.offcanvas', function() {
+                    dockContainer.style.opacity = '0';
+                    dockContainer.style.pointerEvents = 'none';
+                    dockContainer.style.transform = 'translateY(40px)';
+                });
+                offcanvasEl.addEventListener('hidden.bs.offcanvas', function() {
+                    dockContainer.style.opacity = '1';
+                    dockContainer.style.pointerEvents = 'auto';
+                    dockContainer.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    </script>
     @stack('scripts')
 </body>
 </html>
