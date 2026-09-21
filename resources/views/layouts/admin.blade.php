@@ -331,12 +331,15 @@
                 <span>Jadwal</span>
             </a>
 
-            {{-- Layanan SIGAP --}}
-            <a class="dock-item {{ request()->routeIs('admin.sigap.*') ? 'active' : '' }}" 
-               href="{{ route('admin.sigap.siterbat') }}">
-                <i class="bi bi-lightning-charge-fill"></i>
+            {{-- Layanan SIGAP (Trigger Menu Pilihan Layanan) --}}
+            <button type="button" 
+                    class="dock-item dock-item-btn {{ request()->routeIs('admin.sigap.*') ? 'active' : '' }}" 
+                    data-bs-toggle="offcanvas" 
+                    data-bs-target="#sigapMenuOffcanvas" 
+                    aria-controls="sigapMenuOffcanvas">
+                <i class="bi bi-lightning-charge-fill text-warning"></i>
                 <span>SIGAP</span>
-            </a>
+            </button>
             
             {{-- Permohonan --}}
             <a class="dock-item {{ request()->routeIs('admin.permohonan.*') ? 'active' : '' }}" 
@@ -351,6 +354,55 @@
                 <span>Lainnya</span>
             </button>
             
+        </div>
+    </div>
+
+    {{-- Offcanvas Khusus Menu Layanan SIGAP (Muncul Saat Dock SIGAP Ditekan) --}}
+    <div class="offcanvas offcanvas-bottom rounded-top-4 d-lg-none" tabindex="-1" id="sigapMenuOffcanvas" aria-labelledby="sigapMenuOffcanvasLabel" style="height: auto; max-height: 65vh;">
+        <div class="offcanvas-header border-bottom py-3 px-3">
+            <h6 class="offcanvas-title fw-bold text-success d-flex align-items-center gap-2" id="sigapMenuOffcanvasLabel">
+                <i class="bi bi-lightning-charge-fill text-warning fs-5"></i> Pilih Layanan SIGAP
+            </h6>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body p-3">
+            <div class="list-group list-group-flush gap-2">
+                {{-- SITERBAT --}}
+                <a href="{{ route('admin.sigap.siterbat') }}" class="list-group-item list-group-item-action rounded-3 border p-3 d-flex align-items-center gap-3 {{ request()->routeIs('admin.sigap.siterbat') ? 'border-success bg-success-subtle' : '' }}">
+                    <div class="p-2.5 bg-success text-white rounded-3 fs-4 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; flex-shrink: 0;">
+                        <i class="bi bi-bicycle"></i>
+                    </div>
+                    <div class="flex-grow-1">
+                        <div class="fw-bold text-dark mb-0.5">SITERBAT</div>
+                        <small class="text-muted d-block">Layanan Antar Obat Pasien ke Rumah</small>
+                    </div>
+                    <i class="bi bi-chevron-right text-muted"></i>
+                </a>
+
+                {{-- AMBULAN --}}
+                <a href="{{ route('admin.sigap.ambulan') }}" class="list-group-item list-group-item-action rounded-3 border p-3 d-flex align-items-center gap-3 {{ request()->routeIs('admin.sigap.ambulan') ? 'border-danger bg-danger-subtle' : '' }}">
+                    <div class="p-2.5 bg-danger text-white rounded-3 fs-4 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; flex-shrink: 0;">
+                        <i class="bi bi-truck"></i>
+                    </div>
+                    <div class="flex-grow-1">
+                        <div class="fw-bold text-dark mb-0.5">AMBULAN</div>
+                        <small class="text-muted d-block">Layanan Jemput Pasien Gratis</small>
+                    </div>
+                    <i class="bi bi-chevron-right text-muted"></i>
+                </a>
+
+                {{-- SANTAR DEKATE --}}
+                <a href="{{ route('admin.sigap.santardekate') }}" class="list-group-item list-group-item-action rounded-3 border p-3 d-flex align-items-center gap-3 {{ request()->routeIs('admin.sigap.santardekate') ? 'border-warning bg-warning-subtle' : '' }}">
+                    <div class="p-2.5 bg-warning text-dark rounded-3 fs-4 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; flex-shrink: 0;">
+                        <i class="bi bi-basket3"></i>
+                    </div>
+                    <div class="flex-grow-1">
+                        <div class="fw-bold text-dark mb-0.5">SANTAR DEKATE</div>
+                        <small class="text-muted d-block">Pemesanan Koperasi & Belanja Ruangan</small>
+                    </div>
+                    <i class="bi bi-chevron-right text-muted"></i>
+                </a>
+            </div>
         </div>
     </div>
 
