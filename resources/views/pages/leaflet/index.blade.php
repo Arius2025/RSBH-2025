@@ -153,24 +153,41 @@
 {{-- 3. FULLSCREEN MODAL PDF READER --}}
 <div class="modal fade" id="pdfReaderModal" tabindex="-1" aria-labelledby="pdfReaderTitle" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-fullscreen">
-        <div class="modal-content bg-dark text-white border-0 d-flex flex-column">
+        <div class="modal-content bg-dark text-white border-0 d-flex flex-column" style="height: 100vh;">
             
             {{-- Reader Header --}}
             <div class="modal-header border-bottom border-secondary bg-black bg-opacity-80 py-2.5 px-3 px-md-4 flex-shrink-0">
-                <div class="d-flex align-items-center gap-2 overflow-hidden me-auto" style="max-width: 65%;">
+                <div class="d-flex align-items-center gap-2 overflow-hidden me-auto" style="max-width: 50%;">
                     <div class="bg-success text-white p-2 rounded-3 d-none d-sm-flex align-items-center justify-content-center">
                         <i class="bi bi-file-earmark-medical fs-5"></i>
                     </div>
                     <div class="text-truncate">
                         <h6 class="modal-title fw-bold text-white mb-0 text-truncate" id="pdfReaderTitle">Judul Leaflet</h6>
-                        <span class="badge bg-secondary rounded-pill px-2 py-0.5 small" id="pdfReaderCategory" style="font-size: 0.72rem;">Kategori</span>
+                        <div class="d-flex align-items-center gap-2 mt-0.5">
+                            <span class="badge bg-secondary rounded-pill px-2 py-0.5 small" id="pdfReaderCategory" style="font-size: 0.72rem;">Kategori</span>
+                            <span class="badge bg-dark border border-secondary text-white-50 rounded-pill px-2 py-0.5 small d-none" id="pdfPageCountBadge" style="font-size: 0.72rem;">0 Halaman</span>
+                        </div>
                     </div>
                 </div>
 
+                {{-- Center / Toolbar: Zoom Controls --}}
+                <div class="d-none d-md-flex align-items-center gap-1 mx-2" id="pdfZoomToolbar">
+                    <button type="button" class="btn btn-sm btn-outline-light rounded-pill px-2.5 py-1" id="btnZoomOut" title="Perkecil">
+                        <i class="bi bi-dash-lg"></i>
+                    </button>
+                    <span class="text-white-50 small px-2 font-monospace" id="zoomPercent" style="min-width: 50px; text-align: center;">100%</span>
+                    <button type="button" class="btn btn-sm btn-outline-light rounded-pill px-2.5 py-1" id="btnZoomIn" title="Perbesar">
+                        <i class="bi bi-plus-lg"></i>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline-light rounded-pill px-2.5 py-1" id="btnFitWidth" title="Sesuaikan Lebar Layar">
+                        <i class="bi bi-arrows-expand"></i>
+                    </button>
+                </div>
+
                 {{-- Right Actions: Open in Tab, Download, Close --}}
-                <div class="d-flex align-items-center gap-2 ms-2">
-                    <a href="#" id="openTabBtn" target="_blank" class="btn btn-sm btn-outline-light rounded-pill px-3 d-none d-sm-inline-flex align-items-center gap-1">
-                        <i class="bi bi-box-arrow-up-right"></i> <span>Tab Baru</span>
+                <div class="d-flex align-items-center gap-2 ms-auto">
+                    <a href="#" id="openTabBtn" target="_blank" class="btn btn-sm btn-outline-light rounded-pill px-3 d-inline-flex align-items-center gap-1 shadow-sm">
+                        <i class="bi bi-box-arrow-up-right"></i> <span class="d-none d-sm-inline">Tab Baru</span>
                     </a>
                     <a href="#" id="downloadPdfBtn" download class="btn btn-sm btn-success rounded-pill px-3 fw-medium d-inline-flex align-items-center gap-1 shadow-sm">
                         <i class="bi bi-download"></i> <span class="d-none d-md-inline">Unduh PDF</span>
@@ -185,20 +202,32 @@
             <div class="modal-body p-0 position-relative flex-grow-1 d-flex flex-column overflow-hidden" style="background: #0f172a;">
                 
                 {{-- Loading Spinner --}}
-                <div id="pdfLoadingIndicator" class="position-absolute top-50 start-50 translate-middle text-center" style="z-index: 10;">
+                <div id="pdfLoadingIndicator" class="position-absolute top-50 start-50 translate-middle text-center" style="z-index: 20;">
                     <div class="spinner-border text-success" style="width: 3rem; height: 3rem;" role="status">
                         <span class="visually-hidden">Memuat Dokumen...</span>
                     </div>
-                    <div class="mt-3 text-white-50 small fw-medium">Menyiapkan dokumen leaflet...</div>
+                    <div class="mt-3 text-white-50 small fw-medium" id="pdfLoadingText">Menyiapkan dokumen leaflet...</div>
                 </div>
 
-                {{-- Native PDF Frame Viewer --}}
-                <iframe id="pdfViewerFrame" 
-                        class="w-100 h-100 flex-grow-1 border-0" 
-                        style="min-height: calc(100vh - 65px); background: #1e293b;" 
-                        src="" 
-                        allow="fullscreen">
-                </iframe>
+                {{-- Fallback Error Box (Hidden by default) --}}
+                <div id="pdfErrorState" class="position-absolute top-50 start-50 translate-middle text-center p-4 rounded-4 bg-dark border border-secondary shadow-lg d-none" style="z-index: 15; max-width: 440px; width: 90%;">
+                    <i class="bi bi-file-earmark-pdf fs-1 text-warning mb-3 d-block"></i>
+                    <h6 class="fw-bold text-white mb-2">Penampil Dokumen</h6>
+                    <p class="text-white-50 small mb-4">Dokumen dapat dibuka secara langsung atau diunduh untuk kenyamanan membaca di perangkat Anda.</p>
+                    <div class="d-flex justify-content-center gap-2">
+                        <a href="#" id="fallbackOpenTabBtn" target="_blank" class="btn btn-outline-light btn-sm rounded-pill px-3">
+                            <i class="bi bi-box-arrow-up-right me-1"></i> Buka Tab Baru
+                        </a>
+                        <a href="#" id="fallbackDownloadBtn" download class="btn btn-success btn-sm rounded-pill px-3">
+                            <i class="bi bi-download me-1"></i> Unduh PDF
+                        </a>
+                    </div>
+                </div>
+
+                {{-- Scrollable Canvas Container for PDF.js --}}
+                <div id="pdfCanvasContainer" class="w-100 h-100 overflow-auto p-2 p-md-4 d-flex flex-column align-items-center" style="scroll-behavior: smooth;">
+                    {{-- Dynamic PDF canvas cards --}}
+                </div>
 
             </div>
 
@@ -291,122 +320,275 @@
         width: 1rem !important;
         height: 1rem !important;
     }
+    .pdf-page-card {
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    }
 </style>
+@endsection
 
+@push('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script>
-    const modalEl = document.getElementById('pdfReaderModal');
-    const pdfReaderModal = new bootstrap.Modal(modalEl);
-    const pdfViewerFrame = document.getElementById('pdfViewerFrame');
-    const loadingIndicator = document.getElementById('pdfLoadingIndicator');
-    const downloadBtn = document.getElementById('downloadPdfBtn');
-    const openTabBtn = document.getElementById('openTabBtn');
-    const pdfTitleEl = document.getElementById('pdfReaderTitle');
-    const pdfCatEl = document.getElementById('pdfReaderCategory');
-
-    // Handle Open Reader
-    document.querySelectorAll('.btn-open-reader').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            const id = this.dataset.id;
-            const title = this.dataset.title;
-            const cat = this.dataset.category;
-            const streamUrl = this.dataset.stream;
-            const downloadUrl = this.dataset.download;
-
-            openPdfModal(id, title, cat, streamUrl, downloadUrl);
-        });
-    });
-
-    // Also click anywhere on card
-    document.querySelectorAll('.leaflet-card').forEach(card => {
-        card.addEventListener('click', function(e) {
-            if (e.target.closest('.btn-open-reader')) return;
-            const btn = this.querySelector('.btn-open-reader');
-            if (btn) btn.click();
-        });
-    });
-
-    function openPdfModal(id, title, category, streamUrl, downloadUrl) {
-        pdfTitleEl.textContent = title;
-        pdfCatEl.textContent = category;
-        downloadBtn.href = downloadUrl;
-        openTabBtn.href = streamUrl;
-
-        // Reset & Show loading
-        loadingIndicator.classList.remove('d-none');
-        pdfViewerFrame.src = '';
-
-        pdfReaderModal.show();
-
-        // Increment views count
-        fetch(`/api/leaflet/${id}/view`, {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                'Accept': 'application/json'
-            }
-        }).then(r => r.json()).then(data => {
-            if (data.success) {
-                const counterEl = document.getElementById(`views_${id}`);
-                if (counterEl) counterEl.textContent = data.views_count.toLocaleString();
-            }
-        }).catch(console.error);
-
-        // Load stream URL into iframe
-        pdfViewerFrame.onload = function() {
-            loadingIndicator.classList.add('d-none');
-        };
-
-        // Append toolbar query param for optimal viewing
-        const frameSrc = streamUrl + '#toolbar=1&navpanes=0&scrollbar=1';
-        pdfViewerFrame.src = frameSrc;
-
-        // Hide spinner after 1.5s max in case onload doesn't fire on some embedded plugins
-        setTimeout(() => {
-            loadingIndicator.classList.add('d-none');
-        }, 1500);
+    if (typeof pdfjsLib !== 'undefined') {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
     }
 
-    // Clear iframe on modal close to free memory
-    modalEl.addEventListener('hidden.bs.modal', function () {
-        pdfViewerFrame.src = '';
-    });
+    document.addEventListener('DOMContentLoaded', function() {
+        const modalEl = document.getElementById('pdfReaderModal');
+        if (!modalEl) return;
 
-    // Client-side Instant Filter Search
-    const liveSearchInput = document.getElementById('liveSearchInput');
-    const visibleCounter = document.getElementById('visibleCounter');
-    const noSearchResults = document.getElementById('noSearchResults');
-    const items = document.querySelectorAll('.leaflet-item');
+        let pdfReaderModal = null;
+        if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+            pdfReaderModal = new bootstrap.Modal(modalEl);
+        }
 
-    liveSearchInput.addEventListener('input', function() {
-        const query = this.value.trim().toLowerCase();
-        let matchCount = 0;
+        const loadingIndicator = document.getElementById('pdfLoadingIndicator');
+        const loadingText = document.getElementById('pdfLoadingText');
+        const errorState = document.getElementById('pdfErrorState');
+        const canvasContainer = document.getElementById('pdfCanvasContainer');
+        const downloadBtn = document.getElementById('downloadPdfBtn');
+        const openTabBtn = document.getElementById('openTabBtn');
+        const fallbackOpenTabBtn = document.getElementById('fallbackOpenTabBtn');
+        const fallbackDownloadBtn = document.getElementById('fallbackDownloadBtn');
+        const pdfTitleEl = document.getElementById('pdfReaderTitle');
+        const pdfCatEl = document.getElementById('pdfReaderCategory');
+        const pageCountBadge = document.getElementById('pdfPageCountBadge');
+        const zoomPercent = document.getElementById('zoomPercent');
+        const btnZoomIn = document.getElementById('btnZoomIn');
+        const btnZoomOut = document.getElementById('btnZoomOut');
+        const btnFitWidth = document.getElementById('btnFitWidth');
 
-        items.forEach(el => {
-            const title = el.dataset.title || '';
-            const cat = el.dataset.category || '';
-            const matches = title.includes(query) || cat.includes(query);
+        let currentPdfDoc = null;
+        let currentScale = 1.0;
+        let baseFitScale = 1.0;
 
-            if (matches) {
-                el.classList.remove('d-none');
-                matchCount++;
-            } else {
-                el.classList.add('d-none');
-            }
+        // Open Reader Buttons
+        document.querySelectorAll('.btn-open-reader').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                openPdfModal(
+                    this.dataset.id,
+                    this.dataset.title,
+                    this.dataset.category,
+                    this.dataset.stream,
+                    this.dataset.download
+                );
+            });
         });
 
-        visibleCounter.textContent = matchCount;
+        // Click anywhere on Card
+        document.querySelectorAll('.leaflet-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                if (e.target.closest('.btn-open-reader')) return;
+                const btn = this.querySelector('.btn-open-reader');
+                if (btn) btn.click();
+            });
+        });
 
-        if (matchCount === 0 && items.length > 0) {
-            noSearchResults.classList.remove('d-none');
-        } else {
-            noSearchResults.classList.add('d-none');
+        async function openPdfModal(id, title, category, streamUrl, downloadUrl) {
+            pdfTitleEl.textContent = title;
+            pdfCatEl.textContent = category;
+            downloadBtn.href = downloadUrl;
+            openTabBtn.href = streamUrl;
+            if (fallbackDownloadBtn) fallbackDownloadBtn.href = downloadUrl;
+            if (fallbackOpenTabBtn) fallbackOpenTabBtn.href = streamUrl;
+
+            // Reset modal state
+            canvasContainer.innerHTML = '';
+            errorState.classList.add('d-none');
+            loadingIndicator.classList.remove('d-none');
+            loadingText.textContent = 'Menyiapkan dokumen leaflet...';
+            pageCountBadge.classList.add('d-none');
+
+            if (!pdfReaderModal && typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+                pdfReaderModal = new bootstrap.Modal(modalEl);
+            }
+            if (pdfReaderModal) {
+                pdfReaderModal.show();
+            }
+
+            // Increment views count asynchronously
+            fetch(`/api/leaflet/${id}/view`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '{{ csrf_token() }}',
+                    'Accept': 'application/json'
+                }
+            }).then(r => r.json()).then(data => {
+                if (data.success) {
+                    const counterEl = document.getElementById(`views_${id}`);
+                    if (counterEl) counterEl.textContent = Number(data.views_count).toLocaleString();
+                }
+            }).catch(console.error);
+
+            // Render PDF with PDF.js
+            try {
+                if (typeof pdfjsLib === 'undefined') {
+                    throw new Error('PDF.js tidak tersedia');
+                }
+
+                loadingText.textContent = 'Mengunduh data dokumen...';
+                const loadingTask = pdfjsLib.getDocument({
+                    url: streamUrl,
+                    cMapUrl: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/cmaps/',
+                    cMapPacked: true
+                });
+
+                currentPdfDoc = await loadingTask.promise;
+
+                pageCountBadge.textContent = `${currentPdfDoc.numPages} Halaman`;
+                pageCountBadge.classList.remove('d-none');
+
+                // Determine scale to fit container width nicely
+                const firstPage = await currentPdfDoc.getPage(1);
+                const unscaledViewport = firstPage.getViewport({ scale: 1.0 });
+                const availableWidth = Math.max(280, (canvasContainer.clientWidth || window.innerWidth) - 48);
+                
+                baseFitScale = Math.min(availableWidth / unscaledViewport.width, 1.4);
+                currentScale = baseFitScale;
+                updateZoomBadge();
+
+                await renderAllPages();
+                loadingIndicator.classList.add('d-none');
+            } catch (err) {
+                console.warn('PDF.js rendering error:', err);
+                loadingIndicator.classList.add('d-none');
+                errorState.classList.remove('d-none');
+            }
+        }
+
+        async function renderAllPages() {
+            if (!currentPdfDoc) return;
+            canvasContainer.innerHTML = '';
+            const numPages = currentPdfDoc.numPages;
+
+            for (let i = 1; i <= numPages; i++) {
+                const page = await currentPdfDoc.getPage(i);
+                const viewport = page.getViewport({ scale: currentScale });
+                const outputScale = window.devicePixelRatio || 1;
+
+                const pageWrapper = document.createElement('div');
+                pageWrapper.className = 'pdf-page-card position-relative mb-4 rounded-3 overflow-hidden bg-white';
+                pageWrapper.style.maxWidth = '100%';
+
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+
+                canvas.width = Math.floor(viewport.width * outputScale);
+                canvas.height = Math.floor(viewport.height * outputScale);
+                canvas.style.width = Math.floor(viewport.width) + 'px';
+                canvas.style.height = Math.floor(viewport.height) + 'px';
+                canvas.style.display = 'block';
+
+                const transform = outputScale !== 1 ? [outputScale, 0, 0, outputScale, 0, 0] : null;
+
+                const pageNumTag = document.createElement('span');
+                pageNumTag.className = 'badge bg-dark bg-opacity-75 text-white position-absolute bottom-0 end-0 m-2 rounded-pill px-2.5 py-1 small font-monospace';
+                pageNumTag.style.fontSize = '0.72rem';
+                pageNumTag.textContent = `${i} / ${numPages}`;
+
+                pageWrapper.appendChild(canvas);
+                pageWrapper.appendChild(pageNumTag);
+                canvasContainer.appendChild(pageWrapper);
+
+                await page.render({
+                    canvasContext: ctx,
+                    transform: transform,
+                    viewport: viewport
+                }).promise;
+            }
+        }
+
+        function updateZoomBadge() {
+            if (zoomPercent) {
+                zoomPercent.textContent = Math.round((currentScale / baseFitScale) * 100) + '%';
+            }
+        }
+
+        if (btnZoomIn) {
+            btnZoomIn.addEventListener('click', async function() {
+                if (!currentPdfDoc || currentScale >= 3.0) return;
+                currentScale = +(currentScale * 1.25).toFixed(2);
+                updateZoomBadge();
+                loadingIndicator.classList.remove('d-none');
+                loadingText.textContent = 'Memperbesar...';
+                await renderAllPages();
+                loadingIndicator.classList.add('d-none');
+            });
+        }
+
+        if (btnZoomOut) {
+            btnZoomOut.addEventListener('click', async function() {
+                if (!currentPdfDoc || currentScale <= 0.4) return;
+                currentScale = +(currentScale / 1.25).toFixed(2);
+                updateZoomBadge();
+                loadingIndicator.classList.remove('d-none');
+                loadingText.textContent = 'Memperkecil...';
+                await renderAllPages();
+                loadingIndicator.classList.add('d-none');
+            });
+        }
+
+        if (btnFitWidth) {
+            btnFitWidth.addEventListener('click', async function() {
+                if (!currentPdfDoc) return;
+                const firstPage = await currentPdfDoc.getPage(1);
+                const unscaled = firstPage.getViewport({ scale: 1.0 });
+                const availableWidth = Math.max(280, (canvasContainer.clientWidth || window.innerWidth) - 48);
+                baseFitScale = Math.min(availableWidth / unscaled.width, 1.4);
+                currentScale = baseFitScale;
+                updateZoomBadge();
+                loadingIndicator.classList.remove('d-none');
+                loadingText.textContent = 'Menyesuaikan layar...';
+                await renderAllPages();
+                loadingIndicator.classList.add('d-none');
+            });
+        }
+
+        // Clean up when modal closed
+        modalEl.addEventListener('hidden.bs.modal', function() {
+            canvasContainer.innerHTML = '';
+            currentPdfDoc = null;
+        });
+
+        // Client-side Instant Filter Search
+        const liveSearchInput = document.getElementById('liveSearchInput');
+        const visibleCounter = document.getElementById('visibleCounter');
+        const noSearchResults = document.getElementById('noSearchResults');
+        const items = document.querySelectorAll('.leaflet-item');
+
+        if (liveSearchInput) {
+            liveSearchInput.addEventListener('input', function() {
+                const query = this.value.trim().toLowerCase();
+                let matchCount = 0;
+
+                items.forEach(el => {
+                    const title = el.dataset.title || '';
+                    const cat = el.dataset.category || '';
+                    const matches = title.includes(query) || cat.includes(query);
+
+                    if (matches) {
+                        el.classList.remove('d-none');
+                        matchCount++;
+                    } else {
+                        el.classList.add('d-none');
+                    }
+                });
+
+                if (visibleCounter) visibleCounter.textContent = matchCount;
+
+                if (matchCount === 0 && items.length > 0) {
+                    if (noSearchResults) noSearchResults.classList.remove('d-none');
+                } else {
+                    if (noSearchResults) noSearchResults.classList.add('d-none');
+                }
+            });
+
+            window.resetLiveSearch = function() {
+                liveSearchInput.value = '';
+                liveSearchInput.dispatchEvent(new Event('input'));
+            };
         }
     });
-
-    window.resetLiveSearch = function() {
-        liveSearchInput.value = '';
-        liveSearchInput.dispatchEvent(new Event('input'));
-    };
 </script>
-@endsection
+@endpush

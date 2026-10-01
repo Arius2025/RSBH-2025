@@ -504,6 +504,8 @@ class FrontendController extends Controller
                 'Content-Type' => 'application/pdf',
                 'Content-Disposition' => 'inline; filename="' . basename($path) . '"',
                 'Cache-Control' => 'public, max-age=86400',
+                'Access-Control-Allow-Origin' => '*',
+                'Accept-Ranges' => 'bytes',
             ]);
         }
 
@@ -513,6 +515,8 @@ class FrontendController extends Controller
                 'Content-Type' => 'application/pdf',
                 'Content-Disposition' => 'inline; filename="' . basename($path) . '"',
                 'Cache-Control' => 'public, max-age=86400',
+                'Access-Control-Allow-Origin' => '*',
+                'Accept-Ranges' => 'bytes',
             ]);
         }
 
