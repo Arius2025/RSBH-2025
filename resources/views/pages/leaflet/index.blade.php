@@ -71,8 +71,8 @@
             <div class="col leaflet-item" data-title="{{ strtolower($leaf->title) }}" data-category="{{ strtolower($leaf->category) }}">
                 <div class="card h-100 border rounded-3 overflow-hidden leaflet-card bg-white position-relative d-flex flex-column">
                     
-                    {{-- Wadah Sampul Dokumen Proporsi Standar 3:4 --}}
-                    <div class="position-relative leaflet-cover-container" style="padding-top: 133.33%; background: #f8fafc; border-bottom: 1px solid #e2e8f0;">
+                    {{-- Wadah Sampul Dokumen Proporsi Brosur Lanskap --}}
+                    <div class="position-relative leaflet-cover-container" style="padding-top: 70%; background: #f8fafc; border-bottom: 1px solid #e2e8f0;">
                         @if($leaf->thumbnail_path)
                             <img src="{{ $leaf->thumbnail_url }}" alt="{{ $leaf->title }}" class="position-absolute top-0 start-0 w-100 h-100 leaflet-cover-image" loading="lazy">
                         @else
@@ -270,7 +270,9 @@
         border-color: #cbd5e1;
     }
     .leaflet-cover-image {
-        object-fit: cover;
+        object-fit: contain;
+        background-color: #f8fafc;
+        padding: 4px;
     }
     .text-truncate-2 {
         display: -webkit-box;
@@ -278,8 +280,25 @@
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
+    #pdfCanvasContainer {
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+        overflow-x: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-sizing: border-box;
+    }
     .pdf-page-card {
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        margin: 0 auto;
+        overflow: visible;
+        box-sizing: border-box;
+    }
+    .pdf-page-card canvas {
+        display: block;
+        border-radius: 6px;
     }
     .btn-open-reader:focus-visible,
     .btn:focus-visible {
@@ -401,12 +420,7 @@
                 pageCountBadge.textContent = `${currentPdfDoc.numPages} Halaman`;
                 pageCountBadge.classList.remove('d-none');
 
-                const firstPage = await currentPdfDoc.getPage(1);
-                const unscaledViewport = firstPage.getViewport({ scale: 1.0 });
-                const availableWidth = Math.max(280, (canvasContainer.clientWidth || window.innerWidth) - 48);
-                
-                baseFitScale = Math.min(availableWidth / unscaledViewport.width, 1.4);
-                currentScale = baseFitScale;
+                currentScale = 1.0;
                 updateZoomBadge();
 
                 await renderAllPages();
@@ -423,25 +437,53 @@
             canvasContainer.innerHTML = '';
             const numPages = currentPdfDoc.numPages;
 
+            // Hitung lebar area yang tersedia untuk dokumen agar pas dan tidak terpotong
+            const containerWidth = canvasContainer.clientWidth || window.innerWidth;
+            const padding = window.innerWidth < 768 ? 24 : 48;
+            const availableWidth = Math.max(280, containerWidth - padding);
+
             for (let i = 1; i <= numPages; i++) {
                 const page = await currentPdfDoc.getPage(i);
-                const viewport = page.getViewport({ scale: currentScale });
-                const outputScale = window.devicePixelRatio || 1;
+                const unscaledViewport = page.getViewport({ scale: 1.0 });
+
+                // Hitung skala pas selebar layar (fit width)
+                const fitScale = availableWidth / unscaledViewport.width;
+                const effectiveScale = fitScale * currentScale;
+
+                // Render resolusi tinggi dengan devicePixelRatio agar teks tajam
+                const pixelRatio = window.devicePixelRatio || 1;
+                const renderViewport = page.getViewport({ scale: effectiveScale * pixelRatio });
 
                 const pageWrapper = document.createElement('div');
-                pageWrapper.className = 'pdf-page-card position-relative mb-4 rounded-2 overflow-hidden bg-white';
-                pageWrapper.style.maxWidth = '100%';
+                pageWrapper.className = 'pdf-page-card position-relative mb-4 bg-white rounded-2';
+                
+                if (currentScale <= 1.0) {
+                    pageWrapper.style.maxWidth = '100%';
+                    pageWrapper.style.width = 'fit-content';
+                } else {
+                    pageWrapper.style.maxWidth = 'none';
+                    pageWrapper.style.width = Math.floor(unscaledViewport.width * effectiveScale) + 'px';
+                }
 
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
 
-                canvas.width = Math.floor(viewport.width * outputScale);
-                canvas.height = Math.floor(viewport.height * outputScale);
-                canvas.style.width = Math.floor(viewport.width) + 'px';
-                canvas.style.height = Math.floor(viewport.height) + 'px';
-                canvas.style.display = 'block';
+                canvas.width = Math.floor(renderViewport.width);
+                canvas.height = Math.floor(renderViewport.height);
 
-                const transform = outputScale !== 1 ? [outputScale, 0, 0, outputScale, 0, 0] : null;
+                const displayWidth = Math.floor(unscaledViewport.width * effectiveScale);
+                const displayHeight = Math.floor(unscaledViewport.height * effectiveScale);
+
+                if (currentScale <= 1.0) {
+                    canvas.style.maxWidth = '100%';
+                    canvas.style.height = 'auto';
+                    canvas.style.width = '100%';
+                } else {
+                    canvas.style.maxWidth = 'none';
+                    canvas.style.width = displayWidth + 'px';
+                    canvas.style.height = displayHeight + 'px';
+                }
+                canvas.style.display = 'block';
 
                 const pageNumTag = document.createElement('span');
                 pageNumTag.className = 'badge bg-dark bg-opacity-75 text-white position-absolute bottom-0 end-0 m-2 rounded-2 px-2.5 py-1 small font-monospace';
@@ -454,15 +496,14 @@
 
                 await page.render({
                     canvasContext: ctx,
-                    transform: transform,
-                    viewport: viewport
+                    viewport: renderViewport
                 }).promise;
             }
         }
 
         function updateZoomBadge() {
             if (zoomPercent) {
-                zoomPercent.textContent = Math.round((currentScale / baseFitScale) * 100) + '%';
+                zoomPercent.textContent = Math.round(currentScale * 100) + '%';
             }
         }
 
@@ -493,11 +534,7 @@
         if (btnFitWidth) {
             btnFitWidth.addEventListener('click', async function() {
                 if (!currentPdfDoc) return;
-                const firstPage = await currentPdfDoc.getPage(1);
-                const unscaled = firstPage.getViewport({ scale: 1.0 });
-                const availableWidth = Math.max(280, (canvasContainer.clientWidth || window.innerWidth) - 48);
-                baseFitScale = Math.min(availableWidth / unscaled.width, 1.4);
-                currentScale = baseFitScale;
+                currentScale = 1.0;
                 updateZoomBadge();
                 loadingIndicator.classList.remove('d-none');
                 loadingText.textContent = 'Menyesuaikan layar...';
