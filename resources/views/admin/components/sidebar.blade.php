@@ -72,6 +72,15 @@
                 </a>
             </li>
 
+            {{-- Leaflet Kesehatan --}}
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('admin.leaflets.*') ? 'active-admin' : '' }}" 
+                   href="{{ route('admin.leaflets.index') }}">
+                    <i class="bi bi-file-earmark-medical-fill"></i>
+                    <span>Leaflet Kesehatan</span>
+                </a>
+            </li>
+
             {{-- Permohonan Informasi --}}
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('admin.permohonan.*') ? 'active-admin' : '' }}" 

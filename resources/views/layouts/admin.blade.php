@@ -471,6 +471,14 @@
                     </div>
                 </a>
 
+                <a href="{{ route('admin.leaflets.index') }}" class="list-group-item list-group-item-action rounded-3 border-0 py-2.5 d-flex align-items-center gap-3 {{ request()->routeIs('admin.leaflets.*') ? 'bg-success-subtle text-success fw-bold' : '' }}">
+                    <i class="bi bi-file-earmark-medical-fill fs-5 text-success"></i>
+                    <div>
+                        <div class="fw-semibold">Kelola Leaflet Kesehatan</div>
+                        <small class="text-muted">Manajemen & upload leaflet edukasi PDF</small>
+                    </div>
+                </a>
+
                 <a href="{{ route('profile.edit') }}" class="list-group-item list-group-item-action rounded-3 border-0 py-2.5 d-flex align-items-center gap-3 {{ request()->routeIs('profile.edit') ? 'bg-success-subtle text-success fw-bold' : '' }}">
                     <i class="bi bi-person-gear fs-5 text-primary"></i>
                     <div>

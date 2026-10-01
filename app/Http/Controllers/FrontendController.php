@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Berita;
 use App\Models\JadwalDokter;
+use App\Models\Leaflet;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -440,5 +441,50 @@ class FrontendController extends Controller
             $result[] = ['label' => $cleanLabel, 'count' => $count];
         }
         return response()->json($result);
+    }
+
+    /**
+     * Halaman Publik Leaflet Informasi Kesehatan
+     */
+    public function leaflet(Request $request)
+    {
+        $query = Leaflet::query();
+
+        if ($request->filled('q')) {
+            $search = $request->q;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('category', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('kategori') && $request->kategori !== 'Semua') {
+            $query->where('category', $request->kategori);
+        }
+
+        $leaflets = $query->latest()->paginate(12)->withQueryString();
+
+        // Ambil daftar kategori unik beserta jumlahnya
+        $categories = Leaflet::selectRaw('category, count(*) as count')
+            ->groupBy('category')
+            ->orderBy('category')
+            ->pluck('count', 'category');
+
+        $totalCount = Leaflet::count();
+
+        return view('pages.leaflet.index', compact('leaflets', 'categories', 'totalCount'));
+    }
+
+    /**
+     * Hitung view leaflet saat dibuka di PDF Reader
+     */
+    public function incrementLeafletView($id)
+    {
+        $leaflet = Leaflet::find($id);
+        if ($leaflet) {
+            $leaflet->increment('views_count');
+            return response()->json(['success' => true, 'views_count' => $leaflet->views_count]);
+        }
+        return response()->json(['success' => false], 404);
     }
 }

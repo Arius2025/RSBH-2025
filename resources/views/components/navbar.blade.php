@@ -21,12 +21,13 @@
                         <a class="nav-link px-2 {{ request()->routeIs('home') ? 'text-success active' : '' }}" href="{{ route('home') }}">Beranda</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle px-2 {{ (request()->routeIs('informasi') || request()->routeIs('dokter') || request()->routeIs('tidur') || request()->routeIs('indikator-mutu')) ? 'text-success active' : '' }}" href="#" data-bs-toggle="dropdown">Informasi</a>
-                        <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-3 p-2 rounded-3" style="min-width: 220px;">
+                        <a class="nav-link dropdown-toggle px-2 {{ (request()->routeIs('informasi') || request()->routeIs('dokter') || request()->routeIs('tidur') || request()->routeIs('indikator-mutu') || request()->routeIs('leaflet.*')) ? 'text-success active' : '' }}" href="#" data-bs-toggle="dropdown">Informasi</a>
+                        <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-3 p-2 rounded-3" style="min-width: 250px;">
                             <li><a class="dropdown-item rounded-2" href="{{ route('informasi') }}">Profil Singkat</a></li>
                             <li><a class="dropdown-item rounded-2" href="{{ route('dokter') }}">Dokter RS</a></li>
                             <li><a class="dropdown-item rounded-2" href="{{ route('tidur') }}">Ketersediaan Tempat Tidur</a></li>
                             <li><a class="dropdown-item rounded-2 {{ request()->routeIs('indikator-mutu') ? 'active bg-success text-white' : '' }}" href="{{ route('indikator-mutu') }}">Indikator Mutu</a></li>
+                            <li><a class="dropdown-item rounded-2 {{ request()->routeIs('leaflet.*') ? 'active bg-success text-white' : '' }}" href="{{ route('leaflet.index') }}"><i class="bi bi-file-earmark-medical me-1 text-success"></i> Leaflet Informasi Kesehatan</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -254,6 +255,12 @@
             <a href="{{ route('indikator-mutu') }}" class="sigap-pop-item stagger-4">
                 <div class="icon-wrap bg-white text-success"><i class="bi bi-graph-up-arrow"></i></div>
                 <span>Mutu (INM)</span>
+            </a>
+        </div>
+        <div class="col-4">
+            <a href="{{ route('leaflet.index') }}" class="sigap-pop-item stagger-4">
+                <div class="icon-wrap bg-white text-success"><i class="bi bi-file-earmark-medical"></i></div>
+                <span>Leaflet</span>
             </a>
         </div>
         <div class="col-12 mt-4">

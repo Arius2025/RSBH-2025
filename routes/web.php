@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\BeritaCrudController;
 use App\Http\Controllers\Admin\JadwalCrudController;
 use App\Http\Controllers\Admin\DocumentCrudController;
+use App\Http\Controllers\Admin\LeafletCrudController;
 use App\Http\Controllers\Admin\TarifController;
 use App\Http\Controllers\Admin\SigapController;
 use App\Http\Controllers\FrontendController;
@@ -28,6 +29,8 @@ use App\Http\Controllers\FupController;
 
 Route::get('/', [FrontendController::class, 'home'])->name('home');
 Route::get('/informasi', [FrontendController::class, 'informasi'])->name('informasi');
+Route::get('/informasi/leaflet', [FrontendController::class, 'leaflet'])->name('leaflet.index');
+Route::post('/api/leaflet/{id}/view', [FrontendController::class, 'incrementLeafletView'])->name('api.leaflet.view');
 Route::get('/dokter', [FrontendController::class, 'dokter'])->name('dokter');
 Route::get('/berita', [FrontendController::class, 'berita'])->name('berita');
 Route::get('/berita/{slug}', [FrontendController::class, 'detailBerita'])->name('berita.detail');
@@ -114,6 +117,11 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     // Kelola Dokumen PPID
     Route::resource('documents', DocumentCrudController::class);
 
+    // Kelola Leaflet Kesehatan
+    Route::get('/leaflets/batch', [LeafletCrudController::class, 'batch'])->name('leaflets.batch');
+    Route::post('/leaflets/batch-upload', [LeafletCrudController::class, 'batchUploadItem'])->name('leaflets.batch_upload');
+    Route::resource('leaflets', LeafletCrudController::class);
+
     // Permohonan Informasi
     Route::get('/permohonan-informasi', [PermohonanInformasiController::class, 'adminIndex'])->name('permohonan.index');
     Route::put('/permohonan-informasi/{id}/status', [PermohonanInformasiController::class, 'adminUpdateStatus'])->name('permohonan.status');
@@ -156,6 +164,7 @@ Route::get('/sitemap.xml', function () {
         ['loc' => route('zona'), 'priority' => '0.6', 'changefreq' => 'monthly'],
         ['loc' => route('survei'), 'priority' => '0.6', 'changefreq' => 'monthly'],
         ['loc' => route('indikator-mutu'), 'priority' => '0.8', 'changefreq' => 'monthly'],
+        ['loc' => route('leaflet.index'), 'priority' => '0.8', 'changefreq' => 'weekly'],
     ];
 
     try {
