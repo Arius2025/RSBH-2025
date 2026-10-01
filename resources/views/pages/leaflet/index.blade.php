@@ -144,7 +144,7 @@
     {{-- Pagination --}}
     @if($leaflets->hasPages())
         <div class="d-flex justify-content-center mt-5">
-            {{ $leaflets->links() }}
+            {{ $leaflets->links('pagination::bootstrap-5') }}
         </div>
     @endif
 
@@ -254,6 +254,42 @@
     .no-scrollbar {
         -ms-overflow-style: none;
         scrollbar-width: none;
+    }
+    /* Clean Antislop Pagination */
+    .pagination {
+        gap: 6px;
+        margin-bottom: 0;
+    }
+    .pagination .page-item .page-link {
+        color: #198754;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 8px 16px;
+        font-weight: 600;
+        font-size: 0.875rem;
+        background: #ffffff;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+        transition: all 0.2s ease;
+    }
+    .pagination .page-item .page-link:hover {
+        background: #e8f5e9;
+        color: #115c39;
+        border-color: #198754;
+    }
+    .pagination .page-item.active .page-link {
+        background-color: #198754;
+        border-color: #198754;
+        color: #ffffff;
+        box-shadow: 0 4px 10px rgba(25, 135, 84, 0.25);
+    }
+    .pagination .page-item.disabled .page-link {
+        color: #94a3b8;
+        background: #f8fafc;
+        border-color: #e2e8f0;
+    }
+    .pagination svg {
+        width: 1rem !important;
+        height: 1rem !important;
     }
 </style>
 

@@ -27,7 +27,7 @@
                             <li><a class="dropdown-item rounded-2" href="{{ route('dokter') }}">Dokter RS</a></li>
                             <li><a class="dropdown-item rounded-2" href="{{ route('tidur') }}">Ketersediaan Tempat Tidur</a></li>
                             <li><a class="dropdown-item rounded-2 {{ request()->routeIs('indikator-mutu') ? 'active bg-success text-white' : '' }}" href="{{ route('indikator-mutu') }}">Indikator Mutu</a></li>
-                            <li><a class="dropdown-item rounded-2 {{ request()->routeIs('leaflet.*') ? 'active bg-success text-white' : '' }}" href="{{ route('leaflet.index') }}"><i class="bi bi-file-earmark-medical me-1 text-success"></i> Leaflet Informasi Kesehatan</a></li>
+                            <li><a class="dropdown-item rounded-2 {{ request()->routeIs('leaflet.*') ? 'active bg-success text-white' : '' }}" href="{{ route('leaflet.index') }}">Leaflet Informasi Kesehatan</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">

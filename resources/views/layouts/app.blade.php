@@ -142,6 +142,49 @@
       }
       .text-shadow { text-shadow: 0 2px 6px rgba(0,0,0,0.6); }
 
+      /* Global Pagination Styling */
+      .pagination {
+          display: flex;
+          padding-left: 0;
+          list-style: none;
+          gap: 6px;
+          align-items: center;
+          margin-bottom: 0;
+      }
+      .pagination .page-item .page-link {
+          color: #198754;
+          background-color: #ffffff;
+          border: 1px solid #e2e8f0;
+          border-radius: 10px;
+          padding: 8px 16px;
+          font-weight: 600;
+          font-size: 0.875rem;
+          text-decoration: none;
+          box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+          transition: all 0.2s ease;
+      }
+      .pagination .page-item .page-link:hover {
+          color: #115c39;
+          background-color: #e8f5e9;
+          border-color: #198754;
+      }
+      .pagination .page-item.active .page-link {
+          color: #ffffff;
+          background-color: #198754;
+          border-color: #198754;
+          box-shadow: 0 3px 8px rgba(25, 135, 84, 0.25);
+      }
+      .pagination .page-item.disabled .page-link {
+          color: #94a3b8;
+          background-color: #f8fafc;
+          border-color: #e2e8f0;
+          cursor: not-allowed;
+      }
+      .pagination svg {
+          width: 1rem !important;
+          height: 1rem !important;
+      }
+
       /* ========================================= */
       /* 2. FLOATING QUICK ACCESS (Compact)        */
       /* ========================================= */

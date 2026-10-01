@@ -189,7 +189,7 @@
                         Menampilkan {{ $leaflets->firstItem() }} - {{ $leaflets->lastItem() }} dari total {{ $leaflets->total() }} leaflet
                     </div>
                     <div>
-                        {{ $leaflets->links() }}
+                        {{ $leaflets->links('pagination::bootstrap-5') }}
                     </div>
                 </div>
             @endif
