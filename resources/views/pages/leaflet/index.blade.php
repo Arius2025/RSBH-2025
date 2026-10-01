@@ -3,24 +3,24 @@
 @section('content')
 
 {{-- Header Halaman Informasi Leaflet --}}
-<section class="bg-light border-bottom py-4 py-md-5">
+<section class="bg-light border-bottom py-3 py-md-4">
     <div class="container">
         <nav aria-label="breadcrumb">
-            <ol class="breadcrumb mb-2 small">
+            <ol class="breadcrumb mb-1 mb-md-2 small">
                 <li class="breadcrumb-item"><a href="{{ route('home') }}" class="text-decoration-none text-muted">Beranda</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('informasi') }}" class="text-decoration-none text-muted">Informasi</a></li>
                 <li class="breadcrumb-item active text-success fw-semibold" aria-current="page">Leaflet Kesehatan</li>
             </ol>
         </nav>
         
-        <div class="row align-items-md-center justify-content-between gy-3">
+        <div class="row align-items-md-center justify-content-between gy-2">
             <div class="col-lg-8">
-                <h1 class="h2 fw-bold text-dark mb-2">Leaflet Informasi Kesehatan</h1>
-                <p class="text-secondary mb-0" style="max-width: 720px; font-size: 1rem; line-height: 1.6;">
-                    Materi edukasi dan promosi kesehatan resmi dari RS Baladhika Husada (DKT Jember). Anda dapat membaca dokumen secara langsung atau mengunduh berkas PDF untuk panduan kesehatan keluarga.
+                <h1 class="h4 fw-bold text-dark mb-1">Leaflet Informasi Kesehatan</h1>
+                <p class="text-secondary small mb-0" style="max-width: 680px; line-height: 1.5;">
+                    Materi edukasi dan promosi kesehatan resmi dari RS Baladhika Husada (DKT Jember). Anda dapat membaca langsung atau mengunduh berkas PDF untuk panduan kesehatan.
                 </p>
             </div>
-            <div class="col-lg-auto">
+            <div class="col-lg-auto d-none d-md-block">
                 <div class="d-inline-flex align-items-center gap-2 px-3 py-2 bg-white border rounded-3 shadow-xs text-muted small">
                     <i class="bi bi-journal-medical text-success fs-5"></i>
                     <span>Tersedia <strong>{{ $totalCount }}</strong> materi publikasi</span>
@@ -31,99 +31,100 @@
 </section>
 
 {{-- Konten Utama dan Filter Dokumen --}}
-<div class="container py-4 py-md-5">
+<div class="container py-3 py-md-4">
     
     {{-- Bilah Pencarian dan Kategori --}}
-    <div class="bg-white border rounded-3 p-3 p-md-4 mb-4 shadow-xs">
-        <div class="row g-3 align-items-center justify-content-between">
+    <div class="bg-white border rounded-3 p-2.5 p-md-3 mb-3 shadow-xs">
+        <div class="row g-2 align-items-center justify-content-between">
             <div class="col-12 col-md-6 col-lg-5">
-                <div class="input-group">
-                    <span class="input-group-text bg-white border-end-0 text-muted ps-3">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-text bg-white border-end-0 text-muted ps-2.5">
                         <i class="bi bi-search"></i>
                     </span>
-                    <input type="text" id="liveSearchInput" class="form-control border-start-0 py-2 ps-0" placeholder="Ketik topik atau judul leaflet..." value="{{ request('q') }}" aria-label="Cari judul leaflet">
+                    <input type="text" id="liveSearchInput" class="form-control border-start-0 py-2 ps-1" placeholder="Cari topik atau judul leaflet..." value="{{ request('q') }}" aria-label="Cari judul leaflet">
                 </div>
             </div>
 
-            <div class="col-12 col-md-auto text-md-end text-muted small">
-                Menampilkan <span class="fw-semibold text-dark" id="visibleCounter">{{ $leaflets->total() }}</span> dari {{ $totalCount }} leaflet
+            <div class="col-12 col-md-auto text-muted small d-flex align-items-center justify-content-between justify-content-md-end">
+                <span>Menampilkan <strong class="text-dark" id="visibleCounter">{{ $leaflets->total() }}</strong> dari {{ $totalCount }} leaflet</span>
             </div>
         </div>
 
         {{-- Navigasi Filter Kategori --}}
-        <div class="d-flex align-items-center gap-2 overflow-auto pt-3 mt-3 border-top category-scroll-container" style="white-space: nowrap;">
+        <div class="d-flex align-items-center gap-1.5 overflow-auto pt-2 mt-2 border-top category-scroll-container" style="white-space: nowrap;">
             <a href="{{ route('leaflet.index', ['q' => request('q')]) }}" 
-               class="btn btn-sm rounded-2 px-3 py-1.5 {{ !request('kategori') || request('kategori') === 'Semua' ? 'btn-success fw-medium' : 'btn-outline-secondary' }}">
-                Semua Kategori <span class="badge {{ !request('kategori') || request('kategori') === 'Semua' ? 'bg-white text-success' : 'bg-light text-dark border' }} ms-1">{{ $totalCount }}</span>
+               class="btn btn-sm rounded-2 px-2.5 py-1 {{ !request('kategori') || request('kategori') === 'Semua' ? 'btn-success fw-medium' : 'btn-outline-secondary' }}" style="font-size: 0.82rem;">
+                Semua <span class="badge {{ !request('kategori') || request('kategori') === 'Semua' ? 'bg-white text-success' : 'bg-light text-dark border' }} ms-1">{{ $totalCount }}</span>
             </a>
             @foreach($categories as $catName => $catCount)
                 <a href="{{ route('leaflet.index', ['kategori' => $catName, 'q' => request('q')]) }}" 
-                   class="btn btn-sm rounded-2 px-3 py-1.5 {{ request('kategori') === $catName ? 'btn-success fw-medium' : 'btn-outline-secondary' }}">
+                   class="btn btn-sm rounded-2 px-2.5 py-1 {{ request('kategori') === $catName ? 'btn-success fw-medium' : 'btn-outline-secondary' }}" style="font-size: 0.82rem;">
                     {{ $catName }} <span class="badge {{ request('kategori') === $catName ? 'bg-white text-success' : 'bg-light text-dark border' }} ms-1">{{ $catCount }}</span>
                 </a>
             @endforeach
         </div>
     </div>
 
-    {{-- Grid Kartu Leaflet --}}
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="leafletGrid">
+    {{-- Grid Kartu Leaflet: 2 Kolom di Layar HP agar Tidak Terlalu Banyak Scroll --}}
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-2 g-sm-3 g-lg-4" id="leafletGrid">
         @forelse($leaflets as $leaf)
             <div class="col leaflet-item" data-title="{{ strtolower($leaf->title) }}" data-category="{{ strtolower($leaf->category) }}">
                 <div class="card h-100 border rounded-3 overflow-hidden leaflet-card bg-white position-relative d-flex flex-column">
                     
                     {{-- Wadah Sampul Dokumen Proporsi Brosur Lanskap --}}
-                    <div class="position-relative leaflet-cover-container" style="padding-top: 70%; background: #f8fafc; border-bottom: 1px solid #e2e8f0;">
+                    <div class="position-relative leaflet-cover-container" style="padding-top: 68%; background: #f8fafc; border-bottom: 1px solid #e2e8f0;">
                         @if($leaf->thumbnail_path)
                             <img src="{{ $leaf->thumbnail_url }}" alt="{{ $leaf->title }}" class="position-absolute top-0 start-0 w-100 h-100 leaflet-cover-image" loading="lazy">
                         @else
-                            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column align-items-center justify-content-center text-muted p-3 text-center">
-                                <i class="bi bi-file-earmark-medical fs-1 text-success opacity-50 mb-2"></i>
-                                <span class="small fw-semibold text-truncate w-100">{{ $leaf->title }}</span>
+                            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column align-items-center justify-content-center text-muted p-2 text-center">
+                                <i class="bi bi-file-earmark-medical fs-2 text-success opacity-50 mb-1"></i>
+                                <span class="small fw-semibold text-truncate w-100" style="font-size: 0.75rem;">{{ $leaf->title }}</span>
                             </div>
                         @endif
 
                         {{-- Label Kategori Dokumen --}}
-                        <div class="position-absolute top-0 start-0 m-2.5 z-2">
-                            <span class="badge bg-white text-dark border shadow-xs rounded-2 px-2.5 py-1 small fw-semibold">
+                        <div class="position-absolute top-0 start-0 m-1.5 m-sm-2 z-2">
+                            <span class="badge bg-white text-dark border shadow-xs rounded-1 px-1.5 px-sm-2 py-0.5 small fw-semibold" style="font-size: 0.68rem;">
                                 {{ $leaf->category }}
                             </span>
                         </div>
                     </div>
 
                     {{-- Informasi & Tombol Baca --}}
-                    <div class="card-body p-3 d-flex flex-column flex-grow-1">
-                        <h2 class="card-title h6 fw-semibold text-dark mb-2 text-truncate-2" title="{{ $leaf->title }}" style="font-size: 0.95rem; line-height: 1.45;">
+                    <div class="card-body p-2 p-sm-3 d-flex flex-column flex-grow-1">
+                        <h2 class="card-title fw-semibold text-dark mb-1 mb-sm-2 text-truncate-2" title="{{ $leaf->title }}" style="font-size: 0.85rem; line-height: 1.35; min-height: 2.3em;">
                             {{ $leaf->title }}
                         </h2>
 
-                        <div class="mt-auto pt-2 border-top d-flex align-items-center justify-content-between text-muted small mb-3">
+                        <div class="mt-auto pt-1.5 border-top d-flex align-items-center justify-content-between text-muted small mb-2 mb-sm-2.5" style="font-size: 0.72rem;">
                             <span class="d-inline-flex align-items-center gap-1">
                                 <i class="bi bi-file-earmark-pdf text-danger"></i> {{ $leaf->file_size ?? 'PDF' }}
                             </span>
                             <span class="d-inline-flex align-items-center gap-1">
-                                <i class="bi bi-eye text-secondary"></i> <span id="views_{{ $leaf->id }}">{{ number_format($leaf->views_count) }}</span> dibaca
+                                <i class="bi bi-eye text-secondary"></i> <span id="views_{{ $leaf->id }}">{{ number_format($leaf->views_count) }}</span>
                             </span>
                         </div>
 
                         {{-- Tombol Buka Reader --}}
                         <button type="button" 
-                                class="btn btn-outline-success w-100 rounded-2 fw-semibold d-flex align-items-center justify-content-center gap-2 py-2 btn-open-reader"
+                                class="btn btn-outline-success w-100 rounded-2 fw-semibold d-flex align-items-center justify-content-center gap-1 py-1.5 py-sm-2 btn-open-reader"
+                                style="font-size: 0.82rem;"
                                 data-id="{{ $leaf->id }}"
                                 data-title="{{ $leaf->title }}"
                                 data-category="{{ $leaf->category }}"
                                 data-stream="{{ route('leaflet.stream', $leaf->id) }}"
                                 data-download="{{ route('leaflet.download', $leaf->id) }}">
-                            <i class="bi bi-book"></i> <span>Baca Dokumen</span>
+                            <i class="bi bi-book"></i> <span>Baca</span>
                         </button>
                     </div>
 
                 </div>
             </div>
         @empty
-            <div class="col-12 w-100 text-center py-5 my-4" id="emptyStateBox">
-                <div class="p-5 bg-white border rounded-3 shadow-xs mx-auto" style="max-width: 480px;">
-                    <i class="bi bi-journal-x fs-1 text-muted mb-3 d-block"></i>
-                    <h5 class="fw-bold text-dark mb-2">Belum Ada Leaflet Tersedia</h5>
+            <div class="col-12 w-100 text-center py-4 my-3" id="emptyStateBox">
+                <div class="p-4 bg-white border rounded-3 shadow-xs mx-auto" style="max-width: 440px;">
+                    <i class="bi bi-journal-x fs-1 text-muted mb-2 d-block"></i>
+                    <h5 class="fw-bold text-dark mb-1">Belum Ada Leaflet Tersedia</h5>
                     <p class="text-muted small mb-3">Materi leaflet untuk kategori atau kata kunci pencarian ini belum ditemukan.</p>
                     <a href="{{ route('leaflet.index') }}" class="btn btn-outline-success btn-sm rounded-2 px-3 py-1.5">
                         Lihat Semua Leaflet
@@ -134,10 +135,10 @@
     </div>
 
     {{-- Pesan Hasil Pencarian Kosong --}}
-    <div class="text-center py-5 my-4 d-none" id="noSearchResults">
-        <div class="p-5 bg-white border rounded-3 shadow-xs mx-auto" style="max-width: 480px;">
-            <i class="bi bi-search fs-1 text-muted mb-3 d-block"></i>
-            <h5 class="fw-bold text-dark mb-2">Tidak Ada Hasil Ditemukan</h5>
+    <div class="text-center py-4 my-3 d-none" id="noSearchResults">
+        <div class="p-4 bg-white border rounded-3 shadow-xs mx-auto" style="max-width: 440px;">
+            <i class="bi bi-search fs-1 text-muted mb-2 d-block"></i>
+            <h5 class="fw-bold text-dark mb-1">Tidak Ada Hasil Ditemukan</h5>
             <p class="text-muted small mb-3">Tidak ada dokumen leaflet yang cocok dengan kata kunci pencarian Anda.</p>
             <button type="button" class="btn btn-outline-success btn-sm rounded-2 px-3 py-1.5" onclick="resetLiveSearch()">
                 Bersihkan Pencarian
@@ -147,7 +148,7 @@
 
     {{-- Navigasi Halaman (Pagination) --}}
     @if($leaflets->hasPages())
-        <div class="d-flex justify-content-center mt-5">
+        <div class="d-flex justify-content-center mt-4">
             {{ $leaflets->links('pagination::bootstrap-5') }}
         </div>
     @endif
@@ -160,26 +161,25 @@
         <div class="modal-content bg-dark text-white border-0 d-flex flex-column" style="height: 100vh;">
             
             {{-- Header Pembaca --}}
-            <div class="modal-header border-bottom border-secondary bg-black py-2.5 px-3 px-md-4 flex-shrink-0">
-                <div class="d-flex align-items-center gap-2 overflow-hidden me-auto" style="max-width: 45%;">
-                    <div class="bg-success text-white p-2 rounded-2 d-none d-sm-flex align-items-center justify-content-center">
-                        <i class="bi bi-file-earmark-medical fs-5"></i>
+            <div class="modal-header border-bottom border-secondary bg-black py-2 px-2.5 px-md-3 flex-shrink-0">
+                <div class="d-flex align-items-center gap-1.5 overflow-hidden me-auto" style="max-width: 55%;">
+                    <div class="bg-success text-white p-1.5 rounded-2 d-none d-sm-flex align-items-center justify-content-center">
+                        <i class="bi bi-file-earmark-medical fs-6"></i>
                     </div>
                     <div class="text-truncate">
-                        <h2 class="modal-title h6 fw-bold text-white mb-0 text-truncate" id="pdfReaderTitle">Judul Leaflet</h2>
-                        <div class="d-flex align-items-center gap-2 mt-0.5">
-                            <span class="badge bg-secondary rounded-2 px-2 py-0.5 small" id="pdfReaderCategory" style="font-size: 0.72rem;">Kategori</span>
-                            <span class="badge bg-dark border border-secondary text-white-50 rounded-2 px-2 py-0.5 small d-none" id="pdfPageCountBadge" style="font-size: 0.72rem;">0 Halaman</span>
+                        <h2 class="modal-title h6 fw-bold text-white mb-0 text-truncate" id="pdfReaderTitle" style="font-size: 0.9rem;">Judul Leaflet</h2>
+                        <div class="d-flex align-items-center gap-1.5 mt-0.5">
+                            <span class="badge bg-secondary rounded-1 px-1.5 py-0.5 small" id="pdfReaderCategory" style="font-size: 0.68rem;">Kategori</span>
                         </div>
                     </div>
                 </div>
 
-                {{-- Kontrol Zoom Dokumen --}}
+                {{-- Toolbar Zoom & Fit (Desktop & Tablet) --}}
                 <div class="d-none d-md-flex align-items-center gap-1 mx-2" id="pdfZoomToolbar">
                     <button type="button" class="btn btn-sm btn-outline-light rounded-2 px-2 py-1" id="btnZoomOut" title="Perkecil">
                         <i class="bi bi-dash-lg"></i>
                     </button>
-                    <span class="text-white-50 small px-2 font-monospace" id="zoomPercent" style="min-width: 48px; text-align: center;">100%</span>
+                    <span class="text-white-50 small px-1.5 font-monospace" id="zoomPercent" style="min-width: 44px; text-align: center;">100%</span>
                     <button type="button" class="btn btn-sm btn-outline-light rounded-2 px-2 py-1" id="btnZoomIn" title="Perbesar">
                         <i class="bi bi-plus-lg"></i>
                     </button>
@@ -189,62 +189,82 @@
                 </div>
 
                 {{-- Aksi Unduh, Tab Baru, dan Tombol Tutup --}}
-                <div class="d-flex align-items-center gap-2 ms-auto">
-                    <a href="#" id="openTabBtn" target="_blank" class="btn btn-sm btn-outline-light rounded-2 px-2.5 py-1.5 d-inline-flex align-items-center gap-1" title="Buka berkas di tab baru">
-                        <i class="bi bi-box-arrow-up-right"></i> <span class="d-none d-sm-inline">Tab Baru</span>
+                <div class="d-flex align-items-center gap-1.5 ms-auto">
+                    <a href="#" id="openTabBtn" target="_blank" class="btn btn-sm btn-outline-light rounded-2 px-2 py-1 d-none d-sm-inline-flex align-items-center gap-1" title="Buka berkas di tab baru">
+                        <i class="bi bi-box-arrow-up-right"></i> <span class="d-none d-md-inline">Tab Baru</span>
                     </a>
-                    <a href="#" id="downloadPdfBtn" download class="btn btn-sm btn-success rounded-2 px-2.5 py-1.5 fw-medium d-inline-flex align-items-center gap-1" title="Unduh berkas PDF">
+                    <a href="#" id="downloadPdfBtn" download class="btn btn-sm btn-success rounded-2 px-2 py-1 fw-medium d-inline-flex align-items-center gap-1" title="Unduh berkas PDF">
                         <i class="bi bi-download"></i> <span class="d-none d-md-inline">Unduh</span>
                     </a>
                     
-                    {{-- Tombol Tutup Utama yang Jelas dan Kontras Tinggi --}}
+                    {{-- Tombol Tutup Header --}}
                     <button type="button" 
-                            class="btn btn-danger btn-sm rounded-2 px-3 py-1.5 fw-semibold d-inline-flex align-items-center gap-1.5 shadow-sm" 
+                            class="btn btn-danger btn-sm rounded-2 px-2.5 py-1 fw-semibold d-inline-flex align-items-center gap-1 shadow-sm" 
                             data-bs-dismiss="modal" 
                             aria-label="Tutup penampil dokumen">
-                        <i class="bi bi-x-lg"></i> <span>Tutup</span>
+                        <i class="bi bi-x-lg"></i> <span class="d-none d-sm-inline">Tutup</span>
                     </button>
                 </div>
             </div>
 
             {{-- Area Pembaca Dokumen --}}
-            <div class="modal-body p-0 position-relative flex-grow-1 d-flex flex-column overflow-hidden" style="background: #0f172a;">
+            <div class="modal-body p-0 position-relative flex-grow-1 d-flex flex-column overflow-hidden" style="background: #0f172a; padding-bottom: 58px !important;">
                 
                 {{-- Indikator Memuat Dokumen --}}
                 <div id="pdfLoadingIndicator" class="position-absolute top-50 start-50 translate-middle text-center" style="z-index: 20;">
-                    <div class="spinner-border text-success" style="width: 2.75rem; height: 2.75rem;" role="status">
+                    <div class="spinner-border text-success" style="width: 2.5rem; height: 2.5rem;" role="status">
                         <span class="visually-hidden">Memuat dokumen...</span>
                     </div>
-                    <div class="mt-3 text-white-50 small fw-medium" id="pdfLoadingText">Menyiapkan dokumen leaflet...</div>
+                    <div class="mt-2 text-white-50 small fw-medium" id="pdfLoadingText">Menyiapkan dokumen leaflet...</div>
                 </div>
 
                 {{-- Tampilan Saat Dokumen Gagal Dirender --}}
-                <div id="pdfErrorState" class="position-absolute top-50 start-50 translate-middle text-center p-4 rounded-3 bg-dark border border-secondary shadow-lg d-none" style="z-index: 15; max-width: 440px; width: 90%;">
-                    <i class="bi bi-file-earmark-pdf fs-1 text-warning mb-3 d-block"></i>
-                    <h3 class="h6 fw-bold text-white mb-2">Penampil Dokumen</h3>
-                    <p class="text-white-50 small mb-4">Dokumen dapat dibuka secara langsung di tab browser atau diunduh ke perangkat Anda.</p>
+                <div id="pdfErrorState" class="position-absolute top-50 start-50 translate-middle text-center p-3 rounded-3 bg-dark border border-secondary shadow-lg d-none" style="z-index: 15; max-width: 400px; width: 90%;">
+                    <i class="bi bi-file-earmark-pdf fs-1 text-warning mb-2 d-block"></i>
+                    <h3 class="h6 fw-bold text-white mb-1">Penampil Dokumen</h3>
+                    <p class="text-white-50 small mb-3">Dokumen dapat dibuka secara langsung di tab browser atau diunduh ke perangkat Anda.</p>
                     <div class="d-flex justify-content-center gap-2">
-                        <a href="#" id="fallbackOpenTabBtn" target="_blank" class="btn btn-outline-light btn-sm rounded-2 px-3">
+                        <a href="#" id="fallbackOpenTabBtn" target="_blank" class="btn btn-outline-light btn-sm rounded-2 px-2.5">
                             <i class="bi bi-box-arrow-up-right me-1"></i> Buka Tab Baru
                         </a>
-                        <a href="#" id="fallbackDownloadBtn" download class="btn btn-success btn-sm rounded-2 px-3">
+                        <a href="#" id="fallbackDownloadBtn" download class="btn btn-success btn-sm rounded-2 px-2.5">
                             <i class="bi bi-download me-1"></i> Unduh PDF
                         </a>
                     </div>
                 </div>
 
-                {{-- Wadah Gulir Halaman PDF --}}
-                <div id="pdfCanvasContainer" class="w-100 h-100 overflow-auto p-2 p-md-4 d-flex flex-column align-items-center" style="scroll-behavior: smooth;">
-                    {{-- Halaman kanvas dirender secara dinamis oleh PDF.js --}}
+                {{-- Wadah Tampilan Halaman Dokumen --}}
+                <div id="pdfCanvasContainer" class="w-100 h-100 overflow-auto p-2 p-md-3 d-flex flex-column align-items-center justify-content-start" style="scroll-behavior: smooth;">
+                    {{-- Halaman kanvas dirender di sini --}}
                 </div>
 
-                {{-- Tombol Tutup Melayang di Bawah Layar untuk Kenyamanan Membaca di HP & Desktop --}}
-                <button type="button" 
-                        class="btn btn-dark border border-secondary shadow-lg rounded-pill px-4 py-2 text-white fw-semibold position-fixed bottom-0 start-50 translate-middle-x mb-4 z-3 d-flex align-items-center gap-2"
-                        data-bs-dismiss="modal" 
-                        aria-label="Tutup dokumen">
-                    <i class="bi bi-x-circle-fill text-danger fs-5"></i> <span>Tutup Dokumen</span>
-                </button>
+                {{-- Bilah Navigasi Bawah Khusus HP & Layar Penuh: Ganti Halaman Tanpa Scroll Berlebih --}}
+                <div class="position-fixed bottom-0 start-0 end-0 px-2 py-1.5 bg-black bg-opacity-95 border-top border-secondary d-flex align-items-center justify-content-between z-3" style="backdrop-filter: blur(8px);">
+                    <div class="d-flex align-items-center gap-1">
+                        <button type="button" class="btn btn-sm btn-outline-light rounded-2 px-2 py-1" id="btnPrevPage" title="Halaman Sebelumnya">
+                            <i class="bi bi-chevron-left"></i>
+                        </button>
+                        
+                        {{-- Tombol Pill Pemilih Halaman Cepat --}}
+                        <div class="d-inline-flex gap-1" id="pagePillsContainer">
+                            {{-- Pill tombol Halaman 1 & Halaman 2 dinamis --}}
+                        </div>
+
+                        <button type="button" class="btn btn-sm btn-outline-light rounded-2 px-2 py-1" id="btnNextPage" title="Halaman Selanjutnya">
+                            <i class="bi bi-chevron-right"></i>
+                        </button>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-1.5">
+                        <span class="text-white-50 small px-1 d-none d-sm-inline" id="pageRatioText">Hal 1 dari 1</span>
+                        <button type="button" 
+                                class="btn btn-danger btn-sm rounded-2 px-2.5 py-1 fw-semibold d-flex align-items-center gap-1" 
+                                data-bs-dismiss="modal" 
+                                aria-label="Tutup dokumen">
+                            <i class="bi bi-x-lg"></i> <span>Tutup</span>
+                        </button>
+                    </div>
+                </div>
 
             </div>
 
@@ -254,7 +274,7 @@
 
 <style>
     .category-scroll-container::-webkit-scrollbar {
-        height: 4px;
+        height: 3px;
     }
     .category-scroll-container::-webkit-scrollbar-thumb {
         background: #cbd5e1;
@@ -266,13 +286,13 @@
     }
     .leaflet-card:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
         border-color: #cbd5e1;
     }
     .leaflet-cover-image {
         object-fit: contain;
         background-color: #f8fafc;
-        padding: 4px;
+        padding: 2px;
     }
     .text-truncate-2 {
         display: -webkit-box;
@@ -289,10 +309,11 @@
         flex-direction: column;
         align-items: center;
         box-sizing: border-box;
+        -webkit-overflow-scrolling: touch;
     }
     .pdf-page-card {
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-        margin: 0 auto;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+        margin: auto;
         overflow: visible;
         box-sizing: border-box;
     }
@@ -334,15 +355,18 @@
         const fallbackDownloadBtn = document.getElementById('fallbackDownloadBtn');
         const pdfTitleEl = document.getElementById('pdfReaderTitle');
         const pdfCatEl = document.getElementById('pdfReaderCategory');
-        const pageCountBadge = document.getElementById('pdfPageCountBadge');
         const zoomPercent = document.getElementById('zoomPercent');
         const btnZoomIn = document.getElementById('btnZoomIn');
         const btnZoomOut = document.getElementById('btnZoomOut');
         const btnFitWidth = document.getElementById('btnFitWidth');
+        const btnPrevPage = document.getElementById('btnPrevPage');
+        const btnNextPage = document.getElementById('btnNextPage');
+        const pagePillsContainer = document.getElementById('pagePillsContainer');
+        const pageRatioText = document.getElementById('pageRatioText');
 
         let currentPdfDoc = null;
+        let currentPageIndex = 1;
         let currentScale = 1.0;
-        let baseFitScale = 1.0;
 
         // Tombol Buka Reader
         document.querySelectorAll('.btn-open-reader').forEach(btn => {
@@ -376,10 +400,12 @@
             if (fallbackOpenTabBtn) fallbackOpenTabBtn.href = streamUrl;
 
             canvasContainer.innerHTML = '';
+            pagePillsContainer.innerHTML = '';
             errorState.classList.add('d-none');
             loadingIndicator.classList.remove('d-none');
             loadingText.textContent = 'Menyiapkan dokumen leaflet...';
-            pageCountBadge.classList.add('d-none');
+            currentPageIndex = 1;
+            currentScale = 1.0;
 
             if (!pdfReaderModal && typeof bootstrap !== 'undefined' && bootstrap.Modal) {
                 pdfReaderModal = new bootstrap.Modal(modalEl);
@@ -417,13 +443,10 @@
 
                 currentPdfDoc = await loadingTask.promise;
 
-                pageCountBadge.textContent = `${currentPdfDoc.numPages} Halaman`;
-                pageCountBadge.classList.remove('d-none');
-
-                currentScale = 1.0;
+                buildPageNavigation();
                 updateZoomBadge();
 
-                await renderAllPages();
+                await renderCurrentPage();
                 loadingIndicator.classList.add('d-none');
             } catch (err) {
                 console.warn('PDF.js rendering error:', err);
@@ -432,73 +455,120 @@
             }
         }
 
-        async function renderAllPages() {
+        // Buat Tombol Halaman Cepat (Pills)
+        function buildPageNavigation() {
+            if (!currentPdfDoc) return;
+            pagePillsContainer.innerHTML = '';
+            const total = currentPdfDoc.numPages;
+
+            for (let i = 1; i <= total; i++) {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = `btn btn-sm py-1 px-2 rounded-2 ${i === currentPageIndex ? 'btn-success fw-bold' : 'btn-outline-secondary text-white'}`;
+                btn.style.fontSize = '0.78rem';
+                
+                // Beri label Sisi Luar / Sisi Dalam jika brosur 2 halaman
+                if (total === 2) {
+                    btn.textContent = i === 1 ? 'Sisi 1' : 'Sisi 2';
+                } else {
+                    btn.textContent = `Hal ${i}`;
+                }
+
+                btn.addEventListener('click', () => {
+                    if (currentPageIndex !== i) {
+                        currentPageIndex = i;
+                        renderCurrentPage();
+                    }
+                });
+                pagePillsContainer.appendChild(btn);
+            }
+
+            updateNavButtonsState();
+        }
+
+        function updateNavButtonsState() {
+            if (!currentPdfDoc) return;
+            const total = currentPdfDoc.numPages;
+
+            if (btnPrevPage) btnPrevPage.disabled = (currentPageIndex <= 1);
+            if (btnNextPage) btnNextPage.disabled = (currentPageIndex >= total);
+
+            if (pageRatioText) {
+                pageRatioText.textContent = `Hal ${currentPageIndex} dari ${total}`;
+            }
+
+            // Perbarui status aktif pada tombol pills
+            const buttons = pagePillsContainer.querySelectorAll('button');
+            buttons.forEach((btn, idx) => {
+                const pageNum = idx + 1;
+                if (pageNum === currentPageIndex) {
+                    btn.className = 'btn btn-sm py-1 px-2 rounded-2 btn-success fw-bold';
+                } else {
+                    btn.className = 'btn btn-sm py-1 px-2 rounded-2 btn-outline-secondary text-white';
+                }
+            });
+        }
+
+        // Render Halaman Tunggal yang Dipilih agar Tidak Ada Scroll Panjang di HP
+        async function renderCurrentPage() {
             if (!currentPdfDoc) return;
             canvasContainer.innerHTML = '';
-            const numPages = currentPdfDoc.numPages;
+            updateNavButtonsState();
 
             // Hitung lebar area yang tersedia untuk dokumen agar pas dan tidak terpotong
             const containerWidth = canvasContainer.clientWidth || window.innerWidth;
-            const padding = window.innerWidth < 768 ? 24 : 48;
-            const availableWidth = Math.max(280, containerWidth - padding);
+            const padding = window.innerWidth < 768 ? 16 : 40;
+            const availableWidth = Math.max(260, containerWidth - padding);
 
-            for (let i = 1; i <= numPages; i++) {
-                const page = await currentPdfDoc.getPage(i);
-                const unscaledViewport = page.getViewport({ scale: 1.0 });
+            const page = await currentPdfDoc.getPage(currentPageIndex);
+            const unscaledViewport = page.getViewport({ scale: 1.0 });
 
-                // Hitung skala pas selebar layar (fit width)
-                const fitScale = availableWidth / unscaledViewport.width;
-                const effectiveScale = fitScale * currentScale;
+            // Hitung skala pas selebar layar (fit width)
+            const fitScale = availableWidth / unscaledViewport.width;
+            const effectiveScale = fitScale * currentScale;
 
-                // Render resolusi tinggi dengan devicePixelRatio agar teks tajam
-                const pixelRatio = window.devicePixelRatio || 1;
-                const renderViewport = page.getViewport({ scale: effectiveScale * pixelRatio });
+            // Render resolusi tinggi dengan devicePixelRatio agar teks tajam
+            const pixelRatio = window.devicePixelRatio || 1;
+            const renderViewport = page.getViewport({ scale: effectiveScale * pixelRatio });
 
-                const pageWrapper = document.createElement('div');
-                pageWrapper.className = 'pdf-page-card position-relative mb-4 bg-white rounded-2';
-                
-                if (currentScale <= 1.0) {
-                    pageWrapper.style.maxWidth = '100%';
-                    pageWrapper.style.width = 'fit-content';
-                } else {
-                    pageWrapper.style.maxWidth = 'none';
-                    pageWrapper.style.width = Math.floor(unscaledViewport.width * effectiveScale) + 'px';
-                }
-
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-
-                canvas.width = Math.floor(renderViewport.width);
-                canvas.height = Math.floor(renderViewport.height);
-
-                const displayWidth = Math.floor(unscaledViewport.width * effectiveScale);
-                const displayHeight = Math.floor(unscaledViewport.height * effectiveScale);
-
-                if (currentScale <= 1.0) {
-                    canvas.style.maxWidth = '100%';
-                    canvas.style.height = 'auto';
-                    canvas.style.width = '100%';
-                } else {
-                    canvas.style.maxWidth = 'none';
-                    canvas.style.width = displayWidth + 'px';
-                    canvas.style.height = displayHeight + 'px';
-                }
-                canvas.style.display = 'block';
-
-                const pageNumTag = document.createElement('span');
-                pageNumTag.className = 'badge bg-dark bg-opacity-75 text-white position-absolute bottom-0 end-0 m-2 rounded-2 px-2.5 py-1 small font-monospace';
-                pageNumTag.style.fontSize = '0.72rem';
-                pageNumTag.textContent = `${i} / ${numPages}`;
-
-                pageWrapper.appendChild(canvas);
-                pageWrapper.appendChild(pageNumTag);
-                canvasContainer.appendChild(pageWrapper);
-
-                await page.render({
-                    canvasContext: ctx,
-                    viewport: renderViewport
-                }).promise;
+            const pageWrapper = document.createElement('div');
+            pageWrapper.className = 'pdf-page-card position-relative bg-white rounded-2 my-auto';
+            
+            if (currentScale <= 1.0) {
+                pageWrapper.style.maxWidth = '100%';
+                pageWrapper.style.width = 'fit-content';
+            } else {
+                pageWrapper.style.maxWidth = 'none';
+                pageWrapper.style.width = Math.floor(unscaledViewport.width * effectiveScale) + 'px';
             }
+
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+
+            canvas.width = Math.floor(renderViewport.width);
+            canvas.height = Math.floor(renderViewport.height);
+
+            const displayWidth = Math.floor(unscaledViewport.width * effectiveScale);
+            const displayHeight = Math.floor(unscaledViewport.height * effectiveScale);
+
+            if (currentScale <= 1.0) {
+                canvas.style.maxWidth = '100%';
+                canvas.style.height = 'auto';
+                canvas.style.width = '100%';
+            } else {
+                canvas.style.maxWidth = 'none';
+                canvas.style.width = displayWidth + 'px';
+                canvas.style.height = displayHeight + 'px';
+            }
+            canvas.style.display = 'block';
+
+            pageWrapper.appendChild(canvas);
+            canvasContainer.appendChild(pageWrapper);
+
+            await page.render({
+                canvasContext: ctx,
+                viewport: renderViewport
+            }).promise;
         }
 
         function updateZoomBadge() {
@@ -507,15 +577,32 @@
             }
         }
 
+        // Navigasi Tombol Sebelumnya / Selanjutnya
+        if (btnPrevPage) {
+            btnPrevPage.addEventListener('click', () => {
+                if (currentPageIndex > 1) {
+                    currentPageIndex--;
+                    renderCurrentPage();
+                }
+            });
+        }
+
+        if (btnNextPage) {
+            btnNextPage.addEventListener('click', () => {
+                if (currentPdfDoc && currentPageIndex < currentPdfDoc.numPages) {
+                    currentPageIndex++;
+                    renderCurrentPage();
+                }
+            });
+        }
+
+        // Kontrol Zoom
         if (btnZoomIn) {
             btnZoomIn.addEventListener('click', async function() {
                 if (!currentPdfDoc || currentScale >= 3.0) return;
                 currentScale = +(currentScale * 1.25).toFixed(2);
                 updateZoomBadge();
-                loadingIndicator.classList.remove('d-none');
-                loadingText.textContent = 'Memperbesar tampilan...';
-                await renderAllPages();
-                loadingIndicator.classList.add('d-none');
+                await renderCurrentPage();
             });
         }
 
@@ -524,10 +611,7 @@
                 if (!currentPdfDoc || currentScale <= 0.4) return;
                 currentScale = +(currentScale / 1.25).toFixed(2);
                 updateZoomBadge();
-                loadingIndicator.classList.remove('d-none');
-                loadingText.textContent = 'Memperkecil tampilan...';
-                await renderAllPages();
-                loadingIndicator.classList.add('d-none');
+                await renderCurrentPage();
             });
         }
 
@@ -536,12 +620,27 @@
                 if (!currentPdfDoc) return;
                 currentScale = 1.0;
                 updateZoomBadge();
-                loadingIndicator.classList.remove('d-none');
-                loadingText.textContent = 'Menyesuaikan layar...';
-                await renderAllPages();
-                loadingIndicator.classList.add('d-none');
+                await renderCurrentPage();
             });
         }
+
+        // Dukungan Usap Jari (Touch Swipe) di Layar HP
+        let touchStartX = 0;
+        let touchEndX = 0;
+        canvasContainer.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+        canvasContainer.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchEndX - touchStartX;
+            if (diff > 60 && currentPageIndex > 1) {
+                currentPageIndex--;
+                renderCurrentPage();
+            } else if (diff < -60 && currentPdfDoc && currentPageIndex < currentPdfDoc.numPages) {
+                currentPageIndex++;
+                renderCurrentPage();
+            }
+        }, { passive: true });
 
         // Bersihkan objek saat modal ditutup
         modalEl.addEventListener('hidden.bs.modal', function() {
