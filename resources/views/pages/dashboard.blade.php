@@ -21,9 +21,11 @@
             </div>
             <div class="d-flex align-items-center bg-white luxury-shadow px-4 py-2 rounded-pill border">
                 <label class="small fw-bold text-uppercase text-muted me-3 mb-0">Filter Tahun:</label>
-                <select class="form-select form-select-sm border-0 fw-bold text-success shadow-none" onchange="changeYear(this.value)" style="width: auto; cursor: pointer;">
-                    <option value="2025" selected>2025</option>
-                    <option value="2026">2026</option>
+                <select id="yearSelect" class="form-select form-select-sm border-0 fw-bold text-success shadow-none" onchange="changeYear(this.value)" style="width: auto; cursor: pointer;">
+                    @php $thisYear = (int) date('Y'); @endphp
+                    @for($y = 2024; $y <= max($thisYear + 4, 2030); $y++)
+                        <option value="{{ $y }}" {{ $y == $thisYear ? 'selected' : '' }}>{{ $y }}</option>
+                    @endfor
                 </select>
             </div>
         </div>
@@ -69,7 +71,7 @@
                             <p class="text-muted">Data performa pengiriman obat ke rumah pasien (Geriatri & Purnawirawan).</p>
                             <div class="mt-4">
                                 <h2 class="display-5 fw-bold text-dark" id="totalSiterbat">0</h2>
-                                <p class="small text-muted text-uppercase fw-bold">Total Pengiriman Tahun <span class="selectedYearText">2025</span></p>
+                                <p class="small text-muted text-uppercase fw-bold">Total Pengiriman Tahun <span class="selectedYearText">{{ date('Y') }}</span></p>
                             </div>
                         </div>
                         <div class="col-md-8">
@@ -93,7 +95,7 @@
                             <p class="text-muted">Data registrasi dan layanan jemput gratis pasien.</p>
                             <div class="mt-4">
                                 <h2 class="display-5 fw-bold text-dark" id="totalAmbulance">0</h2>
-                                <p class="small text-muted text-uppercase fw-bold">Total Jemputan Tahun <span class="selectedYearText">2025</span></p>
+                                <p class="small text-muted text-uppercase fw-bold">Total Jemputan Tahun <span class="selectedYearText">{{ date('Y') }}</span></p>
                             </div>
                         </div>
                         <div class="col-md-8">
@@ -117,7 +119,7 @@
                             <p class="text-muted">Data pelayanan Santardekate (Pelayanan antar pesanan pasien dari koperasi rumah sakit).</p>
                             <div class="mt-4">
                                 <h2 class="display-5 fw-bold text-dark" id="totalSantardekate">0</h2>
-                                <p class="small text-muted text-uppercase fw-bold">Total Layanan Tahun <span class="selectedYearText">2025</span></p>
+                                <p class="small text-muted text-uppercase fw-bold">Total Layanan Tahun <span class="selectedYearText">{{ date('Y') }}</span></p>
                             </div>
                         </div>
                         <div class="col-md-8">
@@ -133,108 +135,113 @@
 </div>
 
 <script>
-    const SHEETS_MAP = {
-        2025: {
-            siterbat: '1zZHjcIYoal75rbikPZ6oElTMyGpKjzS2OdzzCKm__4c',
-            ambulance: '1ZiowxZoBCRvqcRlkrkIPueJ2Tzr9uApluGGY5koy9SY',
-            santardekate: '1-tb2VzBFPE12QOecySExK4s3r_lwrc8mVkyu8kLL3ys',
-            // fupKopi: '1mD69mPrV0Ym7_H9XvTq-2Lksb1mY8Y4O_uFmUj7T8-I' 
+    // ID Sheet tetap untuk masing-masing layanan (tidak dibedakan per tahun)
+    const SERVICES = {
+        siterbat: {
+            id: '1zZHjcIYoal75rbikPZ6oElTMyGpKjzS2OdzzCKm__4c',
+            sheet: 'SITERBAT',
+            chartId: 'chartSiterbat',
+            totalId: 'totalSiterbat',
+            type: 'bar',
+            color: '#198754',
+            label: 'Siterbat'
         },
-        2026: {
-            siterbat: '1zZHjcIYoal75rbikPZ6oElTMyGpKjzS2OdzzCKm__4c',
-            ambulance: '1ZiowxZoBCRvqcRlkrkIPueJ2Tzr9uApluGGY5koy9SY',
-            santardekate: '1-tb2VzBFPE12QOecySExK4s3r_lwrc8mVkyu8kLL3ys',
-            // fupKopi: '1mD69mPrV0Ym7_H9XvTq-2Lksb1mY8Y4O_uFmUj7T8-I'
+        ambulance: {
+            id: '1ZiowxZoBCRvqcRlkrkIPueJ2Tzr9uApluGGY5koy9SY',
+            sheet: 'AMBULAN',
+            chartId: 'chartAmbulance',
+            totalId: 'totalAmbulance',
+            type: 'bar',
+            color: '#dc3545',
+            label: 'Ambulance'
+        },
+        santardekate: {
+            id: '1-tb2VzBFPE12QOecySExK4s3r_lwrc8mVkyu8kLL3ys',
+            sheet: 'SANTARDEKATE ',
+            chartId: 'chartSantardekate',
+            totalId: 'totalSantardekate',
+            type: 'bar',
+            color: '#ffc107',
+            label: 'Santardekate'
         }
     };
 
-    let currentYear = "2025";
-    const _0xkey = "QUl6YVN5Q2NvMVVwWGJvejEteklad25HcFNGTmpWblpvYjVDXzQ0cw==";
-    const API_KEY = atob(_0xkey);
-
+    let currentYear = "{{ date('Y') }}";
+    const rawDataCache = {};
+    const charts = {};
     const MONTH_NAMES = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
 
-    async function fetchMonthlyData(spreadsheetId, sheetName) {
+    // Parser tanggal fleksibel (DD/MM/YYYY, YYYY-MM-DD, dsb.)
+    function extractDate(rowVal) {
+        if (!rowVal) return null;
+        const dateStr = String(rowVal).trim().split(' ')[0];
+        
+        if (dateStr.includes('/')) {
+            const parts = dateStr.split('/');
+            if (parts.length === 3) {
+                if (parts[2].length === 4) {
+                    return new Date(parseInt(parts[2]), parseInt(parts[1]) - 1, parseInt(parts[0]));
+                } else if (parts[0].length === 4) {
+                    return new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+                }
+            }
+        }
+        
+        if (dateStr.includes('-')) {
+            const parts = dateStr.split('-');
+            if (parts.length === 3) {
+                if (parts[0].length === 4) {
+                    return new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+                } else if (parts[2].length === 4) {
+                    return new Date(parseInt(parts[2]), parseInt(parts[1]) - 1, parseInt(parts[0]));
+                }
+            }
+        }
+
+        const d = new Date(dateStr);
+        return isNaN(d.getTime()) ? null : d;
+    }
+
+    // Ambil data baris mentah dari sheet per layanan (disimpan di cache memory)
+    async function fetchServiceRawRows(serviceKey) {
+        if (rawDataCache[serviceKey]) {
+            return rawDataCache[serviceKey];
+        }
+
+        const service = SERVICES[serviceKey];
         try {
-            const range = `${sheetName}!A2:A`;
-            const url = `/api/dashboard/sheet-data?id=${spreadsheetId}&range=${encodeURIComponent(range)}`;
-            console.log("Fetching via proxy:", url);
+            const range = `${service.sheet}!A2:A`;
+            const url = `/api/dashboard/sheet-data?id=${service.id}&range=${encodeURIComponent(range)}`;
             const response = await fetch(url);
             const data = await response.json();
-            
+
             if (data.error) {
-                console.error("Sheets Proxy Error:", data.error);
-                // alert("Kesalahan Dashboard: " + data.error.message + ". Pastikan aplikasi memiliki akses ke Sheet.");
+                console.error(`Error sheet ${serviceKey}:`, data.error);
+                rawDataCache[serviceKey] = [];
                 return [];
             }
 
-            // Initialize monthly counts
-            let monthlyCounts = MONTH_NAMES.map(name => ({ label: name, count: 0 }));
-
-            if (data.values) {
-                console.log("Monthly Data Found:", data.values.length, "rows");
-                data.values.forEach(row => {
-                    if (row[0]) {
-                        let date;
-                        const dateStr = row[0].split(' ')[0]; // Take only date part
-                        
-                        // Try DD/MM/YYYY format
-                        if (dateStr.includes('/')) {
-                            const parts = dateStr.split('/');
-                            if (parts.length === 3) {
-                                // DD/MM/YYYY -> MM/DD/YYYY (for JS Date) or YYYY, MM-1, DD
-                                if (parts[2].length === 4) { // Year is at the end
-                                    date = new Date(parts[2], parts[1] - 1, parts[0]);
-                                } else if (parts[0].length === 4) { // Year is at the beginning
-                                    date = new Date(parts[0], parts[1] - 1, parts[2]);
-                                }
-                            }
-                        }
-                        
-                        if (!date || isNaN(date)) {
-                            date = new Date(dateStr);
-                        }
-
-                        if (date && !isNaN(date)) {
-                            const monthIndex = date.getMonth();
-                            const year = date.getFullYear();
-                            if (year.toString() === currentYear) {
-                                monthlyCounts[monthIndex].count++;
-                            }
-                        }
-                    }
-                });
-            } else {
-                console.warn("No values found in range");
-            }
-            return monthlyCounts;
-        } catch (error) {
-            console.error(`Error fetching monthly data:`, error);
+            rawDataCache[serviceKey] = Array.isArray(data.values) ? data.values : [];
+            return rawDataCache[serviceKey];
+        } catch (err) {
+            console.error(`Fetch error ${serviceKey}:`, err);
+            rawDataCache[serviceKey] = [];
             return [];
         }
     }
 
-    async function fetchLegacySheetData(spreadsheetId, excludeSheets = []) {
-        try {
-            const url = `/api/dashboard/legacy-data?id=${spreadsheetId}`;
-            const response = await fetch(url);
-            const data = await response.json();
-            if (data && data.error) {
-                console.error("Legacy Proxy Error:", data.error);
-                return [];
-            }
-            if (!Array.isArray(data)) return [];
-            return data;
-        } catch (error) { console.error(`Error fetching legacy data:`, error); return []; }
-    }
-
-    let charts = {};
+    // Render chart Chart.js
     function renderChart(canvasId, totalElementId, type, color, label, data) {
-        if(!data || data.length === 0) return;
-        const ctx = document.getElementById(canvasId).getContext('2d');
+        if (!data || data.length === 0) return;
+        const canvas = document.getElementById(canvasId);
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
         const labels = data.map(d => d.label);
         const counts = data.map(d => d.count);
-        document.getElementById(totalElementId).innerText = counts.reduce((a, b) => a + b, 0).toLocaleString();
+        const total = counts.reduce((a, b) => a + b, 0);
+
+        const totalEl = document.getElementById(totalElementId);
+        if (totalEl) totalEl.innerText = total.toLocaleString();
         
         if (charts[canvasId]) charts[canvasId].destroy();
         charts[canvasId] = new Chart(ctx, {
@@ -251,39 +258,99 @@
                     tension: 0.4
                 }]
             },
-            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { precision: 0 }
+                    }
+                }
+            }
         });
     }
 
-    async function initDashboard() {
-        // Fallback to 2025 if currentYear not found
-        const sheets = SHEETS_MAP[currentYear] || SHEETS_MAP["2025"];
-        if (!sheets) {
-            console.error("No sheet mapping found for year:", currentYear);
-            return;
-        }
-        
-        // Siterbat & Ambulance now use the new single-sheet monthly logic
-        const siterbatData = await fetchMonthlyData(sheets.siterbat, 'SITERBAT');
-        renderChart('chartSiterbat', 'totalSiterbat', 'bar', '#198754', 'Siterbat', siterbatData);
-        
-        const ambulanceData = await fetchMonthlyData(sheets.ambulance, 'AMBULAN');
-        renderChart('chartAmbulance', 'totalAmbulance', 'bar', '#dc3545', 'Ambulance', ambulanceData);
-        
-        // HIDE FUP KOPI FETCHING
-        // const fupKopiData = await fetchMonthlyData(sheets.fupKopi, 'FUP_KOPI');
-        // renderChart('chartFupKopi', 'totalFupKopi', 'line', '#4e21f1', 'FUP Kopi', fupKopiData);
-        
-        // Santardekate now uses the same monthly data structure as Siterbat & Ambulance
-        const santardekateData = await fetchMonthlyData(sheets.santardekate, 'SANTARDEKATE ');
-        renderChart('chartSantardekate', 'totalSantardekate', 'bar', '#ffc107', 'Santardekate', santardekateData);
-        
+    // Terapkan filter tahun ke semua grafik secara instan
+    function applyYearFilter(year) {
+        currentYear = year.toString();
         document.querySelectorAll('.selectedYearText').forEach(el => el.innerText = currentYear);
+
+        for (const [key, service] of Object.entries(SERVICES)) {
+            const rawRows = rawDataCache[key] || [];
+            let monthlyCounts = MONTH_NAMES.map(name => ({ label: name, count: 0 }));
+
+            rawRows.forEach(row => {
+                if (row && row[0]) {
+                    const date = extractDate(row[0]);
+                    if (date && date.getFullYear().toString() === currentYear) {
+                        monthlyCounts[date.getMonth()].count++;
+                    }
+                }
+            });
+
+            renderChart(service.chartId, service.totalId, service.type, service.color, service.label, monthlyCounts);
+        }
+    }
+
+    // Update opsi dropdown tahun jika ditemukan tahun tambahan di spreadsheet
+    function syncYearDropdownOptions() {
+        const detectedYears = new Set([2024, 2025, 2026, 2027, 2028, 2029, 2030]);
+
+        for (const rows of Object.values(rawDataCache)) {
+            rows.forEach(row => {
+                if (row && row[0]) {
+                    const d = extractDate(row[0]);
+                    if (d) {
+                        const y = d.getFullYear();
+                        if (y >= 2020 && y <= 2040) {
+                            detectedYears.add(y);
+                        }
+                    }
+                }
+            });
+        }
+
+        const sorted = Array.from(detectedYears).sort((a, b) => a - b);
+        const yearSelect = document.getElementById('yearSelect');
+        if (yearSelect) {
+            yearSelect.innerHTML = '';
+            sorted.forEach(y => {
+                const opt = document.createElement('option');
+                opt.value = y;
+                opt.textContent = y;
+                if (y.toString() === currentYear.toString()) {
+                    opt.selected = true;
+                }
+                yearSelect.appendChild(opt);
+            });
+        }
+    }
+
+    // Init Dashboard
+    async function initDashboard() {
+        const yearSelect = document.getElementById('yearSelect');
+        if (yearSelect && yearSelect.value) {
+            currentYear = yearSelect.value;
+        }
+
+        // Ambil data dari masing-masing spreadsheet layanan
+        await Promise.all([
+            fetchServiceRawRows('siterbat'),
+            fetchServiceRawRows('ambulance'),
+            fetchServiceRawRows('santardekate')
+        ]);
+
+        // Sinkronkan tahun pada dropdown dan render grafik
+        syncYearDropdownOptions();
+        applyYearFilter(currentYear);
     }
 
     function changeYear(year) {
-        currentYear = year;
-        initDashboard();
+        applyYearFilter(year);
     }
 
     document.addEventListener('DOMContentLoaded', initDashboard);
