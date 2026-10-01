@@ -207,8 +207,33 @@
                 </div>
             </div>
 
+            {{-- Bilah Navigasi Halaman Dokumen (Sub-header: Selalu terlihat di HP & Desktop tanpa terhalang dock bawah) --}}
+            <div class="bg-black bg-opacity-95 border-bottom border-secondary py-1.5 px-2 px-md-3 d-flex align-items-center justify-content-between flex-shrink-0" id="pdfPageNavBar" style="z-index: 10;">
+                <div class="d-flex align-items-center gap-1.5">
+                    <button type="button" class="btn btn-sm btn-outline-light rounded-2 px-2.5 py-1.5 d-inline-flex align-items-center justify-content-center" id="btnPrevPage" title="Halaman Sebelumnya" style="min-height: 38px; min-width: 38px;">
+                        <i class="bi bi-chevron-left"></i> <span class="d-none d-sm-inline ms-1">Sebelumnya</span>
+                    </button>
+                    
+                    {{-- Tombol Pemilih Halaman Cepat (Sisi 1 / Sisi 2) --}}
+                    <div class="d-inline-flex gap-1" id="pagePillsContainer">
+                        {{-- Tombol Halaman 1 & Halaman 2 dinamis --}}
+                    </div>
+
+                    <button type="button" class="btn btn-sm btn-outline-light rounded-2 px-2.5 py-1.5 d-inline-flex align-items-center justify-content-center" id="btnNextPage" title="Halaman Selanjutnya" style="min-height: 38px; min-width: 38px;">
+                        <span class="d-none d-sm-inline me-1">Selanjutnya</span> <i class="bi bi-chevron-right"></i>
+                    </button>
+                </div>
+
+                <div class="d-flex align-items-center gap-1.5 gap-md-2">
+                    <span class="badge bg-secondary bg-opacity-75 text-white rounded-2 px-2 py-1.5 small font-monospace" id="pageRatioText">Hal 1 dari 2</span>
+                    <button type="button" class="btn btn-sm btn-outline-light rounded-2 px-2 py-1.5 d-inline-flex align-items-center gap-1" id="btnToggleAllPages" title="Tampilkan Semua Halaman Sekaligus" style="min-height: 38px;">
+                        <i class="bi bi-layers"></i> <span class="small d-none d-sm-inline" id="btnToggleAllText">Semua</span>
+                    </button>
+                </div>
+            </div>
+
             {{-- Area Pembaca Dokumen --}}
-            <div class="modal-body p-0 position-relative flex-grow-1 d-flex flex-column overflow-hidden" style="background: #0f172a; padding-bottom: 58px !important;">
+            <div class="modal-body p-0 position-relative flex-grow-1 d-flex flex-column overflow-hidden" style="background: #0f172a;">
                 
                 {{-- Indikator Memuat Dokumen --}}
                 <div id="pdfLoadingIndicator" class="position-absolute top-50 start-50 translate-middle text-center" style="z-index: 20;">
@@ -236,34 +261,6 @@
                 {{-- Wadah Tampilan Halaman Dokumen --}}
                 <div id="pdfCanvasContainer" class="w-100 h-100 overflow-auto p-2 p-md-3 d-flex flex-column align-items-center justify-content-start" style="scroll-behavior: smooth;">
                     {{-- Halaman kanvas dirender di sini --}}
-                </div>
-
-                {{-- Bilah Navigasi Bawah Khusus HP & Layar Penuh: Ganti Halaman Tanpa Scroll Berlebih --}}
-                <div class="position-fixed bottom-0 start-0 end-0 px-2 py-1.5 bg-black bg-opacity-95 border-top border-secondary d-flex align-items-center justify-content-between z-3" style="backdrop-filter: blur(8px);">
-                    <div class="d-flex align-items-center gap-1">
-                        <button type="button" class="btn btn-sm btn-outline-light rounded-2 px-2 py-1" id="btnPrevPage" title="Halaman Sebelumnya">
-                            <i class="bi bi-chevron-left"></i>
-                        </button>
-                        
-                        {{-- Tombol Pill Pemilih Halaman Cepat --}}
-                        <div class="d-inline-flex gap-1" id="pagePillsContainer">
-                            {{-- Pill tombol Halaman 1 & Halaman 2 dinamis --}}
-                        </div>
-
-                        <button type="button" class="btn btn-sm btn-outline-light rounded-2 px-2 py-1" id="btnNextPage" title="Halaman Selanjutnya">
-                            <i class="bi bi-chevron-right"></i>
-                        </button>
-                    </div>
-
-                    <div class="d-flex align-items-center gap-1.5">
-                        <span class="text-white-50 small px-1 d-none d-sm-inline" id="pageRatioText">Hal 1 dari 1</span>
-                        <button type="button" 
-                                class="btn btn-danger btn-sm rounded-2 px-2.5 py-1 fw-semibold d-flex align-items-center gap-1" 
-                                data-bs-dismiss="modal" 
-                                aria-label="Tutup dokumen">
-                            <i class="bi bi-x-lg"></i> <span>Tutup</span>
-                        </button>
-                    </div>
                 </div>
 
             </div>
@@ -321,6 +318,20 @@
         display: block;
         border-radius: 6px;
     }
+    #pdfReaderModal {
+        z-index: 1250 !important;
+    }
+    .modal-backdrop.show {
+        z-index: 1240 !important;
+    }
+    #pdfPageNavBar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+    }
+    #pdfPageNavBar button {
+        touch-action: manipulation;
+    }
     .btn-open-reader:focus-visible,
     .btn:focus-visible {
         outline: 2px solid #198754;
@@ -363,10 +374,14 @@
         const btnNextPage = document.getElementById('btnNextPage');
         const pagePillsContainer = document.getElementById('pagePillsContainer');
         const pageRatioText = document.getElementById('pageRatioText');
+        const btnToggleAllPages = document.getElementById('btnToggleAllPages');
+        const btnToggleAllText = document.getElementById('btnToggleAllText');
 
         let currentPdfDoc = null;
         let currentPageIndex = 1;
         let currentScale = 1.0;
+        let viewMode = 'single'; // 'single' atau 'all'
+        let currentRenderTask = null;
 
         // Tombol Buka Reader
         document.querySelectorAll('.btn-open-reader').forEach(btn => {
@@ -399,6 +414,12 @@
             if (fallbackDownloadBtn) fallbackDownloadBtn.href = downloadUrl;
             if (fallbackOpenTabBtn) fallbackOpenTabBtn.href = streamUrl;
 
+            // Batalkan render aktif sebelumnya jika ada
+            if (currentRenderTask) {
+                try { currentRenderTask.cancel(); } catch (e) {}
+                currentRenderTask = null;
+            }
+
             canvasContainer.innerHTML = '';
             pagePillsContainer.innerHTML = '';
             errorState.classList.add('d-none');
@@ -406,6 +427,8 @@
             loadingText.textContent = 'Menyiapkan dokumen leaflet...';
             currentPageIndex = 1;
             currentScale = 1.0;
+            viewMode = 'single';
+            updateViewModeButton();
 
             if (!pdfReaderModal && typeof bootstrap !== 'undefined' && bootstrap.Modal) {
                 pdfReaderModal = new bootstrap.Modal(modalEl);
@@ -446,7 +469,7 @@
                 buildPageNavigation();
                 updateZoomBadge();
 
-                await renderCurrentPage();
+                await renderCurrentView();
                 loadingIndicator.classList.add('d-none');
             } catch (err) {
                 console.warn('PDF.js rendering error:', err);
@@ -464,20 +487,27 @@
             for (let i = 1; i <= total; i++) {
                 const btn = document.createElement('button');
                 btn.type = 'button';
-                btn.className = `btn btn-sm py-1 px-2 rounded-2 ${i === currentPageIndex ? 'btn-success fw-bold' : 'btn-outline-secondary text-white'}`;
-                btn.style.fontSize = '0.78rem';
+                btn.className = `btn btn-sm py-1.5 px-2.5 rounded-2 ${i === currentPageIndex && viewMode === 'single' ? 'btn-success fw-bold' : 'btn-outline-secondary text-white'}`;
+                btn.style.fontSize = '0.82rem';
+                btn.style.minHeight = '38px';
+                btn.style.minWidth = '42px';
                 
-                // Beri label Sisi Luar / Sisi Dalam jika brosur 2 halaman
+                // Beri label Sisi 1 / Sisi 2 jika brosur 2 halaman
                 if (total === 2) {
                     btn.textContent = i === 1 ? 'Sisi 1' : 'Sisi 2';
+                    btn.title = i === 1 ? 'Sisi Luar Leaflet' : 'Sisi Dalam Leaflet';
                 } else {
                     btn.textContent = `Hal ${i}`;
+                    btn.title = `Halaman ${i}`;
                 }
 
-                btn.addEventListener('click', () => {
-                    if (currentPageIndex !== i) {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (viewMode !== 'single' || currentPageIndex !== i) {
+                        viewMode = 'single';
                         currentPageIndex = i;
-                        renderCurrentPage();
+                        updateViewModeButton();
+                        renderCurrentView();
                     }
                 });
                 pagePillsContainer.appendChild(btn);
@@ -490,85 +520,211 @@
             if (!currentPdfDoc) return;
             const total = currentPdfDoc.numPages;
 
-            if (btnPrevPage) btnPrevPage.disabled = (currentPageIndex <= 1);
-            if (btnNextPage) btnNextPage.disabled = (currentPageIndex >= total);
+            if (btnPrevPage) btnPrevPage.disabled = (viewMode === 'all' || currentPageIndex <= 1);
+            if (btnNextPage) btnNextPage.disabled = (viewMode === 'all' || currentPageIndex >= total);
 
             if (pageRatioText) {
-                pageRatioText.textContent = `Hal ${currentPageIndex} dari ${total}`;
+                if (viewMode === 'all') {
+                    pageRatioText.textContent = `Semua (${total} Hal)`;
+                } else {
+                    pageRatioText.textContent = total === 2 
+                        ? (currentPageIndex === 1 ? 'Sisi 1 (Luar)' : 'Sisi 2 (Dalam)')
+                        : `Hal ${currentPageIndex} dari ${total}`;
+                }
             }
 
             // Perbarui status aktif pada tombol pills
             const buttons = pagePillsContainer.querySelectorAll('button');
             buttons.forEach((btn, idx) => {
                 const pageNum = idx + 1;
-                if (pageNum === currentPageIndex) {
-                    btn.className = 'btn btn-sm py-1 px-2 rounded-2 btn-success fw-bold';
+                if (viewMode === 'single' && pageNum === currentPageIndex) {
+                    btn.className = 'btn btn-sm py-1.5 px-2.5 rounded-2 btn-success fw-bold';
                 } else {
-                    btn.className = 'btn btn-sm py-1 px-2 rounded-2 btn-outline-secondary text-white';
+                    btn.className = 'btn btn-sm py-1.5 px-2.5 rounded-2 btn-outline-secondary text-white';
                 }
             });
         }
 
-        // Render Halaman Tunggal yang Dipilih agar Tidak Ada Scroll Panjang di HP
-        async function renderCurrentPage() {
+        function updateViewModeButton() {
+            if (!btnToggleAllPages) return;
+            if (viewMode === 'all') {
+                btnToggleAllPages.className = 'btn btn-sm btn-success rounded-2 px-2.5 py-1.5 d-inline-flex align-items-center gap-1';
+                if (btnToggleAllText) btnToggleAllText.textContent = '1 Hal';
+                btnToggleAllPages.title = 'Beralih ke tampilan per halaman';
+            } else {
+                btnToggleAllPages.className = 'btn btn-sm btn-outline-light rounded-2 px-2.5 py-1.5 d-inline-flex align-items-center gap-1';
+                if (btnToggleAllText) btnToggleAllText.textContent = 'Semua';
+                btnToggleAllPages.title = 'Tampilkan semua halaman berurutan';
+            }
+        }
+
+        if (btnToggleAllPages) {
+            btnToggleAllPages.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (!currentPdfDoc) return;
+                viewMode = (viewMode === 'all') ? 'single' : 'all';
+                updateViewModeButton();
+                renderCurrentView();
+            });
+        }
+
+        // Fungsi pusat untuk merender tampilan aktif
+        async function renderCurrentView() {
             if (!currentPdfDoc) return;
-            canvasContainer.innerHTML = '';
             updateNavButtonsState();
 
-            // Hitung lebar area yang tersedia untuk dokumen agar pas dan tidak terpotong
+            if (viewMode === 'all') {
+                await renderAllPagesVertically();
+            } else {
+                await renderSinglePage(currentPageIndex);
+            }
+        }
+
+        // Render Halaman Tunggal yang Dipilih
+        async function renderSinglePage(pageNum) {
+            if (!currentPdfDoc) return;
+
+            // Batalkan render yang sedang berlangsung agar tidak collision di PDF.js
+            if (currentRenderTask) {
+                try { currentRenderTask.cancel(); } catch (e) {}
+                currentRenderTask = null;
+            }
+
+            canvasContainer.innerHTML = '';
+            canvasContainer.scrollTop = 0;
+
             const containerWidth = canvasContainer.clientWidth || window.innerWidth;
             const padding = window.innerWidth < 768 ? 16 : 40;
             const availableWidth = Math.max(260, containerWidth - padding);
 
-            const page = await currentPdfDoc.getPage(currentPageIndex);
-            const unscaledViewport = page.getViewport({ scale: 1.0 });
+            try {
+                const page = await currentPdfDoc.getPage(pageNum);
+                const unscaledViewport = page.getViewport({ scale: 1.0 });
 
-            // Hitung skala pas selebar layar (fit width)
-            const fitScale = availableWidth / unscaledViewport.width;
-            const effectiveScale = fitScale * currentScale;
+                const fitScale = availableWidth / unscaledViewport.width;
+                const effectiveScale = fitScale * currentScale;
+                const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+                const renderViewport = page.getViewport({ scale: effectiveScale * pixelRatio });
 
-            // Render resolusi tinggi dengan devicePixelRatio agar teks tajam
-            const pixelRatio = window.devicePixelRatio || 1;
-            const renderViewport = page.getViewport({ scale: effectiveScale * pixelRatio });
+                const pageWrapper = document.createElement('div');
+                pageWrapper.className = 'pdf-page-card position-relative bg-white rounded-2 my-auto';
+                
+                if (currentScale <= 1.0) {
+                    pageWrapper.style.maxWidth = '100%';
+                    pageWrapper.style.width = 'fit-content';
+                } else {
+                    pageWrapper.style.maxWidth = 'none';
+                    pageWrapper.style.width = Math.floor(unscaledViewport.width * effectiveScale) + 'px';
+                }
 
-            const pageWrapper = document.createElement('div');
-            pageWrapper.className = 'pdf-page-card position-relative bg-white rounded-2 my-auto';
-            
-            if (currentScale <= 1.0) {
-                pageWrapper.style.maxWidth = '100%';
-                pageWrapper.style.width = 'fit-content';
-            } else {
-                pageWrapper.style.maxWidth = 'none';
-                pageWrapper.style.width = Math.floor(unscaledViewport.width * effectiveScale) + 'px';
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+
+                canvas.width = Math.floor(renderViewport.width);
+                canvas.height = Math.floor(renderViewport.height);
+
+                const displayWidth = Math.floor(unscaledViewport.width * effectiveScale);
+                const displayHeight = Math.floor(unscaledViewport.height * effectiveScale);
+
+                if (currentScale <= 1.0) {
+                    canvas.style.maxWidth = '100%';
+                    canvas.style.height = 'auto';
+                    canvas.style.width = '100%';
+                } else {
+                    canvas.style.maxWidth = 'none';
+                    canvas.style.width = displayWidth + 'px';
+                    canvas.style.height = displayHeight + 'px';
+                }
+                canvas.style.display = 'block';
+
+                pageWrapper.appendChild(canvas);
+                canvasContainer.appendChild(pageWrapper);
+
+                currentRenderTask = page.render({
+                    canvasContext: ctx,
+                    viewport: renderViewport
+                });
+                await currentRenderTask.promise;
+            } catch (err) {
+                if (err && err.name === 'RenderingCancelledException') {
+                    return;
+                }
+                console.warn('Render single page error:', err);
+            } finally {
+                currentRenderTask = null;
+            }
+        }
+
+        // Render Semua Halaman Bertumpuk Vertikal
+        async function renderAllPagesVertically() {
+            if (!currentPdfDoc) return;
+
+            if (currentRenderTask) {
+                try { currentRenderTask.cancel(); } catch (e) {}
+                currentRenderTask = null;
             }
 
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
+            canvasContainer.innerHTML = '';
+            canvasContainer.scrollTop = 0;
 
-            canvas.width = Math.floor(renderViewport.width);
-            canvas.height = Math.floor(renderViewport.height);
+            const total = currentPdfDoc.numPages;
+            const containerWidth = canvasContainer.clientWidth || window.innerWidth;
+            const padding = window.innerWidth < 768 ? 16 : 40;
+            const availableWidth = Math.max(260, containerWidth - padding);
 
-            const displayWidth = Math.floor(unscaledViewport.width * effectiveScale);
-            const displayHeight = Math.floor(unscaledViewport.height * effectiveScale);
+            for (let i = 1; i <= total; i++) {
+                try {
+                    const page = await currentPdfDoc.getPage(i);
+                    const unscaledViewport = page.getViewport({ scale: 1.0 });
+                    const fitScale = availableWidth / unscaledViewport.width;
+                    const effectiveScale = fitScale * currentScale;
+                    const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+                    const renderViewport = page.getViewport({ scale: effectiveScale * pixelRatio });
 
-            if (currentScale <= 1.0) {
-                canvas.style.maxWidth = '100%';
-                canvas.style.height = 'auto';
-                canvas.style.width = '100%';
-            } else {
-                canvas.style.maxWidth = 'none';
-                canvas.style.width = displayWidth + 'px';
-                canvas.style.height = displayHeight + 'px';
+                    const pageWrapper = document.createElement('div');
+                    pageWrapper.className = 'pdf-page-card position-relative bg-white rounded-2 mb-3';
+                    
+                    const label = document.createElement('div');
+                    label.className = 'bg-secondary bg-opacity-75 text-white small px-2 py-0.5 rounded-top text-center font-monospace';
+                    label.textContent = total === 2 ? (i === 1 ? 'Sisi 1 (Luar)' : 'Sisi 2 (Dalam)') : `Halaman ${i}`;
+                    pageWrapper.appendChild(label);
+
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+
+                    canvas.width = Math.floor(renderViewport.width);
+                    canvas.height = Math.floor(renderViewport.height);
+
+                    const displayWidth = Math.floor(unscaledViewport.width * effectiveScale);
+                    const displayHeight = Math.floor(unscaledViewport.height * effectiveScale);
+
+                    if (currentScale <= 1.0) {
+                        canvas.style.maxWidth = '100%';
+                        canvas.style.height = 'auto';
+                        canvas.style.width = '100%';
+                    } else {
+                        canvas.style.maxWidth = 'none';
+                        canvas.style.width = displayWidth + 'px';
+                        canvas.style.height = displayHeight + 'px';
+                    }
+                    canvas.style.display = 'block';
+
+                    pageWrapper.appendChild(canvas);
+                    canvasContainer.appendChild(pageWrapper);
+
+                    currentRenderTask = page.render({
+                        canvasContext: ctx,
+                        viewport: renderViewport
+                    });
+                    await currentRenderTask.promise;
+                } catch (err) {
+                    if (err && err.name === 'RenderingCancelledException') {
+                        return;
+                    }
+                    console.warn('Render page in vertical stack error:', err);
+                }
             }
-            canvas.style.display = 'block';
-
-            pageWrapper.appendChild(canvas);
-            canvasContainer.appendChild(pageWrapper);
-
-            await page.render({
-                canvasContext: ctx,
-                viewport: renderViewport
-            }).promise;
+            currentRenderTask = null;
         }
 
         function updateZoomBadge() {
@@ -579,19 +735,29 @@
 
         // Navigasi Tombol Sebelumnya / Selanjutnya
         if (btnPrevPage) {
-            btnPrevPage.addEventListener('click', () => {
+            btnPrevPage.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (viewMode === 'all') {
+                    viewMode = 'single';
+                    updateViewModeButton();
+                }
                 if (currentPageIndex > 1) {
                     currentPageIndex--;
-                    renderCurrentPage();
+                    renderCurrentView();
                 }
             });
         }
 
         if (btnNextPage) {
-            btnNextPage.addEventListener('click', () => {
+            btnNextPage.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (viewMode === 'all') {
+                    viewMode = 'single';
+                    updateViewModeButton();
+                }
                 if (currentPdfDoc && currentPageIndex < currentPdfDoc.numPages) {
                     currentPageIndex++;
-                    renderCurrentPage();
+                    renderCurrentView();
                 }
             });
         }
@@ -602,7 +768,7 @@
                 if (!currentPdfDoc || currentScale >= 3.0) return;
                 currentScale = +(currentScale * 1.25).toFixed(2);
                 updateZoomBadge();
-                await renderCurrentPage();
+                await renderCurrentView();
             });
         }
 
@@ -611,7 +777,7 @@
                 if (!currentPdfDoc || currentScale <= 0.4) return;
                 currentScale = +(currentScale / 1.25).toFixed(2);
                 updateZoomBadge();
-                await renderCurrentPage();
+                await renderCurrentView();
             });
         }
 
@@ -620,30 +786,50 @@
                 if (!currentPdfDoc) return;
                 currentScale = 1.0;
                 updateZoomBadge();
-                await renderCurrentPage();
+                await renderCurrentView();
             });
         }
 
         // Dukungan Usap Jari (Touch Swipe) di Layar HP
         let touchStartX = 0;
+        let touchStartY = 0;
         let touchEndX = 0;
+        let touchEndY = 0;
+
         canvasContainer.addEventListener('touchstart', e => {
-            touchStartX = e.changedTouches[0].screenX;
+            if (e.changedTouches.length > 0) {
+                touchStartX = e.changedTouches[0].screenX;
+                touchStartY = e.changedTouches[0].screenY;
+            }
         }, { passive: true });
+
         canvasContainer.addEventListener('touchend', e => {
-            touchEndX = e.changedTouches[0].screenX;
-            const diff = touchEndX - touchStartX;
-            if (diff > 60 && currentPageIndex > 1) {
-                currentPageIndex--;
-                renderCurrentPage();
-            } else if (diff < -60 && currentPdfDoc && currentPageIndex < currentPdfDoc.numPages) {
-                currentPageIndex++;
-                renderCurrentPage();
+            if (viewMode === 'all' || currentScale > 1.05) return;
+            if (e.changedTouches.length > 0) {
+                touchEndX = e.changedTouches[0].screenX;
+                touchEndY = e.changedTouches[0].screenY;
+                const diffX = touchEndX - touchStartX;
+                const diffY = touchEndY - touchStartY;
+
+                // Hanya ganti halaman jika swipe horizontal signifikan dan dominan dibanding vertikal
+                if (Math.abs(diffX) > 65 && Math.abs(diffX) > Math.abs(diffY) * 1.5) {
+                    if (diffX > 0 && currentPageIndex > 1) {
+                        currentPageIndex--;
+                        renderCurrentView();
+                    } else if (diffX < 0 && currentPdfDoc && currentPageIndex < currentPdfDoc.numPages) {
+                        currentPageIndex++;
+                        renderCurrentView();
+                    }
+                }
             }
         }, { passive: true });
 
         // Bersihkan objek saat modal ditutup
         modalEl.addEventListener('hidden.bs.modal', function() {
+            if (currentRenderTask) {
+                try { currentRenderTask.cancel(); } catch (e) {}
+                currentRenderTask = null;
+            }
             canvasContainer.innerHTML = '';
             currentPdfDoc = null;
         });
