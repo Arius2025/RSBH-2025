@@ -37,10 +37,12 @@ class Leaflet extends Model
 
     public function getPdfUrlAttribute(): string
     {
-        if (str_starts_with($this->pdf_path, 'http://') || str_starts_with($this->pdf_path, 'https://')) {
-            return $this->pdf_path;
-        }
-        return asset('storage/' . ltrim($this->pdf_path, '/'));
+        return route('leaflet.stream', $this->id);
+    }
+
+    public function getDownloadUrlAttribute(): string
+    {
+        return route('leaflet.download', $this->id);
     }
 
     public function getThumbnailUrlAttribute(): ?string
@@ -51,6 +53,6 @@ class Leaflet extends Model
         if (str_starts_with($this->thumbnail_path, 'http://') || str_starts_with($this->thumbnail_path, 'https://')) {
             return $this->thumbnail_path;
         }
-        return asset('storage/' . ltrim($this->thumbnail_path, '/'));
+        return '/storage/' . ltrim($this->thumbnail_path, '/');
     }
 }

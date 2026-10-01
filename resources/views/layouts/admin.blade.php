@@ -59,15 +59,36 @@
         /* Sidebar Styles (Desktop Only) */
         .sidebar {
             width: var(--sidebar-width);
-            min-height: 100vh;
+            height: calc(100vh - 64px);
             position: fixed;
-            top: 0;
+            top: 64px;
             left: 0;
+            bottom: 0;
             z-index: 1000;
-            padding-top: 74px; 
+            padding-top: 12px;
+            padding-bottom: 50px;
             background: #ffffff;
             border-right: 1px solid rgba(0, 0, 0, 0.06);
             transition: var(--transition);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.12);
+            border-radius: 10px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.25);
         }
 
         /* Sidebar Nav Link Styles */
@@ -463,11 +484,19 @@
                     </div>
                 </a>
 
-                <a href="{{ route('admin.tarif.index') }}" class="list-group-item list-group-item-action rounded-3 border-0 py-2.5 d-flex align-items-center gap-3 {{ request()->routeIs('admin.tarif.*') ? 'bg-success-subtle text-success fw-bold' : '' }}">
-                    <i class="bi bi-tag-fill fs-5 text-success"></i>
+                <a href="{{ route('admin.jadwal.index') }}" class="list-group-item list-group-item-action rounded-3 border-0 py-2.5 d-flex align-items-center gap-3 {{ request()->routeIs('admin.jadwal.*') ? 'bg-success-subtle text-success fw-bold' : '' }}">
+                    <i class="bi bi-calendar-event-fill fs-5 text-success"></i>
                     <div>
-                        <div class="fw-semibold">Tarif RSDKT</div>
-                        <small class="text-muted">Kelola daftar harga dan tarif</small>
+                        <div class="fw-semibold">Jadwal Dokter</div>
+                        <small class="text-muted">Kelola jadwal praktik dokter</small>
+                    </div>
+                </a>
+
+                <a href="{{ route('admin.documents.index') }}" class="list-group-item list-group-item-action rounded-3 border-0 py-2.5 d-flex align-items-center gap-3 {{ request()->routeIs('admin.dokumen.*') || request()->routeIs('admin.documents.*') ? 'bg-success-subtle text-success fw-bold' : '' }}">
+                    <i class="bi bi-file-earmark-text-fill fs-5 text-success"></i>
+                    <div>
+                        <div class="fw-semibold">Dokumen PPID</div>
+                        <small class="text-muted">Kelola berkas regulasi & SOP</small>
                     </div>
                 </a>
 
@@ -476,6 +505,22 @@
                     <div>
                         <div class="fw-semibold">Kelola Leaflet Kesehatan</div>
                         <small class="text-muted">Manajemen & upload leaflet edukasi PDF</small>
+                    </div>
+                </a>
+
+                <a href="{{ route('admin.permohonan.index') }}" class="list-group-item list-group-item-action rounded-3 border-0 py-2.5 d-flex align-items-center gap-3 {{ request()->routeIs('admin.permohonan.*') ? 'bg-success-subtle text-success fw-bold' : '' }}">
+                    <i class="bi bi-inbox-fill fs-5 text-success"></i>
+                    <div>
+                        <div class="fw-semibold">Permohonan Informasi</div>
+                        <small class="text-muted">Data permohonan informasi publik</small>
+                    </div>
+                </a>
+
+                <a href="{{ route('admin.tarif.index') }}" class="list-group-item list-group-item-action rounded-3 border-0 py-2.5 d-flex align-items-center gap-3 {{ request()->routeIs('admin.tarif.*') ? 'bg-success-subtle text-success fw-bold' : '' }}">
+                    <i class="bi bi-tag-fill fs-5 text-success"></i>
+                    <div>
+                        <div class="fw-semibold">Tarif RSDKT</div>
+                        <small class="text-muted">Kelola daftar harga dan tarif</small>
                     </div>
                 </a>
 

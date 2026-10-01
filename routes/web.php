@@ -30,6 +30,8 @@ use App\Http\Controllers\FupController;
 Route::get('/', [FrontendController::class, 'home'])->name('home');
 Route::get('/informasi', [FrontendController::class, 'informasi'])->name('informasi');
 Route::get('/informasi/leaflet', [FrontendController::class, 'leaflet'])->name('leaflet.index');
+Route::get('/leaflet/stream/{id}', [FrontendController::class, 'streamLeaflet'])->name('leaflet.stream');
+Route::get('/leaflet/download/{id}', [FrontendController::class, 'downloadLeaflet'])->name('leaflet.download');
 Route::post('/api/leaflet/{id}/view', [FrontendController::class, 'incrementLeafletView'])->name('api.leaflet.view');
 Route::get('/dokter', [FrontendController::class, 'dokter'])->name('dokter');
 Route::get('/berita', [FrontendController::class, 'berita'])->name('berita');

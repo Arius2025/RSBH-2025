@@ -38,8 +38,9 @@ jobs:
             # Jika 'composer' tidak ditemukan, gunakan: /usr/local/bin/composer
             composer install --no-dev --optimize-autoloader
 
-            # 5. Update Database
+            # 5. Update Database & Storage Link
             php artisan migrate --force
+            php artisan storage:link || true
 
             # 6. Build Frontend
             # Gunakan npm ci jika ada package-lock.json untuk install yang lebih cepat/bersih

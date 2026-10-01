@@ -9,6 +9,7 @@ use App\Models\Leaflet;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class FrontendController extends Controller
@@ -486,5 +487,58 @@ class FrontendController extends Controller
             return response()->json(['success' => true, 'views_count' => $leaflet->views_count]);
         }
         return response()->json(['success' => false], 404);
+    }
+
+    /**
+     * Stream PDF Leaflet inline ke browser
+     * Mencegah kegagalan CORS, HTTPS mixed-content, atau symlink server
+     */
+    public function streamLeaflet($id)
+    {
+        $leaflet = Leaflet::findOrFail($id);
+        $path = $leaflet->pdf_path;
+
+        if (Storage::disk('public')->exists($path)) {
+            $fullPath = Storage::disk('public')->path($path);
+            return response()->file($fullPath, [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="' . basename($path) . '"',
+                'Cache-Control' => 'public, max-age=86400',
+            ]);
+        }
+
+        $altPath = storage_path('app/public/' . ltrim($path, '/'));
+        if (file_exists($altPath)) {
+            return response()->file($altPath, [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="' . basename($path) . '"',
+                'Cache-Control' => 'public, max-age=86400',
+            ]);
+        }
+
+        abort(404, 'Berkas PDF leaflet tidak ditemukan.');
+    }
+
+    /**
+     * Unduh file PDF Leaflet langsung
+     */
+    public function downloadLeaflet($id)
+    {
+        $leaflet = Leaflet::findOrFail($id);
+        $path = $leaflet->pdf_path;
+
+        if (Storage::disk('public')->exists($path)) {
+            $fullPath = Storage::disk('public')->path($path);
+            $cleanName = Str::slug($leaflet->title) . '.pdf';
+            return response()->download($fullPath, $cleanName);
+        }
+
+        $altPath = storage_path('app/public/' . ltrim($path, '/'));
+        if (file_exists($altPath)) {
+            $cleanName = Str::slug($leaflet->title) . '.pdf';
+            return response()->download($altPath, $cleanName);
+        }
+
+        abort(404, 'Berkas PDF leaflet tidak ditemukan.');
     }
 }
